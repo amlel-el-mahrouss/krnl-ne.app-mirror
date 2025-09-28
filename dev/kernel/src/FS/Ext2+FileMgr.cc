@@ -32,106 +32,102 @@ struct Ext2GroupInfo {
 };
 
 // Convert EXT2 block number -> LBA (sector index) for Drive I/O.
-static inline Kernel::UInt32 ext2_block_to_lba(Kernel::Ext2Context* ctx,
-                                               Kernel::UInt32       blockNumber) {
+static inline UInt32 ext2_block_to_lba(Ext2Context* ctx,
+                                               UInt32       blockNumber) {
   if (!ctx || !ctx->drive) return 0;
-  Kernel::UInt32 blockSize       = ctx->BlockSize();
-  Kernel::UInt32 sectorSize      = ctx->drive->fSectorSz;
-  Kernel::UInt32 sectorsPerBlock = blockSize / sectorSize;
+  UInt32 blockSize       = ctx->BlockSize();
+  UInt32 sectorSize      = ctx->drive->fSectorSz;
+  UInt32 sectorsPerBlock = blockSize / sectorSize;
   return blockNumber * sectorsPerBlock;
 }
 
 // Read a block and return a pointer to its content
-static ErrorOr<Kernel::UInt32*> ext2_read_block_ptr(Kernel::Ext2Context* ctx,
-                                                    Kernel::UInt32       blockNumber) {
+static ErrorOr<UInt32*> ext2_read_block_ptr(Ext2Context* ctx,
+                                                    UInt32       blockNumber) {
   if (!ctx || !ctx->drive || !ctx->superblock)
-    return ErrorOr<Kernel::UInt32*>(Kernel::kErrorInvalidData);
+    return ErrorOr<UInt32*>(kErrorInvalidData);
 
-  Kernel::UInt32 blockSize = ctx->BlockSize();
-  auto           buf       = (Kernel::UInt32*) mm_alloc_ptr(blockSize, true, false);
-  if (!buf) return ErrorOr<Kernel::UInt32*>(Kernel::kErrorHeapOutOfMemory);
+  UInt32 blockSize = ctx->BlockSize();
+  auto           buf       = (UInt32*) mm_alloc_ptr(blockSize, true, false);
+  if (!buf) return ErrorOr<UInt32*>(kErrorHeapOutOfMemory);
 
-  Kernel::UInt32 lba = ext2_block_to_lba(ctx, blockNumber);
+  UInt32 lba = ext2_block_to_lba(ctx, blockNumber);
   if (!ext2_read_block(ctx->drive, lba, buf, blockSize)) {
     mm_free_ptr(buf);
-    return ErrorOr<Kernel::UInt32*>(Kernel::kErrorDisk);
+    return ErrorOr<UInt32*>(kErrorDisk);
   }
-  return ErrorOr<Kernel::UInt32*>(buf);
+  return ErrorOr<UInt32*>(buf);
 }
 
 // Get the block address for a given logical block index
-static ErrorOr<Kernel::UInt32> ext2_get_block_address(Kernel::Ext2Context* ctx, Ext2Node* node,
-                                                      Kernel::UInt32 logicalIndex) {
-  if (!ctx || !node || !ctx->drive) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
+static ErrorOr<UInt32> ext2_get_block_address(Ext2Context* ctx, Ext2Node* node,
+                                                      UInt32 logicalIndex) {
+  if (!ctx || !node || !ctx->drive) return ErrorOr<UInt32>(kErrorInvalidData);
 
-  Kernel::UInt32 blockSize        = ctx->BlockSize();
-  Kernel::UInt32 pointersPerBlock = blockSize / sizeof(Kernel::UInt32);
+  UInt32 blockSize        = ctx->BlockSize();
+  UInt32 pointersPerBlock = blockSize / sizeof(UInt32);
 
   // Direct blocks
   if (logicalIndex < EXT2_DIRECT_BLOCKS) {
-    Kernel::UInt32 bn = node->inode.fBlock[logicalIndex];
-    if (bn == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
-    return ErrorOr<Kernel::UInt32>(bn);
+    UInt32 bn = node->inode.fBlock[logicalIndex];
+    if (bn == 0) return ErrorOr<UInt32>(kErrorInvalidData);
+    return ErrorOr<UInt32>(bn);
   }
 
   // Single indirect blocks
   if (logicalIndex < (EXT2_DIRECT_BLOCKS + pointersPerBlock)) {
-    Kernel::UInt32 iblock = node->inode.fBlock[EXT2_SINGLE_INDIRECT_INDEX];
-    if (iblock == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
+    UInt32 iblock = node->inode.fBlock[EXT2_SINGLE_INDIRECT_INDEX];
+    if (iblock == 0) return ErrorOr<UInt32>(kErrorInvalidData);
 
     auto res = ext2_read_block_ptr(ctx, iblock);
-    if (!res) return ErrorOr<Kernel::UInt32>(res.Error());
+    if (!res) return ErrorOr<UInt32>(res.Error());
 
     // Using dereference operator
-    Kernel::UInt32* ptr = *res.Leak();  // operator* returns T (UInt32*)
+    UInt32* ptr = *res.Leak();  // operator* returns T (UInt32*)
 
-    Kernel::UInt32 val = ptr[logicalIndex - EXT2_DIRECT_BLOCKS];
+    UInt32 val = ptr[logicalIndex - EXT2_DIRECT_BLOCKS];
     mm_free_ptr(ptr);
 
-    if (val == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
-    return ErrorOr<Kernel::UInt32>(val);
+    if (val == 0) return ErrorOr<UInt32>(kErrorInvalidData);
+    return ErrorOr<UInt32>(val);
   }
 
   // Double indirect blocks
-  Kernel::UInt32 doubleStart = EXT2_DIRECT_BLOCKS + pointersPerBlock;
-  Kernel::UInt32 doubleSpan  = pointersPerBlock * pointersPerBlock;
+  UInt32 doubleStart = EXT2_DIRECT_BLOCKS + pointersPerBlock;
+  UInt32 doubleSpan  = pointersPerBlock * pointersPerBlock;
   if (logicalIndex < (doubleStart + doubleSpan)) {
-    Kernel::UInt32 db = node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX];
-    if (db == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
+    UInt32 db = node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX];
+    if (db == 0) return ErrorOr<UInt32>(kErrorInvalidData);
 
     auto dblRes = ext2_read_block_ptr(ctx, db);
-    if (!dblRes) return ErrorOr<Kernel::UInt32>(dblRes.Error());
+    if (!dblRes) return ErrorOr<UInt32>(dblRes.Error());
 
-    Kernel::UInt32* dblPtr = *dblRes.Leak();
+    UInt32* dblPtr = *dblRes.Leak();
 
-    Kernel::UInt32 idxWithin      = logicalIndex - doubleStart;
-    Kernel::UInt32 firstIdx       = idxWithin / pointersPerBlock;
-    Kernel::UInt32 secondIdx      = idxWithin % pointersPerBlock;
-    Kernel::UInt32 singleBlockNum = dblPtr[firstIdx];
+    UInt32 idxWithin      = logicalIndex - doubleStart;
+    UInt32 firstIdx       = idxWithin / pointersPerBlock;
+    UInt32 secondIdx      = idxWithin % pointersPerBlock;
+    UInt32 singleBlockNum = dblPtr[firstIdx];
 
     mm_free_ptr(dblPtr);
-    if (singleBlockNum == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
+    if (singleBlockNum == 0) return ErrorOr<UInt32>(kErrorInvalidData);
 
     auto singleRes = ext2_read_block_ptr(ctx, singleBlockNum);
-    if (!singleRes) return ErrorOr<Kernel::UInt32>(singleRes.Error());
+    if (!singleRes) return ErrorOr<UInt32>(singleRes.Error());
 
-    Kernel::UInt32* singlePtr = *singleRes.Leak();
-    Kernel::UInt32  val       = singlePtr[secondIdx];
+    UInt32* singlePtr = *singleRes.Leak();
+    UInt32  val       = singlePtr[secondIdx];
     mm_free_ptr(singlePtr);
 
-    if (val == 0) return ErrorOr<Kernel::UInt32>(Kernel::kErrorInvalidData);
-    return ErrorOr<Kernel::UInt32>(val);
+    if (val == 0) return ErrorOr<UInt32>(kErrorInvalidData);
+    return ErrorOr<UInt32>(val);
   }
 
-  return ErrorOr<Kernel::UInt32>(Kernel::kErrorUnimplemented);
+  return ErrorOr<UInt32>(kErrorUnimplemented);
 }
 
-static Kernel::ErrorOr<voidPtr> ext2_read_inode_data(Kernel::Ext2Context* ctx, Ext2Node* node,
+static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node,
                                                      SizeT size) {
-  using Kernel::ErrorOr;
-  using Kernel::UInt32;
-  using Kernel::UInt8;
-
   if (!ctx || !ctx->drive || !node || size == 0) return ErrorOr<voidPtr>(1);
 
   auto  blockSize   = ctx->BlockSize();
@@ -187,7 +183,7 @@ static Kernel::ErrorOr<voidPtr> ext2_read_inode_data(Kernel::Ext2Context* ctx, E
 }
 
 // Get group descriptor information for a given block/inode number
-static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Kernel::Ext2Context* ctx,
+static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
                                                               UInt32 targetBlockOrInode) {
   if (!ctx || !ctx->superblock || !ctx->drive) return ErrorOr<Ext2GroupInfo*>(kErrorInvalidData);
 
@@ -258,7 +254,7 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Kernel::Ext2Contex
 }
 
 // Allocate a new block
-inline ErrorOr<UInt32> ext2_alloc_block(Kernel::Ext2Context*   ctx,
+inline ErrorOr<UInt32> ext2_alloc_block(Ext2Context*   ctx,
                                         EXT2_GROUP_DESCRIPTOR* groupDesc) {
   if (!ctx || !ctx->superblock || !groupDesc) return ErrorOr<UInt32>(kErrorInvalidData);
 
@@ -306,10 +302,10 @@ inline ErrorOr<UInt32> ext2_alloc_block(Kernel::Ext2Context*   ctx,
 }
 
 // Indirect blocks
-static Kernel::ErrorOr<Kernel::Void*> ext2_set_block_address(Kernel::Ext2Context* ctx,
+static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx,
                                                              Ext2Node*            node,
-                                                             Kernel::UInt32       logicalBlockIndex,
-                                                             Kernel::UInt32 physicalBlockNumber) {
+                                                             UInt32       logicalBlockIndex,
+                                                             UInt32 physicalBlockNumber) {
   using namespace Kernel;
 
   if (!ctx || !ctx->drive || !node) return ErrorOr<Void*>(kErrorInvalidData);
@@ -514,33 +510,33 @@ static Kernel::ErrorOr<Kernel::Void*> ext2_set_block_address(Kernel::Ext2Context
 }
 
 // Find a directory entry by name within a directory inode
-static ErrorOr<EXT2_DIR_ENTRY*> ext2_find_dir_entry(Kernel::Ext2Context* ctx, Ext2Node* dirNode,
+static ErrorOr<EXT2_DIR_ENTRY*> ext2_find_dir_entry(Ext2Context* ctx, Ext2Node* dirNode,
                                                     const char* name) {
   if (!ctx || !ctx->drive || !dirNode || !name)
-    return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorInvalidData);
+    return ErrorOr<EXT2_DIR_ENTRY*>(kErrorInvalidData);
 
   // Check directory type
   auto type = (dirNode->inode.fMode >> 12) & 0xF;
-  if (type != kExt2FileTypeDirectory) return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorInvalidData);
+  if (type != kExt2FileTypeDirectory) return ErrorOr<EXT2_DIR_ENTRY*>(kErrorInvalidData);
 
-  Kernel::UInt32 blockSize = ctx->BlockSize();
+  UInt32 blockSize = ctx->BlockSize();
   auto           blockBuf  = mm_alloc_ptr(blockSize, true, false);
-  if (!blockBuf) return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorHeapOutOfMemory);
+  if (!blockBuf) return ErrorOr<EXT2_DIR_ENTRY*>(kErrorHeapOutOfMemory);
 
   SizeT nameLen = rt_string_len(name);
-  for (Kernel::UInt32 i = 0; i < EXT2_DIRECT_BLOCKS; ++i) {
-    Kernel::UInt32 blockNum = dirNode->inode.fBlock[i];
+  for (UInt32 i = 0; i < EXT2_DIRECT_BLOCKS; ++i) {
+    UInt32 blockNum = dirNode->inode.fBlock[i];
     if (blockNum == 0) continue;
 
-    Kernel::UInt32 lba = ext2_block_to_lba(ctx, blockNum);
+    UInt32 lba = ext2_block_to_lba(ctx, blockNum);
     if (!ext2_read_block(ctx->drive, lba, blockBuf, blockSize)) {
       mm_free_ptr(blockBuf);
-      return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorDisk);
+      return ErrorOr<EXT2_DIR_ENTRY*>(kErrorDisk);
     }
 
-    Kernel::UInt32 offset = 0;
-    while (offset + sizeof(Kernel::UInt32) + sizeof(Kernel::UInt16) <= blockSize) {
-      auto onDiskEntry = reinterpret_cast<EXT2_DIR_ENTRY*>((Kernel::UInt8*) blockBuf + offset);
+    UInt32 offset = 0;
+    while (offset + sizeof(UInt32) + sizeof(UInt16) <= blockSize) {
+      auto onDiskEntry = reinterpret_cast<EXT2_DIR_ENTRY*>((UInt8*) blockBuf + offset);
       if (onDiskEntry->fRecordLength == 0) break;  // corrupted
 
       if (onDiskEntry->fInode != 0 && onDiskEntry->fNameLength == nameLen) {
@@ -551,7 +547,7 @@ static ErrorOr<EXT2_DIR_ENTRY*> ext2_find_dir_entry(Kernel::Ext2Context* ctx, Ex
           auto  found   = (EXT2_DIR_ENTRY*) mm_alloc_ptr(recSize, true, false);
           if (!found) {
             mm_free_ptr(blockBuf);
-            return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorHeapOutOfMemory);
+            return ErrorOr<EXT2_DIR_ENTRY*>(kErrorHeapOutOfMemory);
           }
 
           // Copy only record-length bytes
@@ -565,7 +561,7 @@ static ErrorOr<EXT2_DIR_ENTRY*> ext2_find_dir_entry(Kernel::Ext2Context* ctx, Ex
   }
 
   mm_free_ptr(blockBuf);
-  return ErrorOr<EXT2_DIR_ENTRY*>(Kernel::kErrorFileNotFound);
+  return ErrorOr<EXT2_DIR_ENTRY*>(kErrorFileNotFound);
 }
 
 // Compute ideal record length for a directory name
@@ -575,9 +571,9 @@ static inline UInt16 ext2_dir_entry_ideal_len(UInt8 nameLen) {
   return static_cast<UInt16>((raw + 3) & ~3u);  // align up to 4
 }
 
-static ErrorOr<Kernel::Void*> ext2_add_dir_entry(Kernel::Ext2Context* ctx, Ext2Node* parentDirNode,
-                                                 const char* name, Kernel::UInt32 inodeNumber,
-                                                 Kernel::UInt8 fileType) {
+static ErrorOr<Void*> ext2_add_dir_entry(Ext2Context* ctx, Ext2Node* parentDirNode,
+                                                 const char* name, UInt32 inodeNumber,
+                                                 UInt8 fileType) {
   using namespace Kernel;
 
   if (!ctx || !ctx->drive || !parentDirNode || !name) return ErrorOr<Void*>(kErrorInvalidData);
@@ -591,7 +587,7 @@ static ErrorOr<Kernel::Void*> ext2_add_dir_entry(Kernel::Ext2Context* ctx, Ext2N
   auto blockBuf = mm_alloc_ptr(blockSize, true, false);
   if (!blockBuf) return ErrorOr<Void*>(kErrorHeapOutOfMemory);
 
-  for (int bi = 0; bi < EXT2_DIRECT_BLOCKS; ++bi) {
+  for (UInt32 bi = 0; bi < EXT2_DIRECT_BLOCKS; ++bi) {
     UInt32 blockNum = parentDirNode->inode.fBlock[bi];
 
     if (blockNum == 0) {
@@ -698,7 +694,7 @@ static ErrorOr<Kernel::Void*> ext2_add_dir_entry(Kernel::Ext2Context* ctx, Ext2N
 
   // No space in direct blocks -> allocate new block
   int targetIndex = -1;
-  for (Kernel::UInt32 i = 0; i < EXT2_DIRECT_BLOCKS; ++i) {
+  for (UInt32 i = 0; i < EXT2_DIRECT_BLOCKS; ++i) {
     if (parentDirNode->inode.fBlock[i] == 0) {
       targetIndex = i;
       break;
@@ -761,7 +757,7 @@ static ErrorOr<Kernel::Void*> ext2_add_dir_entry(Kernel::Ext2Context* ctx, Ext2N
 }
 
 // Soon
-static ErrorOr<UInt32> ext2_alloc_inode(Kernel::Ext2Context*   ctx,
+static ErrorOr<UInt32> ext2_alloc_inode(Ext2Context*   ctx,
                                         EXT2_GROUP_DESCRIPTOR* groupDesc) {
   if (!ctx || !ctx->superblock || !groupDesc) return ErrorOr<UInt32>(kErrorInvalidData);
 
@@ -809,7 +805,7 @@ static ErrorOr<UInt32> ext2_alloc_inode(Kernel::Ext2Context*   ctx,
 }
 
 // to write an inode to its correct location on disk
-static ErrorOr<Void*> ext2_write_inode(Kernel::Ext2Context* ctx, Ext2Node* node) {
+static ErrorOr<Void*> ext2_write_inode(Ext2Context* ctx, Ext2Node* node) {
   using namespace Kernel;
 
   if (!ctx || !ctx->superblock || !ctx->drive || !node) return ErrorOr<Void*>(kErrorInvalidData);
@@ -900,7 +896,7 @@ struct PathComponents {
       return;
     }
 
-    int   compCount = 0;
+    UInt32   compCount = 0;
     Char* p         = buffer;
 
     while (*p != '\0') {
@@ -936,7 +932,7 @@ struct PathComponents {
       return;
     }
 
-    for (Kernel::UInt32 i = 0; i < compCount; i++) components[i] = temp[i];
+    for (UInt32 i = 0; i < compCount; i++) components[i] = temp[i];
     count = compCount;
 
     mm_free_ptr(temp);
@@ -980,7 +976,7 @@ NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) 
   UInt32    currentInodeNumber = EXT2_ROOT_INODE;
   Ext2Node* currentDirNode     = nullptr;
 
-  for (Kernel::UInt32 i = 0; i < pathComponents.count; ++i) {
+  for (UInt32 i = 0; i < (UInt32)pathComponents.count; ++i) {
     auto inodeResult = ext2_load_inode(&this->ctx, currentInodeNumber);
     if (!inodeResult) {
       if (currentDirNode) mm_free_ptr(currentDirNode);
@@ -1000,7 +996,7 @@ NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) 
     *currentDirNode        = *inodeResult.Leak().Leak();
     currentDirNode->cursor = 0;
 
-    if (i < pathComponents.count - 1) {
+    if (i < pathComponents.count - 1U) {
       UInt32 type = (currentDirNode->inode.fMode >> 12) & 0xF;
       if (type != kExt2FileTypeDirectory) {
         mm_free_ptr(currentDirNode);
@@ -1209,7 +1205,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   // Build parent path
   Char  parentPathBuf[256] = {0};
   SizeT currentPathLen     = 0;
-  for (Kernel::UInt32 i = 0; (i < pathComponents.count - 1); ++i) {
+  for (UInt32 i = 0; (i < pathComponents.count - 1U); ++i) {
     SizeT componentLen = rt_string_len(pathComponents.components[i]);
     if (currentPathLen + componentLen + 1 >= sizeof(parentPathBuf)) return nullptr;
     if (i > 0) parentPathBuf[currentPathLen++] = '/';
@@ -1338,7 +1334,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   // Build parent path
   Char  parentPathBuf[256];
   SizeT currentPathLen = 0;
-  for (Kernel::UInt32 i = 0; (i < pathComponents.count - 1); ++i) {
+  for (UInt32 i = 0; (i < pathComponents.count - 1U); ++i) {
     SizeT componentLen = rt_string_len(pathComponents.components[i]);
     if (currentPathLen + componentLen + 1 >= sizeof(parentPathBuf)) {
       kout << "EXT2: Parent path too long for CreateDirectory.\n";

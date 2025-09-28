@@ -36,7 +36,7 @@ class Ref final {
 
   T& Leak() noexcept { return fClass; }
 
-  T& TryLeak() const noexcept { return fClass; }
+  T& TryLeak() noexcept { return fClass; }
 
   T operator*() { return fClass; }
 

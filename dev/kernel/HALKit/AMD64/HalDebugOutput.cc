@@ -57,7 +57,9 @@ namespace Detail {
 
 TerminalDevice::~TerminalDevice() = default;
 
+#ifdef __DEBUG__
 STATIC SizeT kX = kFontSizeX, kY = kFontSizeY;
+#endif  // __DEBUG__
 
 EXTERN_C void ke_utf_io_write(DeviceInterface<const Utf8Char*>* obj, const Utf8Char* bytes) {
   NE_UNUSED(bytes);

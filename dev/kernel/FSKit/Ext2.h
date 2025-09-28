@@ -15,8 +15,6 @@
 /// @file Ext2.h
 /// @brief EXT2 filesystem structures, constants, and base wrappers.
 
-namespace Ext2 {
-
 /// EXT2 Constants
 #define kExt2FSMagic (0xEF53)
 #define kExt2FSMaxFileNameLen (255U)
@@ -39,6 +37,17 @@ enum {
   kExt2FileTypeSocket       = 6,
   kExt2FileTypeSymbolicLink = 7
 };
+
+typedef struct EXT2_GROUP_DESCRIPTOR final {
+  UInt32 fBlockBitmap;
+  UInt32 fInodeBitmap;
+  UInt32 fInodeTable;
+  UInt16 fFreeBlocksCount;
+  UInt16 fFreeInodesCount;
+  UInt16 fBgUsedDirsCount;
+  UInt16 fBgPad;
+  UInt32 fBgReserved[3];
+} EXT2_GROUP_DESCRIPTOR;
 
 struct PACKED EXT2_SUPER_BLOCK final {
   Kernel::UInt32 fInodeCount;
@@ -137,7 +146,3 @@ struct Ext2Node {
   EXT2_INODE     inode;
   Kernel::UInt32 cursor{0};
 };
-
-class Ext2FileSystemMgr;
-
-}  // namespace Ext2

@@ -38,6 +38,8 @@ class ErrorOr final {
     return *this;
   }
 
+  const T& Value() { return mRef.TryLeak(); }
+
   Ref<T>& Leak() { return mRef; }
 
   Int32 Error() { return mId; }

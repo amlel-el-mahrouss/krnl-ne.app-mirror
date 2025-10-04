@@ -8,8 +8,8 @@
 
 #include <NeKit/Macros.h>
 
-#define NEWKIT_VERSION_STR "0.0.1"
-#define NEWKIT_VERSION_BCD 0x0001
+#define NEKIT_VERSION_STR "0.0.1"
+#define NEKIT_VERSION_BCD 0x0001
 
 #ifndef __cplusplus
 #error Kernel compiles with a C++ compiler.

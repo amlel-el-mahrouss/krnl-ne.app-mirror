@@ -86,7 +86,7 @@ class USER_PROCESS final {
   /***********************************************************************************/
   //! @brief boolean operator, check status.
   /***********************************************************************************/
-  operator bool();
+  explicit operator bool();
 
   /***********************************************************************************/
   ///! @brief Crashes the app, exits with code ~0.
@@ -192,7 +192,7 @@ class UserProcessScheduler final : public ISchedulable {
   NE_MOVE_DELETE(UserProcessScheduler)
 
  public:
-       operator bool();
+       explicit operator bool();
   bool operator!();
 
  public:

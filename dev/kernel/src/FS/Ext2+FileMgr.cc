@@ -17,14 +17,14 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-constexpr UInt32 EXT2_DIRECT_BLOCKS          = 12;
-constexpr UInt32 EXT2_SINGLE_INDIRECT_INDEX  = 12;
-constexpr UInt32 EXT2_DOUBLE_INDIRECT_INDEX  = 13;
-constexpr UInt32 EXT2_TRIPLE_INDIRECT_INDEX  = 14;
-constexpr UInt32 EXT2_ROOT_INODE             = 2;
-constexpr UInt32 EXT2_SUPERBLOCK_BLOCK       = 1;
-constexpr UInt32 EXT2_GROUP_DESC_BLOCK_SMALL = 2;
-constexpr UInt32 EXT2_GROUP_DESC_BLOCK_LARGE = 1;
+constexpr static UInt32 EXT2_DIRECT_BLOCKS          = 12;
+constexpr static UInt32 EXT2_SINGLE_INDIRECT_INDEX  = 12;
+constexpr static UInt32 EXT2_DOUBLE_INDIRECT_INDEX  = 13;
+constexpr ATTRIBUTE(unused) static UInt32 EXT2_TRIPLE_INDIRECT_INDEX  = 14;
+constexpr static UInt32 EXT2_ROOT_INODE             = 2;
+constexpr ATTRIBUTE(unused) static UInt32 EXT2_SUPERBLOCK_BLOCK       = 1;
+constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_SMALL = 2;
+constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_LARGE = 1;
 
 static inline SizeT ext2_min(SizeT a, SizeT b) {
   return a < b ? a : b;

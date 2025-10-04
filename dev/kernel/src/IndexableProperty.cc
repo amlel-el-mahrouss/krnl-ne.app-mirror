@@ -22,7 +22,7 @@ namespace Indexer {
 
   Void IndexableProperty::AddFlag(Int16 flag) { fFlags |= flag; }
 
-  Void IndexableProperty::RemoveFlag(Int16 flag) { fFlags &= flag; }
+  Void IndexableProperty::RemoveFlag(Int16 flag) { fFlags &= ~(flag); }
 
   Int16 IndexableProperty::HasFlag(Int16 flag) { return fFlags & flag; }
 
@@ -33,6 +33,7 @@ namespace Indexer {
   /// @return none, check before if indexer can be claimed (using indexer.HasFlag(kIndexerClaimed)).
   Void fs_index_file(const Char* filename, SizeT filenameLen, IndexableProperty& indexer) {
     if (!indexer.HasFlag(kIndexerClaimed)) {
+      indexer.RemoveFlag(kIndexerUnclaimed);
       indexer.AddFlag(kIndexerClaimed);
       rt_copy_memory_safe(reinterpret_cast<VoidPtr>(const_cast<Char*>(filename)),
                           (VoidPtr) indexer.Leak().Path, filenameLen, kIndexerCatalogNameLength);

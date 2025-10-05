@@ -2,7 +2,7 @@
 -Idev/
 -Idev/user
 -Idev/boot
--Idev/system_sdk
+-Idev/launch
 -Idev/misc
 -Idev/ddk
 -Ipublic/tools

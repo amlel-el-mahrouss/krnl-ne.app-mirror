@@ -11,7 +11,7 @@
 extern "C" SInt32 nelaunch_startup_fn(Void) {
   /// @todo Start LaunchServices.fwrk services, make the launcher manageable too (via mgmt.launch)
 
-  NELAUNCH_INFO("Starting NeKernel services...");
+  NELAUNCH_INFO("Registering NeKernel Launcher...");
 
   return kErrorSuccess;
 }

@@ -15,6 +15,6 @@
 #define NELAUNCH_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)
 
 namespace Launch {
-using LaunchHandle = VoidPtr;
-using KernelStatus = SInt32;
+using LaunchAny = VoidPtr;
+using LaunchStatus = SInt32;
 }  // namespace Launch

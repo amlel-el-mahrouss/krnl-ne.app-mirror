@@ -32,6 +32,14 @@
 #define kHeFSINDStartOffset (sizeof(HEFS_BOOT_NODE))
 #define kHeFSINStartOffset (sizeof(HEFS_INDEX_NODE_DIRECTORY))
 
+#define kHeFSRootDirectory "/"
+#define kHeFSRootDirectoryU8 u8"/"
+
+#define kHeFSSeparator '/'
+#define kHeFSUpDir ".."
+
+#define kHeFSRootDirectoryLen (2U)
+
 #define kHeFSSearchAllStr u8"*"
 
 struct HEFS_BOOT_NODE;

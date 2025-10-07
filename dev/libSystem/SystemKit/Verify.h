@@ -37,4 +37,4 @@ inline constexpr R* sys_constexpr_cast(T* ptr) {
   static_assert(must_cast_traits<T, R>::value, "constexpr cast failed! types are mismatching!");
   return static_cast<R*>(ptr);
 }
-}  // namespace LibSystem::Detail
+}  // namespace LibSystem::Verify

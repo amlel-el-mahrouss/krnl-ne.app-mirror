@@ -298,7 +298,7 @@ class FileStream final {
 
     if (man) {
       man->Write(offset, fFile, data, len);
-      return ErrorOr<Int64>(0);
+      return ErrorOr<Int64>(kErrorSuccess);
     }
 
     return ErrorOr<Int64>(kErrorInvalidData);
@@ -317,7 +317,7 @@ class FileStream final {
 
     if (man) {
       man->Write(name, fFile, data, 0, len);
-      return ErrorOr<Int64>(0);
+      return ErrorOr<Int64>(kErrorSuccess);
     }
 
     return ErrorOr<Int64>(kErrorInvalidData);

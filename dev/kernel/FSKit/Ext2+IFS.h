@@ -146,7 +146,7 @@ inline Kernel::ErrorOr<Ext2Node*> ext2_load_inode(Ext2Context* ctx, Kernel::UInt
  */
 class Ext2FileSystemParser final {
  private:
-  Ext2Context ctx;  // Internal EXT2 context
+  Ext2Context fCtx;  // Internal EXT2 context
 
  public:
   /*

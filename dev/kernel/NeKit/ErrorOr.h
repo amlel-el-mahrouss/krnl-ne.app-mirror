@@ -50,7 +50,7 @@ class ErrorOr final {
 
  private:
   Ref<T> mRef;
-  ErrorT  mId{0};
+  ErrorT mId{0};
 };
 
 using ErrorOrAny = ErrorOr<voidPtr>;

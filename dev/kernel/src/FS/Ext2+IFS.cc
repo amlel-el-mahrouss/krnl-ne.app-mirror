@@ -17,14 +17,14 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-constexpr static UInt32 EXT2_DIRECT_BLOCKS          = 12;
-constexpr static UInt32 EXT2_SINGLE_INDIRECT_INDEX  = 12;
-constexpr static UInt32 EXT2_DOUBLE_INDIRECT_INDEX  = 13;
-constexpr ATTRIBUTE(unused) static UInt32 EXT2_TRIPLE_INDIRECT_INDEX  = 14;
-constexpr static UInt32 EXT2_ROOT_INODE             = 2;
-constexpr ATTRIBUTE(unused) static UInt32 EXT2_SUPERBLOCK_BLOCK       = 1;
-constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_SMALL = 2;
-constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_LARGE = 1;
+constexpr static UInt32 EXT2_DIRECT_BLOCKS                           = 12;
+constexpr static UInt32 EXT2_SINGLE_INDIRECT_INDEX                   = 12;
+constexpr static UInt32 EXT2_DOUBLE_INDIRECT_INDEX                   = 13;
+constexpr ATTRIBUTE(unused) static UInt32 EXT2_TRIPLE_INDIRECT_INDEX = 14;
+constexpr static UInt32 EXT2_ROOT_INODE                              = 2;
+constexpr ATTRIBUTE(unused) static UInt32 EXT2_SUPERBLOCK_BLOCK      = 1;
+constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_SMALL                  = 2;
+constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_LARGE                  = 1;
 
 static inline SizeT ext2_min(SizeT a, SizeT b) {
   return a < b ? a : b;
@@ -38,8 +38,7 @@ struct Ext2GroupInfo {
 };
 
 // Convert EXT2 block number -> LBA (sector index) for Drive I/O.
-static inline UInt32 ext2_block_to_lba(Ext2Context* ctx,
-                                               UInt32       blockNumber) {
+static inline UInt32 ext2_block_to_lba(Ext2Context* ctx, UInt32 blockNumber) {
   if (!ctx || !ctx->drive) return 0;
   UInt32 blockSize       = ctx->BlockSize();
   UInt32 sectorSize      = ctx->drive->fSectorSz;
@@ -48,13 +47,11 @@ static inline UInt32 ext2_block_to_lba(Ext2Context* ctx,
 }
 
 // Read a block and return a pointer to its content
-static ErrorOr<UInt32*> ext2_read_block_ptr(Ext2Context* ctx,
-                                                    UInt32       blockNumber) {
-  if (!ctx || !ctx->drive || !ctx->superblock)
-    return ErrorOr<UInt32*>(kErrorInvalidData);
+static ErrorOr<UInt32*> ext2_read_block_ptr(Ext2Context* ctx, UInt32 blockNumber) {
+  if (!ctx || !ctx->drive || !ctx->superblock) return ErrorOr<UInt32*>(kErrorInvalidData);
 
   UInt32 blockSize = ctx->BlockSize();
-  auto           buf       = (UInt32*) mm_alloc_ptr(blockSize, true, false);
+  auto   buf       = (UInt32*) mm_alloc_ptr(blockSize, true, false);
   if (!buf) return ErrorOr<UInt32*>(kErrorHeapOutOfMemory);
 
   UInt32 lba = ext2_block_to_lba(ctx, blockNumber);
@@ -67,7 +64,7 @@ static ErrorOr<UInt32*> ext2_read_block_ptr(Ext2Context* ctx,
 
 // Get the block address for a given logical block index
 static ErrorOr<UInt32> ext2_get_block_address(Ext2Context* ctx, Ext2Node* node,
-                                                      UInt32 logicalIndex) {
+                                              UInt32 logicalIndex) {
   if (!ctx || !node || !ctx->drive) return ErrorOr<UInt32>(kErrorInvalidData);
 
   UInt32 blockSize        = ctx->BlockSize();
@@ -132,8 +129,7 @@ static ErrorOr<UInt32> ext2_get_block_address(Ext2Context* ctx, Ext2Node* node,
   return ErrorOr<UInt32>(kErrorUnimplemented);
 }
 
-static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node,
-                                                     SizeT size) {
+static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node, SizeT size) {
   if (!ctx || !ctx->drive || !node || size == 0) return ErrorOr<voidPtr>(1);
 
   auto  blockSize   = ctx->BlockSize();
@@ -190,7 +186,7 @@ static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node,
 
 // Get group descriptor information for a given block/inode number
 static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
-                                                              UInt32 targetBlockOrInode) {
+                                                              UInt32       targetBlockOrInode) {
   if (!ctx || !ctx->superblock || !ctx->drive) return ErrorOr<Ext2GroupInfo*>(kErrorInvalidData);
 
   UInt32 blockSize      = ctx->BlockSize();
@@ -260,8 +256,7 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
 }
 
 // Allocate a new block
-inline ErrorOr<UInt32> ext2_alloc_block(Ext2Context*   ctx,
-                                        EXT2_GROUP_DESCRIPTOR* groupDesc) {
+inline ErrorOr<UInt32> ext2_alloc_block(Ext2Context* ctx, EXT2_GROUP_DESCRIPTOR* groupDesc) {
   if (!ctx || !ctx->superblock || !groupDesc) return ErrorOr<UInt32>(kErrorInvalidData);
 
   UInt32 blockSize = ctx->BlockSize();
@@ -308,10 +303,8 @@ inline ErrorOr<UInt32> ext2_alloc_block(Ext2Context*   ctx,
 }
 
 // Indirect blocks
-static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx,
-                                                             Ext2Node*            node,
-                                                             UInt32       logicalBlockIndex,
-                                                             UInt32 physicalBlockNumber) {
+static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
+                                             UInt32 logicalBlockIndex, UInt32 physicalBlockNumber) {
   using namespace Kernel;
 
   if (!ctx || !ctx->drive || !node) return ErrorOr<Void*>(kErrorInvalidData);
@@ -518,15 +511,14 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx,
 // Find a directory entry by name within a directory inode
 static ErrorOr<EXT2_DIR_ENTRY*> ext2_find_dir_entry(Ext2Context* ctx, Ext2Node* dirNode,
                                                     const char* name) {
-  if (!ctx || !ctx->drive || !dirNode || !name)
-    return ErrorOr<EXT2_DIR_ENTRY*>(kErrorInvalidData);
+  if (!ctx || !ctx->drive || !dirNode || !name) return ErrorOr<EXT2_DIR_ENTRY*>(kErrorInvalidData);
 
   // Check directory type
   auto type = (dirNode->inode.fMode >> 12) & 0xF;
   if (type != kExt2FileTypeDirectory) return ErrorOr<EXT2_DIR_ENTRY*>(kErrorInvalidData);
 
   UInt32 blockSize = ctx->BlockSize();
-  auto           blockBuf  = mm_alloc_ptr(blockSize, true, false);
+  auto   blockBuf  = mm_alloc_ptr(blockSize, true, false);
   if (!blockBuf) return ErrorOr<EXT2_DIR_ENTRY*>(kErrorHeapOutOfMemory);
 
   SizeT nameLen = rt_string_len(name);
@@ -578,8 +570,7 @@ static inline UInt16 ext2_dir_entry_ideal_len(UInt8 nameLen) {
 }
 
 static ErrorOr<Void*> ext2_add_dir_entry(Ext2Context* ctx, Ext2Node* parentDirNode,
-                                                 const char* name, UInt32 inodeNumber,
-                                                 UInt8 fileType) {
+                                         const char* name, UInt32 inodeNumber, UInt8 fileType) {
   using namespace Kernel;
 
   if (!ctx || !ctx->drive || !parentDirNode || !name) return ErrorOr<Void*>(kErrorInvalidData);
@@ -763,8 +754,7 @@ static ErrorOr<Void*> ext2_add_dir_entry(Ext2Context* ctx, Ext2Node* parentDirNo
 }
 
 // Soon
-static ErrorOr<UInt32> ext2_alloc_inode(Ext2Context*   ctx,
-                                        EXT2_GROUP_DESCRIPTOR* groupDesc) {
+static ErrorOr<UInt32> ext2_alloc_inode(Ext2Context* ctx, EXT2_GROUP_DESCRIPTOR* groupDesc) {
   if (!ctx || !ctx->superblock || !groupDesc) return ErrorOr<UInt32>(kErrorInvalidData);
 
   UInt32 blockSize = ctx->BlockSize();
@@ -902,8 +892,8 @@ struct PathComponents {
       return;
     }
 
-    UInt32   compCount = 0;
-    Char* p         = buffer;
+    UInt32 compCount = 0;
+    Char*  p         = buffer;
 
     while (*p != '\0') {
       // skip slashes
@@ -952,16 +942,19 @@ struct PathComponents {
 }  // anonymous namespace
 
 // The Ext2FileSystemParser (not manager!)
-Ext2FileSystemParser::Ext2FileSystemParser(DriveTrait* drive) : ctx(drive) {}
+Ext2FileSystemParser::Ext2FileSystemParser(DriveTrait* drive) : fCtx(drive) {
+  MUST_PASS(fCtx);
+}
+
 NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) {
   NE_UNUSED(restrict_type);
-  if (!path || *path == '\0' || !this->ctx.drive) {
+  if (!path || *path == '\0' || !this->fCtx.drive) {
     return nullptr;
   }
 
   // Root ("/")
   if (rt_string_len(path) == 1 && rt_string_cmp(path, "/", 1) == 0) {
-    auto inodeResult = ext2_load_inode(&this->ctx, EXT2_ROOT_INODE);
+    auto inodeResult = ext2_load_inode(&this->fCtx, EXT2_ROOT_INODE);
     if (!inodeResult) {
       return nullptr;
     }
@@ -982,8 +975,8 @@ NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) 
   UInt32    currentInodeNumber = EXT2_ROOT_INODE;
   Ext2Node* currentDirNode     = nullptr;
 
-  for (UInt32 i = 0; i < (UInt32)pathComponents.count; ++i) {
-    auto inodeResult = ext2_load_inode(&this->ctx, currentInodeNumber);
+  for (UInt32 i = 0; i < (UInt32) pathComponents.count; ++i) {
+    auto inodeResult = ext2_load_inode(&this->fCtx, currentInodeNumber);
     if (!inodeResult) {
       if (currentDirNode) mm_free_ptr(currentDirNode);
       return nullptr;
@@ -1011,7 +1004,7 @@ NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) 
     }
 
     auto dirEntryResult =
-        ext2_find_dir_entry(&this->ctx, currentDirNode, pathComponents.components[i]);
+        ext2_find_dir_entry(&this->fCtx, currentDirNode, pathComponents.components[i]);
     if (!dirEntryResult) {
       mm_free_ptr(currentDirNode);
       return nullptr;
@@ -1022,7 +1015,7 @@ NodePtr Ext2FileSystemParser::Open(const char* path, const char* restrict_type) 
     mm_free_ptr(entryPtr);
   }
 
-  auto finalInodeResult = ext2_load_inode(&this->ctx, currentInodeNumber);
+  auto finalInodeResult = ext2_load_inode(&this->fCtx, currentInodeNumber);
   if (!finalInodeResult) {
     if (currentDirNode) mm_free_ptr(currentDirNode);
     return nullptr;
@@ -1048,7 +1041,7 @@ void* Ext2FileSystemParser::Read(NodePtr node, Int32 flags, SizeT size) {
   NE_UNUSED(flags);
 
   auto extNode    = reinterpret_cast<Ext2Node*>(node);
-  auto dataResult = ext2_read_inode_data(&this->ctx, extNode, size);
+  auto dataResult = ext2_read_inode_data(&this->fCtx, extNode, size);
 
   if (!dataResult) {
     return nullptr;  // error, nothing to return
@@ -1068,7 +1061,7 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
   NE_UNUSED(flags);
 
   auto  extNode      = reinterpret_cast<Ext2Node*>(node);
-  auto  blockSize    = this->ctx.BlockSize();
+  auto  blockSize    = this->fCtx.BlockSize();
   SizeT bytesWritten = 0;
 
   UInt32 currentOffset = extNode->cursor;
@@ -1078,19 +1071,19 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
     UInt32 logicalBlockIndex = currentOffset / blockSize;
     UInt32 offsetInBlock     = currentOffset % blockSize;
 
-    auto   physBlockResult = ext2_get_block_address(&this->ctx, extNode, logicalBlockIndex);
+    auto   physBlockResult = ext2_get_block_address(&this->fCtx, extNode, logicalBlockIndex);
     UInt32 physicalBlock   = 0;
 
     if (!physBlockResult) {
       auto err = physBlockResult.Error();
       if (err == kErrorInvalidData || err == kErrorUnimplemented) {
-        auto groupInfoResult = ext2_get_group_descriptor_info(&this->ctx, extNode->inodeNumber);
+        auto groupInfoResult = ext2_get_group_descriptor_info(&this->fCtx, extNode->inodeNumber);
         if (!groupInfoResult) {
           return;
         }
 
         auto groupInfo   = *groupInfoResult.Leak();
-        auto allocResult = ext2_alloc_block(&this->ctx, groupInfo->groupDesc);
+        auto allocResult = ext2_alloc_block(&this->fCtx, groupInfo->groupDesc);
         if (!allocResult) {
           mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
           mm_free_ptr(groupInfo);
@@ -1099,15 +1092,16 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
 
         physicalBlock = *allocResult.Leak();
 
-        auto setRes = ext2_set_block_address(&this->ctx, extNode, logicalBlockIndex, physicalBlock);
+        auto setRes =
+            ext2_set_block_address(&this->fCtx, extNode, logicalBlockIndex, physicalBlock);
         if (!setRes) {
           mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
           mm_free_ptr(groupInfo);
           return;
         }
 
-        UInt32 gdtLba = ext2_block_to_lba(&this->ctx, groupInfo->groupDescriptorBlock);
-        if (!ext2_write_block(this->ctx.drive, gdtLba, groupInfo->blockBuffer, blockSize)) {
+        UInt32 gdtLba = ext2_block_to_lba(&this->fCtx, groupInfo->groupDescriptorBlock);
+        if (!ext2_write_block(this->fCtx.drive, gdtLba, groupInfo->blockBuffer, blockSize)) {
           mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
           mm_free_ptr(groupInfo);
           return;
@@ -1122,13 +1116,13 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
       physicalBlock = physBlockResult.Value();
     }
 
-    UInt32 physicalLba = ext2_block_to_lba(&this->ctx, physicalBlock);
+    UInt32 physicalLba = ext2_block_to_lba(&this->fCtx, physicalBlock);
 
     auto blockBuf = mm_alloc_ptr(blockSize, true, false);
     if (!blockBuf) return;
 
     if (offsetInBlock > 0 || (size - bytesWritten) < blockSize) {
-      if (!ext2_read_block(this->ctx.drive, physicalLba, blockBuf, blockSize)) {
+      if (!ext2_read_block(this->fCtx.drive, physicalLba, blockBuf, blockSize)) {
         mm_free_ptr(blockBuf);
         return;
       }
@@ -1141,7 +1135,7 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
     rt_copy_memory_safe(src, static_cast<void*>((UInt8*) blockBuf + offsetInBlock),
                         bytesInCurrentBlock, blockSize - offsetInBlock);
 
-    if (!ext2_write_block(this->ctx.drive, physicalLba, blockBuf, blockSize)) {
+    if (!ext2_write_block(this->fCtx.drive, physicalLba, blockBuf, blockSize)) {
       mm_free_ptr(blockBuf);
       return;
     }
@@ -1160,7 +1154,7 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
   extNode->inode.fBlocks     = (extNode->inode.fSize + blockSize - 1) / blockSize;
   extNode->inode.fModifyTime = 0;
 
-  auto writeInodeRes = ext2_write_inode(&this->ctx, extNode);
+  auto writeInodeRes = ext2_write_inode(&this->fCtx, extNode);
   if (!writeInodeRes) {
     // Failed to persist inode
   }
@@ -1226,7 +1220,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   NodePtr parentDirNodePtr = nullptr;
   if (currentPathLen == 0) {
     // root
-    auto inodeRes = ext2_load_inode(&this->ctx, EXT2_ROOT_INODE);
+    auto inodeRes = ext2_load_inode(&this->fCtx, EXT2_ROOT_INODE);
     if (!inodeRes) return nullptr;
     parentDirNodePtr = mm_alloc_ptr(sizeof(Ext2Node), true, false);
     if (!parentDirNodePtr) return nullptr;
@@ -1248,7 +1242,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   }
 
   // Get group info for allocation
-  auto groupInfoResult = ext2_get_group_descriptor_info(&this->ctx, parentDirNode->inodeNumber);
+  auto groupInfoResult = ext2_get_group_descriptor_info(&this->fCtx, parentDirNode->inodeNumber);
   if (!groupInfoResult) {
     mm_free_ptr(parentDirNode);
     return nullptr;
@@ -1256,7 +1250,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   auto groupInfo = *groupInfoResult.Leak();
 
   // Allocate new inode
-  auto newInodeRes = ext2_alloc_inode(&this->ctx, groupInfo->groupDesc);
+  auto newInodeRes = ext2_alloc_inode(&this->fCtx, groupInfo->groupDesc);
   if (!newInodeRes) {
     mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
     mm_free_ptr(groupInfo);  // so this works
@@ -1265,8 +1259,8 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   }
   UInt32 newInodeNumber = newInodeRes.Value();
 
-  UInt32 gdtLba = ext2_block_to_lba(&this->ctx, groupInfo->groupDescriptorBlock);
-  if (!ext2_write_block(this->ctx.drive, gdtLba, groupInfo->blockBuffer, this->ctx.BlockSize())) {
+  UInt32 gdtLba = ext2_block_to_lba(&this->fCtx, groupInfo->groupDescriptorBlock);
+  if (!ext2_write_block(this->fCtx.drive, gdtLba, groupInfo->blockBuffer, this->fCtx.BlockSize())) {
     mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
     mm_free_ptr(groupInfo);
     mm_free_ptr(parentDirNode);
@@ -1296,7 +1290,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   newFileNode->inode.fModifyTime = 0;
 
   // Persist new inode
-  auto writeInodeRes = ext2_write_inode(&this->ctx, newFileNode);
+  auto writeInodeRes = ext2_write_inode(&this->fCtx, newFileNode);
   if (!writeInodeRes) {
     mm_free_ptr(parentDirNode);
     mm_free_ptr(newFileNode);
@@ -1304,8 +1298,8 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   }
 
   // Add directory entry
-  auto addRes =
-      ext2_add_dir_entry(&this->ctx, parentDirNode, filename, newInodeNumber, kExt2FileTypeRegular);
+  auto addRes = ext2_add_dir_entry(&this->fCtx, parentDirNode, filename, newInodeNumber,
+                                   kExt2FileTypeRegular);
   if (!addRes) {
     mm_free_ptr(parentDirNode);
     mm_free_ptr(newFileNode);
@@ -1313,7 +1307,7 @@ NodePtr Ext2FileSystemParser::Create(const char* path) {
   }
 
   // Update parent inode
-  auto parentWriteRes = ext2_write_inode(&this->ctx, parentDirNode);
+  auto parentWriteRes = ext2_write_inode(&this->fCtx, parentDirNode);
   // ignore failure
 
   NE_UNUSED(parentWriteRes);
@@ -1360,7 +1354,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   // Open parent directory node
   NodePtr parentDirNodePtr = nullptr;
   if (currentPathLen == 0) {
-    auto inodeRes = ext2_load_inode(&this->ctx, EXT2_ROOT_INODE);
+    auto inodeRes = ext2_load_inode(&this->fCtx, EXT2_ROOT_INODE);
     if (!inodeRes) {
       return nullptr;
     }
@@ -1390,7 +1384,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   }
 
   // Allocate inode
-  auto groupInfoResult = ext2_get_group_descriptor_info(&this->ctx, parentDirNode->inodeNumber);
+  auto groupInfoResult = ext2_get_group_descriptor_info(&this->fCtx, parentDirNode->inodeNumber);
   if (!groupInfoResult) {
     kout << "EXT2: Failed to get group descriptor info for new dir inode.\n";
     mm_free_ptr(parentDirNode);
@@ -1398,7 +1392,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   }
 
   auto groupInfo   = *groupInfoResult.Leak();
-  auto newInodeRes = ext2_alloc_inode(&this->ctx, groupInfo->groupDesc);
+  auto newInodeRes = ext2_alloc_inode(&this->fCtx, groupInfo->groupDesc);
   if (!newInodeRes) {
     kout << "EXT2: Failed to allocate inode for new directory.\n";
     mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
@@ -1410,8 +1404,8 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   UInt32 newInodeNumber = *newInodeRes.Leak();
 
   // Write back group descriptor block
-  UInt32 gdtLba = ext2_block_to_lba(&this->ctx, groupInfo->groupDescriptorBlock);
-  if (!ext2_write_block(this->ctx.drive, gdtLba, groupInfo->blockBuffer, this->ctx.BlockSize())) {
+  UInt32 gdtLba = ext2_block_to_lba(&this->fCtx, groupInfo->groupDescriptorBlock);
+  if (!ext2_write_block(this->fCtx.drive, gdtLba, groupInfo->blockBuffer, this->fCtx.BlockSize())) {
     kout << "EXT2: Failed to write group descriptor after inode allocation.\n";
     mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
     mm_free_ptr(groupInfo);
@@ -1436,13 +1430,13 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   newDirNode->inode.fUID        = 0;
   newDirNode->inode.fGID        = 0;
   newDirNode->inode.fLinksCount = 2;  // . and ..
-  newDirNode->inode.fSize       = this->ctx.BlockSize();
+  newDirNode->inode.fSize       = this->fCtx.BlockSize();
   newDirNode->inode.fBlocks     = 1;
   newDirNode->inode.fCreateTime = 0;
   newDirNode->inode.fModifyTime = 0;
 
   // Allocate a data block for the new directory
-  auto groupForBlockRes = ext2_get_group_descriptor_info(&this->ctx, newDirNode->inodeNumber);
+  auto groupForBlockRes = ext2_get_group_descriptor_info(&this->fCtx, newDirNode->inodeNumber);
   if (!groupForBlockRes) {
     kout << "EXT2: Failed to get group info for directory block allocation.\n";
     mm_free_ptr(parentDirNode);
@@ -1451,7 +1445,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   }
 
   auto groupForBlock = *groupForBlockRes.Leak();
-  auto newBlockRes   = ext2_alloc_block(&this->ctx, groupForBlock->groupDesc);
+  auto newBlockRes   = ext2_alloc_block(&this->fCtx, groupForBlock->groupDesc);
   if (!newBlockRes) {
     kout << "EXT2: Failed to allocate block for new directory contents.\n";
     mm_free_ptr(reinterpret_cast<void*>(groupForBlock->blockBuffer));
@@ -1464,9 +1458,9 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   UInt32 newDirBlockNum = *newBlockRes.Leak();
 
   // Write back GDT
-  UInt32 gdtLba2 = ext2_block_to_lba(&this->ctx, groupForBlock->groupDescriptorBlock);
-  if (!ext2_write_block(this->ctx.drive, gdtLba2, groupForBlock->blockBuffer,
-                        this->ctx.BlockSize())) {
+  UInt32 gdtLba2 = ext2_block_to_lba(&this->fCtx, groupForBlock->groupDescriptorBlock);
+  if (!ext2_write_block(this->fCtx.drive, gdtLba2, groupForBlock->blockBuffer,
+                        this->fCtx.BlockSize())) {
     kout << "EXT2: Failed to write GDT after directory block allocation.\n";
     mm_free_ptr(reinterpret_cast<void*>(groupForBlock->blockBuffer));
     mm_free_ptr(groupForBlock);
@@ -1479,7 +1473,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   mm_free_ptr(groupForBlock);
 
   // Set the block in newDirNode
-  auto setBlkRes = ext2_set_block_address(&this->ctx, newDirNode, 0, newDirBlockNum);
+  auto setBlkRes = ext2_set_block_address(&this->fCtx, newDirNode, 0, newDirBlockNum);
   if (!setBlkRes) {
     kout << "EXT2: Failed to set data block for new directory.\n";
     mm_free_ptr(parentDirNode);
@@ -1488,7 +1482,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   }
 
   // Prepare block with '.' and '..'
-  auto dirBlockBuf = mm_alloc_ptr(this->ctx.BlockSize(), true, false);
+  auto dirBlockBuf = mm_alloc_ptr(this->fCtx.BlockSize(), true, false);
   if (!dirBlockBuf) {
     kout << "EXT2: Out of memory preparing directory block.\n";
     mm_free_ptr(parentDirNode);
@@ -1496,7 +1490,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
     return nullptr;
   }
 
-  rt_zero_memory(dirBlockBuf, this->ctx.BlockSize());
+  rt_zero_memory(dirBlockBuf, this->fCtx.BlockSize());
 
   // '.' entry
   auto dot           = reinterpret_cast<EXT2_DIR_ENTRY*>(dirBlockBuf);
@@ -1511,13 +1505,13 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   dotdot->fInode = parentDirNode->inodeNumber;
   dotdot->fNameLength   = 2;
   dotdot->fFileType     = kExt2FileTypeDirectory;
-  dotdot->fRecordLength = static_cast<UInt16>(this->ctx.BlockSize() - dot->fRecordLength);
+  dotdot->fRecordLength = static_cast<UInt16>(this->fCtx.BlockSize() - dot->fRecordLength);
   dotdot->fName[0]      = '.';
   dotdot->fName[1]      = '.';
 
   // Write dir block to disk
-  UInt32 newDirBlockLba = ext2_block_to_lba(&this->ctx, newDirBlockNum);
-  if (!ext2_write_block(this->ctx.drive, newDirBlockLba, dirBlockBuf, this->ctx.BlockSize())) {
+  UInt32 newDirBlockLba = ext2_block_to_lba(&this->fCtx, newDirBlockNum);
+  if (!ext2_write_block(this->fCtx.drive, newDirBlockLba, dirBlockBuf, this->fCtx.BlockSize())) {
     kout << "EXT2: Failed to write directory block to disk.\n";
     mm_free_ptr(dirBlockBuf);
     mm_free_ptr(parentDirNode);
@@ -1528,7 +1522,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   mm_free_ptr(dirBlockBuf);
 
   // Persist new directory inode
-  auto writeInodeRes = ext2_write_inode(&this->ctx, newDirNode);
+  auto writeInodeRes = ext2_write_inode(&this->fCtx, newDirNode);
   if (!writeInodeRes) {
     kout << "EXT2: Failed to write new directory inode to disk.\n";
     mm_free_ptr(parentDirNode);
@@ -1537,7 +1531,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
   }
 
   // Add directory entry into parent
-  auto addRes = ext2_add_dir_entry(&this->ctx, parentDirNode, dirname, newInodeNumber,
+  auto addRes = ext2_add_dir_entry(&this->fCtx, parentDirNode, dirname, newInodeNumber,
                                    kExt2FileTypeDirectory);
   if (!addRes) {
     kout << "EXT2: Failed to add directory entry for '" << dirname << "' to parent.\n";
@@ -1548,7 +1542,7 @@ NodePtr Ext2FileSystemParser::CreateDirectory(const char* path) {
 
   // Increment parent link count and persist parent inode
   parentDirNode->inode.fLinksCount += 1;
-  auto parentWriteRes = ext2_write_inode(&this->ctx, parentDirNode);
+  auto parentWriteRes = ext2_write_inode(&this->fCtx, parentDirNode);
   if (!parentWriteRes) {
     kout << "EXT2: Warning: failed to update parent inode after directory creation.\n";
   }

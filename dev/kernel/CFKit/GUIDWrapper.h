@@ -15,9 +15,7 @@
 #define kXRNNil "@{........-....-M...-N...-............}"
 
 /// @brief eXtended Resource Namespace
-namespace CF::XRN {
-using namespace Kernel;
-
+namespace Kernel::CF::XRN {
 union GUIDSequence {
   alignas(8) UShort fU8[16];
   alignas(8) UShort fU16[8];
@@ -48,4 +46,4 @@ class GUID final {
  private:
   GUIDSequence fUUID;
 };
-}  // namespace CF::XRN
+}  // namespace Kernel::CF::XRN

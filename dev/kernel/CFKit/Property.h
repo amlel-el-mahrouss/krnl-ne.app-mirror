@@ -15,9 +15,7 @@
 
 #define kMaxPropLen (256U)
 
-namespace CF {
-using namespace Kernel;
-
+namespace Kernel::CF {
 /// @brief handle to anything (number, ptr, string...)
 using PropertyId = UIntPtr;
 
@@ -44,10 +42,10 @@ class Property {
 
 template <SizeT N>
 using PropertyArray = Array<Property, N>;
-}  // namespace CF
+}  // namespace Kernel::CF
 
 namespace Kernel {
-using namespace CF;
+using namespace Kernel::CF;
 }
 
 #endif  // !CFKIT_PROPS_H

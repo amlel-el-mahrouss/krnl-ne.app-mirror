@@ -192,8 +192,8 @@ class UserProcessScheduler final : public ISchedulable {
   NE_MOVE_DELETE(UserProcessScheduler)
 
  public:
-       explicit operator bool();
-  bool operator!();
+  explicit operator bool();
+  bool     operator!();
 
  public:
   UserProcessTeam& TheCurrentTeam();

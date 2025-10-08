@@ -6,6 +6,7 @@
 
 #include <libSystem/SystemKit/Err.h>
 #include <libSystem/SystemKit/Verify.h>
+#include <libSystem/SystemKit/Syscall.h>
 
 using namespace LibSystem;
 

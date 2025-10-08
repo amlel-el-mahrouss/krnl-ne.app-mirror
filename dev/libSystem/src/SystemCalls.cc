@@ -11,13 +11,6 @@
 
 using namespace LibSystem;
 
-IMPORT_C Void _rtl_assert(Bool expr, const Char* origin) {
-  if (!expr) {
-    PrintOut(nullptr, "Assertion failed: %s\r", origin);
-    libsys_syscall_arg_1(SYSCALL_HASH("_rtl_debug_break"));
-  }
-}
-
 /// @note this uses the FNV 64-bit variant.
 IMPORT_C UInt64 libsys_hash_64(const Char* path) {
   if (!path || *path == 0) return 0;

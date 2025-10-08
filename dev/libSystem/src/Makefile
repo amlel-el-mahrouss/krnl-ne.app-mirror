@@ -1,5 +1,5 @@
 ##################################################
-# (c) Amlal El Mahrouss, all rights reserved.
+# (c) Amlal El Mahrouss and NeKernel contributors, all rights reserved.
 # This file is for libSystem.dll's syscall stubs.
 ##################################################
 
@@ -8,9 +8,9 @@ FLAGS=-f win64
 
 .PHONY: error
 error:
-	@echo "==> Invalid rule."
+	@echo "==> Invalid recipe."
 	@echo "==> Use libsys_asm_io_<arch> instead."
 
 .PHONY: libsys_asm_io_x64
 libsys_asm_io_x64:
-	$(ASM) $(FLAGS) SystemProc.asm -o SystemProc.stub.obj
+	$(ASM) $(FLAGS) SystemCallsABI+AMD64.asm -o SystemCallsABI+AMD64.stub.obj

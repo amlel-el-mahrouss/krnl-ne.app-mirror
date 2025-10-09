@@ -21,6 +21,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/KString.h>
 #include <NeKit/Utils.h>
+#include <KernelKit/KPC.h>
 #include <SignalKit/SignalGen.h>
 
 ///! BUGS: 0
@@ -462,15 +463,10 @@ UserProcessScheduler& UserProcessScheduler::The() {
 /***********************************************************************************/
 
 Void UserProcessScheduler::Remove(ProcessID process_id) {
-  if (process_id < 0 || process_id > kSchedProcessLimitPerTeam) {
-    return;
-  }
+  if (process_id < 0 || process_id > kSchedProcessLimitPerTeam) return;
+  if (this->mTeam.mProcessList[process_id].Status == ProcessStatusKind::kInvalid) return;
 
-  if (this->mTeam.mProcessList[process_id].Status == ProcessStatusKind::kInvalid) {
-    return;
-  }
-
-  mTeam.mProcessList[process_id].Exit(0);
+  mTeam.mProcessList[process_id].Exit(kErrorSuccess);
 }
 
 /// @brief Is it a user scheduler?

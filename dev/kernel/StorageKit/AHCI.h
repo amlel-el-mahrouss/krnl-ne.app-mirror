@@ -45,5 +45,5 @@ class AHCIDeviceInterface NE_DEVICE<MountpointInterface*> {
 };
 
 UInt16                       sk_init_ahci_device(BOOL atapi);
-ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(Int32 drv_index);
+ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(UInt32 drv_index);
 }  // namespace Kernel

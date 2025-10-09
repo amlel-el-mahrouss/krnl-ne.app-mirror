@@ -74,7 +74,7 @@ const UInt32& ATADeviceInterface::GetIndex() {
 }
 
 Void ATADeviceInterface::SetIndex(const UInt32& drv) {
-  MUST_PASS(MountpointInterface::kDriveIndexInvalid != drv);
+  MUST_PASS(MountpointInterface::kDriveIndexInvalid < drv);
   this->fDriveIndex = drv;
 }
 

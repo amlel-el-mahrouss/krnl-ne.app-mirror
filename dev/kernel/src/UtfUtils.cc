@@ -10,6 +10,8 @@
 
 namespace Kernel {
 Size urt_string_len(const Utf8Char* str) {
+  if (!str) return 0;
+
   SizeT len{0};
 
   while (str[len] != u8'\0') ++len;
@@ -18,6 +20,8 @@ Size urt_string_len(const Utf8Char* str) {
 }
 
 Void urt_set_memory(const voidPtr src, UInt32 dst, Size len) {
+  if (!src) return;
+
   Utf8Char* srcChr = reinterpret_cast<Utf8Char*>(src);
   Size      index  = 0;
 
@@ -28,6 +32,8 @@ Void urt_set_memory(const voidPtr src, UInt32 dst, Size len) {
 }
 
 Int32 urt_string_cmp(const Utf8Char* src, const Utf8Char* cmp, Size size) {
+  if (!src) return 0;
+
   Int32 counter = 0;
 
   for (Size index = 0; index < size; ++index) {
@@ -38,6 +44,9 @@ Int32 urt_string_cmp(const Utf8Char* src, const Utf8Char* cmp, Size size) {
 }
 
 Int32 urt_copy_memory(const VoidPtr src, VoidPtr dst, Size len) {
+  if (!src) return 0;
+  if (!dst) return 0;
+
   Utf8Char* srcChr  = reinterpret_cast<Utf8Char*>(src);
   Utf8Char* dstChar = reinterpret_cast<Utf8Char*>(dst);
 

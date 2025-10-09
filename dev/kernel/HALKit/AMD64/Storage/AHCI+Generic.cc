@@ -591,7 +591,7 @@ namespace Detail {
 /// @brief Acquires a new AHCI device with drv_index in mind.
 /// @param drv_index The drive index to assign.
 /// @return A wrapped device interface if successful, or error code.
-ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(Int32 drv_index) {
+ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(UInt32 drv_index) {
   if (!drv_std_detected_ahci()) return ErrorOr<AHCIDeviceInterface>(kErrorDisk);
 
   AHCIDeviceInterface device(Detail::sk_io_read_ahci, Detail::sk_io_write_ahci);

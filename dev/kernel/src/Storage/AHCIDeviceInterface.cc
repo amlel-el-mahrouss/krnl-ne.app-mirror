@@ -84,6 +84,6 @@ const UInt32& AHCIDeviceInterface::GetIndex() {
 }
 
 Void AHCIDeviceInterface::SetIndex(const UInt32& drv) {
-  MUST_PASS(MountpointInterface::kDriveIndexInvalid != drv);
+  MUST_PASS(MountpointInterface::kDriveIndexInvalid < drv);
   this->fDriveIndex = drv;
 }

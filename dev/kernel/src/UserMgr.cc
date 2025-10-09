@@ -22,7 +22,7 @@
 #define kStdUserType (0xEE)
 #define kSuperUserType (0xEF)
 
-/// @file User.cc
+/// @file UserMgr.cc
 /// @brief Multi-user support.
 
 namespace Kernel {
@@ -38,14 +38,14 @@ namespace Detail {
 
     kout << "user_fnv_generator: Hashing user password...\r";
 
-    const UInt64 FNV_OFFSET_BASIS = 0xcbf29ce484222325ULL;
-    const UInt64 FNV_PRIME        = 0x100000001b3ULL;
+    const UInt64 kFnvOffsetBasis = 0xcbf29ce484222325ULL;
+    const UInt64 fFnvPrime        = 0x100000001b3ULL;
 
-    UInt64 hash = FNV_OFFSET_BASIS;
+    UInt64 hash = kFnvOffsetBasis;
 
     while (*password) {
-      hash ^= (Utf8Char) (*password++);
-      hash *= FNV_PRIME;
+      hash ^= (Char) (*password++);
+      hash *= fFnvPrime;
     }
 
     kout << "user_fnv_generator: Hashed user password.\r";

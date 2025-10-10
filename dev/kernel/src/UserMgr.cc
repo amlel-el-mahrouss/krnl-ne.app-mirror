@@ -39,7 +39,7 @@ namespace Detail {
     kout << "user_fnv_generator: Hashing user password...\r";
 
     const UInt64 kFnvOffsetBasis = 0xcbf29ce484222325ULL;
-    const UInt64 fFnvPrime        = 0x100000001b3ULL;
+    const UInt64 fFnvPrime       = 0x100000001b3ULL;
 
     UInt64 hash = kFnvOffsetBasis;
 

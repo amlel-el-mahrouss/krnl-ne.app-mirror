@@ -16,7 +16,7 @@
 
 /// @brief eXtended Resource Namespace
 namespace Kernel::CF::XRN {
-union GUIDSequence {
+union GUIDSequence final {
   alignas(8) UShort fU8[16];
   alignas(8) UShort fU16[8];
   alignas(8) UInt fU32[4];
@@ -36,8 +36,7 @@ class GUID final {
   ~GUID()         = default;
 
  public:
-  GUID& operator=(const GUID&) = default;
-  GUID(const GUID&)            = default;
+  NE_COPY_DEFAULT(GUID)
 
  public:
   GUIDSequence& operator->() noexcept { return fUUID; }

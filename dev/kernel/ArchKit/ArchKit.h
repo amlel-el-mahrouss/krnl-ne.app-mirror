@@ -75,6 +75,9 @@ struct HAL_DISPATCH_ENTRY final {
   Kernel::Bool    fHooked;
   rt_syscall_proc fProc;
 
+  BOOL IsKernCall() { return NO; }
+  BOOL IsSysCall() { return YES; }
+
   operator bool() { return fHooked; }
 };
 
@@ -85,6 +88,9 @@ struct HAL_KERNEL_DISPATCH_ENTRY final {
   Kernel::UInt64   fHash;
   Kernel::Bool     fHooked;
   rt_kerncall_proc fProc;
+
+  BOOL IsKernCall() { return YES; }
+  BOOL IsSysCall() { return NO; }
 
   operator bool() { return fHooked; }
 };

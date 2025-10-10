@@ -5,8 +5,8 @@
 ------------------------------------------- */
 
 #include <libSystem/SystemKit/Err.h>
-#include <libSystem/SystemKit/Verify.h>
 #include <libSystem/SystemKit/Syscall.h>
+#include <libSystem/SystemKit/Verify.h>
 
 using namespace LibSystem;
 

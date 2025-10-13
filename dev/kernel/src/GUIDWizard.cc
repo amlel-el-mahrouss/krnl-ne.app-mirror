@@ -24,6 +24,8 @@ auto cf_make_sequence(const ArrayList<UInt32>& uuidSeq) -> Ref<GUIDSequence*> {
 
   Ref<GUIDSequence*> seq_ref{seq};
 
+  if (!seq) return seq_ref;
+
   seq_ref.Leak()->fUuid.fMs1    = uuidSeq[0];
   seq_ref.Leak()->fUuid.fMs2    = uuidSeq[1];
   seq_ref.Leak()->fUuid.fMs3    = uuidSeq[2];
@@ -60,6 +62,6 @@ auto cf_try_guid_to_string(Ref<GUIDSequence*>& seq) -> ErrorOr<Ref<KString>> {
 
   if (view) return ErrorOr<Ref<KString>>{view.Leak()};
 
-  return ErrorOr<Ref<KString>>{-1};
+  return ErrorOr<Ref<KString>>{kErrorInvalidData};
 }
 }  // namespace Kernel::CF::XRN::Version1

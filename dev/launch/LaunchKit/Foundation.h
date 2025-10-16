@@ -7,14 +7,15 @@
 #pragma once
 
 #include <libSystem/SystemKit/System.h>
+#include <CoreFoundation.fwrk/headers/Ref.h>
 
 /// @author Amlal El Mahrouss
-/// @brief NeKernel Launch Kit.
+/// @brief NeKernel Launch Kit - launch programs from it.
 
 #define NELAUNCH_INFO(MSG) PrintOut(nullptr, "INFO: [LAUNCH] %s\n", MSG)
 #define NELAUNCH_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)
 
 namespace Launch {
-using LaunchAny    = VoidPtr;
-using LaunchStatus = SInt32;
+using AnyRef    = CF::CFRef<VoidPtr>;
+using StatusRef = CF::CFRef<SInt32>;
 }  // namespace Launch

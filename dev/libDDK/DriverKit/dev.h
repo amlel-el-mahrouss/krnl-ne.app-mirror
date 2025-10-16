@@ -29,8 +29,8 @@ typedef struct _DDK_DEVICE DDK_FINAL {
 
 /// @brief Open a new device from path.
 /// @param path the device's path.
-DDK_EXTERN DDK_DEVICE_PTR open(const char* path);
+DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* path);
 
 /// @brief Close any device.
 /// @param device valid device.
-DDK_EXTERN BOOL close(DDK_DEVICE_PTR device);
+DDK_EXTERN BOOL kclose_dev(DDK_DEVICE_PTR device);

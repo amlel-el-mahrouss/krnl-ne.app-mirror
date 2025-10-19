@@ -54,7 +54,10 @@ SWAP_DISK_HEADER* DiskSwapInterface::Read(const Char* fork_name, SizeT fork_name
 
   VoidPtr blob = file.Read(fork_name, sizeof(SWAP_DISK_HEADER) + data_len);
 
-  if (!blob || ((SWAP_DISK_HEADER*)blob)->fMagic != kSwapDiskHeaderMagic) return nullptr;
+  if (!blob || ((SWAP_DISK_HEADER*) blob)->fMagic != kSwapDiskHeaderMagic) {
+    if (blob) mm_free_ptr(blob);
+    return nullptr;
+  }
 
   return reinterpret_cast<SWAP_DISK_HEADER*>(blob);
 }

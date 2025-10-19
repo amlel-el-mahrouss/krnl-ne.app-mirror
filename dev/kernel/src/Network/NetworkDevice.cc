@@ -11,7 +11,7 @@ namespace Kernel {
 /// \brief Getter for fNetworkName.
 /// \return Network device name.
 const Char* NetworkDevice::Name() const {
-  return "/devices/net{}";
+  return "/devices/net/net{}";
 }
 
 /// \brief Setter for fNetworkName.

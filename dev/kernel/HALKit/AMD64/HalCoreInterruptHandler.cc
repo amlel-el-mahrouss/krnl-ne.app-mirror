@@ -8,7 +8,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/UserMgr.h>
 #include <NeKit/KString.h>
-#include <SignalKit/SignalGen.h>
+#include <SignalKit/Signals.h>
 
 EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip);
 

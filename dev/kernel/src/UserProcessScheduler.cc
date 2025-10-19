@@ -21,7 +21,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/KString.h>
 #include <NeKit/Utils.h>
-#include <SignalKit/SignalGen.h>
+#include <SignalKit/Signals.h>
 
 ///! BUGS: 0
 

@@ -6,7 +6,9 @@
 
 #include <NeKit/Crc32.h>
 
-// @file CRC32.cpp
+#define kCrcCnt (256)
+
+// @file CRC32.cc
 // @brief Check sequence implementation.
 
 namespace Kernel {

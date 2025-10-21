@@ -37,7 +37,7 @@ nekernel-arm64-epm: clean
 	$(CC) $(CCFLAGS) $(DISKDRIVER) $(DEBUG) $(wildcard src/*.cc) \
 	       $(wildcard src/FS/*.cc) $(wildcard HALKit/ARM64/Storage/*.cc) \
 			$(wildcard HALKit/ARM64/PCI/*.cc) $(wildcard src/Network/*.cc) $(wildcard src/Storage/*.cc) \
-			$(wildcard HALKit/ARM64/*.cc) $(wildcard HALKit/ARM64/*.cpp) \
+			$(wildcard HALKit/ARM64/*.cc) $(wildcard HALKit/ARM64/*.cc) \
 			$(wildcard HALKit/ARM64/*.s) $(wildcard HALKit/ARM64/APM/*.cc)
 
 	$(MOVEALL)

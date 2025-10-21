@@ -6,5 +6,5 @@
 
 #include <NeKit/Atom.h>
 
-// @file Atom.cpp
+// @file Atom.cc
 // @brief Atomic primitives

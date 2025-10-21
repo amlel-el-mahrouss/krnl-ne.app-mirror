@@ -12,7 +12,7 @@ namespace Kernel {
 template <typename T>
 class ArrayList final {
  public:
-  explicit ArrayList(T* list, SizeT length) : fList(reinterpret_cast<T>(list)) {}
+  explicit ArrayList(T* list, SizeT length) : fList(reinterpret_cast<T>(list)), fLen(length) {}
 
   ~ArrayList() = default;
 

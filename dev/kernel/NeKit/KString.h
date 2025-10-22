@@ -16,13 +16,13 @@
 
 namespace Kernel {
 /// @brief Kernel string class, not dynamic.
-template <SizeT MinSz = kMinimumStringSize>
+template <typename CharKind = Char>
 class BasicKString final {
  public:
   explicit BasicKString() {
-    fDataSz = MinSz;
+    fDataSz = kMinimumStringSize;
 
-    fData = new Char[fDataSz];
+    fData = new CharKind[fDataSz];
     MUST_PASS(fData);
 
     rt_set_memory(fData, 0, fDataSz);
@@ -31,7 +31,7 @@ class BasicKString final {
   explicit BasicKString(SizeT Sz) : fDataSz(Sz) {
     MUST_PASS(Sz > 1);
 
-    fData = new Char[Sz];
+    fData = new CharKind[Sz];
     MUST_PASS(fData);
 
     rt_set_memory(fData, 0, Sz);
@@ -46,18 +46,18 @@ class BasicKString final {
 
   NE_COPY_DEFAULT(BasicKString)
 
-  Char*       Data();
-  const Char* CData() const;
-  Size        Length() const;
+  CharKind*       Data();
+  const CharKind* CData() const;
+  Size            Length() const;
 
-  bool operator==(const Char* rhs) const;
-  bool operator!=(const Char* rhs) const;
+  bool operator==(const CharKind* rhs) const;
+  bool operator!=(const CharKind* rhs) const;
 
-  bool operator==(const BasicKString<>& rhs) const;
-  bool operator!=(const BasicKString<>& rhs) const;
+  bool operator==(const BasicKString<CharKind>& rhs) const;
+  bool operator!=(const BasicKString<CharKind>& rhs) const;
 
-  BasicKString<>& operator+=(const Char* rhs);
-  BasicKString<>& operator+=(const BasicKString<>& rhs);
+  BasicKString<CharKind>& operator+=(const CharKind* rhs);
+  BasicKString<CharKind>& operator+=(const BasicKString<CharKind>& rhs);
 
   operator const char*() { return fData; }
 
@@ -66,9 +66,9 @@ class BasicKString final {
   bool operator!() { return fData; }
 
  private:
-  Char* fData{nullptr};
-  Size  fDataSz{0};
-  Size  fCur{0};
+  CharKind* fData{nullptr};
+  Size      fDataSz{0};
+  Size      fCur{0};
 
   friend class KStringBuilder;
 };
@@ -78,11 +78,14 @@ using KStringOr = ErrorOr<KString>;
 
 class KStringBuilder final {
  public:
-  static ErrorOr<KString> Construct(const Char* data);
-  static const Char*      FromBool(const Char* fmt, bool n);
-  static const Char*      Format(const Char* fmt, const Char* from);
-  static bool             Equals(const Char* lhs, const Char* rhs);
-  static bool             Equals(const Utf8Char* lhs, const Utf8Char* rhs);
+  template <typename CharKind = Char>
+  static ErrorOr<BasicKString<CharKind>> Construct(const CharKind* data);
+  template <typename CharKind = Char>
+  static const CharKind* FromBool(const CharKind* fmt, bool n);
+  template <typename CharKind = Char>
+  static const CharKind* Format(const CharKind* fmt, const CharKind* from);
+  template <typename CharKind = Char>
+  static bool Equals(const CharKind* lhs, const CharKind* rhs);
 };
 }  // namespace Kernel
 

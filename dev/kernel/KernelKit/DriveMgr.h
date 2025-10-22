@@ -52,9 +52,9 @@ enum {
 
 /// @brief Media drive trait type.
 struct DriveTrait final {
-  Char  fName[kDriveNameLen];  // /System, /boot, //./Devices/USB...
-  Int32 fKind;                 // fMassStorage, fFloppy, fOpticalDrive.
-  Int32 fFlags;                // fReadOnly, fEPMDrive...
+  Char  fName[kDriveNameLen] = {0};  // /System, /boot, //./Devices/USB...
+  UInt32 fKind{};                 // fMassStorage, fFloppy, fOpticalDrive.
+  UInt32 fFlags{};                // fReadOnly, fEPMDrive...
 
   /// @brief Packet drive (StorageKit compilant.)
   struct DrivePacket final {
@@ -70,11 +70,11 @@ struct DriveTrait final {
   Lba   fLbaStart{0}, fLbaEnd{0};
   SizeT fSectorSz{kDriveSectorSz};
 
-  Void (*fInput)(DrivePacket& packet);
-  Void (*fOutput)(DrivePacket& packet);
-  Void (*fVerify)(DrivePacket& packet);
-  Void (*fInit)(DrivePacket& packet);
-  const Char* (*fProtocol)(Void);
+  Void (*fInput)(DrivePacket& packet){};
+  Void (*fOutput)(DrivePacket& packet){};
+  Void (*fVerify)(DrivePacket& packet){};
+  Void (*fInit)(DrivePacket& packet){};
+  const Char* (*fProtocol)(Void){};
 };
 
 namespace Detail {

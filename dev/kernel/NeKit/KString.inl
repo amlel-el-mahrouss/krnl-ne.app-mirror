@@ -4,7 +4,7 @@
 
 ------------------------------------------- */
 
-/// @file BasicKString.inl
+/// @file KBasicString.inl
 /// @brief Kernel String manipulation file.
 
 namespace Kernel {
@@ -19,22 +19,22 @@ inline void ort_string_append(CharKind* lhs, const CharKind* rhs, Int32 cur) {
 }
 
 template <typename CharKind>
-inline CharKind* BasicKString<CharKind>::Data() {
+inline CharKind* KBasicString<CharKind>::Data() {
   return this->fData;
 }
 
 template <typename CharKind>
-inline const CharKind* BasicKString<CharKind>::CData() const {
+inline const CharKind* KBasicString<CharKind>::CData() const {
   return const_cast<const CharKind*>(this->fData);
 }
 
 template <typename CharKind>
-inline SizeT BasicKString<CharKind>::Length() const {
+inline SizeT KBasicString<CharKind>::Length() const {
   return this->fDataSz;
 }
 
 template <typename CharKind>
-inline bool BasicKString<CharKind>::operator==(const BasicKString<CharKind>& rhs) const {
+inline bool KBasicString<CharKind>::operator==(const KBasicString<CharKind>& rhs) const {
   if (rhs.Length() != this->Length()) return false;
 
   for (Size index = 0; index < this->Length(); ++index) {
@@ -45,7 +45,7 @@ inline bool BasicKString<CharKind>::operator==(const BasicKString<CharKind>& rhs
 }
 
 template <typename CharKind>
-inline bool BasicKString<CharKind>::operator==(const CharKind* rhs) const {
+inline bool KBasicString<CharKind>::operator==(const CharKind* rhs) const {
   if (ort_string_len<CharKind>(rhs) != this->Length()) return false;
 
   for (Size index = 0; index < ort_string_len<CharKind>(rhs); ++index) {
@@ -56,7 +56,7 @@ inline bool BasicKString<CharKind>::operator==(const CharKind* rhs) const {
 }
 
 template <typename CharKind>
-inline bool BasicKString<CharKind>::operator!=(const BasicKString<CharKind>& rhs) const {
+inline bool KBasicString<CharKind>::operator!=(const KBasicString<CharKind>& rhs) const {
   if (rhs.Length() != this->Length()) return false;
 
   for (Size index = 0; index < rhs.Length(); ++index) {
@@ -67,7 +67,7 @@ inline bool BasicKString<CharKind>::operator!=(const BasicKString<CharKind>& rhs
 }
 
 template <typename CharKind>
-inline bool BasicKString<CharKind>::operator!=(const CharKind* rhs) const {
+inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
   if (ort_string_len<CharKind>(rhs) != this->Length()) return false;
 
   for (Size index = 0; index < ort_string_len<CharKind>(rhs); ++index) {
@@ -78,7 +78,7 @@ inline bool BasicKString<CharKind>::operator!=(const CharKind* rhs) const {
 }
 
 template <typename CharKind>
-inline BasicKString<CharKind>& BasicKString<CharKind>::operator+=(const BasicKString<CharKind>& rhs) {
+inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const KBasicString<CharKind>& rhs) {
   if (ort_string_len<CharKind>(rhs.fData) > this->Length()) return *this;
 
   ort_string_append(this->fData, const_cast<CharKind*>(rhs.fData), this->fCur);
@@ -88,7 +88,7 @@ inline BasicKString<CharKind>& BasicKString<CharKind>::operator+=(const BasicKSt
 }
 
 template <typename CharKind>
-inline BasicKString<CharKind>& BasicKString<CharKind>::operator+=(const CharKind* rhs) {
+inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const CharKind* rhs) {
   ort_string_append(this->fData, const_cast<CharKind*>(rhs), this->fCur);
   this->fCur += ort_string_len<CharKind>(const_cast<CharKind*>(rhs));
 
@@ -96,13 +96,13 @@ inline BasicKString<CharKind>& BasicKString<CharKind>::operator+=(const CharKind
 }
 
 template <typename CharKind>
-inline ErrorOr<BasicKString<CharKind>> KStringBuilder::Construct(const CharKind* data) {
-  if (!data || *data == 0) return ErrorOr<BasicKString<CharKind>>(nullptr);
+inline ErrorOr<KBasicString<CharKind>> KStringBuilder::Construct(const CharKind* data) {
+  if (!data || *data == 0) return ErrorOr<KBasicString<CharKind>>(nullptr);
 
-  BasicKString<CharKind>* view = new BasicKString<CharKind>(ort_string_len<CharKind>(data));
+  KBasicString<CharKind>* view = new KBasicString<CharKind>(ort_string_len<CharKind>(data));
   (*view) += data;
 
-  return ErrorOr<BasicKString<CharKind>>(*view);
+  return ErrorOr<KBasicString<CharKind>>(*view);
 }
 template <typename CharKind>
 inline const CharKind* KStringBuilder::FromBool(const CharKind* fmt, bool i) {

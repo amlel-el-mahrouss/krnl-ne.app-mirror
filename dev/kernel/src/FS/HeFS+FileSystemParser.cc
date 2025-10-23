@@ -79,12 +79,14 @@ namespace Detail {
                                               const Utf8Char* dir_name, UInt16 flags,
                                               const BOOL delete_or_create);
 
+  /// @brief This helper makes it easier for other machines to understand HeFS encoded hashes.
   STATIC UInt64 hefsi_to_big_endian_64(UInt64 val) {
     return ((val >> 56) & 0x00000000000000FFULL) | ((val >> 40) & 0x000000000000FF00ULL) |
            ((val >> 24) & 0x0000000000FF0000ULL) | ((val >> 8) & 0x00000000FF000000ULL) |
            ((val << 8) & 0x000000FF00000000ULL) | ((val << 24) & 0x0000FF0000000000ULL) |
            ((val << 40) & 0x00FF000000000000ULL) | ((val << 56) & 0xFF00000000000000ULL);
   }
+  
   /// @brief Simple algorithm to hash directory entries for INDs.
   /// @param path the directory path.
   /// @return The hashed path.

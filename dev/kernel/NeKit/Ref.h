@@ -65,6 +65,9 @@ class NonNullRef final {
  private:
   Ref<T> fRef{};
 };
+
+using RefAny = Ref<Any>;
+using NonNullRefAny = NonNullRef<Any>;
 }  // namespace Kernel
 
 #endif  // ifndef _NEKIT_REF_H_

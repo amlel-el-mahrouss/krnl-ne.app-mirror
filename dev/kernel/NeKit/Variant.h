@@ -33,9 +33,10 @@ class Variant final {
   ~Variant() = default;
 
  public:
-  explicit Variant(KString* stringView) : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
+  template <typename CharKind>
+  explicit Variant(KBasicString<CharKind>* stringView) : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
 
-  explicit Variant(Json* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
+  explicit Variant(JsonObject* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
 
   explicit Variant(nullPtr ptr) : fPtr(ptr), fKind(VariantKind::kNull) {}
 
@@ -55,7 +56,7 @@ class Variant final {
   VariantKind& Kind();
 
  private:
-  voidPtr     fPtr{nullptr};
+  VoidPtr     fPtr{nullptr};
   VariantKind fKind{VariantKind::kNull};
 };
 }  // namespace Kernel

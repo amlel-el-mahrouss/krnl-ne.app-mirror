@@ -21,14 +21,14 @@ Property::Property() = default;
 /// @brief Check if property's name equals to name.
 /// @param name string to check.
 /***********************************************************************************/
-Bool Property::StringEquals(BasicKString<>& name) {
+Bool Property::StringEquals(KBasicString<>& name) {
   return this->fName && this->fName == name;
 }
 
 /***********************************************************************************/
 /// @brief Gets the key (name) of property.
 /***********************************************************************************/
-BasicKString<>& Property::GetKey() {
+KBasicString<>& Property::GetKey() {
   return this->fName;
 }
 

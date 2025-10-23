@@ -19,12 +19,12 @@ HeFileSystemMgr::HeFileSystemMgr() {
   mParser = new HeFileSystemParser();
   MUST_PASS(mParser);
 
-  kout << "We are done allocating NeFileSystemParser...\n";
+  kout << "We are done allocating HeFileSystemParser...\n";
 }
 
 HeFileSystemMgr::~HeFileSystemMgr() {
   if (mParser) {
-    kout << "Destroying NeFileSystemParser...\n";
+    kout << "Destroying HeFileSystemParser...\n";
     delete mParser;
     mParser = nullptr;
   }
@@ -124,21 +124,44 @@ _Output NodePtr HeFileSystemMgr::Open(_Input const Char* path, _Input const Char
 }
 
 Void HeFileSystemMgr::Write(_Input NodePtr node, _Input VoidPtr data, _Input Int32 flags,
-                            _Input SizeT size) {}
+                            _Input SizeT size) {
+  NE_UNUSED(node);
+  NE_UNUSED(flags);
+  NE_UNUSED(size);
+  NE_UNUSED(data);
+}
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _Input SizeT size) {
+  NE_UNUSED(node);
+  NE_UNUSED(flags);
+  NE_UNUSED(size);
+
   return nullptr;
 }
 
 Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input VoidPtr data,
-                            _Input Int32 flags, _Input SizeT size) {}
+                            _Input Int32 flags, _Input SizeT size) {
+  NE_UNUSED(node);
+  NE_UNUSED(flags);
+  NE_UNUSED(size);
+  NE_UNUSED(name);
+  NE_UNUSED(data);
+}
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr node,
                                       _Input Int32 flags, _Input SizeT sz) {
+  NE_UNUSED(node);
+  NE_UNUSED(flags);
+  NE_UNUSED(sz);
+  NE_UNUSED(name);
+
   return nullptr;
 }
 
 _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
+  NE_UNUSED(node);
+  NE_UNUSED(off);
+
   return false;
 }
 
@@ -146,6 +169,7 @@ _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
 /// @param node
 /// @return kFileMgrNPos if invalid, else current offset.
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
+  NE_UNUSED(node);
   return kFileMgrNPos;
 }
 
@@ -153,6 +177,7 @@ _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
 /// @param node
 /// @return False if invalid, nah? calls Seek(node, 0).
 _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
+  NE_UNUSED(node);
   return kFileMgrNPos;
 }
 

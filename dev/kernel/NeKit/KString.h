@@ -12,14 +12,14 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-#define kMinimumStringSize (8196U)
-
 namespace Kernel {
+inline auto kMinimumStringSize = 8196;
+
 /// @brief Kernel string class, not dynamic.
 template <typename CharKind = Char>
-class BasicKString final {
+class KBasicString final {
  public:
-  explicit BasicKString() {
+  explicit KBasicString() {
     fDataSz = kMinimumStringSize;
 
     fData = new CharKind[fDataSz];
@@ -28,7 +28,7 @@ class BasicKString final {
     rt_set_memory(fData, 0, fDataSz);
   }
 
-  explicit BasicKString(SizeT Sz) : fDataSz(Sz) {
+  explicit KBasicString(SizeT Sz) : fDataSz(Sz) {
     MUST_PASS(Sz > 1);
 
     fData = new CharKind[Sz];
@@ -37,14 +37,14 @@ class BasicKString final {
     rt_set_memory(fData, 0, Sz);
   }
 
-  ~BasicKString() {
+  ~KBasicString() {
     if (fData) {
       delete[] fData;
       fData = nullptr;
     }
   }
 
-  NE_COPY_DEFAULT(BasicKString)
+  NE_COPY_DEFAULT(KBasicString)
 
   CharKind*       Data();
   const CharKind* CData() const;
@@ -53,11 +53,11 @@ class BasicKString final {
   bool operator==(const CharKind* rhs) const;
   bool operator!=(const CharKind* rhs) const;
 
-  bool operator==(const BasicKString<CharKind>& rhs) const;
-  bool operator!=(const BasicKString<CharKind>& rhs) const;
+  bool operator==(const KBasicString<CharKind>& rhs) const;
+  bool operator!=(const KBasicString<CharKind>& rhs) const;
 
-  BasicKString<CharKind>& operator+=(const CharKind* rhs);
-  BasicKString<CharKind>& operator+=(const BasicKString<CharKind>& rhs);
+  KBasicString<CharKind>& operator+=(const CharKind* rhs);
+  KBasicString<CharKind>& operator+=(const KBasicString<CharKind>& rhs);
 
   operator const char*() { return fData; }
 
@@ -73,13 +73,13 @@ class BasicKString final {
   friend class KStringBuilder;
 };
 
-using KString   = BasicKString<>;
+using KString   = KBasicString<>;
 using KStringOr = ErrorOr<KString>;
 
 class KStringBuilder final {
  public:
   template <typename CharKind = Char>
-  static ErrorOr<BasicKString<CharKind>> Construct(const CharKind* data);
+  static ErrorOr<KBasicString<CharKind>> Construct(const CharKind* data);
   template <typename CharKind = Char>
   static const CharKind* FromBool(const CharKind* fmt, bool n);
   template <typename CharKind = Char>

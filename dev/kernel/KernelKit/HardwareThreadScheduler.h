@@ -120,7 +120,7 @@ class HardwareThreadScheduler final : public ISchedulable {
 
  private:
   Array<HardwareThread, kMaxAPInsideSched> fThreadList;
-  ThreadID                                 fCurrentThread{0};
+  ThreadID                                 fCurrentThreadIdx{0};
 };
 
 /// @brief wakes up thread.

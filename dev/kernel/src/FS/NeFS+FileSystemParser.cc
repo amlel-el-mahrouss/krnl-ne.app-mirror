@@ -74,7 +74,7 @@ static inline bool is_valid_lba(Lba lba, DriveTrait& drive) {
   return (lba >= part_block.StartCatalog) && (lba < maxLba);
 }
 
-STATIC MountpointInterface kMountpoint;
+STATIC IMountpoint kMountpoint;
 /***********************************************************************************/
 /// @brief Creates a new fork inside the New filesystem partition.
 /// @param catalog it's catalog
@@ -141,7 +141,7 @@ _Output BOOL NeFileSystemParser::CreateFork(_Input NEFS_FORK_STRUCT& the_fork) {
   drv.fPacket.fPacketContent = reinterpret_cast<VoidPtr>(&the_fork);
   drv.fOutput(drv.fPacket);
 
-  fs_ifs_write(&kMountpoint, drv, MountpointInterface::kDriveIndexA);
+  fs_ifs_write(&kMountpoint, drv, IMountpoint::kDriveIndexA);
 
   delete catalog;
   return YES;
@@ -858,7 +858,7 @@ namespace Kernel::NeFS {
 /// @brief Construct NeFS drives.
 /***********************************************************************************/
 Boolean fs_init_nefs(Void) noexcept {
-  kout << "Creating HeFS disk...\r";
+  kout << "Creating OpenHeFS disk...\r";
   kMountpoint.A() = io_construct_main_drive();
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES)
     ke_panic(RUNTIME_CHECK_FILESYSTEM, "Main disk cannot be mounted.");

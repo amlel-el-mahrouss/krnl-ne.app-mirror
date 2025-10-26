@@ -144,9 +144,9 @@ inline Kernel::ErrorOr<Ext2Node*> ext2_load_inode(Ext2Context* ctx, Kernel::UInt
  *
  * Provides high-level interface for EXT2 filesystem operations
  */
-class Ext2FileSystemParser {
+class Ext2FileSystemParser final {
  private:
-  Ext2Context ctx;  // Internal EXT2 context
+  Ext2Context fCtx;  // Internal EXT2 context
 
  public:
   /*
@@ -156,6 +156,8 @@ class Ext2FileSystemParser {
    * @param drive: Pointer to drive trait for disk I/O operations
    */
   explicit Ext2FileSystemParser(DriveTrait* drive);
+
+  NE_COPY_DELETE(Ext2FileSystemParser)
 
   /*
    * Open a file or directory by path

@@ -13,6 +13,7 @@
 #endif
 
 /// @author Amlal El Mahrouss
+/// @file Server.h
 /// @brief libMsg LISP system.
 
 struct LIBMSG_EXPR;
@@ -23,8 +24,8 @@ struct LIBMSG_EXPR final {
   CF::CFString* l_key{nullptr};
   CF::CFString* l_value{nullptr};
 #else
-  VoidPtr l_key{nullptr};
-  VoidPtr l_value{nullptr};
+  // if we use C< we won't know about CF, so let's make those private.
+  VoidPtr l_private_data[2]{nullptr};
 #endif
 
   LIBMSG_EXPR* l_head{nullptr};
@@ -33,8 +34,8 @@ struct LIBMSG_EXPR final {
 };
 
 /// @brief Function type for LibMSG lisp.
-typedef Void (*libmsg_func_t)(struct LIBMSG_EXPR* self, VoidPtr arg, SizeT arg_size);
+typedef Void (*libmsg_func_type)(struct LIBMSG_EXPR* self, VoidPtr arg, SizeT arg_size);
 
-IMPORT_C Void   libmsg_init_library(libmsg_func_t* funcs, SizeT cnt);
+IMPORT_C Void   libmsg_init_library(libmsg_func_type* funcs, SizeT cnt);
 IMPORT_C UInt32 libmsg_close_library(Void);
 IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head);

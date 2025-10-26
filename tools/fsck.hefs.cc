@@ -4,7 +4,7 @@
 
 ------------------------------------------- */
 
-#include <tools/libmkfs/hefs.h>
+#include <tools/libmkfs/openhefs.h>
 #include <tools/libmkfs/mkfs.h>
 #include <cstdlib>
 #include <fstream>
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
   auto origin = mkfs::get_option<char>(args, "-org");
 
   if (opt_disk.empty()) {
-    mkfs::console_out() << "fsck: hefs: error: HeFS partition is empty! Exiting..."
+    mkfs::console_out() << "fsck: hefs: error: OpenHeFS partition is empty! Exiting..."
                         << "\n";
     return EXIT_FAILURE;
   }
@@ -59,16 +59,16 @@ int main(int argc, char** argv) {
 
   if (strncmp(boot_node.magic, kHeFSMagic, kHeFSMagicLen) != 0 || boot_node.sectorCount < 1 ||
       boot_node.sectorSize < kMkFsSectorSz) {
-    mkfs::console_out() << "hefs: error: Device is not an HeFS disk: " << opt_disk << "\n";
+    mkfs::console_out() << "hefs: error: Device is not an OpenHeFS disk: " << opt_disk << "\n";
     return EXIT_FAILURE;
   }
 
   if (boot_node.badSectors > kMkFsMaxBadSectors) {
-    mkfs::console_out() << "hefs: error: HeFS disk has too much bad sectors: " << opt_disk << "\n";
+    mkfs::console_out() << "hefs: error: OpenHeFS disk has too much bad sectors: " << opt_disk << "\n";
     return EXIT_FAILURE;
   }
 
-  mkfs::console_out() << "hefs: HeFS partition is healthy, exiting...\n";
+  mkfs::console_out() << "hefs: OpenHeFS partition is healthy, exiting...\n";
 
   output_device.close();
 

@@ -26,10 +26,10 @@ namespace Kernel {
 typedef SizeT rt_signal_kind;
 
 /// @brief Standard signal seed for general purpose usage.
-inline static constexpr auto kUserSignalSeed = 0x0895034fUL;
+inline constexpr auto kUserSignalSeed = 0x0895034fUL;
 
 /// @brief Special signal seed for kernel usage.
-inline static constexpr auto kKernelSignalSeed = 0x0895034f9fUL;
+inline constexpr auto kKernelSignalSeed = 0x0895034f9fUL;
 
 /// @brief Generate signal from **Sig**
 template <rt_signal_kind Sig, SizeT Seed = kUserSignalSeed>

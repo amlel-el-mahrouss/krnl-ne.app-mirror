@@ -8,15 +8,13 @@
  * 	========================================================
  */
 
-#ifndef CRC32_H
-#define CRC32_H
+#ifndef NEKIT_CRC32_H
+#define NEKIT_CRC32_H
 
 #include <NeKit/Defines.h>
-
-#define kCrcCnt (256)
 
 namespace Kernel {
 UInt32 ke_calculate_crc32(const VoidPtr crc, Int32 len) noexcept;
 }  // namespace Kernel
 
-#endif  // !CRC32_H
+#endif  // !NEKIT_CRC32_H

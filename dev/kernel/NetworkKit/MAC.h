@@ -10,7 +10,7 @@
 #include <NeKit/Defines.h>
 #include <NeKit/KString.h>
 
-#define kMACAddrLen (32)
+#define kMACAddrLen (32U)
 
 namespace Kernel {
 class MacAddressGetter;

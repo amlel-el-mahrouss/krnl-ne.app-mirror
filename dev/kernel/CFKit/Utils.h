@@ -5,9 +5,7 @@
 #include <KernelKit/PE.h>
 
 /// @brief CFKit
-namespace CF {
-using namespace Kernel;
-
+namespace Kernel::CF {
 /// @brief Finds the PE header inside the blob.
 inline auto ldr_find_exec_header(DosHeaderPtr ptrDos) -> LDR_EXEC_HEADER_PTR {
   if (!ptrDos) return nullptr;
@@ -45,6 +43,6 @@ inline auto ldr_find_exec_header(const Char* ptrDos) -> LDR_EXEC_HEADER_PTR {
 inline auto ldr_find_opt_exec_header(const Char* ptrDos) -> LDR_OPTIONAL_HEADER_PTR {
   return ldr_find_opt_exec_header((DosHeaderPtr) ptrDos);
 }
-}  // namespace CF
+}  // namespace Kernel::CF
 
 #endif  // ifndef CFKIT_UTILS_H

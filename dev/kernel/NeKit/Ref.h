@@ -5,8 +5,8 @@
 
 ------------------------------------------- */
 
-#ifndef _NEWKIT_REF_H_
-#define _NEWKIT_REF_H_
+#ifndef _NEKIT_REF_H_
+#define _NEKIT_REF_H_
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/HeapMgr.h>
@@ -65,6 +65,9 @@ class NonNullRef final {
  private:
   Ref<T> fRef{};
 };
+
+using RefAny = Ref<Any>;
+using NonNullRefAny = NonNullRef<Any>;
 }  // namespace Kernel
 
-#endif  // ifndef _NEWKIT_REF_H_
+#endif  // ifndef _NEKIT_REF_H_

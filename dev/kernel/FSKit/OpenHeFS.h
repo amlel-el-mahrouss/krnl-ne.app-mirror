@@ -14,8 +14,8 @@
 #include <NeKit/KString.h>
 #include <hint/CompilerHint.h>
 
-/// @file HeFS.h
-/// @brief HeFS filesystem support.
+/// @file OpenHeFS.h
+/// @brief OpenHeFS filesystem support.
 
 #define kHeFSVersion (0x0103)
 #define kHeFSMagic "  HeFS"
@@ -27,10 +27,18 @@
 
 #define kHeFSMinimumDiskSize (gib_cast(128))
 
-#define kHeFSDefaultVolumeName u8"HeFS Volume"
+#define kHeFSDefaultVolumeName u8"OpenHeFS Volume"
 
 #define kHeFSINDStartOffset (sizeof(HEFS_BOOT_NODE))
 #define kHeFSINStartOffset (sizeof(HEFS_INDEX_NODE_DIRECTORY))
+
+#define kHeFSRootDirectory "/"
+#define kHeFSRootDirectoryU8 u8"/"
+
+#define kHeFSSeparator '/'
+#define kHeFSUpDir ".."
+
+#define kHeFSRootDirectoryLen (2U)
 
 #define kHeFSSearchAllStr u8"*"
 
@@ -89,7 +97,7 @@ inline constexpr UInt16 kHeFSFileKindSymbolicLink = 0x06;
 inline constexpr UInt16 kHeFSFileKindUnknown      = 0x07;
 inline constexpr UInt16 kHeFSFileKindCount        = 0x08;
 
-/// @brief HeFS blocks are array containing sparse blocks of data.
+/// @brief OpenHeFS blocks are array containing sparse blocks of data.
 /// @details The blocks are used to store the data of a file. Each block is a pointer to a block of
 /// data on the disk.
 inline constexpr UInt16 kHeFSSliceCount = 0x10;
@@ -101,7 +109,7 @@ namespace Kernel {
 /// @details Used to keep track of the INode, INodeDir allocation status.
 typedef UInt64 ATime;
 
-/// @brief HeFS Boot node.
+/// @brief OpenHeFS Boot node.
 /// @details Acts like a superblock, it contains the information about the filesystem.
 /// @note The boot node is the first block of the filesystem.
 struct PACKED HEFS_BOOT_NODE final {
@@ -158,7 +166,7 @@ enum HeFSJournalKind : UInt8 {
   kJournalKindCount,
 };
 
-/// @brief HeFS index node.
+/// @brief OpenHeFS index node.
 /// @details This structure is used to store the file information of a file.
 /// @note The index node is a special type of INode that contains the file information.
 /// @note The index node is used to store the file information of a file.
@@ -192,7 +200,7 @@ enum {
   kHeFSColorCount,
 };
 
-/// @brief HeFS directory node.
+/// @brief OpenHeFS directory node.
 /// @details This structure is used to store the directory information of a file.
 /// @note The directory node is a special type of INode that contains the directory entries.
 struct PACKED HEFS_INDEX_NODE_DIRECTORY final {
@@ -222,7 +230,7 @@ struct PACKED HEFS_INDEX_NODE_DIRECTORY final {
 }  // namespace Kernel
 
 namespace Kernel::Detail {
-/// @brief HeFS get year from ATime.
+/// @brief OpenHeFS get year from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the year value.
 /// @note The year is stored in the upper 32 bits of the ATime value.
@@ -230,7 +238,7 @@ inline UInt32 hefs_year_get(ATime raw_atime) noexcept {
   return (raw_atime) >> 32;
 }
 
-/// @brief HeFS get month from ATime.
+/// @brief OpenHeFS get month from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the month value.
 /// @note The month is stored in the upper 24 bits of the ATime value.
@@ -238,7 +246,7 @@ inline UInt32 hefs_month_get(ATime raw_atime) noexcept {
   return (raw_atime) >> 24;
 }
 
-/// @brief HeFS get day from ATime.
+/// @brief OpenHeFS get day from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the day value.
 /// @note The day is stored in the upper 16 bits of the ATime value.
@@ -246,7 +254,7 @@ inline UInt32 hefs_day_get(ATime raw_atime) noexcept {
   return (raw_atime) >> 16;
 }
 
-/// @brief HeFS get hour from ATime.
+/// @brief OpenHeFS get hour from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the hour value.
 /// @note The hour is stored in the upper 8 bits of the ATime value.
@@ -254,7 +262,7 @@ inline UInt32 hefs_hour_get(ATime raw_atime) noexcept {
   return (raw_atime) >> 8;
 }
 
-/// @brief HeFS get minute from ATime.
+/// @brief OpenHeFS get minute from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the minute value.
 /// @note The minute is stored in the lower 8 bits of the ATime value.
@@ -371,8 +379,8 @@ inline const Char* hefs_file_flags_to_string(UInt32 flags) noexcept {
 }  // namespace Kernel::Detail
 
 namespace Kernel {
-/// @brief HeFS filesystem parser class.
-/// @details This class is used to parse the HeFS filesystem.
+/// @brief OpenHeFS filesystem parser class.
+/// @details This class is used to parse the OpenHeFS filesystem.
 class HeFileSystemParser final {
  public:
   HeFileSystemParser()  = default;
@@ -386,7 +394,7 @@ class HeFileSystemParser final {
   HeFileSystemParser& operator=(HeFileSystemParser&&) = delete;
 
  public:
-  /// @brief Make a EPM+HeFS drive out of the disk.
+  /// @brief Make a EPM+OpenHeFS drive out of the disk.
   /// @param drive The drive to write on.
   /// @return If it was sucessful, see err_local_get().
   _Output Bool Format(_Input _Output DriveTrait* drive, _Input const Int32 flags,
@@ -417,10 +425,10 @@ class HeFileSystemParser final {
                                       const Utf8Char* dir, const BOOL delete_or_create);
 };
 
-namespace HeFS {
+namespace OpenHeFS {
 
-  /// @brief Initialize HeFS inside the main disk.
+  /// @brief Initialize OpenHeFS inside the main disk.
   /// @return Whether it successfuly formated it or not.
   Boolean fs_init_hefs(Void) noexcept;
-}  // namespace HeFS
+}  // namespace OpenHeFS
 }  // namespace Kernel

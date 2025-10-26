@@ -8,6 +8,8 @@
 #include <SwapKit/DiskSwap.h>
 
 namespace Kernel {
+static constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
+
 /***********************************************************************************/
 /// @brief Write memory chunk onto disk.
 /// @param fork_name The swap name to recognize this memory region.
@@ -20,7 +22,7 @@ BOOL DiskSwapInterface::Write(const Char* fork_name, SizeT fork_name_len, SWAP_D
 
   if (*fork_name == 0) return NO;
 
-  if (!data) return NO;
+  if (!data || data->fMagic != kSwapDiskHeaderMagic) return NO;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
 
@@ -51,6 +53,11 @@ SWAP_DISK_HEADER* DiskSwapInterface::Read(const Char* fork_name, SizeT fork_name
   FileStream file(kSwapPageFilePath, kRestrictRB);
 
   VoidPtr blob = file.Read(fork_name, sizeof(SWAP_DISK_HEADER) + data_len);
+
+  if (!blob || ((SWAP_DISK_HEADER*) blob)->fMagic != kSwapDiskHeaderMagic) {
+    if (blob) mm_free_ptr(blob);
+    return nullptr;
+  }
 
   return reinterpret_cast<SWAP_DISK_HEADER*>(blob);
 }

@@ -15,9 +15,7 @@
 #include <NeKit/Ref.h>
 #include <NeKit/Stream.h>
 
-namespace CF::XRN::Version1 {
-using namespace Kernel;
-
-Ref<GUIDSequence*>            cf_make_sequence(const ArrayList<UInt32>& seq);
-ErrorOr<Ref<Kernel::KString>> cf_try_guid_to_string(Ref<GUIDSequence*>& guid);
-}  // namespace CF::XRN::Version1
+namespace Kernel::CF::XRN::Version1 {
+Ref<GUIDSequence*>    cf_make_sequence(const ArrayList<UInt32>& seq);
+ErrorOr<Ref<KString>> cf_try_guid_to_string(Ref<GUIDSequence*>& guid);
+}  // namespace Kernel::CF::XRN::Version1

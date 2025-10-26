@@ -6,4 +6,4 @@
 
 #include <CFKit/GUIDWrapper.h>
 
-namespace CF::XRN {}
+namespace Kernel::CF::XRN {}

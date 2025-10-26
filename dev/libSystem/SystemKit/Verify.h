@@ -11,7 +11,7 @@
 
 #include <libSystem/SystemKit/System.h>
 
-namespace LibSystem::Detail {
+namespace LibSystem::Verify {
 /// @author 0xf00sec, and Amlal El Mahrouss
 /// @brief safe cast operator.
 template <typename T, typename R = VoidPtr>
@@ -34,7 +34,7 @@ struct must_cast_traits<T, T> {
 /// @brief Safe constexpr cast.
 template <typename T, typename R>
 inline constexpr R* sys_constexpr_cast(T* ptr) {
-  static_assert(must_cast_traits<T, R>::value, "constexpr cast failed! types are a mismatch!");
+  static_assert(must_cast_traits<T, R>::value, "constexpr cast failed! types are mismatching!");
   return static_cast<R*>(ptr);
 }
-}  // namespace LibSystem::Detail
+}  // namespace LibSystem::Verify

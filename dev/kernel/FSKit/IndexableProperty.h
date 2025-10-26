@@ -25,7 +25,7 @@ namespace Indexer {
   class IndexableProperty final : public Property {
    public:
     explicit IndexableProperty() : Property() {
-      Kernel::BasicKString<> strProp(kMaxPropLen);
+      Kernel::KBasicString<> strProp(kMaxPropLen);
       strProp += "/prop/indexable";
 
       this->GetKey() = strProp;

@@ -53,7 +53,37 @@ namespace Detail {
 /***********************************************************************************/
 PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
   MUST_PASS(fCachedBlob);
-  fBad = false;
+
+  if (!fCachedBlob) {
+    this->fBad = YES;
+    return;
+  }
+
+  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob);
+
+  if (container->Abi == kPefAbi &&
+      container->Count >=
+          3) { /* if same ABI, AND: .text, .bss, .data (or at least similar) exists */
+    if (container->Cpu == Detail::ldr_get_platform() && container->Magic[0] == kPefMagic[0] &&
+        container->Magic[1] == kPefMagic[1] && container->Magic[2] == kPefMagic[2] &&
+        container->Magic[3] == kPefMagic[3] && container->Magic[4] == kPefMagic[4]) {
+      return;
+    } else if (container->Magic[0] == kPefMagicFat[0] && container->Magic[1] == kPefMagicFat[1] &&
+               container->Magic[2] == kPefMagicFat[2] && container->Magic[3] == kPefMagicFat[3] &&
+               container->Magic[4] == kPefMagicFat[4]) {
+      /// This is a fat binary. Treat it as such.
+      this->fFatBinary = YES;
+      return;
+    }
+  }
+
+  kout << "PEFLoader: warning: Binary format error!\r";
+
+  this->fFatBinary = NO;
+  this->fBad       = YES;
+
+  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob);
+  this->fCachedBlob = nullptr;
 }
 
 /***********************************************************************************/
@@ -69,6 +99,11 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
   /// @note zero here means that the FileMgr will read every container header inside the file.
   fCachedBlob = fFile->Read(kPefHeader, 0UL);
 
+  if (!fCachedBlob) {
+    this->fBad = YES;
+    return;
+  }
+
   PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob);
 
   if (container->Abi == kPefAbi &&
@@ -82,18 +117,18 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
                container->Magic[2] == kPefMagicFat[2] && container->Magic[3] == kPefMagicFat[3] &&
                container->Magic[4] == kPefMagicFat[4]) {
       /// This is a fat binary, treat it as such.
-      this->fFatBinary = true;
+      this->fFatBinary = YES;
       return;
     }
   }
 
-  fBad = true;
+  kout << "PEFLoader: warning: Binary format error!\r";
 
-  if (fCachedBlob) mm_free_ptr(fCachedBlob);
+  this->fFatBinary = NO;
+  this->fBad       = YES;
 
-  kout << "PEFLoader: warning: exec format error!\r";
-
-  fCachedBlob = nullptr;
+  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob);
+  this->fCachedBlob = nullptr;
 }
 
 /***********************************************************************************/
@@ -127,9 +162,8 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
     return ErrorOr<VoidPtr>{kErrorInvalidData};
 
   /// fat binary check.
-  if (command_header->Cpu != container->Cpu && !this->fFatBinary) {
+  if (command_header->Cpu != container->Cpu && !this->fFatBinary)
     return ErrorOr<VoidPtr>{kErrorInvalidData};
-  }
 
   const auto  kMangleCharacter  = '$';
   const Char* kContainerKinds[] = {".code64", ".data64", ".zero64", nullptr};
@@ -183,7 +217,7 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
 
       mm_free_ptr(blob);
 
-      kout << "PEFLoader: info: Loaded stub: " << command_header->Name << "!\r";
+      kout << "PEFLoader: info: Load stub: " << command_header->Name << "!\r";
 
       Int32 ret         = 0;
       SizeT pages_count = (command_header->VMSize + kPageSize - 1) / kPageSize;

@@ -90,6 +90,10 @@ EXTERN_C IDylibRef rtl_init_dylib_pef(USER_PROCESS& process) {
 EXTERN_C Void rtl_fini_dylib_pef(USER_PROCESS& process, IDylibRef dll_obj, BOOL* successful) {
   MUST_PASS(successful);
 
+  if (!successful) {
+    return;
+  }
+
   // sanity check (will also trigger a bug check if this fails)
   if (dll_obj == nullptr) {
     *successful = false;

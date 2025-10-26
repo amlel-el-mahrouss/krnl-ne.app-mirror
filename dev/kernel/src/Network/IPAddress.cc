@@ -73,14 +73,14 @@ bool RawIPAddress6::operator!=(const RawIPAddress6& ipv6) {
 /// @todo
 ErrorOr<KString> IPFactory::ToKString(Ref<RawIPAddress6>& ipv6) {
   NE_UNUSED(ipv6);
-  auto str = KStringBuilder::Construct(0);
+  auto str = KStringBuilder::Construct("");
   return str;
 }
 
 /// @todo
 ErrorOr<KString> IPFactory::ToKString(Ref<RawIPAddress>& ipv4) {
   NE_UNUSED(ipv4);
-  auto str = KStringBuilder::Construct(0);
+  auto str = KStringBuilder::Construct("");
   return str;
 }
 

@@ -52,9 +52,9 @@ enum {
 
 /// @brief Media drive trait type.
 struct DriveTrait final {
-  Char  fName[kDriveNameLen];  // /System, /boot, //./Devices/USB...
-  Int32 fKind;                 // fMassStorage, fFloppy, fOpticalDrive.
-  Int32 fFlags;                // fReadOnly, fEPMDrive...
+  Char  fName[kDriveNameLen] = {0};  // /System, /boot, //./Devices/USB...
+  UInt32 fKind{};                 // fMassStorage, fFloppy, fOpticalDrive.
+  UInt32 fFlags{};                // fReadOnly, fEPMDrive...
 
   /// @brief Packet drive (StorageKit compilant.)
   struct DrivePacket final {
@@ -70,11 +70,11 @@ struct DriveTrait final {
   Lba   fLbaStart{0}, fLbaEnd{0};
   SizeT fSectorSz{kDriveSectorSz};
 
-  Void (*fInput)(DrivePacket& packet);
-  Void (*fOutput)(DrivePacket& packet);
-  Void (*fVerify)(DrivePacket& packet);
-  Void (*fInit)(DrivePacket& packet);
-  const Char* (*fProtocol)(Void);
+  Void (*fInput)(DrivePacket& packet){};
+  Void (*fOutput)(DrivePacket& packet){};
+  Void (*fVerify)(DrivePacket& packet){};
+  Void (*fInit)(DrivePacket& packet){};
+  const Char* (*fProtocol)(Void){};
 };
 
 namespace Detail {
@@ -89,12 +89,12 @@ typedef DriveTrait* DriveTraitPtr;
  * @note This class has all of it's drive set to nullptr, allocate them using
  * GetAddressOf(index).
  */
-class MountpointInterface final {
+class IMountpoint final {
  public:
-  explicit MountpointInterface() = default;
-  ~MountpointInterface()         = default;
+  explicit IMountpoint() = default;
+  ~IMountpoint()         = default;
 
-  NE_COPY_DEFAULT(MountpointInterface)
+  NE_COPY_DEFAULT(IMountpoint)
 
  public:
   DriveTrait& A() { return mA; }

@@ -23,7 +23,7 @@ enum ZXD_FLAGS {
 
 /// @brief ZXD executable header
 /// @details This header is used to identify ZXD executable files.
-struct PACKED ZXD_EXEC_HEADER {
+struct PACKED ZXD_EXEC_HEADER final {
   UInt32  fMagic;
   UInt32  fVersion;
   UInt32  fFlags;
@@ -42,7 +42,7 @@ struct PACKED ZXD_EXEC_HEADER {
 /// @brief ZXD stub header
 /// @details This header is used to identify ZXD stub files. It contains the size of the stub, the
 /// offset of the stub, and the CRC32 checksum of the stub.
-struct PACKED ZXD_STUB_HEADER {
+struct PACKED ZXD_STUB_HEADER final {
   UInt32 fStubSize;
   UInt32 fStubOffset;
   UInt32 fStubCRC32;

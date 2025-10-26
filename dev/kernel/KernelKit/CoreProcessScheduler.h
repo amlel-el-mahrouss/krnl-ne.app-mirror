@@ -147,7 +147,8 @@ enum class ProcessSubsystem : Int32 {
   kProcessSubsystemUser,
   kProcessSubsystemService,
   kProcessSubsystemDriver,
-  kProcessSubsystemCount   = kProcessSubsystemDriver - kProcessSubsystemSecurity + 1,
+  kProcessSubsystemKernel,
+  kProcessSubsystemCount   = kProcessSubsystemKernel - kProcessSubsystemSecurity + 1,
   kProcessSubsystemInvalid = 0xFFFFFFF,
 };
 

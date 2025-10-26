@@ -52,9 +52,12 @@ Int32 rt_copy_memory_safe(const voidPtr src, voidPtr dst, Size len, Size dst_siz
     }
     return -1;
   }
+
   auto s = reinterpret_cast<const UInt8*>(src);
   auto d = reinterpret_cast<UInt8*>(dst);
+
   for (Size i = 0; i < len; ++i) d[i] = s[i];
+
   return static_cast<Int>(len);
 }
 

@@ -7,7 +7,7 @@
 
 #pragma once
 
-// last-rev: 02/04/25
+/// @brief Kernel JSON API.
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Defines.h>
@@ -15,58 +15,58 @@
 #include <NeKit/Stream.h>
 #include <NeKit/Utils.h>
 
-#define kJSONMaxLen (8196)
-#define kJSONLen (256)
-#define kJSONNullArr "[]"
-#define kJSONNullObj "{}"
+#define kNeJsonMaxLen (8196)
+#define kNeJsonLen (256)
+#define kNeJsonNullArr "[]"
+#define kNeJsonNullObj "{}"
 
 namespace Kernel {
 /// @brief JavaScript object class
-class Json final {
+class JsonObject final {
  public:
-  explicit Json() {
-    auto           len = kJSONMaxLen;
-    BasicKString<> key = KString(len);
-    key += kJSONNullObj;
+  explicit JsonObject() {
+    auto           len = kNeJsonMaxLen;
+    KBasicString<> key = KString(len);
+    key += kNeJsonNullObj;
 
     this->AsKey()   = key;
     this->AsValue() = key;
   }
 
-  explicit Json(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {}
+  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {}
 
-  ~Json() = default;
+  ~JsonObject() = default;
 
-  NE_COPY_DEFAULT(Json)
+  NE_COPY_DEFAULT(JsonObject)
 
   Bool& IsUndefined() { return fUndefined; }
 
  private:
   Bool           fUndefined;  // is this instance undefined?
-  BasicKString<> fKey;
-  BasicKString<> fValue;
+  KBasicString<> fKey;
+  KBasicString<> fValue;
 
  public:
   /// @brief returns the key of the json
   /// @return the key as string view.
-  BasicKString<>& AsKey() { return fKey; }
+  KBasicString<>& AsKey() { return fKey; }
 
   /// @brief returns the value of the json.
   /// @return the key as string view.
-  BasicKString<>& AsValue() { return fValue; }
+  KBasicString<>& AsValue() { return fValue; }
 
-  static Json kNull;
+  static JsonObject kNull;
 };
 
-/// @brief Json stream reader helper.
+/// @brief JsonObject stream reader helper.
 struct JsonStreamReader final {
-  STATIC Json In(const Char* full_array) {
+  STATIC JsonObject In(const Char* full_array) {
     auto    start_val   = '{';
     auto    end_val     = '}';
     Boolean probe_value = false;
 
     if (full_array[0] != start_val) {
-      if (full_array[0] != '[') return Json::kNull;
+      if (full_array[0] != '[') return JsonObject::kNull;
 
       start_val = '[';
       end_val   = ']';
@@ -79,7 +79,7 @@ struct JsonStreamReader final {
     SizeT key_len   = 0;
     SizeT value_len = 0;
 
-    Json type(kJSONMaxLen, kJSONMaxLen);
+    JsonObject type(kNeJsonMaxLen, kNeJsonMaxLen);
 
     for (SizeT i = 1; i < len; ++i) {
       if (full_array[i] == '\r' || full_array[i] == '\n') continue;
@@ -125,5 +125,5 @@ struct JsonStreamReader final {
   }
 };
 
-using JsonStream = Stream<JsonStreamReader, Json>;
+using JsonStream = Stream<JsonStreamReader, JsonObject>;
 }  // namespace Kernel

@@ -15,4 +15,17 @@
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-namespace Kernel {}  // namespace Kernel
+namespace Kernel {
+EXTERN_C Void hal_switch_kernel_task(HAL::StackFramePtr frame, ProcessID kid);
+
+Bool KernelTaskHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_kid) {
+  NE_UNUSED(frame_ptr);
+  NE_UNUSED(new_kid);
+
+  return NO;
+}
+
+Bool KernelTaskHelper::CanBeScheduled(const KERNEL_TASK& task) {
+  return task.Kid > 0 && task.Image.HasCode();
+}
+}  // namespace Kernel

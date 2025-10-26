@@ -7,4 +7,4 @@
 #include <NeKit/Json.h>
 
 /// @brief Undefined object, is null in length.
-RTL_INIT_OBJECT(Kernel::Json::kNull, Kernel::Json);
+RTL_INIT_OBJECT(Kernel::JsonObject::kNull, Kernel::JsonObject);

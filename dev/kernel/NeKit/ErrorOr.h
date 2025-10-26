@@ -13,7 +13,7 @@
 #include <NeKit/Ref.h>
 
 namespace Kernel {
-using ErrorT = UInt;
+using ErrorT = UInt32;
 
 template <typename T>
 class ErrorOr final {
@@ -50,7 +50,7 @@ class ErrorOr final {
 
  private:
   Ref<T> mRef;
-  Int32  mId{0};
+  ErrorT mId{0};
 };
 
 using ErrorOrAny = ErrorOr<voidPtr>;

@@ -11,13 +11,6 @@
 
 using namespace LibSystem;
 
-IMPORT_C Void _rtl_assert(Bool expr, const Char* origin) {
-  if (!expr) {
-    PrintOut(nullptr, "Assertion failed: %s\r", origin);
-    libsys_syscall_arg_1(SYSCALL_HASH("_rtl_debug_break"));
-  }
-}
-
 /// @note this uses the FNV 64-bit variant.
 IMPORT_C UInt64 libsys_hash_64(const Char* path) {
   if (!path || *path == 0) return 0;
@@ -147,7 +140,7 @@ IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input SizeT len, _Input UInt
 
 IMPORT_C Ref IoOpenFile(_Input const Char* path, _Input const Char* drv_letter) {
   return static_cast<Ref>(libsys_syscall_arg_3(
-      SYSCALL_HASH("IoOpenFile"), Detail::sys_safe_cast(path), Detail::sys_safe_cast(drv_letter)));
+      SYSCALL_HASH("IoOpenFile"), Verify::sys_safe_cast(path), Verify::sys_safe_cast(drv_letter)));
 }
 
 IMPORT_C Void IoCloseFile(_Input Ref desc) {
@@ -183,7 +176,7 @@ IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {
 
   // if truncated, `needed` >= kBufferSz; we still send truncated buffer
   auto ret_ptr = libsys_syscall_arg_3(SYSCALL_HASH("PrintOut"), static_cast<VoidPtr>(desc),
-                                      Detail::sys_safe_cast(buf));
+                                      Verify::sys_safe_cast(buf));
 
   if (!ret_ptr) return -kErrorInvalidData;
 

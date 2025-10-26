@@ -13,8 +13,8 @@ using namespace Kernel;
 /// @param In  Drive input
 /// @param Cleanup Drive cleanup.
 ATADeviceInterface::ATADeviceInterface(void (*Out)(DeviceInterface*,
-                                                   MountpointInterface* outpacket),
-                                       void (*In)(DeviceInterface*, MountpointInterface* inpacket))
+                                                   IMountpoint* outpacket),
+                                       void (*In)(DeviceInterface*, IMountpoint* inpacket))
     : DeviceInterface(Out, In) {}
 
 /// @brief Class desctructor
@@ -29,7 +29,7 @@ const Char* ATADeviceInterface::Name() const {
 /// @brief Output operator.
 /// @param Data the disk mountpoint.
 /// @return the class itself after operation.
-ATADeviceInterface& ATADeviceInterface::operator<<(MountpointInterface* Data) {
+ATADeviceInterface& ATADeviceInterface::operator<<(IMountpoint* Data) {
   if (!Data) return *this;
 
   for (SizeT driveCount = 0; driveCount < kDriveMaxCount; ++driveCount) {
@@ -44,13 +44,13 @@ ATADeviceInterface& ATADeviceInterface::operator<<(MountpointInterface* Data) {
     }
   }
 
-  return (ATADeviceInterface&) DeviceInterface<MountpointInterface*>::operator<<(Data);
+  return (ATADeviceInterface&) DeviceInterface<IMountpoint*>::operator<<(Data);
 }
 
 /// @brief Input operator.
 /// @param Data the disk mountpoint.
 /// @return the class itself after operation.
-ATADeviceInterface& ATADeviceInterface::operator>>(MountpointInterface* Data) {
+ATADeviceInterface& ATADeviceInterface::operator>>(IMountpoint* Data) {
   if (!Data) return *this;
 
   for (SizeT driveCount = 0; driveCount < kDriveMaxCount; ++driveCount) {
@@ -66,7 +66,7 @@ ATADeviceInterface& ATADeviceInterface::operator>>(MountpointInterface* Data) {
     }
   }
 
-  return (ATADeviceInterface&) DeviceInterface<MountpointInterface*>::operator>>(Data);
+  return (ATADeviceInterface&) DeviceInterface<IMountpoint*>::operator>>(Data);
 }
 
 const UInt32& ATADeviceInterface::GetIndex() {
@@ -74,7 +74,7 @@ const UInt32& ATADeviceInterface::GetIndex() {
 }
 
 Void ATADeviceInterface::SetIndex(const UInt32& drv) {
-  MUST_PASS(MountpointInterface::kDriveIndexInvalid != drv);
+  MUST_PASS(IMountpoint::kDriveIndexInvalid < drv);
   this->fDriveIndex = drv;
 }
 

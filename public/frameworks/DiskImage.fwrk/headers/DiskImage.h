@@ -52,7 +52,7 @@ SInt32 DIFormatPartitionEPM(struct DI_DISK_IMAGE& img) noexcept;
 /// @return Status code upon completion.
 SInt32 DIFormatFilesystemNeFS(struct DI_DISK_IMAGE& img) noexcept;
 
-/// @brief HeFS format over EPM.
+/// @brief OpenHeFS format over EPM.
 /// @param img disk image structure.
 /// @return Status code upon completion.
 SInt32 DIFormatFilesystemHeFS(struct DI_DISK_IMAGE& img) noexcept;

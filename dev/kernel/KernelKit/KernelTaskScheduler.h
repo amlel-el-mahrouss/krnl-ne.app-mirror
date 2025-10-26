@@ -24,7 +24,7 @@ typedef ProcessID KID;
 class KERNEL_TASK final {
  public:
   Char               Name[kSchedNameLen] = {"KERNEL_TASK"};
-  ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemDriver};
+  ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemKernel};
   HAL::StackFramePtr StackFrame{nullptr};
   UInt8*             StackReserve{nullptr};
   SizeT              StackSize{kSchedMaxStackSz};
@@ -40,7 +40,7 @@ class KernelTaskHelper final {
  public:
   STATIC Bool Switch(HAL::StackFramePtr frame_ptr, ProcessID new_kid);
   STATIC Bool CanBeScheduled(const KERNEL_TASK& process);
-  STATIC ErrorOr<ProcessID> TheCurrentKID();
-  STATIC SizeT              StartScheduling();
+  STATIC ErrorOr<KID> TheCurrentKID();
+  STATIC SizeT        StartScheduling();
 };
 }  // namespace Kernel

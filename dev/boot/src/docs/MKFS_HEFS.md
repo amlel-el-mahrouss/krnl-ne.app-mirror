@@ -1,6 +1,6 @@
-# `mkfs.hefs` – HeFS Filesystem Formatter
+# `mkfs.hefs` – OpenHeFS Filesystem Formatter
 
-`mkfs.hefs` is a command-line utility used to format a block device or disk image with the **High-throughput Extended File System (HeFS)** used by NeKernel. This tool initializes a HeFS volume by writing a boot node and configuring directory and inode index regions, block ranges, and volume metadata.
+`mkfs.hefs` is a command-line utility used to format a block device or disk image with the **High-throughput Extended File System (OpenHeFS)** used by NeKernel. This tool initializes a OpenHeFS volume by writing a boot node and configuring directory and inode index regions, block ranges, and volume metadata.
 
 ---
 
@@ -61,7 +61,7 @@
               -is 0x800000 -ie 0xA00000 \
               -S 128 -o hefs.img
 
-This will create a 128 GiB formatted HeFS image named `hefs.img` with specified region boundaries.
+This will create a 128 GiB formatted OpenHeFS image named `hefs.img` with specified region boundaries.
 
 ---
 
@@ -96,7 +96,7 @@ The `BootNode` stores key filesystem metadata:
 
 ## 📚 Source Location
 
-Part of the [HeFS Tooling module](https://github.com/nekernel-org/nekernel) and used during system setup or disk preparation for NeKernel.
+Part of the [OpenHeFS Tooling module](https://github.com/nekernel-org/nekernel) and used during system setup or disk preparation for NeKernel.
 
 ---
 

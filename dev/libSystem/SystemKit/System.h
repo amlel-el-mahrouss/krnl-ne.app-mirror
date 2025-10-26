@@ -79,7 +79,7 @@ IMPORT_C Void IoCloseFile(_Input Ref file_desc);
 /// @param in_data the input data.
 /// @param out_data the output data.
 /// @return the number of bytes written.
-/// @note This function is used to control the file descriptor, introduced for HeFS.
+/// @note This function is used to control the file descriptor, introduced for OpenHeFS.
 IMPORT_C SInt32 IoCtrlFile(_Input Ref file_desc, _Input UInt32 ioctl_code, _Input VoidPtr in_data,
                            _Output VoidPtr out_data);
 
@@ -89,7 +89,7 @@ IMPORT_C const Char* IoMimeFile(_Input Ref file_desc);
 
 /// @brief Gets the dir DIM.
 /// @param dir_desc directory descriptor.
-/// @note only works in HeFS, will return nil-x/nil if used on any other filesystem.
+/// @note only works in OpenHeFS, will return nil-x/nil if used on any other filesystem.
 IMPORT_C const Char* IoDimFile(_Input Ref dir_desc);
 
 /// @brief Write data to a file ref

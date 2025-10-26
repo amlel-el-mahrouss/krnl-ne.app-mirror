@@ -1,12 +1,12 @@
 NAME
-    mgmt.hefs — HeFS Management utility command
+    mgmt.hefs — OpenHeFS Management utility command
 
 SYNOPSIS
     mgmt.hefs [OPTIONS]
 
 DESCRIPTION
     The `mgmt.hefs` command provides scheduling, execution, and remote orchestration
-    of a HeFS volume inside a System One environement. One might use this tool to
+    of a OpenHeFS volume inside a System One environement. One might use this tool to
     create, edit, and remove volumes from a disk.
 
     Usages include, but are not limited to:
@@ -16,7 +16,7 @@ DESCRIPTION
 
 OPTIONS
     -v, --volume <DEVICE>     Device input
-    -c, --create              Create HeFS volume
+    -c, --create              Create OpenHeFS volume
     -x, --xml    <PLIST>      Pass PropertyList to volume creation tool.
     -t, --time <HH:MMAM/PM>   Time to run the script
     -d, --day <DAY>           Day of the week (e.g., Mon, Tue, Wed)

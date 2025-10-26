@@ -134,7 +134,7 @@ HardwareThreadScheduler& HardwareThreadScheduler::The() {
 /// @brief Get Stack Frame of AP.
 /***********************************************************************************/
 HAL::StackFramePtr HardwareThreadScheduler::Leak() noexcept {
-  return fThreadList[fCurrentThread].fStack;
+  return fThreadList[fCurrentThreadIdx].fStack;
 }
 
 /***********************************************************************************/
@@ -150,6 +150,7 @@ Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
     return {kFakeThread};
   }
 
+  fCurrentThreadIdx = idx;
   return &fThreadList[idx];
 }
 

@@ -26,7 +26,7 @@
 
 - **Modular Microkernel Architecture**: Clean separation of kernel, drivers, userland, and frameworks. 
 
-- **Custom Filesystems**: (HeFS), catalog/fork model (NeFS), and metadata handling.
+- **Custom Filesystems**: (OpenHeFS), catalog/fork model (NeFS), and metadata handling.
 
 - **Memory Management**: Custom heap manager, page manager, and safe memory utilities. Kernel heap allocations are protected with metadata and CRCs. Userland and kernel memory separation.
 
@@ -38,7 +38,7 @@
 
 - **Security and Robustness**: kernel and tools (bounds checks, safe memory copy/set, error codes). Kernel panics and error reporting for critical failures. No dynamic code loading in kernel space.
 
-- **Documentation and Specs**: Full LaTeX specifications for HeFS and NeFS, with on-disk structure diagrams and API documentation. Markdown docs for tools and usage.
+- **Documentation and Specs**: Full LaTeX specifications for OpenHeFS and NeFS, with on-disk structure diagrams and API documentation. Markdown docs for tools and usage.
 
 - **Cross-Platform Boot Support**: Bootloader and platform code for AMD64 and ARM64, with handover and hardware abstraction layers.
 

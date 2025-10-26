@@ -8,11 +8,11 @@
 
 #include <NeKit/Macros.h>
 
-#define NEWKIT_VERSION_STR "0.0.1"
-#define NEWKIT_VERSION_BCD 0x0001
+#define NEKIT_VERSION_STR "0.0.1"
+#define NEKIT_VERSION_BCD 0x0001
 
 #ifndef __cplusplus
-#error Kernel compiles with a C++ compiler.
+#error !!! Kernel compiles only with a C++ compiler. !!!
 #endif
 
 #if __cplusplus <= 201703L
@@ -35,13 +35,13 @@ using nullPtr = decltype(nullptr);
 using NullPtr = decltype(nullptr);
 
 using Int     = int;
-using Int32   = int;
-using UShort  = unsigned short;
-using UInt16  = unsigned short;
+using Int32   = __INT32_TYPE__;
+using UShort  = __UINT16_TYPE__;
+using UInt16  = __UINT16_TYPE__;
 using Short   = short;
-using Int16   = short;
-using UInt    = unsigned int;
-using UInt32  = unsigned int;
+using Int16   = __INT16_TYPE__;
+using UInt    = __UINT32_TYPE__;
+using UInt32  = __UINT32_TYPE__;
 using Long    = __INT64_TYPE__;
 using Int64   = __INT64_TYPE__;
 using ULong   = __UINT64_TYPE__;
@@ -49,11 +49,13 @@ using UInt64  = __UINT64_TYPE__;
 using Boolean = bool;
 using Bool    = bool;
 using Char    = char;
-using UChar   = unsigned char;
-using UInt8   = unsigned char;
+using Int8    = __INT8_TYPE__;
+using Char8    = char8_t;
+using UChar   = __UINT8_TYPE__;
+using UInt8   = __UINT8_TYPE__;
 
-using SSize     = Int64;
-using SSizeT    = Int64;
+using SSize     = long;
+using SSizeT    = long;
 using Size      = __SIZE_TYPE__;
 using SizeT     = __SIZE_TYPE__;
 using IntPtr    = __INTPTR_TYPE__;
@@ -83,6 +85,7 @@ typedef UInt32  PhysicalAddressKind;
 typedef UIntPtr VirtualAddressKind;
 
 using Void = void;
+using Any = void*;
 
 using Lba = UInt64;
 

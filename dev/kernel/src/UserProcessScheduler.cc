@@ -21,7 +21,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/KString.h>
 #include <NeKit/Utils.h>
-#include <SignalKit/SignalGen.h>
+#include <SignalKit/Signals.h>
 
 ///! BUGS: 0
 
@@ -462,15 +462,10 @@ UserProcessScheduler& UserProcessScheduler::The() {
 /***********************************************************************************/
 
 Void UserProcessScheduler::Remove(ProcessID process_id) {
-  if (process_id < 0 || process_id > kSchedProcessLimitPerTeam) {
-    return;
-  }
+  if (process_id < 0 || process_id > kSchedProcessLimitPerTeam) return;
+  if (this->mTeam.mProcessList[process_id].Status == ProcessStatusKind::kInvalid) return;
 
-  if (this->mTeam.mProcessList[process_id].Status == ProcessStatusKind::kInvalid) {
-    return;
-  }
-
-  mTeam.mProcessList[process_id].Exit(0);
+  mTeam.mProcessList[process_id].Exit(kErrorSuccess);
 }
 
 /// @brief Is it a user scheduler?
@@ -586,17 +581,13 @@ ErrorOr<ProcessID> UserProcessHelper::TheCurrentPID() {
 /// @retval true can be schedulded.
 /// @retval false cannot be schedulded.
 Bool UserProcessHelper::CanBeScheduled(const USER_PROCESS& process) {
+  if (process.Affinity == AffinityKind::kRealTime) return Yes;
+
   if (process.Status != ProcessStatusKind::kRunning) return No;
   if (process.Affinity == AffinityKind::kInvalid) return No;
   if (process.StackSize > kSchedMaxStackSz) return No;
   if (!process.Name[0]) return No;
-
-  // real time processes shouldn't wait that much.
-  if (process.Affinity == AffinityKind::kRealTime) return Yes;
-
-  if (process.Signal.SignalID == sig_generate_unique<SIGTRAP>()) {
-    return No;
-  }
+  if (process.Signal.SignalID == sig_generate_unique<SIGTRAP>()) return No;
 
   return process.PTime < 1;
 }

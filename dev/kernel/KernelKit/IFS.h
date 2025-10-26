@@ -14,12 +14,12 @@ namespace Kernel {
 /// @param DrvTrait drive info
 /// @param DrvIndex drive index.
 /// @return
-Int32 fs_ifs_read(MountpointInterface* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex);
+Int32 fs_ifs_read(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex);
 
 /// @brief Write to IFS disk.
 /// @param Mnt mounted interface.
 /// @param DrvTrait drive info
 /// @param DrvIndex drive index.
 /// @return
-Int32 fs_ifs_write(MountpointInterface* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex);
+Int32 fs_ifs_write(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex);
 }  // namespace Kernel

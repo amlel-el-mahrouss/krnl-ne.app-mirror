@@ -4,7 +4,7 @@
 
 ------------------------------------------- */
 
-#include <tools/libmkfs/hefs.h>
+#include <tools/libmkfs/openhefs.h>
 #include <tools/libmkfs/mkfs.h>
 #include <algorithm>
 #include <cstdlib>

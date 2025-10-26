@@ -38,13 +38,10 @@ struct PACKED IPC_ADDR final {
   // some operators.
   ////////////////////////////////////
 
-  bool operator==(const IPC_ADDR& addr) noexcept;
-
-  bool operator==(IPC_ADDR& addr) noexcept;
-
-  bool operator!=(const IPC_ADDR& addr) noexcept;
-
-  bool operator!=(IPC_ADDR& addr) noexcept;
+  BOOL operator==(const IPC_ADDR& addr) noexcept;
+  BOOL operator==(IPC_ADDR& addr) noexcept;
+  BOOL operator!=(const IPC_ADDR& addr) noexcept;
+  BOOL operator!=(IPC_ADDR& addr) noexcept;
 };
 
 typedef struct IPC_ADDR IPC_ADDR;
@@ -58,7 +55,7 @@ enum {
 constexpr inline auto kIPCMsgSize = 6094U;
 
 enum {
-  kIPCLockInvalid,
+  kIPCLockInvalid = 0,
   kIPCLockFree = 1,
   kIPCLockUsed = 2,
 };
@@ -77,17 +74,17 @@ typedef struct IPC_MSG final {
   UInt32   IpcLock;
   /// @brief Passes the message to target, could be anything, HTTP packet, JSON or whatever.
   static Bool Pass(IPC_MSG* self, IPC_MSG* target) noexcept;
-} PACKED IPC_MSG;
+} PACKED ALIGN(8) IPC_MSG;
 
 /// @brief Sanitize packet function
 /// @retval true packet is correct.
 /// @retval false packet is incorrect and process has crashed.
-Bool ipc_sanitize_packet(_Input IPC_MSG* pckt_in);
+BOOL ipc_sanitize_packet(_Input IPC_MSG* pckt_in);
 
 /// @brief Construct packet function
 /// @retval true packet is correct.
 /// @retval false packet is incorrect and process has crashed.
-Bool ipc_construct_packet(_Output _Input IPC_MSG** pckt_in);
+BOOL ipc_construct_packet(_Output _Input IPC_MSG** pckt_in);
 }  // namespace Kernel
 
 #endif  // INC_IPC_H

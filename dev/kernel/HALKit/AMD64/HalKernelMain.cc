@@ -145,7 +145,7 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
 #ifdef __FSKIT_INCLUDES_HEFS__
-  HeFS::fs_init_hefs();
+  OpenHeFS::fs_init_hefs();
 #endif
 
 #ifdef __FSKIT_INCLUDES_NEFS__

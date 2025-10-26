@@ -78,4 +78,4 @@ class CFNonNullRef final {
 };
 }  // namespace CF
 
-#endif  // ifndef _NEWKIT_REF_H_
+#endif  // ifndef _NEKIT_REF_H_

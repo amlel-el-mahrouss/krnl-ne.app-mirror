@@ -14,9 +14,10 @@
 
 #pragma once
 
+#ifdef __NE_USE_PEF__
 #include <KernelKit/IPEFDylibObject.h>
-#include <KernelKit/PECodeMgr.h>
 #include <KernelKit/PEFCodeMgr.h>
+#endif
 
 /// @file CodeMgr.h
 /// @brief Code Manager header file.

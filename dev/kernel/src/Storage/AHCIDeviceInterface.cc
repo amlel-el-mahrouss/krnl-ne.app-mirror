@@ -13,9 +13,9 @@ using namespace Kernel;
 /// @param In  Drive input
 /// @param Cleanup Drive cleanup.
 AHCIDeviceInterface::AHCIDeviceInterface(void (*out)(DeviceInterface*     self,
-                                                     MountpointInterface* outpacket),
+                                                     IMountpoint* outpacket),
                                          void (*in)(DeviceInterface*     self,
-                                                    MountpointInterface* inpacket))
+                                                    IMountpoint* inpacket))
     : DeviceInterface(out, in) {}
 
 /// @brief Class desctructor
@@ -30,7 +30,7 @@ const Char* AHCIDeviceInterface::Name() const {
 /// @brief Output operator.
 /// @param mnt the disk mountpoint.
 /// @return the class itself after operation.
-AHCIDeviceInterface& AHCIDeviceInterface::operator<<(MountpointInterface* mnt) {
+AHCIDeviceInterface& AHCIDeviceInterface::operator<<(IMountpoint* mnt) {
   if (!mnt) return *this;
 
   for (SizeT driveCount = 0; driveCount < kDriveMaxCount; ++driveCount) {
@@ -45,13 +45,13 @@ AHCIDeviceInterface& AHCIDeviceInterface::operator<<(MountpointInterface* mnt) {
     }
   }
 
-  return (AHCIDeviceInterface&) DeviceInterface<MountpointInterface*>::operator<<(mnt);
+  return (AHCIDeviceInterface&) DeviceInterface<IMountpoint*>::operator<<(mnt);
 }
 
 /// @brief Input operator.
 /// @param mnt the disk mountpoint.
 /// @return the class itself after operation.
-AHCIDeviceInterface& AHCIDeviceInterface::operator>>(MountpointInterface* mnt) {
+AHCIDeviceInterface& AHCIDeviceInterface::operator>>(IMountpoint* mnt) {
   if (!mnt) return *this;
 
   for (SizeT driveCount = 0; driveCount < kDriveMaxCount; ++driveCount) {
@@ -67,7 +67,7 @@ AHCIDeviceInterface& AHCIDeviceInterface::operator>>(MountpointInterface* mnt) {
     }
   }
 
-  return (AHCIDeviceInterface&) DeviceInterface<MountpointInterface*>::operator>>(mnt);
+  return (AHCIDeviceInterface&) DeviceInterface<IMountpoint*>::operator>>(mnt);
 }
 
 const UInt16& AHCIDeviceInterface::GetPortsImplemented() {
@@ -84,6 +84,6 @@ const UInt32& AHCIDeviceInterface::GetIndex() {
 }
 
 Void AHCIDeviceInterface::SetIndex(const UInt32& drv) {
-  MUST_PASS(MountpointInterface::kDriveIndexInvalid < drv);
+  MUST_PASS(IMountpoint::kDriveIndexInvalid < drv);
   this->fDriveIndex = drv;
 }

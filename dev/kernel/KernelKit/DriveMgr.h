@@ -89,12 +89,12 @@ typedef DriveTrait* DriveTraitPtr;
  * @note This class has all of it's drive set to nullptr, allocate them using
  * GetAddressOf(index).
  */
-class MountpointInterface final {
+class IMountpoint final {
  public:
-  explicit MountpointInterface() = default;
-  ~MountpointInterface()         = default;
+  explicit IMountpoint() = default;
+  ~IMountpoint()         = default;
 
-  NE_COPY_DEFAULT(MountpointInterface)
+  NE_COPY_DEFAULT(IMountpoint)
 
  public:
   DriveTrait& A() { return mA; }

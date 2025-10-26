@@ -200,8 +200,8 @@ namespace Detail {
   /// @brief Read PIO device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_read_pio(DeviceInterface<MountpointInterface*>* self,
-                             MountpointInterface*                   mnt) {
+  STATIC Void sk_io_read_pio(DeviceInterface<IMountpoint*>* self,
+                             IMountpoint*                   mnt) {
     ATADeviceInterface* dev = (ATADeviceInterface*) self;
 
     err_global_get() = kErrorDisk;
@@ -222,8 +222,8 @@ namespace Detail {
   /// @brief Write PIO device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_write_pio(DeviceInterface<MountpointInterface*>* self,
-                              MountpointInterface*                   mnt) {
+  STATIC Void sk_io_write_pio(DeviceInterface<IMountpoint*>* self,
+                              IMountpoint*                   mnt) {
     ATADeviceInterface* dev = (ATADeviceInterface*) self;
 
     err_global_get() = kErrorDisk;

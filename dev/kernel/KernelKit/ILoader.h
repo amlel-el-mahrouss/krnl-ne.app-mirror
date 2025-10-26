@@ -14,12 +14,12 @@
 namespace Kernel {
 /// @brief This interface is used to make loader contracts (MSCOFF, PEF).
 /// @author @Amlal-El-Mahrouss
-class LoaderInterface {
+class ILoader {
  public:
-  explicit LoaderInterface() = default;
-  virtual ~LoaderInterface() = default;
+  explicit ILoader() = default;
+  virtual ~ILoader() = default;
 
-  NE_COPY_DEFAULT(LoaderInterface)
+  NE_COPY_DEFAULT(ILoader)
 
  public:
   virtual _Output ErrorOr<VoidPtr> GetBlob()                                              = 0;

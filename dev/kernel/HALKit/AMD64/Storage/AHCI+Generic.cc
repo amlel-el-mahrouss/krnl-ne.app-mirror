@@ -546,8 +546,8 @@ namespace Detail {
   /// @brief Read AHCI device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_read_ahci(DeviceInterface<MountpointInterface*>* self,
-                              MountpointInterface*                   mnt) {
+  STATIC Void sk_io_read_ahci(DeviceInterface<IMountpoint*>* self,
+                              IMountpoint*                   mnt) {
     AHCIDeviceInterface* dev = (AHCIDeviceInterface*) self;
 
     err_global_get() = kErrorDisk;
@@ -568,8 +568,8 @@ namespace Detail {
   /// @brief Write AHCI device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_write_ahci(DeviceInterface<MountpointInterface*>* self,
-                               MountpointInterface*                   mnt) {
+  STATIC Void sk_io_write_ahci(DeviceInterface<IMountpoint*>* self,
+                               IMountpoint*                   mnt) {
     AHCIDeviceInterface* dev = (AHCIDeviceInterface*) self;
 
     err_global_get() = kErrorDisk;

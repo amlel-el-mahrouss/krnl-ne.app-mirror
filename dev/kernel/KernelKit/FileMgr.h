@@ -23,12 +23,12 @@
 #define INC_FILEMGR_H
 
 /// @file FileMgr.h
-/// @brief File Manager.
+/// @brief File Manager System.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 //! Include filesystems that NeKernel supports.
 #include <FSKit/Ext2+IFS.h>
-#include <FSKit/HeFS.h>
+#include <FSKit/OpenHeFS.h>
 #include <FSKit/NeFS.h>
 
 #include <CompilerKit/CompilerKit.h>
@@ -71,7 +71,7 @@ enum {
   kFileIOCnt    = (kFileFlagData - kFileWriteAll) + 1,
 };
 
-typedef VoidPtr NodePtr;
+using NodePtr = VoidPtr;
 
 /**
 @brief Filesystem Mgr Interface class

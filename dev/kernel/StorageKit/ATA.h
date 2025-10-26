@@ -13,16 +13,16 @@
 
 namespace Kernel {
 /// @brief ATA device interface class.
-class ATADeviceInterface : public DeviceInterface<MountpointInterface*> {
+class ATADeviceInterface : public DeviceInterface<IMountpoint*> {
  public:
-  explicit ATADeviceInterface(void (*Out)(DeviceInterface*, MountpointInterface* outpacket),
-                              void (*In)(DeviceInterface*, MountpointInterface* inpacket));
+  explicit ATADeviceInterface(void (*Out)(DeviceInterface*, IMountpoint* outpacket),
+                              void (*In)(DeviceInterface*, IMountpoint* inpacket));
 
   virtual ~ATADeviceInterface();
 
  public:
-  ATADeviceInterface& operator<<(MountpointInterface* Data) override;
-  ATADeviceInterface& operator>>(MountpointInterface* Data) override;
+  ATADeviceInterface& operator<<(IMountpoint* Data) override;
+  ATADeviceInterface& operator>>(IMountpoint* Data) override;
 
  public:
   ATADeviceInterface& operator=(const ATADeviceInterface&) = default;

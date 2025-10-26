@@ -28,25 +28,25 @@ namespace Kernel {
 /// @param DrvTrait drive info
 /// @param DrvIndex drive index.
 /// @return
-Int32 fs_ifs_read(MountpointInterface* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
+Int32 fs_ifs_read(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
   if (!Mnt) return kErrorDisk;
 
   DrvTrait.fPacket.fPacketGood = false;
 
   switch (DrvIndex) {
-    case MountpointInterface::kDriveIndexA: {
+    case IMountpoint::kDriveIndexA: {
       fsi_ifs_read(A, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexB: {
+    case IMountpoint::kDriveIndexB: {
       fsi_ifs_read(B, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexC: {
+    case IMountpoint::kDriveIndexC: {
       fsi_ifs_read(C, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexD: {
+    case IMountpoint::kDriveIndexD: {
       fsi_ifs_read(D, DrvTrait.fPacket, Mnt);
       break;
     }
@@ -60,25 +60,25 @@ Int32 fs_ifs_read(MountpointInterface* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex
 /// @param DrvTrait drive info
 /// @param DrvIndex drive index.
 /// @return
-Int32 fs_ifs_write(MountpointInterface* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
+Int32 fs_ifs_write(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
   if (!Mnt) return kErrorDisk;
 
   DrvTrait.fPacket.fPacketGood = false;
 
   switch (DrvIndex) {
-    case MountpointInterface::kDriveIndexA: {
+    case IMountpoint::kDriveIndexA: {
       fsi_ifs_write(A, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexB: {
+    case IMountpoint::kDriveIndexB: {
       fsi_ifs_write(B, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexC: {
+    case IMountpoint::kDriveIndexC: {
       fsi_ifs_write(C, DrvTrait.fPacket, Mnt);
       break;
     }
-    case MountpointInterface::kDriveIndexD: {
+    case IMountpoint::kDriveIndexD: {
       fsi_ifs_write(D, DrvTrait.fPacket, Mnt);
       break;
     }

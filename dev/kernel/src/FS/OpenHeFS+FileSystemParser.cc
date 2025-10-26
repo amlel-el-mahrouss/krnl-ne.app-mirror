@@ -6,7 +6,7 @@
 
 #ifdef __FSKIT_INCLUDES_HEFS__
 
-#include <FSKit/HeFS.h>
+#include <FSKit/OpenHeFS.h>
 #include <FirmwareKit/EPM.h>
 #include <FirmwareKit/GPT.h>
 #include <KernelKit/KPC.h>
@@ -79,7 +79,7 @@ namespace Detail {
                                               const Utf8Char* dir_name, UInt16 flags,
                                               const BOOL delete_or_create);
 
-  /// @brief This helper makes it easier for other machines to understand HeFS encoded hashes.
+  /// @brief This helper makes it easier for other machines to understand OpenHeFS encoded hashes.
   STATIC UInt64 hefsi_to_big_endian_64(UInt64 val) {
     return ((val >> 56) & 0x00000000000000FFULL) | ((val >> 40) & 0x000000000000FF00ULL) |
            ((val >> 24) & 0x0000000000FF0000ULL) | ((val >> 8) & 0x00000000FF000000ULL) |
@@ -743,12 +743,12 @@ namespace Detail {
 }  // namespace Detail
 }  // namespace Kernel
 
-/// @note HeFS will allocate inodes and ind in advance, to avoid having to allocate them in
+/// @note OpenHeFS will allocate inodes and ind in advance, to avoid having to allocate them in
 /// real-time.
 /// @note This is certainly take longer to format a disk with it, but worth-it in the long run.
 
 namespace Kernel {
-/// @brief Make a EPM+HeFS mnt out of the disk.
+/// @brief Make a EPM+OpenHeFS mnt out of the disk.
 /// @param mnt The mnt to write on.
 /// @return If it was sucessful, see err_local_get().
 _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input const Int32 flags,
@@ -766,7 +766,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
     (Void)(kout << "OpenHeFS recommends at least 128 GiB of free space." << kendl);
     (Void)(
         kout
-        << "The OS will still try to format a HeFS disk here anyway, don't expect perfect geometry."
+        << "The OS will still try to format a OpenHeFS disk here anyway, don't expect perfect geometry."
         << kendl);
   }
 
@@ -822,7 +822,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
 
   MUST_PASS(boot->fSectorSize);
 
-  /// @note all HeFS strucutres are equal to 512, so here it's fine, unless fSectoSize is 2048.
+  /// @note all OpenHeFS strucutres are equal to 512, so here it's fine, unless fSectoSize is 2048.
   const SizeT max_lba = (drv_std_get_size()) / boot->fSectorSize;
 
   const SizeT dir_max   = max_lba / 300;  // 5% for directory inodes
@@ -1007,7 +1007,7 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
   mnt->fInput(mnt->fPacket);
 
   if (!KStringBuilder::Equals(boot->fMagic, kHeFSMagic) || boot->fVersion != kHeFSVersion) {
-    (Void)(kout << "Invalid Boot Node, HeFS partition is invalid." << kendl);
+    (Void)(kout << "Invalid Boot Node, OpenHeFS partition is invalid." << kendl);
     mm_free_ptr((VoidPtr) boot);
     err_global_get() = kErrorDisk;
     return NO;
@@ -1147,9 +1147,9 @@ _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input co
 
 STATIC DriveTrait kMountPoint;
 
-/// @brief Initialize the HeFS filesystem.
+/// @brief Initialize the OpenHeFS filesystem.
 /// @return To check its status, see err_local_get().
-Boolean HeFS::fs_init_hefs(Void) noexcept {
+Boolean OpenHeFS::fs_init_hefs(Void) noexcept {
   kout << "Verifying disk...\r";
 
   kMountPoint = io_construct_main_drive();

@@ -15,7 +15,7 @@
 #define __KERNELKIT_PEF_H__
 
 #include <CompilerKit/CompilerKit.h>
-#include <KernelKit/LoaderInterface.h>
+#include <KernelKit/ILoader.h>
 #include <NeKit/Defines.h>
 
 #define kPefMagic "Open"

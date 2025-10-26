@@ -10,10 +10,10 @@
 #include <KernelKit/DriveMgr.h>
 
 namespace Kernel {
-class NVMEDeviceInterface final NE_DEVICE<MountpointInterface*> {
+class NVMEDeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
-  explicit NVMEDeviceInterface(Void (*out)(DeviceInterface*, MountpointInterface* out_packet),
-                               Void (*in)(DeviceInterface*, MountpointInterface* in_packet),
+  explicit NVMEDeviceInterface(Void (*out)(DeviceInterface*, IMountpoint* out_packet),
+                               Void (*in)(DeviceInterface*, IMountpoint* in_packet),
                                Void (*cleanup)(Void));
 
   ~NVMEDeviceInterface() override;
@@ -24,7 +24,7 @@ class NVMEDeviceInterface final NE_DEVICE<MountpointInterface*> {
   const Char* Name() const override;
 
  public:
-  OwnPtr<MountpointInterface*> operator()(UInt32 dma_low, UInt32 dma_high, SizeT dma_sz);
+  OwnPtr<IMountpoint*> operator()(UInt32 dma_low, UInt32 dma_high, SizeT dma_sz);
 
  private:
   Void (*fCleanup)(Void) = {nullptr};

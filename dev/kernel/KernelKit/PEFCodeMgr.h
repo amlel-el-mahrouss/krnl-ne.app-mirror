@@ -27,7 +27,7 @@ namespace Kernel {
 /// \name PEFLoader
 /// \brief PEF loader class.
 ///
-class PEFLoader : public LoaderInterface {
+class PEFLoader : public ILoader {
  private:
   explicit PEFLoader() = delete;
 

@@ -4,7 +4,7 @@
 \usepackage{longtable}
 \usepackage{listings}
 \geometry{margin=1in}
-\title{HeFS: Hight-throughput extended File System}
+\title{OpenHeFS: Hight-throughput extended File System}
 \author{Amlal El Mahrouss}
 \date{\today}
 
@@ -13,7 +13,7 @@
 \maketitle
 
 \section{Overview}
-The High-throughput Extended File System (HeFS) is a custom filesystem tailored for performance, structure, and compact representation. It uses red-black trees for directory indexing, sparse block slicing for file layout, and fixed-size metadata structures optimized for 512-byte sector alignment.
+The High-throughput Extended File System (OpenHeFS) is a custom filesystem tailored for performance, structure, and compact representation. It uses red-black trees for directory indexing, sparse block slicing for file layout, and fixed-size metadata structures optimized for 512-byte sector alignment.
 
 \section{Constants and Macros}
 \begin{longtable}{|l|l|}
@@ -21,13 +21,13 @@ The High-throughput Extended File System (HeFS) is a custom filesystem tailored 
 \textbf{Name} & \textbf{Value / Description} \\
 \hline
 \texttt{kHeFSVersion} & 0x0103 \\
-\texttt{kHeFSMagic} & "  HeFS" (8-byte magic identifier) \\
+\texttt{kHeFSMagic} & "  OpenHeFS" (8-byte magic identifier) \\
 \texttt{kHeFSMagicLen} & 8 \\
 \texttt{kHeFSBlockLen} & 512 bytes \\
 \texttt{kHeFSFileNameLen} & 256 characters \\
 \texttt{kHeFSPartNameLen} & 128 characters \\
 \texttt{kHeFSMinimumDiskSize} & 128 GiB \\
-\texttt{kHeFSDefaultVolumeName} & "HeFS Volume" \\
+\texttt{kHeFSDefaultVolumeName} & "OpenHeFS Volume" \\
 \texttt{kHeFSINDStartOffset} & Offset after boot node \\
 \texttt{kHeFSSearchAllStr} & "*" (wildcard string) \\
 \hline
@@ -151,10 +151,10 @@ Constants:
 
 \section{Filesystem API}\label{sec:filesystem-api}
 
-Provided by \texttt{Kernel::HeFS::HeFileSystemParser}.
+Provided by \texttt{Kernel::OpenHeFS::HeFileSystemParser}.
 
 \begin{itemize}
-  \item \texttt{Format(drive, flags, name)} - Format drive with HeFS
+  \item \texttt{Format(drive, flags, name)} - Format drive with OpenHeFS
   \item \texttt{CreateINodeDirectory(drive, flags, dir)}
   \item \texttt{RemoveINodeDirectory(drive, flags, dir)}
   \item \texttt{CreateINode(drive, flags, dir, name, kind)}
@@ -168,7 +168,7 @@ Internal helpers:
 \end{itemize}
 
 \section{Conclusion}
-HeFS provides a modern and compact approach to high-performance file storage.
+OpenHeFS provides a modern and compact approach to high-performance file storage.
 Its use of red-black trees, fixed-size metadata, slice-based sparse files, and minimal overhead makes it a strong candidate for performance-sensitive use cases.
 
 \end{document}

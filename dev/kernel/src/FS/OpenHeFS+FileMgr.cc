@@ -10,7 +10,7 @@
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
 
-/// @brief HeFS File System Manager.
+/// @brief OpenHeFS File System Manager.
 /// BUGS: 0
 
 namespace Kernel {
@@ -35,7 +35,7 @@ HeFileSystemMgr::~HeFileSystemMgr() {
 /// @return If it was deleted or not.
 bool HeFileSystemMgr::Remove(_Input const Char* path) {
   if (path == nullptr || *path == 0) {
-    kout << "HeFS: Remove called with null or empty path\n";
+    kout << "OpenHeFS: Remove called with null or empty path\n";
     return false;
   }
 
@@ -47,7 +47,7 @@ bool HeFileSystemMgr::Remove(_Input const Char* path) {
 /// @return The Node pointer.
 NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
   if (!path || *path == 0) {
-    kout << "HeFS: Create called with null or empty path\n";
+    kout << "OpenHeFS: Create called with null or empty path\n";
     return nullptr;
   }
   return nullptr;
@@ -58,7 +58,7 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
 /// @return The Node pointer.
 NodePtr HeFileSystemMgr::CreateDirectory(const Char* path) {
   if (!path || *path == 0) {
-    kout << "HeFS: CreateDirectory called with null or empty path\n";
+    kout << "OpenHeFS: CreateDirectory called with null or empty path\n";
     return nullptr;
   }
   return nullptr;
@@ -69,7 +69,7 @@ NodePtr HeFileSystemMgr::CreateDirectory(const Char* path) {
 /// @return The Node pointer.
 NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
   if (!path || *path == 0) {
-    kout << "HeFS: CreateAlias called with null or empty path\n";
+    kout << "OpenHeFS: CreateAlias called with null or empty path\n";
     return nullptr;
   }
   return nullptr;
@@ -77,7 +77,7 @@ NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
 
 NodePtr HeFileSystemMgr::CreateSwapFile(const Char* path) {
   if (!path || *path == 0) {
-    kout << "HeFS: CreateSwapFile called with null or empty path\n";
+    kout << "OpenHeFS: CreateSwapFile called with null or empty path\n";
     return nullptr;
   }
   return nullptr;
@@ -104,7 +104,7 @@ Char NeFileSystemHelper::Separator() {
 /// @brief Gets the metafile character.
 /// @return
 Char NeFileSystemHelper::MetaFile() {
-  return 0;
+  return '\0';
 }
 
 /// @brief Opens a new file.
@@ -113,11 +113,11 @@ Char NeFileSystemHelper::MetaFile() {
 /// @return
 _Output NodePtr HeFileSystemMgr::Open(_Input const Char* path, _Input const Char* r) {
   if (!path || *path == 0) {
-    kout << "HeFS: Open called with null or empty path\n";
+    kout << "OpenHeFS: Open called with null or empty path\n";
     return nullptr;
   }
   if (!r || *r == 0) {
-    kout << "HeFS: Open called with null or empty mode string\n";
+    kout << "OpenHeFS: Open called with null or empty mode string\n";
     return nullptr;
   }
   return nullptr;
@@ -181,7 +181,7 @@ _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
   return kFileMgrNPos;
 }
 
-/// @brief Returns the parser of HeFS.
+/// @brief Returns the parser of OpenHeFS.
 _Output HeFileSystemParser* HeFileSystemMgr::GetParser() noexcept {
   return mParser;
 }

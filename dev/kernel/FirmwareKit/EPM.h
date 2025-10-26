@@ -89,7 +89,7 @@ struct PACKED EPM_PART_BLOCK {
   Kernel::Int16 Kind;
   Kernel::Int16 Flags;
   Kernel::Int32 FsVersion;
-  Kernel::Char  Fs[kEPMFilesystemLength];  /* NeFS, HeFS... */
+  Kernel::Char  Fs[kEPMFilesystemLength];  /* NeFS, OpenHeFS... */
   Kernel::Char  Reserved[kEPMReserveLen];  // to fill a full sector.
 };
 

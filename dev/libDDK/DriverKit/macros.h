@@ -16,7 +16,7 @@
 #define BOOL bool
 #define YES true
 #define NO false
-#define DDK_EXTERN extern "C" __declspec(dllexport)
+#define DDK_EXTERN extern "C"
 #define nil nullptr
 #undef NULL
 #define NULL 0
@@ -25,7 +25,7 @@
 #define BOOL char
 #define YES 1
 #define NO 0
-#define DDK_EXTERN extern __declspec(dllexport)
+#define DDK_EXTERN extern
 #define nil ((void*) 0)
 #undef NULL
 #define NULL ((void*) 0)
@@ -35,9 +35,9 @@
 #ifndef __DDK__
 #undef DDK_EXTERN
 #if defined(__cplusplus)
-#define DDK_EXTERN extern "C" __declspec(dllimport)
+#define DDK_EXTERN extern "C"
 #else
-#define DDK_EXTERN __declspec(dllimport)
+#define DDK_EXTERN 
 #endif
 #endif
 

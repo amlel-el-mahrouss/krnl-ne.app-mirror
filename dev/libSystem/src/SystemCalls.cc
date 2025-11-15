@@ -11,23 +11,6 @@
 
 using namespace LibSystem;
 
-/// @note this uses the FNV 64-bit variant.
-IMPORT_C UInt64 libsys_hash_64(const Char* path) {
-  if (!path || *path == 0) return 0;
-
-  const UInt64 kFNVSeed  = 0xcbf29ce484222325ULL;
-  const UInt64 kFNVPrime = 0x100000001b3ULL;
-
-  UInt64 hash = kFNVSeed;
-
-  while (*path) {
-    hash ^= (Char) (*path++);
-    hash *= kFNVPrime;
-  }
-
-  return hash;
-}
-
 IMPORT_C Char* StrFmt(const Char* fmt, ...) {
   if (!fmt || *fmt == 0) return const_cast<Char*>("(null)");
 

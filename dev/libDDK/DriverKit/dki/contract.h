@@ -10,7 +10,7 @@
 #pragma once
 
 #include <CompilerKit/CompilerKit.h>
-#include <DriverKit/macros.h>
+#include <libDDK/DriverKit/macros.h>
 
 #define DKI_CONTRACT_IMPL : public ::Kernel::DKIContract
 

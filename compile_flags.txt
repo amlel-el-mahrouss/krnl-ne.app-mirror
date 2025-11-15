@@ -4,7 +4,7 @@
 -Idev/boot
 -Idev/launch
 -Idev/misc
--Idev/ddk
+-Idev/libDDK
 -Ipublic/tools
 -Ipublic/tools/mk.app
 -Ipublic/tools/mk.fwrk

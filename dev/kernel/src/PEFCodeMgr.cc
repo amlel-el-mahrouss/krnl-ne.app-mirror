@@ -301,7 +301,7 @@ namespace Utils {
     auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
 
     if (!symname) {
-      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS")};
+      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
     }
 
     ProcessID id =

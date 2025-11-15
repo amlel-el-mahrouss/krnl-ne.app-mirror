@@ -224,7 +224,7 @@ namespace Utils {
     auto symname = exec.FindSymbol(kPeImageStart, 0);
 
     if (!symname) {
-      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("UserProcess_PE32")};
+      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PE32+")};
     }
 
     auto id =

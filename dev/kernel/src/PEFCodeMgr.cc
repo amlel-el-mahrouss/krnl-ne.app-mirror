@@ -192,7 +192,7 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
   Char* unconst_symbol = const_cast<Char*>(name);
 
   for (SizeT i = 0UL; i < rt_string_len(unconst_symbol, kPefNameLen); ++i) {
-    if (unconst_symbol[i] == ' ') {
+    if (rt_is_space(unconst_symbol[i])) {
       unconst_symbol[i] = kMangleCharacter;
     }
   }

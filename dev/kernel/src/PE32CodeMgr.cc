@@ -1,0 +1,258 @@
+/* -------------------------------------------
+
+  Copyright (C) 2025, Amlal El Mahrouss, all rights reserved.
+
+------------------------------------------- */
+
+#include <CFKit/Utils.h>
+#include <KernelKit/DebugOutput.h>
+#include <KernelKit/HeapMgr.h>
+#include <KernelKit/PE32CodeMgr.h>
+#include <KernelKit/ProcessScheduler.h>
+#include <NeKit/Defines.h>
+#include <NeKit/KString.h>
+#include <NeKit/OwnPtr.h>
+#include <NeKit/KernelPanic.h>
+
+namespace Kernel {
+namespace Detail {
+  /***********************************************************************************/
+  /// @brief Get the PE32+ platform signature according to the compiled architecture.
+  /***********************************************************************************/
+
+  UInt32 ldr_get_platform_pe(void) noexcept {
+#if defined(__NE_AMD64__)
+    return kPEPlatformAMD64;
+#elif defined(__NE_ARM64__)
+    return kPEPlatformARM64;
+#else
+    return kPEPlatformInvalid;
+#endif  // __32x0__ || __64x0__ || __x86_64__
+  }
+}  // namespace Detail
+
+/***********************************************************************************/
+/// @brief PE32+ loader constructor w/ blob.
+/// @param blob file blob.
+/***********************************************************************************/
+
+PE32Loader::PE32Loader(const VoidPtr blob) : fCachedBlob(blob) {
+  MUST_PASS(fCachedBlob);
+  fBad = false;
+}
+
+/***********************************************************************************/
+/// @brief PE32+ loader constructor.
+/// @param path the filesystem path.
+/***********************************************************************************/
+
+PE32Loader::PE32Loader(const Char* path) : fCachedBlob(nullptr), fBad(false) {
+  fFile.New(const_cast<Char*>(path), kRestrictRB);
+  fPath = KStringBuilder::Construct(path).Leak();
+
+  auto kPefHeader = "PE32_BLOB";
+  fCachedBlob     = fFile->Read(kPefHeader, 0);
+
+  if (!fCachedBlob) fBad = YES;
+}
+
+/***********************************************************************************/
+/// @brief PE32+ destructor.
+/***********************************************************************************/
+
+PE32Loader::~PE32Loader() {
+  if (fCachedBlob) mm_free_ptr(fCachedBlob);
+
+  fFile.Delete();
+}
+
+/***********************************************************************************/
+/// @brief Finds the section  according to its name.
+/// @param name name of section.
+/***********************************************************************************/
+
+ErrorOr<VoidPtr> PE32Loader::FindSectionByName(const Char* name) {
+  if (!fCachedBlob || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  LDR_EXEC_HEADER_PTR     header_ptr     = CF::ldr_find_exec_header((const Char*) fCachedBlob);
+  LDR_OPTIONAL_HEADER_PTR opt_header_ptr = CF::ldr_find_opt_exec_header((const Char*) fCachedBlob);
+
+  if (!header_ptr || !opt_header_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+#ifdef __NE_AMD64__
+  if (header_ptr->Machine != kPeMachineAMD64 || header_ptr->Signature != kPeSignature) {
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
+
+#elif defined(__NE_ARM64__)
+  if (header_ptr->Machine != kPeMachineARM64 || header_ptr->Signature != kPeSignature) {
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
+#endif  // __NE_AMD64__ || __NE_ARM64__
+
+  if (header_ptr->NumberOfSections < 1) {
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
+
+  LDR_SECTION_HEADER_PTR secs =
+      (LDR_SECTION_HEADER_PTR) (((Char*) opt_header_ptr) + header_ptr->SizeOfOptionalHeader);
+
+  for (SizeT sectIndex = 0; sectIndex < header_ptr->NumberOfSections; ++sectIndex) {
+    LDR_SECTION_HEADER_PTR sect = &secs[sectIndex];
+
+    if (KStringBuilder::Equals(name, sect->Name)) {
+      return ErrorOr<VoidPtr>(sect);
+    }
+  }
+
+  return ErrorOr<VoidPtr>{kErrorInvalidData};
+}
+
+/***********************************************************************************/
+/// @brief Finds the symbol according to it's name.
+/// @param name name of symbol.
+/// @param kind kind of symbol we want.
+/***********************************************************************************/
+
+ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
+  if (!name || *name == 0) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  auto section_name = "\0";
+
+  switch (kind) {
+    case kPETypeData:
+      section_name = ".data";
+      break;
+    case kPETypeBSS:
+      section_name = ".bss";
+      break;
+    case kPETypeText:
+      section_name = ".text";
+      break;
+    default:
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
+
+  auto                    sec     = this->FindSectionByName(section_name);
+  LDR_SECTION_HEADER_PTR* sec_ptr = (LDR_SECTION_HEADER_PTR*) sec.Leak().Leak();
+
+  if (!sec_ptr || !*sec_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  LDR_OPTIONAL_HEADER_PTR opt_header_ptr = CF::ldr_find_opt_exec_header((const Char*) fCachedBlob);
+
+  if (opt_header_ptr) {
+    LDR_DATA_DIRECTORY_PTR data_dirs =
+        (LDR_DATA_DIRECTORY_PTR) ((UInt8*) opt_header_ptr + sizeof(LDR_OPTIONAL_HEADER));
+
+    LDR_DATA_DIRECTORY_PTR export_dir_entry = &data_dirs[0];
+
+    if (export_dir_entry->VirtualAddress == 0 || export_dir_entry->Size == 0)
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+    LDR_EXPORT_DIRECTORY* export_dir =
+        (LDR_EXPORT_DIRECTORY*) ((UIntPtr) fCachedBlob + export_dir_entry->VirtualAddress);
+
+    UInt32* name_table     = (UInt32*) ((UIntPtr) fCachedBlob + export_dir->AddressOfNames);
+    UInt16* ordinal_table  = (UInt16*) ((UIntPtr) fCachedBlob + export_dir->AddressOfNameOrdinal);
+    UInt32* function_table = (UInt32*) ((UIntPtr) fCachedBlob + export_dir->AddressOfFunctions);
+
+    for (UInt32 i = 0; i < export_dir->NumberOfNames; ++i) {
+      const char* exported_name = (const char*) ((UIntPtr) fCachedBlob + name_table[i]);
+
+      if (KStringBuilder::Equals(exported_name, name)) {
+        UInt16 ordinal = ordinal_table[i];
+        UInt32 rva     = function_table[ordinal];
+
+        VoidPtr symbol_addr = (VoidPtr) ((UIntPtr) fCachedBlob + rva);
+
+        return ErrorOr<VoidPtr>{symbol_addr};
+      }
+    }
+  }
+
+  return ErrorOr<VoidPtr>{kErrorInvalidData};
+}
+
+/// @brief Finds the executable entrypoint.
+/// @return
+ErrorOr<VoidPtr> PE32Loader::FindStart() {
+  if (auto sym = this->FindSymbol(kPeImageStart, 0); sym) return sym;
+
+  return ErrorOr<VoidPtr>(kErrorExecutable);
+}
+
+/// @brief Tells if the executable is loaded or not.
+/// @return Whether it's not bad and is cached.
+bool PE32Loader::IsLoaded() noexcept {
+  return !fBad && fCachedBlob;
+}
+
+const Char* PE32Loader::Path() {
+  return fPath.Leak().CData();
+}
+
+const Char* PE32Loader::AsString() {
+#ifdef __32x0__
+  return "32x0 PE";
+#elif defined(__64x0__)
+  return "64x0 PE";
+#elif defined(__x86_64__)
+  return "x86_64 PE";
+#elif defined(__aarch64__)
+  return "AARCH64 PE";
+#elif defined(__powerpc64__)
+  return "POWER64 PE";
+#else
+  return "???? PE";
+#endif  // __32x0__ || __64x0__ || __x86_64__ || __powerpc64__
+}
+
+const Char* PE32Loader::MIME() {
+  return kPeApplicationMime;
+}
+
+ErrorOr<VoidPtr> PE32Loader::GetBlob() {
+  return ErrorOr<VoidPtr>{this->fCachedBlob};
+}
+
+namespace Utils {
+  ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) noexcept {
+    auto errOrStart = exec.FindStart();
+
+    if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
+
+    auto symname = exec.FindSymbol(kPeImageStart, 0);
+
+    if (!symname) {
+      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("UserProcess_PE32")};
+    }
+
+    auto id =
+        UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
+                                          errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
+
+    mm_free_ptr(symname.Leak().Leak());
+
+    if (id != kSchedInvalidPID) {
+      auto stacksym = exec.FindSymbol(kPeStackSizeSymbol, 0);
+
+      if (!stacksym) {
+        stacksym = ErrorOr<VoidPtr>{(VoidPtr) new UIntPtr(kSchedMaxStackSz)};
+      }
+
+      if ((*(volatile UIntPtr*) stacksym.Leak().Leak()) > kSchedMaxStackSz) {
+        *(volatile UIntPtr*) stacksym.Leak().Leak() = kSchedMaxStackSz;
+      }
+
+      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].Kind = process_kind;
+      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].StackSize =
+          *(UIntPtr*) stacksym.Leak().Leak();
+
+      mm_free_ptr(stacksym.Leak().Leak());
+      stacksym.Leak().Leak() = nullptr;
+    }
+
+    return id;
+  }
+}  // namespace Utils
+}  // namespace NeKernel

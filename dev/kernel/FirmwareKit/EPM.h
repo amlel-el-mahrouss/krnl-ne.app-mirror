@@ -102,7 +102,7 @@ enum {
   kEPMLinux    = 0x8f,  /// @brief Linux on EPM.
   kEPMBSD      = 0x9f,  /// @brief BSD on EPM.
   kEPMNeKernel = 0x1f,  /// @brief NeKernel.
-  kEPMVMKernel = 0x2f,  /// @brief VMKernel.
+  kEPMLegacy = 0x2f,  /// @brief Legacy VMKernel.
   /// @note ... the rest is reserved for future OSes.
   kEPMInvalidOS = 0xff,
 };

@@ -12,7 +12,7 @@
 
 \section{Abstract}
 
-{The BinaryMutex is a core component of NeKernel (NeKernel/VMKernel) based systems. The pattern excludes other acquirers to own the USER\_PROCESS that is currently being hold. Thus the acquiree is the USER\_PROCESS itself}
+{The BinaryMutex is a core component of NeKernel (NeKernel/Legacy VMKernel) based systems. The pattern excludes other acquirers to own the USER\_PROCESS that is currently being hold. Thus the acquiree is the USER\_PROCESS itself}
 
 \section{Overview}
 
@@ -64,13 +64,13 @@ class BinaryMutex final {
 \section{Conclusion}
 
 {This design pattern is useful for systems that need to make sure that a process isn't tampered by concurrent usages.
-Thus its existence in VMKernel and NeKernel.}
+Thus its existence in Legacy VMKernel and NeKernel.}
 
 \section{References}
 
 {NeKernel}: \href{https://github.com/nekernel-org/nekernel}{NeKernel}
 
-{VMKernel}: \href{https://snu.systems/specs/vmkernel}{VMKernel}
+{Legacy VMKernel}: \href{https://snu.systems/specs/vmkernel}{Legacy VMKernel}
 
 {BinaryMutex}: \href{https://github.com/nekernel-org/nekernel/blob/dev/dev/kernel/KernelKit/BinaryMutex.h}{BinaryMutex}
 

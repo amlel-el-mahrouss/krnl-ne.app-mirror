@@ -15,8 +15,6 @@
 #define NE_POWER_FACTORY : public PowerFactory
 
 namespace Kernel {
-class PowerFactory;
-
 class PowerFactory {
  public:
   explicit PowerFactory() = default;
@@ -26,7 +24,7 @@ class PowerFactory {
   PowerFactory(const PowerFactory&)            = default;
 
  public:
-  Bool Shutdown() { return NO; };  // shutdown
-  Void Reboot(){};                 // soft-reboot
+  virtual Bool Shutdown() { return NO; }  // shutdown
+  virtual Void Reboot() {}                // soft-reboot
 };
 }  // namespace Kernel

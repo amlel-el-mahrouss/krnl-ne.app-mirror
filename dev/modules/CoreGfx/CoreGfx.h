@@ -12,7 +12,7 @@
 
 #define fb_color(R, G, B) RGB(R, G, B)
 
-#define fb_get_clear_clr() RGB(0x20, 0x20, 0x20)
+#define fb_get_clear_clr() RGB(0, 0, 0x80)
 
 #define fb_clear() kCGCursor = 0UL
 

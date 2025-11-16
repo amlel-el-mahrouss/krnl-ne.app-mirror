@@ -93,7 +93,7 @@ inline Bool nvme_create_io_command(HAL_NVME_QUEUE* entry, UInt64 baseAddress,
     entry->CommandSpecific[9] = identify;
 
     if (namespaceIdentify) {
-      entry->CommandSpecific[0] = 1;
+      entry->CommandSpecific[0] = YES;
     }
   }
 

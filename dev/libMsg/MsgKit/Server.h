@@ -24,7 +24,7 @@ struct LIBMSG_EXPR final {
   CF::CFString* l_key{nullptr};
   CF::CFString* l_value{nullptr};
 #else
-  // if we use C< we won't know about CF, so let's make those private.
+  // if we use C, we won't know about CF, so let's make those private.
   VoidPtr l_private_data[2]{nullptr};
 #endif
 

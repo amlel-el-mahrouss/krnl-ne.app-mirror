@@ -16,8 +16,6 @@
 
 #include <NeKit/Defines.h>
 
-using namespace Kernel;
-
 #define kUSBCommand (UInt16) 0x0
 #define kUSBStatus (UInt16) 0x2
 #define kUSBInterruptEnable (UInt16) 0x4
@@ -27,6 +25,7 @@ using namespace Kernel;
 #define kUSBPort1StatusCtrl (UInt16) 0x10
 #define kUSBPort2StatusCtrl (UInt16) 0x12
 
+namespace Kernel {
 typedef struct USBCommandRegister final {
   UInt8 mReserved[8];  // Reserved
   UInt8 mMaxPacket;    //  	0 = Max packet size 32 bits 1 = Max packet size 64 bits
@@ -64,3 +63,4 @@ typedef struct USBInterruptEnableRegister final {
   32-bit physical adress of Frame List. Remember that first 12 bytes are
    always 0. The Frame List must contain 1024 entries.
 */
+}  // namespace Kernel

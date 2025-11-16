@@ -4,8 +4,17 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="LaunchKit" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="170" width="255" height="60" as="geometry"/>
+                <mxCell id="2" value="LaunchHelpers" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="100" width="255" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="ne_launch" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="170" width="255" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="ne_kernel" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="250" y="240" width="540" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="libSystem" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="170" width="270" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

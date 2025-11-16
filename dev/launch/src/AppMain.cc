@@ -10,7 +10,7 @@
 
 /// @note This called by _NeMain from its own runtime.
 extern "C" SInt32 nelaunch_startup_fn(Void) {
-  /// @todo Start LaunchServices.fwrk services, make the launcher manageable too (via mgmt.launch)
+  /// @todo Start LaunchHelpers.fwrk services, make the launcher manageable too (via mgmt.launch)
 
   NELAUNCH_INFO("Turning on launcher...");
 

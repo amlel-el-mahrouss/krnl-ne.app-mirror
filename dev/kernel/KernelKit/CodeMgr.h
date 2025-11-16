@@ -14,11 +14,8 @@
 
 #pragma once
 
-#ifdef __NE_USE_PEF__
 #include <KernelKit/IPEFDylibObject.h>
 #include <KernelKit/PEFCodeMgr.h>
-#endif
-
 #include <KernelKit/PE32CodeMgr.h>
 #include <KernelKit/CoreProcessScheduler.h>
 

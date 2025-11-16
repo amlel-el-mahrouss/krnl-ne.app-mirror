@@ -55,7 +55,7 @@ class PEFLoader : public ILoader {
  private:
 #ifdef __FSKIT_INCLUDES_NEFS__
   OwnPtr<FileStream<Char, NeFileSystemMgr>> fFile;
-#elif defined(__FSKIT_INCLUDES_HEFS__)
+#elif defined(__FSKIT_INCLUDES_OPENHEFS__)
   OwnPtr<FileStream<Char, HeFileSystemMgr>> fFile;
 #else
   OwnPtr<FileStream<Char>> fFile;

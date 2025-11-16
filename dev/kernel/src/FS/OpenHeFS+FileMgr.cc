@@ -5,7 +5,7 @@
 ------------------------------------------- */
 
 #ifndef __NE_MINIMAL_OS__
-#ifdef __FSKIT_INCLUDES_HEFS__
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
 
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
@@ -187,5 +187,5 @@ _Output HeFileSystemParser* HeFileSystemMgr::GetParser() noexcept {
 }
 }  // namespace Kernel
 
-#endif  // ifdef __FSKIT_INCLUDES_HEFS__
+#endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__
 #endif  // ifndef __NE_MINIMAL_OS__

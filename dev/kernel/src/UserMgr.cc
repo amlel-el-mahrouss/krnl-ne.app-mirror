@@ -89,14 +89,11 @@ Bool User::Save(const UserPublicKey password) noexcept {
 Bool User::Login(const UserPublicKey password) noexcept {
   if (!password || !*password) return No;
 
-  // now check if the password matches.
-  if (this->mUserFNV == Detail::user_fnv_generator(password, this)) {
-    kout << "User::Login: Password matches.\r";
-    return Yes;
-  }
+  auto ret = this->mUserFNV == Detail::user_fnv_generator(password, this);
 
-  kout << "User::Login: Password doesn't match.\r";
-  return No;
+  // now check if the password matches.
+  kout << (ret ? "User::Login: Password matches.\r" : "User::Login: Password doesn't match.\r");
+  return ret;
 }
 
 Bool User::operator==(const User& lhs) {

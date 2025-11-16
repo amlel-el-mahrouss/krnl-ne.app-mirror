@@ -76,7 +76,7 @@ KERNEL=ne_kernel
 SYSCHK=chk.efi
 BOOTNET=net.efi
 SCIKIT=libSystem.dll
-DDK=ddk.sys
+DDK=libDDK.dll
 
 .PHONY: invalid-recipe
 invalid-recipe:

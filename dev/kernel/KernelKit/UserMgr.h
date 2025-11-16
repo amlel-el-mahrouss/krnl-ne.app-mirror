@@ -22,7 +22,7 @@
 
 ///! We got the MGMT, STD (%s format) and GUEST users,
 ///! all are used to make authorized operations.
-#define kSuperUser "NEKERNEL/MGMT/%s"
+#define kMgmtUser "NEKERNEL/MGMT/%s"
 #define kGuestUser "NEKERNEL/GUEST/%s"
 #define kStdUser "NEKERNEL/STD/%s"
 

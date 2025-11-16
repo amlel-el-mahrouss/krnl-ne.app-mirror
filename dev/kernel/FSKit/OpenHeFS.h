@@ -429,6 +429,6 @@ namespace OpenHeFS {
 
   /// @brief Initialize OpenHeFS inside the main disk.
   /// @return Whether it successfuly formated it or not.
-  Boolean fs_init_hefs(Void) noexcept;
+  Boolean fs_init_openhefs(Void) noexcept;
 }  // namespace OpenHeFS
 }  // namespace Kernel

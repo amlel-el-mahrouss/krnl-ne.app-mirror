@@ -220,12 +220,11 @@ namespace Detail {
 /// @brief Fetches the main drive.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)
 DriveTrait io_construct_main_drive() noexcept {
-  DriveTrait trait;
-
   constexpr auto kMainDrive = "/media/main/";
 
-  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
+  DriveTrait trait{};
 
+  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
   MUST_PASS(trait.fName[0] != 0);
 
   trait.fVerify   = io_drv_unimplemented;

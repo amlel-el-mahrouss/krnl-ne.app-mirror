@@ -15,7 +15,7 @@
 namespace Kernel {
 class TerminalDevice;
 class DTraceDevice;
-class NeDebugDevice;
+class NeTraceDevice;
 class Utf8TerminalDevice;
 
 inline TerminalDevice end_line();

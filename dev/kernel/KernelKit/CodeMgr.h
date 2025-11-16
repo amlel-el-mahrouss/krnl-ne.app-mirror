@@ -19,6 +19,9 @@
 #include <KernelKit/PEFCodeMgr.h>
 #endif
 
+#include <KernelKit/PE32CodeMgr.h>
+#include <KernelKit/CoreProcessScheduler.h>
+
 /// @file CodeMgr.h
 /// @brief Code Manager header file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)

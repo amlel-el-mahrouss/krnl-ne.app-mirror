@@ -49,9 +49,6 @@ BootDeviceSATA::BootDeviceSATA() noexcept {
   @param Buf buffer
 */
 BootDeviceSATA& BootDeviceSATA::Read(CharacterTypeASCII* Buf, SizeT SectorSz) {
-  NE_UNUSED(Buf);
-  NE_UNUSED(SectorSz);
-
   drv_std_read(mTrait.mBase / SectorSz, Buf, SectorSz, mTrait.mSize);
 
   return *this;
@@ -63,9 +60,6 @@ BootDeviceSATA& BootDeviceSATA::Read(CharacterTypeASCII* Buf, SizeT SectorSz) {
   @param Buf buffer
 */
 BootDeviceSATA& BootDeviceSATA::Write(CharacterTypeASCII* Buf, SizeT SectorSz) {
-  NE_UNUSED(Buf);
-  NE_UNUSED(SectorSz);
-
   drv_std_write(mTrait.mBase / SectorSz, Buf, SectorSz, mTrait.mSize);
 
   return *this;

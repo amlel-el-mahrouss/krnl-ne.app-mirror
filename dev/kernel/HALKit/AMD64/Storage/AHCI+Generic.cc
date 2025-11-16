@@ -294,8 +294,7 @@ STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz
       goto ahci_io_end;
     } else {
       kout << "ahci: Disk still busy after command completion!\r";
-      while (kSATAHba->Ports[kSATAIndex].Tfd & (kSATASRBsy | kSATASRDrq))
-        ;
+      while (kSATAHba->Ports[kSATAIndex].Tfd & (kSATASRBsy | kSATASRDrq));
     }
 
   ahci_io_end:
@@ -308,13 +307,15 @@ STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz
   @brief Gets the number of sectors inside the drive.
   @return Sector size in bytes.
  */
-STATIC ATTRIBUTE(unused) SizeT drv_get_sector_count_ahci() {
+STATIC ATTRIBUTE(unused)
+SizeT  drv_get_sector_count_ahci() {
   return kSATASectorCount;
 }
 
 /// @brief Get the drive size.
 /// @return Disk size in bytes.
-STATIC ATTRIBUTE(unused) SizeT drv_get_size_ahci() {
+STATIC ATTRIBUTE(unused)
+SizeT  drv_get_size_ahci() {
   return drv_std_get_sector_count() * kAHCISectorSize;
 }
 
@@ -456,11 +457,9 @@ STATIC Bool drv_std_init_ahci(UInt16& pi, BOOL& atapi) {
 success_hba_fetch:
   if (ahci_enable_and_probe()) {
     err_global_get() = kErrorSuccess;
-
-    return YES;
   }
 
-  return NO;
+  return err_global_get() == kErrorSuccess;
 }
 
 /// @brief Checks if an AHCI device is detected.
@@ -546,8 +545,7 @@ namespace Detail {
   /// @brief Read AHCI device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_read_ahci(DeviceInterface<IMountpoint*>* self,
-                              IMountpoint*                   mnt) {
+  STATIC Void sk_io_read_ahci(DeviceInterface<IMountpoint*>* self, IMountpoint* mnt) {
     AHCIDeviceInterface* dev = (AHCIDeviceInterface*) self;
 
     err_global_get() = kErrorDisk;
@@ -568,8 +566,7 @@ namespace Detail {
   /// @brief Write AHCI device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_write_ahci(DeviceInterface<IMountpoint*>* self,
-                               IMountpoint*                   mnt) {
+  STATIC Void sk_io_write_ahci(DeviceInterface<IMountpoint*>* self, IMountpoint* mnt) {
     AHCIDeviceInterface* dev = (AHCIDeviceInterface*) self;
 
     err_global_get() = kErrorDisk;

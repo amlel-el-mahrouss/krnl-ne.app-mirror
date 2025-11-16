@@ -152,10 +152,8 @@ DriveTrait io_construct_blank_drive() noexcept {
   return trait;
 }
 
-namespace Detail {
+namespace Probe {
   Void io_detect_drive(DriveTrait& trait) {
-    trait.fInit(trait.fPacket);
-
     EPM_PART_BLOCK block_struct;
 
     trait.fPacket.fPacketLba     = kEPMBootBlockLba;
@@ -164,6 +162,8 @@ namespace Detail {
 
     rt_copy_memory((VoidPtr) "fs/detect-packet", trait.fPacket.fPacketMime,
                    rt_string_len("fs/detect-packet"));
+
+    trait.fInit(trait.fPacket);
 
     trait.fInput(trait.fPacket);
 
@@ -232,10 +232,8 @@ DriveTrait io_construct_main_drive() noexcept {
   trait.fInput    = io_drv_input;
   trait.fInit     = io_drv_init;
   trait.fProtocol = io_drv_kind;
-
-  kout << "DriveMgr: Detecting partition scheme of: " << trait.fName << ".\r";
-
-  Detail::io_detect_drive(trait);
+  
+  Probe::io_detect_drive(trait);
 
   return trait;
 }

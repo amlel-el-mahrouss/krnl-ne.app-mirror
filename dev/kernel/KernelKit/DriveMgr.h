@@ -77,7 +77,7 @@ struct DriveTrait final {
   const Char* (*fProtocol)(Void){};
 };
 
-namespace Detail {
+namespace Probe {
   Void io_detect_drive(DriveTrait& trait);
 }
 

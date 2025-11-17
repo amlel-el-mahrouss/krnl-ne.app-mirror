@@ -1,7 +1,7 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
-  Copyright (C) 2025, Amlal El Mahrouss & NeKernel contributors, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
+  Copyright (C) 2025, Amlal El Mahrouss & NeKernel contributors, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -192,7 +192,7 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
   Char* unconst_symbol = const_cast<Char*>(name);
 
   for (SizeT i = 0UL; i < rt_string_len(unconst_symbol, kPefNameLen); ++i) {
-    if (unconst_symbol[i] == ' ') {
+    if (rt_is_space(unconst_symbol[i])) {
       unconst_symbol[i] = kMangleCharacter;
     }
   }
@@ -301,7 +301,7 @@ namespace Utils {
     auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
 
     if (!symname) {
-      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS")};
+      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
     }
 
     ProcessID id =

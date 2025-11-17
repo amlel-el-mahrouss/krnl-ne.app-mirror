@@ -2,7 +2,7 @@
  *	========================================================
  *
  *  NeKernel
- * 	Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+ * 	Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
  *
  * 	========================================================
  */
@@ -13,7 +13,7 @@
 #include <NeKit/Ref.h>
 
 namespace Kernel {
-using ErrorT = UInt32;
+using ErrorT = Int32;
 
 template <typename T>
 class ErrorOr final {
@@ -22,7 +22,7 @@ class ErrorOr final {
   ~ErrorOr()         = default;
 
  public:
-  explicit ErrorOr(Int32 err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {}
+  explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {}
 
   explicit ErrorOr(nullPtr) {}
 
@@ -42,8 +42,9 @@ class ErrorOr final {
 
   Ref<T>& Leak() { return mRef; }
 
-  Int32 Error() { return mId; }
+  ErrorT Error() { return mId; }
 
+  /// @note DO NOT MAKE THIS EXPLICIT! IT WILL BREAK THE COMPILATION.
   operator bool() { return mRef; }
 
   BOOL HasError() { return this->mId > 0; }

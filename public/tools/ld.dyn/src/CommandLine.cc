@@ -15,7 +15,7 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   LIBSYS_UNUSED(argv);
 
   PrintOut(nullptr, "%s", "ld.dyn: Dynamic Loader.\n");
-  PrintOut(nullptr, "%s", "ld.dyn: © 2024-2025 Amlal El Mahrouss, All rights reserved.\n");
+  PrintOut(nullptr, "%s", "ld.dyn: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
 
   for (SInt32 i = 1U; i < argc; ++i) {
     if (MmStrCmp(argv[i], DYNLIB_FLAG) == 0) {

@@ -9,7 +9,7 @@
   <p>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio.yml"><img src="https://github.com/amlel-el-mahrouss/nekernel/actions/workflows/boot-pio.yml/badge.svg" alt="CI"></a>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci.yml"><img src="https://github.com/amlel-el-mahrouss/nekernel/actions/workflows/kernel-ahci.yml/badge.svg" alt="CI"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-blue.svg" alt="License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
     <img src="https://img.shields.io/badge/QEMU-Tested-success" alt="QEMU Tested">
   </p>
 </div>
@@ -109,12 +109,12 @@ cd nekernel
 
 ## License
 
-This project is licensed under the [GPL-3.0 License](LICENSE).
+This project is licensed under the [Apache-2.0 License](LICENSE).
 
 ---
 
 <div align="center">
   <sub>
-    &copy; 2024-2025 Amlal El Mahrouss & NeKernel contributors. All rights reserved.
+    &copy; 2024-2025 Amlal El Mahrouss & NeKernel contributors. Licensed under the Apache 2.0 license.
   </sub>
 </div>

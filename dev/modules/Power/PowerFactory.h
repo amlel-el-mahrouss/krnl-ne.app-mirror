@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -15,8 +15,6 @@
 #define NE_POWER_FACTORY : public PowerFactory
 
 namespace Kernel {
-class PowerFactory;
-
 class PowerFactory {
  public:
   explicit PowerFactory() = default;
@@ -26,7 +24,7 @@ class PowerFactory {
   PowerFactory(const PowerFactory&)            = default;
 
  public:
-  Bool Shutdown() { return NO; };  // shutdown
-  Void Reboot(){};                 // soft-reboot
+  virtual Bool Shutdown() { return NO; }  // shutdown
+  virtual Void Reboot() {}                // soft-reboot
 };
 }  // namespace Kernel

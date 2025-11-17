@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -8,7 +8,6 @@
 
 #include <tools/rang.h>
 #include <iostream>
-#include <sstream>
 #include <string>
 
 #define kMkFsSectorSz (512U)
@@ -63,10 +62,10 @@ namespace detail {
 template <typename CharType>
 inline std::basic_string<CharType> get_option(const std::basic_string<CharType>& args,
                                               const std::basic_string<CharType>& option) {
-  size_t pos = args.find(option + CharType('='));
+  size_t pos = args.find(CharType('-') + option + CharType('='));
 
   if (pos != std::string::npos) {
-    size_t start = pos + option.length() + 1;
+    size_t start = pos + option.length() + 2;
     size_t end   = args.find(' ', start);
     return args.substr(start, end - start);
   }

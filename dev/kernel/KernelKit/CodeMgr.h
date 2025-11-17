@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   File: CodeMgr.h
   Purpose: Code Mgr.
@@ -14,10 +14,10 @@
 
 #pragma once
 
-#ifdef __NE_USE_PEF__
 #include <KernelKit/IPEFDylibObject.h>
 #include <KernelKit/PEFCodeMgr.h>
-#endif
+#include <KernelKit/PE32CodeMgr.h>
+#include <KernelKit/CoreProcessScheduler.h>
 
 /// @file CodeMgr.h
 /// @brief Code Manager header file.

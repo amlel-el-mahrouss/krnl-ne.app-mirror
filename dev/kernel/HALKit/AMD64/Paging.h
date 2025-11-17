@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -44,17 +44,17 @@ EXTERN_C Kernel::VoidPtr hal_read_cr3();  // @brief Page directory inside cr3 re
 namespace Kernel::HAL {
 namespace Detail {
   enum class ControlRegisterBits {
-    ProtectedModeEnable = 0,
-    MonitorCoProcessor  = 1,
-    Emulation           = 2,
-    TaskSwitched        = 3,
-    ExtensionType       = 4,
-    NumericError        = 5,
-    WriteProtect        = 16,
-    AlignementMask      = 18,
-    NotWriteThrough     = 29,
-    CacheDisable        = 30,
-    PageEnable          = 31,
+    kProtectedModeEnable = 0,
+    kMonitorCoProcessor  = 1,
+    kEmulation           = 2,
+    kTaskSwitched        = 3,
+    kExtensionType       = 4,
+    kNumericError        = 5,
+    kWriteProtect        = 16,
+    kAlignementMask      = 18,
+    kNotWriteThrough     = 29,
+    kCacheDisable        = 30,
+    kPageEnable          = 31,
   };
 
   inline UInt8 control_register_cast(ControlRegisterBits reg) { return static_cast<UInt8>(reg); }

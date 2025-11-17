@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -24,7 +24,7 @@ struct LIBMSG_EXPR final {
   CF::CFString* l_key{nullptr};
   CF::CFString* l_value{nullptr};
 #else
-  // if we use C< we won't know about CF, so let's make those private.
+  // if we use C, we won't know about CF, so let's make those private.
   VoidPtr l_private_data[2]{nullptr};
 #endif
 

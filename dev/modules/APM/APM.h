@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -21,9 +21,9 @@ enum {
   kAPMPowerCommandReboot   = 0x08,
 };
 
-/// @brief Send a APM command into it's own IO space.
+/// @brief Send a APM command into it's controller. (Shutdown, Reboot, Sleep...)
 /// @param base_dma the IO base port.
 /// @param cmd the command.
-/// @return status code.
+/// @return status code of the APM command.
 EXTERN_C Int32 apm_send_io_command(UInt16 cmd);
 }  // namespace Kernel

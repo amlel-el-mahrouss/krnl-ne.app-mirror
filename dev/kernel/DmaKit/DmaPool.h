@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2025, Amlal El Mahrouss , all rights reserved.
+  Copyright (C) 2025, Amlal El Mahrouss , licensed under the Apache 2.0 license.
 
   File: DmaPool.h
   Purpose: Dma Pool Manager.
@@ -23,11 +23,7 @@
 #define kNeDMAPoolSize (0x1000000)
 #endif
 
-#ifdef __GNUC__
-#define kNeDMABestAlign __BIGGEST_ALIGNMENT__
-#else
 #define kNeDMABestAlign (8)
-#endif
 
 namespace Kernel {
 /// @brief DMA pool base pointer, here we're sure that AHCI or whatever tricky standard sees it.
@@ -41,7 +37,7 @@ inline const UInt8* kDmaPoolEnd = (UInt8*) (kNeDMAPoolStart + kNeDMAPoolSize);
 /***********************************************************************************/
 inline VoidPtr rtl_dma_alloc(SizeT size, SizeT align) {
   if (!size) {
-    ++size;
+    return nullptr;
   }
 
   /// Check alignement according to architecture.

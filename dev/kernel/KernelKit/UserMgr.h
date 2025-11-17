@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
- Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+ Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -22,7 +22,7 @@
 
 ///! We got the MGMT, STD (%s format) and GUEST users,
 ///! all are used to make authorized operations.
-#define kSuperUser "NEKERNEL/MGMT/%s"
+#define kMgmtUser "NEKERNEL/MGMT/%s"
 #define kGuestUser "NEKERNEL/GUEST/%s"
 #define kStdUser "NEKERNEL/STD/%s"
 

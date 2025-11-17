@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -42,7 +42,7 @@ EXTERN_C void hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
                          handover_hdr->f_HardwareTables.f_ImageHandle);
 #endif
 
-  FB::fb_clear_video();
+  FB::cg_clear_video();
 
   /************************************** */
   /*     INITIALIZE BIT MAP.              */

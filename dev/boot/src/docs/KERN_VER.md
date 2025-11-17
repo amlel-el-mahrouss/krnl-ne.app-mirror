@@ -15,4 +15,4 @@ N/A
 ## © License
 
     Copyright (C) 2025,
-    Amlal El Mahrouss – All rights reserved.
+    Amlal El Mahrouss – Licensed under the Apache 2.0 license.

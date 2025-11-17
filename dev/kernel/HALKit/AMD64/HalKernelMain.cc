@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -118,7 +118,7 @@ EXTERN_C Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
   kGDTArray[4].fFlags      = 0;
   kGDTArray[4].fBaseHigh   = 0;
 
-  FB::fb_clear_video();
+  FB::cg_clear_video();
 
   // Load memory descriptors.
   HAL::Register64 gdt_reg;
@@ -144,8 +144,8 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
-#ifdef __FSKIT_INCLUDES_HEFS__
-  OpenHeFS::fs_init_hefs();
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
+  OpenHeFS::fs_init_openhefs();
 #endif
 
 #ifdef __FSKIT_INCLUDES_NEFS__

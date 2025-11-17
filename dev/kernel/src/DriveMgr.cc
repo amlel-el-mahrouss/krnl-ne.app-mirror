@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -152,10 +152,8 @@ DriveTrait io_construct_blank_drive() noexcept {
   return trait;
 }
 
-namespace Detail {
+namespace Probe {
   Void io_detect_drive(DriveTrait& trait) {
-    trait.fInit(trait.fPacket);
-
     EPM_PART_BLOCK block_struct;
 
     trait.fPacket.fPacketLba     = kEPMBootBlockLba;
@@ -164,6 +162,8 @@ namespace Detail {
 
     rt_copy_memory((VoidPtr) "fs/detect-packet", trait.fPacket.fPacketMime,
                    rt_string_len("fs/detect-packet"));
+
+    trait.fInit(trait.fPacket);
 
     trait.fInput(trait.fPacket);
 
@@ -220,12 +220,11 @@ namespace Detail {
 /// @brief Fetches the main drive.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)
 DriveTrait io_construct_main_drive() noexcept {
-  DriveTrait trait;
-
   constexpr auto kMainDrive = "/media/main/";
 
-  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
+  DriveTrait trait{};
 
+  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
   MUST_PASS(trait.fName[0] != 0);
 
   trait.fVerify   = io_drv_unimplemented;
@@ -233,10 +232,8 @@ DriveTrait io_construct_main_drive() noexcept {
   trait.fInput    = io_drv_input;
   trait.fInit     = io_drv_init;
   trait.fProtocol = io_drv_kind;
-
-  kout << "DriveMgr: Detecting partition scheme of: " << trait.fName << ".\r";
-
-  Detail::io_detect_drive(trait);
+  
+  Probe::io_detect_drive(trait);
 
   return trait;
 }

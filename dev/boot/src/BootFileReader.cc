@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   File: FileReader.cc
   Purpose: New Boot FileReader,
@@ -75,7 +75,7 @@ Boot::BootFileReader::BootFileReader(const CharacterTypeUTF16* path, EfiHandlePt
     mWriter.Write(L"BootZ: Fetch-Protocol: No-Such-Path: ").Write(mPath).Write(L"\r");
     this->mErrorCode = kNotSupported;
 
-    fb_render_string("BootZ: PLEASE RECOVER YOUR MINKRNL INSTALL.", 40, 10, RGB(0xFF, 0xFF, 0xFF));
+    cg_render_string("BootZ: PLEASE RECOVER YOUR NEKERNEL INSTALL.", 40, 10, RGB(0xFF, 0xFF, 0xFF));
 
     mRootFs->Close(mRootFs);
 

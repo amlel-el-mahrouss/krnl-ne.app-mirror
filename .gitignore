@@ -24,6 +24,7 @@ neoskrnl/neoskrnl.xcodeproj/project.xcworkspace/xcshareddata/
 
 tools/dist/mkfs.*
 tools/dist/fsck.*
+tools/dist/chk.*
 
 html/
 latex/

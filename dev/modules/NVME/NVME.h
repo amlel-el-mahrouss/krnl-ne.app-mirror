@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   Revision History:
 
@@ -93,7 +93,7 @@ inline Bool nvme_create_io_command(HAL_NVME_QUEUE* entry, UInt64 baseAddress,
     entry->CommandSpecific[9] = identify;
 
     if (namespaceIdentify) {
-      entry->CommandSpecific[0] = 1;
+      entry->CommandSpecific[0] = YES;
     }
   }
 

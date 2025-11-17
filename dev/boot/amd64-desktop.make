@@ -1,5 +1,5 @@
 ##################################################
-# (c) Amlal El Mahrouss, all rights reserved.
+# (c) Amlal El Mahrouss, licensed under the Apache 2.0 license.
 # This is the bootloader makefile.
 ##################################################
 
@@ -76,7 +76,7 @@ KERNEL=ne_kernel
 SYSCHK=chk.efi
 BOOTNET=net.efi
 SCIKIT=libSystem.dll
-DDK=ddk.sys
+DDK=libDDK.dll
 
 .PHONY: invalid-recipe
 invalid-recipe:

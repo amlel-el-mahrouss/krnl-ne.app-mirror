@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss , all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss , licensed under the Apache 2.0 license.
 
   File: FileMgr.h
   Purpose: Kernel file manager.
@@ -223,7 +223,7 @@ class Ext2FileSystemMgr final : public IFilesystemMgr {
 
 #endif  // ifdef __FSKIT_INCLUDES_EXT2__
 
-#ifdef __FSKIT_INCLUDES_HEFS__
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
 /**
  * @brief Based of IFilesystemMgr, takes care of managing NeFS
  * disks.
@@ -267,7 +267,7 @@ class HeFileSystemMgr final : public IFilesystemMgr {
   HeFileSystemParser* mParser{nullptr};
 };
 
-#endif  // ifdef __FSKIT_INCLUDES_HEFS__
+#endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__
 
 /**
  * FileStream class.

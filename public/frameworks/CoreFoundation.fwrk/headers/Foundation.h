@@ -1,7 +1,7 @@
 
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   FILE: Foundation.h
   PURPOSE: Foundation header of the CF framework.

@@ -1,10 +1,10 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025 Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025 Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
-#ifdef __FSKIT_INCLUDES_HEFS__
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
 
 #include <FSKit/OpenHeFS.h>
 #include <FirmwareKit/EPM.h>
@@ -1149,13 +1149,15 @@ STATIC DriveTrait kMountPoint;
 
 /// @brief Initialize the OpenHeFS filesystem.
 /// @return To check its status, see err_local_get().
-Boolean OpenHeFS::fs_init_hefs(Void) noexcept {
+Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
   kout << "Verifying disk...\r";
 
   kMountPoint = io_construct_main_drive();
 
-  if (kMountPoint.fPacket.fPacketReadOnly == YES)
-    ke_panic(RUNTIME_CHECK_FILESYSTEM, "Main disk cannot be mounted (read-only media).");
+  if (kMountPoint.fPacket.fPacketReadOnly == YES) {
+    kout << "Main disk cannot be mounted (read-only media).\r";
+    return NO;
+  }
 
   HeFileSystemParser parser;
 
@@ -1163,4 +1165,4 @@ Boolean OpenHeFS::fs_init_hefs(Void) noexcept {
 }
 }  // namespace Kernel
 
-#endif  // ifdef __FSKIT_INCLUDES_HEFS__
+#endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__

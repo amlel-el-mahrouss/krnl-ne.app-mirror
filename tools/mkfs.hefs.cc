@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -12,11 +12,12 @@
 #include <fstream>
 #include <limits>
 
-static size_t        kDiskSize = mkfs::detail::gib_cast(4UL);
 static uint16_t      kVersion  = kHeFSVersion;
-static std::u8string kLabel;
-static size_t        kSectorSize    = 512;
 static uint16_t      kNumericalBase = 10;
+
+static size_t        kDiskSize = mkfs::detail::gib_cast(4UL);
+static std::u8string kDiskLabel;
+static size_t        kDiskSectorSz    = 512;
 
 int main(int argc, char** argv) {
   if (argc < 2) {
@@ -30,13 +31,13 @@ int main(int argc, char** argv) {
 
   std::string args = mkfs::detail::build_args(argc, argv);
 
-  auto output_path = mkfs::get_option<char>(args, "-o");
+  auto output_path = mkfs::get_option<char>(args, "o");
   if (output_path.empty()) {
     mkfs::console_out() << "hefs: error: Missing -o <output_device> argument.\n";
     return EXIT_FAILURE;
   }
 
-  auto opt_s    = mkfs::get_option<char>(args, "-s");
+  auto opt_s    = mkfs::get_option<char>(args, "s");
   long parsed_s = 0;
   if (!mkfs::detail::parse_signed(opt_s, parsed_s, kNumericalBase) || parsed_s == 0) {
     mkfs::console_out() << "hefs: error: Invalid sector size \"" << opt_s
@@ -49,20 +50,20 @@ int main(int argc, char** argv) {
                         << "\" is not a power of two.\n";
     return EXIT_FAILURE;
   }
-  kSectorSize = static_cast<size_t>(parsed_s);
+  kDiskSectorSz = static_cast<size_t>(parsed_s);
 
-  auto opt_L = mkfs::get_option<char>(args, "-L");
+  auto opt_L = mkfs::get_option<char>(args, "L");
   if (!opt_L.empty()) {
-    kLabel.clear();
-    for (char c : opt_L) kLabel.push_back(static_cast<char8_t>(c));
+    kDiskLabel.clear();
+    for (char c : opt_L) kDiskLabel.push_back(static_cast<char8_t>(c));
   } else {
-    kLabel.clear();
+    kDiskLabel.clear();
     for (size_t i = 0; i < kHeFSPartNameLen && kHeFSDefaultVolumeName[i] != u'\0'; ++i) {
-      kLabel.push_back(static_cast<char8_t>(kHeFSDefaultVolumeName[i]));
+      kDiskLabel.push_back(static_cast<char8_t>(kHeFSDefaultVolumeName[i]));
     }
   }
 
-  auto               opt_S = mkfs::get_option<char>(args, "-S");
+  auto               opt_S = mkfs::get_option<char>(args, "S");
   unsigned long long gb    = 0;
   if (!mkfs::detail::parse_decimal(opt_S, gb) || gb == 0ULL) {
     mkfs::console_out() << "hefs: error: Invalid disk size \"" << opt_S
@@ -76,12 +77,12 @@ int main(int argc, char** argv) {
   }
   kDiskSize = static_cast<size_t>(gb * 1024ULL * 1024ULL * 1024ULL);
 
-  auto opt_b  = mkfs::get_option<char>(args, "-b");
-  auto opt_e  = mkfs::get_option<char>(args, "-e");
-  auto opt_bs = mkfs::get_option<char>(args, "-bs");
-  auto opt_be = mkfs::get_option<char>(args, "-be");
-  auto opt_is = mkfs::get_option<char>(args, "-is");
-  auto opt_ie = mkfs::get_option<char>(args, "-ie");
+  auto opt_b  = mkfs::get_option<char>(args, "b");
+  auto opt_e  = mkfs::get_option<char>(args, "e");
+  auto opt_bs = mkfs::get_option<char>(args, "bs");
+  auto opt_be = mkfs::get_option<char>(args, "be");
+  auto opt_is = mkfs::get_option<char>(args, "is");
+  auto opt_ie = mkfs::get_option<char>(args, "ie");
 
   long start_ind = 0, end_ind = 0;
   long start_block = 0, end_block = 0;
@@ -117,7 +118,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  if (static_cast<size_t>(end_block) * kSectorSize > kDiskSize ||
+  if (static_cast<size_t>(end_block) * kDiskSectorSz > kDiskSize ||
       static_cast<size_t>(end_ind) > kDiskSize || static_cast<size_t>(end_in) > kDiskSize) {
     mkfs::console_out() << "hefs: error: One or more ranges exceed disk size.\n";
     return EXIT_FAILURE;
@@ -137,8 +138,8 @@ int main(int argc, char** argv) {
   boot_node.diskKind    = mkfs::hefs::kHeFSHardDrive;
   boot_node.encoding    = mkfs::hefs::kHeFSEncodingFlagsUTF8;
   boot_node.diskSize    = kDiskSize;
-  boot_node.sectorSize  = kSectorSize;
-  boot_node.sectorCount = kDiskSize / kSectorSize;
+  boot_node.sectorSize  = kDiskSectorSz;
+  boot_node.sectorCount = kDiskSize / kDiskSectorSz;
   boot_node.startIND    = static_cast<size_t>(start_ind) + sizeof(mkfs::hefs::BootNode);
   boot_node.endIND      = static_cast<size_t>(end_ind);
   boot_node.startIN     = static_cast<size_t>(start_in);
@@ -161,10 +162,10 @@ int main(int argc, char** argv) {
 
   std::memset(boot_node.volumeName, 0, sizeof(boot_node.volumeName));
 
-  size_t label_units = std::min(kLabel.size(), vol_slots - 1);
+  size_t label_units = std::min(kDiskLabel.size(), vol_slots - 1);
 
   for (size_t i = 0; i < label_units; ++i) {
-    boot_node.volumeName[i] = static_cast<char8_t>(kLabel[i]);
+    boot_node.volumeName[i] = static_cast<char8_t>(kDiskLabel[i]);
   }
 
   boot_node.volumeName[label_units] = 0U;

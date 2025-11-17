@@ -1,11 +1,11 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
 #ifndef __NE_MINIMAL_OS__
-#ifdef __FSKIT_INCLUDES_HEFS__
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
 
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
@@ -187,5 +187,5 @@ _Output HeFileSystemParser* HeFileSystemMgr::GetParser() noexcept {
 }
 }  // namespace Kernel
 
-#endif  // ifdef __FSKIT_INCLUDES_HEFS__
+#endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__
 #endif  // ifndef __NE_MINIMAL_OS__

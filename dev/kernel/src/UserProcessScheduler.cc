@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   FILE: UserProcessScheduler.cc
   PURPOSE: Low-Privilege/Ring-3 process scheduler.
@@ -678,11 +678,13 @@ UserProcessScheduler::operator bool() {
 /// @brief this checks if no process is on the team.
 ////////////////////////////////////////////////////////////
 Bool UserProcessScheduler::operator!() {
+  SInt64 cnt = 0UL;
+
   for (auto process_index = 0UL; process_index < mTeam.AsArray().Count(); ++process_index) {
     auto& process = mTeam.AsArray()[process_index];
-    if (UserProcessHelper::CanBeScheduled(process)) return false;
+    if (UserProcessHelper::CanBeScheduled(process)) ++cnt;
   }
 
-  return true;
+  return cnt == 0L;
 }
 }  // namespace Kernel

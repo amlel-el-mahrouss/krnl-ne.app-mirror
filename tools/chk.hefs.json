@@ -5,9 +5,9 @@
         "../"
     ],
     "sources_path": [
-        "fsck.hefs.cc"
+        "chk.hefs.cc"
     ],
-    "output_name": "./dist/fsck.hefs",
+    "output_name": "./dist/chk.hefs",
     "cpp_macros": [
         "kFsckHeFSVersion=0x0100",
         "kFsckHeFSVersionHighest=0x0100",

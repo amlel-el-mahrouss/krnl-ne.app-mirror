@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-   Copyright Amlal El Mahrouss 2025, all rights reserved.
+   Copyright Amlal El Mahrouss 2025, licensed under the Apache 2.0 license.
 
    FILE: ddk.h
    PURPOSE: Driver Kernel Interface Model base header.
@@ -10,7 +10,7 @@
 #pragma once
 
 #include <CompilerKit/CompilerKit.h>
-#include <DriverKit/macros.h>
+#include <libDDK/DriverKit/macros.h>
 
 #define DKI_CONTRACT_IMPL : public ::Kernel::DKIContract
 

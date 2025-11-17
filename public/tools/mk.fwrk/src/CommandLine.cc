@@ -25,7 +25,7 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   for (SInt32 i = 2UL; i < argc; ++i) {
     if (MmStrCmp(argv[i], "-h") == 0) {
       PrintOut(nullptr, "%s", "make_app: Framework/Application Creation Tool.\n");
-      PrintOut(nullptr, "%s", "make_app: © 2024-2025 Amlal El Mahrouss, All rights reserved.\n");
+      PrintOut(nullptr, "%s", "make_app: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
 
       PrintOut(nullptr, "%s", "make_app: -a: Application Directory.\n");
       PrintOut(nullptr, "%s", "make_app: -s: Steps (Setup pages) Directory.\n");

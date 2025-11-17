@@ -111,7 +111,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader = handover_hdr;
 
-  FB::fb_clear_video();
+  FB::cg_clear_video();
 
   UInt32 cnt_enabled  = 0;
   UInt32 cnt_disabled = 0;

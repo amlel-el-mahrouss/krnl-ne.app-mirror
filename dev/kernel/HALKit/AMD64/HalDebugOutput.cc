@@ -90,7 +90,7 @@ EXTERN_C void ke_utf_io_write(DeviceInterface<const Utf8Char*>* obj, const Utf8C
     tmp_str[0] = (bytes[index] > 127) ? '?' : bytes[index];
     tmp_str[1] = 0;
 
-    fb_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
+    cg_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
 
     if (bytes[index] == '\r') {
       kY += kFontSizeY;
@@ -106,7 +106,7 @@ EXTERN_C void ke_utf_io_write(DeviceInterface<const Utf8Char*>* obj, const Utf8C
     if (kY > kHandoverHeader->f_GOP.f_Height) {
       kY = kFontSizeY;
 
-      FBDrawInRegion(fb_get_clear_clr(), FB::FBAccessibilty::Height(), FB::FBAccessibilty::Width(),
+      FBDrawInRegion(cg_get_clear_clr(), FB::CGAccessibilty::Height(), FB::CGAccessibilty::Width(),
                      0, 0);
     }
 
@@ -146,7 +146,7 @@ EXTERN_C void ke_io_write(DeviceInterface<const Char*>* obj, const Char* bytes) 
     tmp_str[0] = bytes[index];
     tmp_str[1] = 0;
 
-    fb_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
+    cg_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
 
     if (bytes[index] == '\r') {
       kY += kFontSizeY;
@@ -162,7 +162,7 @@ EXTERN_C void ke_io_write(DeviceInterface<const Char*>* obj, const Char* bytes) 
     if (kY > kHandoverHeader->f_GOP.f_Height) {
       kY = kFontSizeY;
 
-      FBDrawInRegion(fb_get_clear_clr(), FB::FBAccessibilty::Height(), FB::FBAccessibilty::Width(),
+      FBDrawInRegion(cg_get_clear_clr(), FB::CGAccessibilty::Height(), FB::CGAccessibilty::Width(),
                      0, 0);
     }
 

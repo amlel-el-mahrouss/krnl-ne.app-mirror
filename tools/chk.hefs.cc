@@ -14,16 +14,16 @@ static uint16_t kNumericalBase = 10;
 
 int main(int argc, char** argv) {
   if (argc < 2) {
-    mkfs::console_out() << "fsck: hefs: usage: fsck.hefs -in=<input_device> -org=<origin>"
+    mkfs::console_out() << "fsck: hefs: usage: chk.hefs -in=<input_device> -b=<origin>"
                         << "\n";
     return EXIT_FAILURE;
   }
 
   auto args = mkfs::detail::build_args(argc, argv);
 
-  auto opt_disk = mkfs::get_option<char>(args, "-in");
+  auto opt_disk = mkfs::get_option<char>(args, "in");
 
-  auto origin = mkfs::get_option<char>(args, "-org");
+  auto origin = mkfs::get_option<char>(args, "b");
 
   if (opt_disk.empty()) {
     mkfs::console_out() << "fsck: hefs: error: OpenHeFS partition is empty! Exiting..."
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  mkfs::console_out() << "hefs: OpenHeFS partition is healthy, exiting...\n";
+  mkfs::console_out() << "hefs: OpenHeFS partition is healthy. Exiting...\n";
 
   output_device.close();
 

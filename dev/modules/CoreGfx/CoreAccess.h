@@ -17,12 +17,12 @@ namespace FB {
 using namespace Kernel;
 
 /// @brief common User interface class.
-class FBAccessibilty final {
-  explicit FBAccessibilty() = default;
-  ~FBAccessibilty()         = default;
+class CGAccessibilty final {
+  explicit CGAccessibilty() = default;
+  ~CGAccessibilty()         = default;
 
  public:
-  NE_COPY_DELETE(FBAccessibilty)
+  NE_COPY_DELETE(CGAccessibilty)
 
   static UInt64 Width() noexcept { return kHandoverHeader->f_GOP.f_Width; }
 

@@ -42,7 +42,7 @@ EXTERN_C void hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
                          handover_hdr->f_HardwareTables.f_ImageHandle);
 #endif
 
-  FB::fb_clear_video();
+  FB::cg_clear_video();
 
   /************************************** */
   /*     INITIALIZE BIT MAP.              */

@@ -306,7 +306,7 @@ template <int V>
 bool Qr<V>::draw(int whereX, int whereY) noexcept {
   if (!this->status) return false;  // it may be invalid.
 
-  fb_init();
+  cg_init();
 
   for (int y = 0; y < (this->side_size()); ++y) {
     for (int x = 0; x < (this->side_size()); ++x) {
@@ -315,7 +315,7 @@ bool Qr<V>::draw(int whereX, int whereY) noexcept {
     }
   }
 
-  fb_clear();
+  cg_clear();
 
   return false;
 }

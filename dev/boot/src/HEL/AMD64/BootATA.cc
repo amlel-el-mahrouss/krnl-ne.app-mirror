@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss/Symphony Corp, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss/Symphony Corp, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 

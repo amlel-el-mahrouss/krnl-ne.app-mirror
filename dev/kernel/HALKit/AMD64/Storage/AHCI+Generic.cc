@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ------------------------------------------- */
 
@@ -11,7 +11,7 @@
  * @version 0.1
  * @date 2024-02-02
  *
- * @copyright (C) 2024-2025, Amlal El Mahrouss, all rights reserved.
+ * @copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
  *
  */
 

@@ -1,6 +1,6 @@
 /* -------------------------------------------
 
-   Copyright Amlal El Mahrouss 2025, all rights reserved.
+   Copyright Amlal El Mahrouss 2025, licensed under the Apache 2.0 license.
 
    FILE: ddk.h
    PURPOSE: Driver Kernel Interface Model base header.

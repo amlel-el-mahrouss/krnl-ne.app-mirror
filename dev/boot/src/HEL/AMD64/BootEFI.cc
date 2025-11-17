@@ -163,7 +163,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // If we succeed in reading the blob, then execute it.
   // ------------------------------------------ //
 
-#ifndef __AHCI__
   Boot::BootFileReader reader_syschk(L"chk.efi", image_handle);
   reader_syschk.ReadAll(0);
 
@@ -175,7 +174,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
     syschk_thread->Start(handover_hdr, NO);
   }
-#endif /// @note SysChk breaks NeKernel on AHCI
 
   BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
 

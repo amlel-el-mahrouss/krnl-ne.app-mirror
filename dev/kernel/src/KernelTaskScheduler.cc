@@ -16,11 +16,17 @@
 /***********************************************************************************/
 
 namespace Kernel {
-EXTERN_C Void hal_switch_kernel_task(HAL::StackFramePtr frame, ProcessID kid);
+EXTERN_C Void hal_switch_kernel_task(HAL::StackFramePtr frame, KID kid);
 
-Bool KernelTaskHelper::Add(HAL::StackFramePtr frame_ptr, ProcessID new_kid) {
+Bool KernelTaskHelper::Add(HAL::StackFramePtr frame_ptr, KID new_kid) {
   NE_UNUSED(frame_ptr);
   NE_UNUSED(new_kid);
+
+  return NO;
+}
+
+Bool KernelTaskHelper::Remove(const KID kid) {
+  NE_UNUSED(kid);
 
   return NO;
 }

@@ -13,9 +13,9 @@
 #include <NeKit/Ref.h>
 
 // begin of ascii 'readable' characters. (A, C, C, 1, 2)
-#define kUUIDAsciiBegin 47
+#define kGUIDAsciiBegin 47
 // @brief Size of UUID.
-#define kUUIDSize 37
+#define kGUIDSize 37
 
 namespace Kernel::CF::XRN::Version1 {
 auto cf_make_sequence(const ArrayList<UInt32>& uuidSeq) -> Ref<GUIDSequence*> {
@@ -44,18 +44,18 @@ auto cf_make_sequence(const ArrayList<UInt32>& uuidSeq) -> Ref<GUIDSequence*> {
 // @brief Tries to make a guid out of a string.
 // This function is not complete for now
 auto cf_try_guid_to_string(Ref<GUIDSequence*>& seq) -> ErrorOr<Ref<KString>> {
-  Char buf[kUUIDSize];
+  Char buf[kGUIDSize];
 
   for (SizeT index = 0; index < 16; ++index) {
-    buf[index] = seq.Leak()->fU8[index] + kUUIDAsciiBegin;
+    buf[index] = seq.Leak()->fU8[index] + kGUIDAsciiBegin;
   }
 
   for (SizeT index = 16; index < 24; ++index) {
-    buf[index] = seq.Leak()->fU16[index] + kUUIDAsciiBegin;
+    buf[index] = seq.Leak()->fU16[index] + kGUIDAsciiBegin;
   }
 
   for (SizeT index = 24; index < 28; ++index) {
-    buf[index] = seq.Leak()->fU32[index] + kUUIDAsciiBegin;
+    buf[index] = seq.Leak()->fU32[index] + kGUIDAsciiBegin;
   }
 
   auto view = KStringBuilder::Construct(buf);

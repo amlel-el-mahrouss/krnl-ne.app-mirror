@@ -19,13 +19,13 @@ void* operator new(size_t sz) {
   return Kernel::mm_alloc_ptr(sz, true, false);
 }
 
-void operator delete[](void* ptr) {
+void operator delete[](void* ptr) noexcept {
   if (ptr == nullptr) return;
 
   Kernel::mm_free_ptr(ptr);
 }
 
-void operator delete(void* ptr) {
+void operator delete(void* ptr) noexcept {
   if (ptr == nullptr) return;
 
   Kernel::mm_free_ptr(ptr);

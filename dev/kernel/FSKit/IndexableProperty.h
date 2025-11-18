@@ -18,14 +18,14 @@ namespace Kernel {
 namespace Indexer {
   struct Index final {
    public:
-    Char Drive[kDriveNameLen];
-    Char Path[kIndexerCatalogNameLength];
+    Char Drive[kDriveNameLen]{};
+    Char Path[kIndexerCatalogNameLength]{};
   };
 
   class IndexableProperty final : public Property {
    public:
     explicit IndexableProperty() : Property() {
-      Kernel::KBasicString<> strProp(kMaxPropLen);
+      KBasicString<> strProp(kMaxPropLen);
       strProp += "/prop/indexable";
 
       this->GetKey() = strProp;
@@ -39,13 +39,13 @@ namespace Indexer {
     Index& Leak() noexcept;
 
    public:
-    void  AddFlag(Int16 flag);
-    void  RemoveFlag(Int16 flag);
-    Int16 HasFlag(Int16 flag);
+    Void  AddFlag(UInt16 flag);
+    Void  RemoveFlag(UInt16 flag);
+    UInt16 HasFlag(UInt16 flag);
 
    private:
     Index  fIndex;
-    UInt32 fFlags;
+    UInt32 fFlags{};
   };
 
   /// @brief Index a file into the indexer instance.

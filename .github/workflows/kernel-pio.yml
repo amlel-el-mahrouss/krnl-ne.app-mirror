@@ -2,9 +2,9 @@ name: NeKernel CI (ATA PIO)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "stable" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "stable" ]
 
 jobs:
   build:

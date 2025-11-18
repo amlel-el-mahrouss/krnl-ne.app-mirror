@@ -78,8 +78,8 @@ typedef struct EPM_GUID {
  * @note NumBlock and LbaStart are ignored on some platforms.
  */
 struct PACKED EPM_PART_BLOCK {
-  Kernel::Char  Magic[kEPMMagicLength] = {0};
-  Kernel::Char  Name[kEPMNameLength]   = {0};
+  Kernel::Char  Magic[kEPMMagicLength];
+  Kernel::Char  Name[kEPMNameLength];
   EPM_GUID      Guid;
   Kernel::Int32 Version;
   Kernel::Int64 NumBlocks;

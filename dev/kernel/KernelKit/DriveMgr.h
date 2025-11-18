@@ -52,7 +52,7 @@ enum {
 
 /// @brief Media drive trait type.
 struct DriveTrait final {
-  Char  fName[kDriveNameLen] = {0};  // /System, /boot, //./Devices/USB...
+  Char  fName[kDriveNameLen] = "/media/null";  // /System, /boot, //./Devices/USB...
   UInt32 fKind{};                 // fMassStorage, fFloppy, fOpticalDrive.
   UInt32 fFlags{};                // fReadOnly, fEPMDrive...
 
@@ -70,11 +70,11 @@ struct DriveTrait final {
   Lba   fLbaStart{0}, fLbaEnd{0};
   SizeT fSectorSz{kDriveSectorSz};
 
-  Void (*fInput)(DrivePacket& packet){};
-  Void (*fOutput)(DrivePacket& packet){};
-  Void (*fVerify)(DrivePacket& packet){};
-  Void (*fInit)(DrivePacket& packet){};
-  const Char* (*fProtocol)(Void){};
+  Void (*fInput)(DrivePacket& packet){nullptr};
+  Void (*fOutput)(DrivePacket& packet){nullptr};
+  Void (*fVerify)(DrivePacket& packet){nullptr};
+  Void (*fInit)(DrivePacket& packet){nullptr};
+  const Char* (*fProtocol)(Void){nullptr};
 };
 
 namespace Probe {
@@ -155,7 +155,12 @@ const Char* io_drv_kind(Void);
 DriveTrait io_construct_blank_drive(Void) noexcept;
 
 /// @brief Fetches the main drive.
+/// @param trait the new drive as a trait.
+Void io_construct_main_drive(DriveTrait& trait) noexcept;
+
+/// @brief Fetches the main drive.
 /// @return the new drive as a trait.
+/// @deprecated use io_construct_main_drive(DriveTrait& trait) instead.
 DriveTrait io_construct_main_drive(Void) noexcept;
 
 namespace Detect {

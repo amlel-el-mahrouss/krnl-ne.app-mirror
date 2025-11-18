@@ -86,7 +86,7 @@ namespace Detail {
            ((val << 8) & 0x000000FF00000000ULL) | ((val << 24) & 0x0000FF0000000000ULL) |
            ((val << 40) & 0x00FF000000000000ULL) | ((val << 56) & 0xFF00000000000000ULL);
   }
-  
+
   /// @brief Simple algorithm to hash directory entries for INDs.
   /// @param path the directory path.
   /// @return The hashed path.
@@ -759,15 +759,14 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
   // if disk isn't good, then error out.
   if (false == mnt->fPacket.fPacketGood) {
     err_global_get() = kErrorDiskIsCorrupted;
-    return false;
+    return NO;
   }
 
   if (drv_std_get_size() < kHeFSMinimumDiskSize) {
     (Void)(kout << "OpenHeFS recommends at least 128 GiB of free space." << kendl);
-    (Void)(
-        kout
-        << "The OS will still try to format a OpenHeFS disk here anyway, don't expect perfect geometry."
-        << kendl);
+    (Void)(kout << "The OS will still try to format a OpenHeFS disk here anyway, don't expect "
+                   "perfect geometry."
+                << kendl);
   }
 
   HEFS_BOOT_NODE* boot = (HEFS_BOOT_NODE*) RTL_ALLOCA(sizeof(HEFS_BOOT_NODE));
@@ -1145,23 +1144,28 @@ _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input co
   return NO;
 }
 
-STATIC DriveTrait kMountPoint;
+STATIC IMountpoint kMountpoint;
 
 /// @brief Initialize the OpenHeFS filesystem.
 /// @return To check its status, see err_local_get().
 Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
-  kout << "Verifying disk...\r";
+  io_construct_main_drive(kMountpoint.A());
 
-  kMountPoint = io_construct_main_drive();
-
-  if (kMountPoint.fPacket.fPacketReadOnly == YES) {
+  if (kMountpoint.A().fPacket.fPacketReadOnly == YES) {
     kout << "Main disk cannot be mounted (read-only media).\r";
     return NO;
   }
 
   HeFileSystemParser parser;
 
-  return parser.Format(&kMountPoint, kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName);
+  if (!parser.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName)) {
+    kout << "Failed to format OpenHeFS partition!\r";
+    return NO;
+  }
+
+  kout << "Valid OpenHeFS disk...\r";
+
+  return YES;
 }
 }  // namespace Kernel
 

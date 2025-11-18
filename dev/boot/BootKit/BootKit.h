@@ -261,7 +261,7 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
   EPM_PART_BLOCK* epm_boot = (EPM_PART_BLOCK*) RTL_ALLOCA(sizeof(EPM_PART_BLOCK));
 
   const auto kFsName    = "NeKernel";
-  const auto kBlockName = "OS (EPM)";
+  const auto kBlockName = " NeKernelOS";
 
   epm_boot->FsVersion = 0;
   epm_boot->LbaStart  = sizeof(EPM_PART_BLOCK);

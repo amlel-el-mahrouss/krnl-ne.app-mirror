@@ -9,7 +9,9 @@
 #include <NeKit/Defines.h>
 
 namespace Kernel {
-/// ASCII API
+/// =========================================================== ///
+/// @brief ASCII API
+/// =========================================================== ///
 
 Int         rt_copy_memory(const voidPtr src, voidPtr dst, Size len);
 Int         rt_move_memory(const voidPtr src, voidPtr dst, Size len);
@@ -20,29 +22,36 @@ const Char* rt_alloc_string(const Char* text);
 Size        rt_string_len(const Char* str);
 Size        rt_string_len(const Char* str, SizeT _len);
 Boolean     rt_to_string(Char* str_out, UInt64 base, Int32 limit);
-Boolean     rt_is_newln(Char chr);
-Boolean     rt_is_space(Char chr);
-Int32       rt_is_alnum(Int32 character);
+Boolean     rt_is_newln(Int chr);
+Boolean     rt_is_space(Int chr);
+Int32       rt_is_alnum(Int character);
 Int         rt_to_uppercase(Int c);
 Int         rt_to_lower(Int c);
 voidPtr     rt_string_in_string(const Char* in, const Char* needle);
 char*       rt_string_has_char(Char* str, Char chr);
 
-// Safe memory functions
+/// =========================================================== ///
+/// @brief Safe memory functions API
+/// =========================================================== ///
+
 Int     rt_copy_memory_safe(const voidPtr src, voidPtr dst, Size len, Size dst_size);
 voidPtr rt_set_memory_safe(voidPtr dst, UInt32 value, Size len, Size dst_size);
 
-/// UNICODE API
+/// =========================================================== ///
+/// @brief UNICODE API
+/// =========================================================== ///
 
 Int  urt_string_cmp(const Utf8Char* src, const Utf8Char* cmp, Size len);
 Void urt_set_memory(const voidPtr src, UInt32 dst, Size len);
 Int  urt_copy_memory(const voidPtr src, voidPtr dst, Size len);
 Size urt_string_len(const Utf8Char* str);
 
-/// OpenTemplate UTILS API
+/// =========================================================== ///
+/// @brief OpenEncoding API
+/// =========================================================== ///
 
 template <typename CharType = Char>
-inline SizeT ort_string_len(const CharType* str) {
+inline SizeT oe_string_len(const CharType* str) {
   if (!str) return 0;
 
   SizeT len{0};

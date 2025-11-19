@@ -72,8 +72,6 @@ Void io_drv_output(DriveTrait::DrivePacket& pckt) {
 /// @param pckt the packet to read.
 /// @return
 Void io_drv_init(DriveTrait::DrivePacket& pckt) {
-  NE_UNUSED(pckt);
-
 #if defined(__ATA_PIO__) || defined(__ATA_DMA__)
   kATAMaster = 0;
   kATAIO     = 0;
@@ -97,10 +95,9 @@ Void io_drv_init(DriveTrait::DrivePacket& pckt) {
   pckt.fPacketGood = YES;
 #elif defined(__AHCI__)
   kAHCIPortsImplemented = 0;
+  drv_std_init(kAHCIPortsImplemented);
 
-  if (drv_std_init(kAHCIPortsImplemented)) {
-    pckt.fPacketGood = YES;
-  }
+  pckt.fPacketGood = kAHCIPortsImplemented > 0;
 #endif  // if defined(__ATA_PIO__) || defined (__ATA_DMA__)
 }
 
@@ -154,6 +151,8 @@ DriveTrait io_construct_blank_drive() noexcept {
 
 namespace Probe {
   Void io_detect_drive(DriveTrait& trait) {
+    trait.fInit(trait.fPacket);
+
     EPM_PART_BLOCK block_struct;
 
     trait.fPacket.fPacketLba     = kEPMBootBlockLba;
@@ -162,8 +161,6 @@ namespace Probe {
 
     rt_copy_memory((VoidPtr) "fs/detect-packet", trait.fPacket.fPacketMime,
                    rt_string_len("fs/detect-packet"));
-
-    trait.fInit(trait.fPacket);
 
     trait.fInput(trait.fPacket);
 
@@ -215,14 +212,14 @@ namespace Probe {
     trait.fPacket.fPacketSize    = 0UL;
     trait.fPacket.fPacketContent = nullptr;
   }
-}  // namespace Detail
+}  // namespace Probe
 
 /// @brief Fetches the main drive.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)
 DriveTrait io_construct_main_drive() noexcept {
   constexpr auto kMainDrive = "/media/main/";
 
-  DriveTrait trait{};
+  DriveTrait trait;
 
   rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
   MUST_PASS(trait.fName[0] != 0);
@@ -232,9 +229,26 @@ DriveTrait io_construct_main_drive() noexcept {
   trait.fInput    = io_drv_input;
   trait.fInit     = io_drv_init;
   trait.fProtocol = io_drv_kind;
-  
+
   Probe::io_detect_drive(trait);
 
   return trait;
+}
+
+/// @brief Replacement for io_construct_main_drive that works with IMountpoint.
+/// @return the new drive. (returns kEPMDrive if EPM formatted)
+Void io_construct_main_drive(DriveTrait& trait) noexcept {
+  constexpr auto kMainDrive = "/media/main/";
+
+  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
+  MUST_PASS(trait.fName[0] != 0);
+
+  trait.fVerify   = io_drv_unimplemented;
+  trait.fOutput   = io_drv_output;
+  trait.fInput    = io_drv_input;
+  trait.fInit     = io_drv_init;
+  trait.fProtocol = io_drv_kind;
+
+  Probe::io_detect_drive(trait);
 }
 }  // namespace Kernel

@@ -7,12 +7,12 @@
 #include <KernelKit/PCI/Iterator.h>
 
 namespace Kernel::PCI {
-Iterator::Iterator(const Types::PciDeviceKind& type) {
+Iterator::Iterator(const Types::PciDeviceKind type, UInt32 bar) {
   // probe devices.
-  for (int bus = 0; bus < NE_BUS_COUNT; ++bus) {
-    for (int device = 0; device < NE_DEVICE_COUNT; ++device) {
-      for (int function = 0; function < NE_FUNCTION_COUNT; ++function) {
-        Device dev(bus, device, function, 0x00);
+  for (Int32 bus = 0; bus < NE_BUS_COUNT; ++bus) {
+    for (Int32 device = 0; device < NE_DEVICE_COUNT; ++device) {
+      for (Int32 function = 0; function < NE_FUNCTION_COUNT; ++function) {
+        Device dev(bus, device, function, bar);
 
         if (dev.Class() == type) {
           fDevices[bus] = dev;

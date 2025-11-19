@@ -134,7 +134,13 @@ EXTERN_C Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
 }
 
 EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
-  using namespace Kernel;
+#ifdef __FSKIT_INCLUDES_OPENHEFS__
+  OpenHeFS::fs_init_openhefs();
+#endif
+
+#ifdef __FSKIT_INCLUDES_NEFS__
+  NeFS::fs_init_nefs();
+#endif
 
   HAL::Register64 idt_reg;
   idt_reg.Base = reinterpret_cast<UIntPtr>(kInterruptVectorTable);
@@ -143,14 +149,6 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   idt_loader.Load(idt_reg);
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
-
-#ifdef __FSKIT_INCLUDES_OPENHEFS__
-  OpenHeFS::fs_init_openhefs();
-#endif
-
-#ifdef __FSKIT_INCLUDES_NEFS__
-  NeFS::fs_init_nefs();
-#endif
 
   while (YES)
     ;

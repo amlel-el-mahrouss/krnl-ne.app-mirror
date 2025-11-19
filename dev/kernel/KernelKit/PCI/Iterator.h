@@ -23,7 +23,7 @@ class Iterator final {
   Iterator() = delete;
 
  public:
-  explicit Iterator(const Types::PciDeviceKind& deviceType);
+  explicit Iterator(const Types::PciDeviceKind deviceType, UInt32 bar);
 
   Iterator& operator=(const Iterator&) = default;
   Iterator(const Iterator&)            = default;

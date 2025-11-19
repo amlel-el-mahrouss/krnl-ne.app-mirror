@@ -397,7 +397,8 @@ STATIC Bool drv_init_command_structures_ahci() {
 /// @param atapi reference value, tells whether we should detect ATAPI instead of SATA.
 /// @return if the disk was successfully initialized or not.
 STATIC Bool drv_std_init_ahci(UInt16& pi, BOOL& atapi) {
-  PCI::Iterator iterator(Types::PciDeviceKind::MassStorageController);
+  /// AMLALE: TODO: Iterator is good enough, but we need to expand it.
+  PCI::Iterator iterator(Types::PciDeviceKind::MassStorageController, 0x00);
 
   for (SizeT device_index = 0; device_index < NE_BUS_COUNT; ++device_index) {
     kSATADev = iterator[device_index].Leak();  // Leak device.
@@ -438,7 +439,6 @@ STATIC Bool drv_std_init_ahci(UInt16& pi, BOOL& atapi) {
 
           if (!drv_init_command_structures_ahci()) {
             err_global_get() = kErrorDisk;
-            return NO;
           }
 
           goto success_hba_fetch;

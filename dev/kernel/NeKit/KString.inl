@@ -10,7 +10,7 @@
 namespace Kernel {
 template <typename CharKind>
 inline void ort_string_append(CharKind* lhs, const CharKind* rhs, Int32 cur) {
-  SizeT sz_rhs = ort_string_len<CharKind>(rhs);
+  SizeT sz_rhs = oe_string_len<CharKind>(rhs);
   SizeT rhs_i  = 0;
 
   for (; rhs_i < sz_rhs; ++rhs_i) {
@@ -46,9 +46,9 @@ inline bool KBasicString<CharKind>::operator==(const KBasicString<CharKind>& rhs
 
 template <typename CharKind>
 inline bool KBasicString<CharKind>::operator==(const CharKind* rhs) const {
-  if (ort_string_len<CharKind>(rhs) != this->Length()) return false;
+  if (oe_string_len<CharKind>(rhs) != this->Length()) return false;
 
-  for (Size index = 0; index < ort_string_len<CharKind>(rhs); ++index) {
+  for (Size index = 0; index < oe_string_len<CharKind>(rhs); ++index) {
     if (rhs[index] != this->fData[index]) return false;
   }
 
@@ -68,9 +68,9 @@ inline bool KBasicString<CharKind>::operator!=(const KBasicString<CharKind>& rhs
 
 template <typename CharKind>
 inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
-  if (ort_string_len<CharKind>(rhs) != this->Length()) return false;
+  if (oe_string_len<CharKind>(rhs) != this->Length()) return false;
 
-  for (Size index = 0; index < ort_string_len<CharKind>(rhs); ++index) {
+  for (Size index = 0; index < oe_string_len<CharKind>(rhs); ++index) {
     if (rhs[index] == this->fData[index]) return false;
   }
 
@@ -79,10 +79,10 @@ inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
 
 template <typename CharKind>
 inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const KBasicString<CharKind>& rhs) {
-  if (ort_string_len<CharKind>(rhs.fData) > this->Length()) return *this;
+  if (oe_string_len<CharKind>(rhs.fData) > this->Length()) return *this;
 
   ort_string_append(this->fData, const_cast<CharKind*>(rhs.fData), this->fCur);
-  this->fCur += ort_string_len<CharKind>(const_cast<CharKind*>(rhs.fData));
+  this->fCur += oe_string_len<CharKind>(const_cast<CharKind*>(rhs.fData));
 
   return *this;
 }
@@ -90,7 +90,7 @@ inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const KBasicSt
 template <typename CharKind>
 inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const CharKind* rhs) {
   ort_string_append(this->fData, const_cast<CharKind*>(rhs), this->fCur);
-  this->fCur += ort_string_len<CharKind>(const_cast<CharKind*>(rhs));
+  this->fCur += oe_string_len<CharKind>(const_cast<CharKind*>(rhs));
 
   return *this;
 }
@@ -99,7 +99,7 @@ template <typename CharKind>
 inline ErrorOr<KBasicString<CharKind>> KStringBuilder::Construct(const CharKind* data) {
   if (!data || *data == 0) return ErrorOr<KBasicString<CharKind>>(nullptr);
 
-  KBasicString<CharKind>* view = new KBasicString<CharKind>(ort_string_len<CharKind>(data));
+  KBasicString<CharKind>* view = new KBasicString<CharKind>(oe_string_len<CharKind>(data));
   (*view) += data;
 
   return ErrorOr<KBasicString<CharKind>>(*view);
@@ -109,12 +109,12 @@ inline const CharKind* KStringBuilder::FromBool(const CharKind* fmt, bool i) {
   if (!fmt) return ("?");
 
   const CharKind* boolean_expr = i ? "YES" : "NO";
-  CharKind*       ret          = (CharKind*) RTL_ALLOCA(ort_string_len<CharKind>(boolean_expr) + ort_string_len<CharKind>(fmt));
+  CharKind*       ret          = (CharKind*) RTL_ALLOCA(oe_string_len<CharKind>(boolean_expr) + oe_string_len<CharKind>(fmt));
 
   if (!ret) return ("?");
 
-  const auto fmt_len = ort_string_len<CharKind>(fmt);
-  const auto res_len = ort_string_len<CharKind>(boolean_expr);
+  const auto fmt_len = oe_string_len<CharKind>(fmt);
+  const auto res_len = oe_string_len<CharKind>(boolean_expr);
 
   for (Size idx = 0; idx < fmt_len; ++idx) {
     if (fmt[idx] == '%') {
@@ -135,9 +135,9 @@ inline const CharKind* KStringBuilder::FromBool(const CharKind* fmt, bool i) {
 }
 template <typename CharKind>
 inline bool KStringBuilder::Equals(const CharKind* lhs, const CharKind* rhs) {
-  if (ort_string_len<CharKind>(rhs) != ort_string_len<CharKind>(lhs)) return false;
+  if (oe_string_len<CharKind>(rhs) != oe_string_len<CharKind>(lhs)) return false;
 
-  for (Size index = 0; index < ort_string_len<CharKind>(rhs); ++index) {
+  for (Size index = 0; index < oe_string_len<CharKind>(rhs); ++index) {
     if (rhs[index] != lhs[index]) return false;
   }
 
@@ -147,17 +147,17 @@ template <typename CharKind>
 inline const CharKind* KStringBuilder::Format(const CharKind* fmt, const CharKind* fmt2) {
   if (!fmt || !fmt2) return ("?");
 
-  CharKind* ret = (CharKind*) RTL_ALLOCA(sizeof(char) * (ort_string_len<CharKind>(fmt2) + ort_string_len<CharKind>(fmt)));
+  CharKind* ret = (CharKind*) RTL_ALLOCA(sizeof(char) * (oe_string_len<CharKind>(fmt2) + oe_string_len<CharKind>(fmt)));
 
   if (!ret) return ("?");
 
-  const auto len = ort_string_len<CharKind>(fmt);
+  const auto len = oe_string_len<CharKind>(fmt);
 
   for (Size idx = 0; idx < len; ++idx) {
-    if (fmt[idx] == '%' && idx < ort_string_len<CharKind>(fmt) && fmt[idx] == 's') {
+    if (fmt[idx] == '%' && idx < oe_string_len<CharKind>(fmt) && fmt[idx] == 's') {
       Size result_cnt = idx;
 
-      for (Size y_idx = 0; y_idx < ort_string_len<CharKind>(fmt2); ++y_idx) {
+      for (Size y_idx = 0; y_idx < oe_string_len<CharKind>(fmt2); ++y_idx) {
         ret[result_cnt] = fmt2[y_idx];
         ++result_cnt;
       }

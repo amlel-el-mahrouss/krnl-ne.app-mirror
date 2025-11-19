@@ -98,23 +98,23 @@ Int32 rt_copy_memory(const voidPtr src, voidPtr dst, Size len) {
   return static_cast<Int>(len);
 }
 
-Int32 rt_to_uppercase(Int32 ch) {
+Int32 rt_to_uppercase(Int ch) {
   return (ch >= 'a' && ch <= 'z') ? ch - 0x20 : ch;
 }
 
-Int32 rt_to_lower(Int32 ch) {
+Int32 rt_to_lower(Int ch) {
   return (ch >= 'A' && ch <= 'Z') ? ch + 0x20 : ch;
 }
 
-Int32 rt_is_alnum(Int32 ch) {
+Int32 rt_is_alnum(Int ch) {
   return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
 }
 
-Boolean rt_is_space(Char ch) {
+Boolean rt_is_space(Int ch) {
   return ch == ' ';
 }
 
-Boolean rt_is_newln(Char ch) {
+Boolean rt_is_newln(Int ch) {
   return ch == '\n';
 }
 
@@ -124,7 +124,8 @@ Char rt_to_char(UInt64 value, Int32 base) {
 }
 
 Bool rt_to_string(Char* str, UInt64 value, Int32 base) {
-#ifdef __NE_AMD64__
+  if (!str || base < 2 || base > 16) return NO;
+
   Int i = 0;
   do {
     str[i++] = rt_to_char(value, base);
@@ -139,8 +140,6 @@ Bool rt_to_string(Char* str, UInt64 value, Int32 base) {
   }
 
   return YES;
-#endif
-  return NO;
 }
 
 VoidPtr rt_string_in_string(const Char* haystack, const Char* needle) {
@@ -163,19 +162,4 @@ Char* rt_string_has_char(Char* str, Char ch) {
   while (*str && *str != ch) ++str;
   return (*str == ch) ? str : nullptr;
 }
-
-EXTERN_C void* memset(void* dst, int c, long long unsigned int len) {
-  return Kernel::rt_set_memory_safe(dst, c, static_cast<Size>(len), static_cast<Size>(len));
-}
-
-EXTERN_C void* memcpy(void* dst, const void* src, long long unsigned int len) {
-  Kernel::rt_copy_memory_safe(const_cast<void*>(src), dst, static_cast<Size>(len),
-                              static_cast<Size>(len));
-  return dst;
-}
-
-EXTERN_C Int32 strcmp(const char* a, const char* b) {
-  return Kernel::rt_string_cmp(a, b, rt_string_len(a));
-}
-
 }  // namespace Kernel

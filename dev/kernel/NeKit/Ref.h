@@ -14,6 +14,9 @@
 #include <NeKit/KernelPanic.h>
 
 namespace Kernel {
+/// =========================================================== ///
+/// @brief Reference wrapper class.                          ///
+/// =========================================================== ///
 template <typename T>
 class Ref final {
  public:
@@ -66,7 +69,7 @@ class NonNullRef final {
   Ref<T> fRef{};
 };
 
-using RefAny = Ref<Any>;
+using RefAny        = Ref<Any>;
 using NonNullRefAny = NonNullRef<Any>;
 }  // namespace Kernel
 

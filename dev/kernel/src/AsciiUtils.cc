@@ -7,10 +7,6 @@
 #include <NeKit/Utils.h>
 
 namespace Kernel {
-
-Int32   rt_copy_memory_safe(const voidPtr src, voidPtr dst, Size len, Size dst_size);
-voidPtr rt_set_memory_safe(voidPtr dst, UInt32 value, Size len, Size dst_size);
-
 Int32 rt_string_cmp(const Char* src, const Char* cmp, Size size) {
   for (Size i = 0; i < size; ++i) {
     if (src[i] != cmp[i]) return static_cast<Int32>(src[i]) - static_cast<Int32>(cmp[i]);

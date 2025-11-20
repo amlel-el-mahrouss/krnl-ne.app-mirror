@@ -8,6 +8,10 @@ xcuserdata/
 *.dSYM.zip
 *.dSYM
 
+*.fls
+*.gz
+*.fdb_*
+
 # EPM Image
 *.eimg
 

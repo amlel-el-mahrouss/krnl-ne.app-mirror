@@ -13,7 +13,8 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   LIBSYS_UNUSED(argv);
 
   PrintOut(nullptr, "%s", "ld.fwrk: Framework Loader.\n");
-  PrintOut(nullptr, "%s", "ld.fwrk: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
+  PrintOut(nullptr, "%s",
+           "ld.fwrk: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
 
   return EXIT_FAILURE;
 }

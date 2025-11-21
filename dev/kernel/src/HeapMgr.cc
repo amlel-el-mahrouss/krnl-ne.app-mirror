@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/DebugOutput.h>
@@ -12,7 +12,7 @@
 #include <NeKit/PageMgr.h>
 #include <NeKit/Utils.h>
 
-/* -------------------------------------------
+/* ========================================
 
  Revision History:
   10/8/24: FIX: Fix useless long name, alongside a new WR (WriteRead) field.
@@ -20,7 +20,7 @@
     27/01/25: REFACTOR: Reworked code as the memory manager.
   25/03/25: REFACTOR: Refactor HeapMgr code and log freed address location.
 
- ------------------------------------------- */
+ ======================================== */
 
 //! @file HeapMgr.cc
 //! @brief Heap system that serves as the main memory manager.

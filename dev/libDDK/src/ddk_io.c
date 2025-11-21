@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   libDDK - Device Driver Kit
   Copyright 2025 - Amlal El Mahrouss and NeKernel contributors.
@@ -6,7 +6,7 @@
   File: ddk_io.c
   Purpose: DDK Text I/O.
 
-------------------------------------------- */
+======================================== */
 
 #include <DriverKit/io.h>
 

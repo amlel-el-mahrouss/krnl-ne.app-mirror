@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
-#include <tools/libmkfs/openhefs.h>
 #include <tools/libmkfs/mkfs.h>
+#include <tools/libmkfs/openhefs.h>
 #include <cstdlib>
 #include <fstream>
 
@@ -64,7 +64,8 @@ int main(int argc, char** argv) {
   }
 
   if (boot_node.badSectors > kMkFsMaxBadSectors) {
-    mkfs::console_out() << "hefs: error: OpenHeFS disk has too much bad sectors: " << opt_disk << "\n";
+    mkfs::console_out() << "hefs: error: OpenHeFS disk has too much bad sectors: " << opt_disk
+                        << "\n";
     return EXIT_FAILURE;
   }
 

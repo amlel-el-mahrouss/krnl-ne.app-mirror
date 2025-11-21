@@ -1,19 +1,19 @@
-/* -------------------------------------------
+/* ========================================
 
  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #ifndef INC_USER_H
 #define INC_USER_H
 
-/* -------------------------------------------
+/* ========================================
 
  Revision History:
 
  04/03/25: Set users directory as /libSystem/ instead of /usr/
 
- ------------------------------------------- */
+ ======================================== */
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/KPC.h>

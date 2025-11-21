@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -50,7 +50,7 @@ using Boolean = bool;
 using Bool    = bool;
 using Char    = char;
 using Int8    = __INT8_TYPE__;
-using Char8    = char8_t;
+using Char8   = char8_t;
 using UChar   = __UINT8_TYPE__;
 using UInt8   = __UINT8_TYPE__;
 
@@ -85,7 +85,7 @@ typedef UInt32  PhysicalAddressKind;
 typedef UIntPtr VirtualAddressKind;
 
 using Void = void;
-using Any = void*;
+using Any  = void*;
 
 using Lba = UInt64;
 

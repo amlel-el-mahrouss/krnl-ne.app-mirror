@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #ifndef __INC_NETWORK_DEVICE_H__
 #define __INC_NETWORK_DEVICE_H__

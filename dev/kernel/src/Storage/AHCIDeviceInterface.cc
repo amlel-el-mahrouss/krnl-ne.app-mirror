@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #include <StorageKit/AHCI.h>
 
@@ -12,10 +12,8 @@ using namespace Kernel;
 /// @param Out Drive output
 /// @param In  Drive input
 /// @param Cleanup Drive cleanup.
-AHCIDeviceInterface::AHCIDeviceInterface(void (*out)(DeviceInterface*     self,
-                                                     IMountpoint* outpacket),
-                                         void (*in)(DeviceInterface*     self,
-                                                    IMountpoint* inpacket))
+AHCIDeviceInterface::AHCIDeviceInterface(void (*out)(DeviceInterface* self, IMountpoint* outpacket),
+                                         void (*in)(DeviceInterface* self, IMountpoint* inpacket))
     : DeviceInterface(out, in) {}
 
 /// @brief Class desctructor

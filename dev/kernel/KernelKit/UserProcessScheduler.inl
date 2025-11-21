@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
   FILE: UserProcessScheduler.inl
   PURPOSE: Low level/Ring-3 process scheduler.
 
-------------------------------------------- */
+======================================== */
 
 /// @brief USER_PROCESS inline definitions.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)

@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 //! @file ThreadLocalStorage.inl
 //! @brief Allocate resources from the process's heap storage.

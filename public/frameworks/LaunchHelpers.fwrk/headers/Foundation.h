@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -15,10 +15,10 @@ struct LHLaunchInfo;
 /// @brief Launch information structure.
 /// @note This structure is read-only. Modyfing its members wo't have any effect.
 struct LHLaunchInfo final {
-  CF::CFString  fExecutablePath;
-  CF::CFString  fWorkingDirectory;
-  CF::CFString  fArguments;
-  CF::CFString  fEnvironment;
+  CF::CFString    fExecutablePath;
+  CF::CFString    fWorkingDirectory;
+  CF::CFString    fArguments;
+  CF::CFString    fEnvironment;
   CF::CFInteger64 fUID{0};
   CF::CFInteger64 fGID{0};
 };

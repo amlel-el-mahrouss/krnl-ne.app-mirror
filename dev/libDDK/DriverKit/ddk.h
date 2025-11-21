@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright Amlal El Mahrouss 2025, licensed under the Apache 2.0 license.
 
   FILE: ddk.h
   PURPOSE: DDK Driver model base header.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 

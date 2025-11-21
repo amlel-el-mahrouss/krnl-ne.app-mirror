@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -13,7 +13,7 @@
 
 namespace Kernel {
 template <Int32 PacketBitLen>
-using scsi_packet_type    = Kernel::UInt16[PacketBitLen];
+using scsi_packet_type = Kernel::UInt16[PacketBitLen];
 
 using scsi_packet_type_12 = scsi_packet_type<12>;
 

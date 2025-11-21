@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license..
 
   File: IPC.h.
   Purpose: IPC protocol.
 
-------------------------------------------- */
+======================================== */
 
 #ifndef INC_IPC_H
 #define INC_IPC_H
@@ -56,8 +56,8 @@ constexpr inline auto kIPCMsgSize = 6094U;
 
 enum {
   kIPCLockInvalid = 0,
-  kIPCLockFree = 1,
-  kIPCLockUsed = 2,
+  kIPCLockFree    = 1,
+  kIPCLockUsed    = 2,
 };
 
 /// @brief IPC connection header, message cannot be greater than 6K.

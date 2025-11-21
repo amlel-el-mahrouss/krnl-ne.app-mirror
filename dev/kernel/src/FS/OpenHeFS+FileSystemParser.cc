@@ -1150,19 +1150,10 @@ Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
 
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES) {
     kout << "Main disk cannot be mounted (read-only media).\r";
-    return NO;
+    return YES;
   }
 
-  HeFileSystemParser parser;
-
-  if (!parser.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName)) {
-    kout << "Failed to format OpenHeFS partition!\r";
-    return NO;
-  }
-
-  kout << "Valid OpenHeFS disk...\r";
-
-  return YES;
+  return HeFileSystemParser{}.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName);
 }
 }  // namespace Kernel
 

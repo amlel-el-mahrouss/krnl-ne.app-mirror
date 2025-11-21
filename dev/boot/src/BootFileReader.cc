@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
@@ -6,7 +6,7 @@
   Purpose: New Boot FileReader,
   Read complete file and store it in a buffer.
 
-------------------------------------------- */
+======================================== */
 
 #include <BootKit/BootKit.h>
 #include <BootKit/Platform.h>

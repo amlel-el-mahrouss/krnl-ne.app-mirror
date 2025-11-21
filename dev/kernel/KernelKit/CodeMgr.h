@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
@@ -10,14 +10,14 @@
   30/01/24: Added file (amlel)
   3/8/24: Add UPP struct.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
-#include <KernelKit/IPEFDylibObject.h>
-#include <KernelKit/PEFCodeMgr.h>
-#include <KernelKit/PE32CodeMgr.h>
 #include <KernelKit/CoreProcessScheduler.h>
+#include <KernelKit/IPEFDylibObject.h>
+#include <KernelKit/PE32CodeMgr.h>
+#include <KernelKit/PEFCodeMgr.h>
 
 /// @file CodeMgr.h
 /// @brief Code Manager header file.

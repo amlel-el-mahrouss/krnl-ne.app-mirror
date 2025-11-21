@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
 Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license..
 
 File: LTE\LTE.h.
 Purpose: LTE Standard Library.
 
-------------------------------------------- */
+======================================== */
 
 #ifndef _INC_NETWORK_LTE_H_
 #define _INC_NETWORK_LTE_H_

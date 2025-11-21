@@ -14,7 +14,7 @@
 #include <KernelKit/ThreadLocalStorage.h>
 #include <NeKit/Defines.h>
 
-/* -------------------------------------------
+/* ========================================
 
  Revision History:
 
@@ -28,7 +28,7 @@
 
   10/8/24: FIX: Fix log comment.
 
- ------------------------------------------- */
+ ======================================== */
 
 using namespace Kernel;
 

@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -34,7 +34,8 @@ class Variant final {
 
  public:
   template <typename CharKind>
-  explicit Variant(KBasicString<CharKind>* stringView) : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
+  explicit Variant(KBasicString<CharKind>* stringView)
+      : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
 
   explicit Variant(JsonObject* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
 

@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss , licensed under the Apache 2.0 license.
 
@@ -6,9 +6,9 @@
   Purpose: Kernel file manager.
   Author: Amlal El Mahrouss (amlal@nekernel.org)
 
-------------------------------------------- */
+======================================== */
 
-/* -------------------------------------------
+/* ========================================
 
  Revision History:
 
@@ -17,7 +17,7 @@
     as well.
   18/01/25: Patches to FileStream class.
 
- ------------------------------------------- */
+ ======================================== */
 
 #ifndef INC_FILEMGR_H
 #define INC_FILEMGR_H
@@ -28,8 +28,8 @@
 
 //! Include filesystems that NeKernel supports.
 #include <FSKit/Ext2+IFS.h>
-#include <FSKit/OpenHeFS.h>
 #include <FSKit/NeFS.h>
+#include <FSKit/OpenHeFS.h>
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DebugOutput.h>

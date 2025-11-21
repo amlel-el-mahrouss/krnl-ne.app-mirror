@@ -1,23 +1,23 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
-#include <tools/libmkfs/openhefs.h>
 #include <tools/libmkfs/mkfs.h>
+#include <tools/libmkfs/openhefs.h>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <limits>
 
-static uint16_t      kVersion  = kHeFSVersion;
-static uint16_t      kNumericalBase = 10;
+static uint16_t kVersion       = kHeFSVersion;
+static uint16_t kNumericalBase = 10;
 
 static size_t        kDiskSize = mkfs::detail::gib_cast(4UL);
 static std::u8string kDiskLabel;
-static size_t        kDiskSectorSz    = 512;
+static size_t        kDiskSectorSz = 512;
 
 int main(int argc, char** argv) {
   if (argc < 2) {

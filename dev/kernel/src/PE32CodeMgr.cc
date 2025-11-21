@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #include <CFKit/Utils.h>
 #include <KernelKit/DebugOutput.h>
@@ -11,8 +11,8 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/Defines.h>
 #include <NeKit/KString.h>
-#include <NeKit/OwnPtr.h>
 #include <NeKit/KernelPanic.h>
+#include <NeKit/OwnPtr.h>
 
 namespace Kernel {
 namespace Detail {
@@ -255,4 +255,4 @@ namespace Utils {
     return id;
   }
 }  // namespace Utils
-}  // namespace NeKernel
+}  // namespace Kernel

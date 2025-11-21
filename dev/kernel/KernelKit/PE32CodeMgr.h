@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
@@ -9,7 +9,7 @@
 
   12/02/24: Added file (amlel)
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -88,4 +88,4 @@ enum { kPETypeInvalid, kPETypeText = 100, kPETypeData, kPETypeBSS };
 typedef LDR_SECTION_HEADER PE_SECTION_INFO;
 
 ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) noexcept;
-}  // namespace NeKernel
+}  // namespace Kernel

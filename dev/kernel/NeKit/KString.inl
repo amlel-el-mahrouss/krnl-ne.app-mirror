@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 /// @file KBasicString.inl
 /// @brief Kernel String manipulation file.
@@ -78,7 +78,8 @@ inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
 }
 
 template <typename CharKind>
-inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const KBasicString<CharKind>& rhs) {
+inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(
+    const KBasicString<CharKind>& rhs) {
   if (oe_string_len<CharKind>(rhs.fData) > this->Length()) return *this;
 
   ort_string_append(this->fData, const_cast<CharKind*>(rhs.fData), this->fCur);
@@ -109,7 +110,8 @@ inline const CharKind* KStringBuilder::FromBool(const CharKind* fmt, bool i) {
   if (!fmt) return ("?");
 
   const CharKind* boolean_expr = i ? "YES" : "NO";
-  CharKind*       ret          = (CharKind*) RTL_ALLOCA(oe_string_len<CharKind>(boolean_expr) + oe_string_len<CharKind>(fmt));
+  CharKind*       ret =
+      (CharKind*) RTL_ALLOCA(oe_string_len<CharKind>(boolean_expr) + oe_string_len<CharKind>(fmt));
 
   if (!ret) return ("?");
 
@@ -147,7 +149,8 @@ template <typename CharKind>
 inline const CharKind* KStringBuilder::Format(const CharKind* fmt, const CharKind* fmt2) {
   if (!fmt || !fmt2) return ("?");
 
-  CharKind* ret = (CharKind*) RTL_ALLOCA(sizeof(char) * (oe_string_len<CharKind>(fmt2) + oe_string_len<CharKind>(fmt)));
+  CharKind* ret = (CharKind*) RTL_ALLOCA(
+      sizeof(char) * (oe_string_len<CharKind>(fmt2) + oe_string_len<CharKind>(fmt)));
 
   if (!ret) return ("?");
 

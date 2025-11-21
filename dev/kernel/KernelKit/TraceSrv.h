@@ -1,9 +1,9 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
   NeKernel is licensed under the Apache License 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 

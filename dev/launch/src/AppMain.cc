@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
    Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-   ------------------------------------------- */
+   ======================================== */
 
 #include <LaunchKit/Foundation.h>
 #include <libSystem/SystemKit/Err.h>

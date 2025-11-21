@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 /**
  * @file PIO+Generic.cc
@@ -200,8 +200,7 @@ namespace Detail {
   /// @brief Read PIO device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_read_pio(DeviceInterface<IMountpoint*>* self,
-                             IMountpoint*                   mnt) {
+  STATIC Void sk_io_read_pio(DeviceInterface<IMountpoint*>* self, IMountpoint* mnt) {
     ATADeviceInterface* dev = (ATADeviceInterface*) self;
 
     err_global_get() = kErrorDisk;
@@ -222,8 +221,7 @@ namespace Detail {
   /// @brief Write PIO device.
   /// @param self device
   /// @param mnt mounted disk.
-  STATIC Void sk_io_write_pio(DeviceInterface<IMountpoint*>* self,
-                              IMountpoint*                   mnt) {
+  STATIC Void sk_io_write_pio(DeviceInterface<IMountpoint*>* self, IMountpoint* mnt) {
     ATADeviceInterface* dev = (ATADeviceInterface*) self;
 
     err_global_get() = kErrorDisk;

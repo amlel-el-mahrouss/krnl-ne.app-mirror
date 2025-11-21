@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
@@ -7,7 +7,7 @@
   ??/??/24: Added file (amlel)
   23 Jul 24: Update filename to Defines.h and using NE_ALIGN_NVME for NVME structs. (amlel)
 
-------------------------------------------- */
+======================================== */
 
 #ifndef __MODULE_NVME_H__
 #define __MODULE_NVME_H__

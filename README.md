@@ -102,7 +102,7 @@ cd nekernel
 
 ## Authors & Credits
 
-- **Amlal El Mahrouss** — Lead developer, kernel architect
+- **Amlal El Mahrouss** — Lead Developer and Kernel Architect.
 - [Full contributor list](https://github.com/nekernel-org/nekernel/graphs/contributors)
 
 ---

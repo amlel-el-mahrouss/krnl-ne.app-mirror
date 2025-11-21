@@ -1,4 +1,4 @@
-/* -------------------------------------------
+/* ========================================
 
   DDK
   Copyright Amlal El Mahrouss.
@@ -6,7 +6,7 @@
   Author: Amlal El Mahrouss
   Purpose: DDK kernel dispatch system.
 
-------------------------------------------- */
+======================================== */
 
 #include <DriverKit/ddk.h>
 #include <stdarg.h>

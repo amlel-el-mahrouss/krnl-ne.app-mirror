@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -39,8 +39,8 @@ namespace Indexer {
     Index& Leak() noexcept;
 
    public:
-    Void  AddFlag(UInt16 flag);
-    Void  RemoveFlag(UInt16 flag);
+    Void   AddFlag(UInt16 flag);
+    Void   RemoveFlag(UInt16 flag);
     UInt16 HasFlag(UInt16 flag);
 
    private:

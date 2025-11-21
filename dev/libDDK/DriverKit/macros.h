@@ -1,11 +1,11 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright 2025 Amlal El Mahrouss.
 
   FILE: ddk.h
   PURPOSE: DDK Driver model base header.
 
-------------------------------------------- */
+======================================== */
 
 #pragma once
 
@@ -37,7 +37,7 @@
 #if defined(__cplusplus)
 #define DDK_EXTERN extern "C"
 #else
-#define DDK_EXTERN 
+#define DDK_EXTERN
 #endif
 #endif
 

@@ -17,7 +17,8 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   if (argc == 1) return EXIT_FAILURE;
 
   PrintOut(nullptr, "open: Open Loader.\n");
-  PrintOut(nullptr, "open: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
+  PrintOut(nullptr,
+           "open: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
 
   for (SInt32 i = 1U; i < argc; ++i) {
     if (MmStrCmp(argv[i], OPEN_APP_HELP_FLAG) == 0) {

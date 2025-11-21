@@ -1,8 +1,8 @@
-/* -------------------------------------------
+/* ========================================
 
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
-------------------------------------------- */
+======================================== */
 
 #ifndef INC_DRIVE_MANAGER_H
 #define INC_DRIVE_MANAGER_H
@@ -52,9 +52,9 @@ enum {
 
 /// @brief Media drive trait type.
 struct DriveTrait final {
-  Char  fName[kDriveNameLen] = "/media/null";  // /System, /boot, //./Devices/USB...
-  UInt32 fKind{};                 // fMassStorage, fFloppy, fOpticalDrive.
-  UInt32 fFlags{};                // fReadOnly, fEPMDrive...
+  Char   fName[kDriveNameLen] = "/media/null";  // /System, /boot, //./Devices/USB...
+  UInt32 fKind{};                               // fMassStorage, fFloppy, fOpticalDrive.
+  UInt32 fFlags{};                              // fReadOnly, fEPMDrive...
 
   /// @brief Packet drive (StorageKit compilant.)
   struct DrivePacket final {

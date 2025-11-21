@@ -9,8 +9,8 @@
 namespace Kernel {
 const Char* Variant::ToString() {
   switch (fKind) {
-    case VariantKind::kXML:
-      return ("Class:{XML}");
+    case VariantKind::kTOML:
+      return ("Class:{TOML}");
     case VariantKind::kJson:
       return ("Class:{Json}");
     case VariantKind::kString:

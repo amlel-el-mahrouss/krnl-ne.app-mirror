@@ -56,6 +56,7 @@ class NonNullRef final {
   NonNullRef(nullPtr) = delete;
 
   NonNullRef(T* ref) : fRef(ref) { MUST_PASS(ref); }
+  NonNullRef(Ref<T> ref) : fRef(ref) { MUST_PASS(ref); }
 
   Ref<T>& operator->() {
     MUST_PASS(fRef);

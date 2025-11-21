@@ -15,7 +15,9 @@
 #include <KernelKit/Timer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
-// timer slot 0
+/// ================================================================================
+/// @note timer slot 0
+/// ================================================================================
 
 #define kHPETSignature ("HPET")
 
@@ -24,9 +26,11 @@
 #define kHPETCompRegValue (0x24)
 #define kHPETInterruptRegValue (0x2C)
 
+/// ================================================================================
 ///! BUGS: 0
 ///! @file HalTimer.cc
 ///! @brief Hardware Timer (HPET)
+/// ================================================================================
 
 namespace Kernel::Detail {
 struct HPET_BLOCK : public Kernel::SDT {

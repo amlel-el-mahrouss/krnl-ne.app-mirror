@@ -4,31 +4,34 @@
 
 ======================================== */
 
-#ifndef _PROPS_H
-#define _PROPS_H
+#pragma once
 
+#include <CoreFoundation.fwrk/headers/Foundation.h>
 #include <CoreFoundation.fwrk/headers/Ref.h>
 #include <libSystem/SystemKit/System.h>
 
-#define kMaxPropLen (256U)
+#define kCFMaxPropLen (256U)
 
 namespace CF {
 class CFString;
 class CFProperty;
-class CFGUID;
 
 template <typename Cls, SizeT N>
 class CFArray;
 
+/// ================================================================================
 /// @brief handle to anything (number, ptr, string...)
+/// ================================================================================
 using CFPropertyId = UIntPtr;
 
+/// ================================================================================
 /// @brief User property class.
 /// @example /prop/foo or /prop/bar
+/// ================================================================================
 class CFProperty final CF_OBJECT {
  public:
-  CFProperty();
-  virtual ~CFProperty();
+  CFProperty(CFRef<CFGUID> guid, CFString& name, CFPropertyId value);
+  ~CFProperty() override = default;
 
  public:
   CFProperty& operator=(const CFProperty&) = default;
@@ -41,11 +44,10 @@ class CFProperty final CF_OBJECT {
  private:
   CFString*    fName{nullptr};
   CFPropertyId fValue{0UL};
-  Ref<CFGUID>  fGUID{};
+  CFRef<CFGUID>  fGUID{};
 };
 
 template <SizeT N>
 using CFPropertyArray = CFArray<CFProperty, N>;
 }  // namespace CF
 
-#endif  // !CFKIT_PROPS_H

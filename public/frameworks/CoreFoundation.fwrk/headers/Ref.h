@@ -5,8 +5,7 @@
 
 ======================================== */
 
-#ifndef _REF_H_
-#define _REF_H_
+#pragma once
 
 #include <CoreFoundation.fwrk/headers/Object.h>
 #include <libSystem/SystemKit/System.h>
@@ -15,6 +14,9 @@ namespace CF {
 template <typename T>
 class CFRef;
 
+/// ================================================================================
+/// @brief CFRef class for reference counting.
+/// ================================================================================
 template <typename T>
 class CFRef final CF_OBJECT {
  public:
@@ -57,6 +59,9 @@ class CFRef final CF_OBJECT {
   T* fClass{nullptr};
 };
 
+/// ================================================================================
+/// @brief CFNonNullRef class for non-null reference counting.
+/// ================================================================================
 template <typename T>
 class CFNonNullRef final {
  public:
@@ -64,6 +69,7 @@ class CFNonNullRef final {
   CFNonNullRef(nullPtr) = delete;
 
   CFNonNullRef(T* ref) : fRef(ref) { MUST_PASS(ref); }
+  CFNonNullRef(CFRef<T> ref) : fRef(ref) { MUST_PASS(ref); }
 
   CFRef<T>& operator->() {
     MUST_PASS(fRef);
@@ -78,4 +84,3 @@ class CFNonNullRef final {
 };
 }  // namespace CF
 
-#endif  // ifndef _NEKIT_REF_H_

@@ -88,8 +88,9 @@ namespace HAL {
         }
 
         VoidPtr base = reinterpret_cast<VoidPtr>((UIntPtr) base_ptr);
-
         MUST_PASS(base);
+
+        if (!base) return nullptr;
 
         STATIC SizeT biggest = 0UL;
 
@@ -105,7 +106,7 @@ namespace HAL {
               this->GetBitMapStatus(ptr_bit_set);
 
               UInt32 flags = this->MakeMMFlags(wr, user);
-              mm_map_page(ptr_bit_set, ptr_bit_set, flags);
+              mm_map_page(ptr_bit_set, (VoidPtr)mm_get_page_addr(ptr_bit_set), flags);
 
               if (biggest < (size + pad)) biggest = size + pad;
 
@@ -121,7 +122,7 @@ namespace HAL {
             this->GetBitMapStatus(ptr_bit_set);
 
             UInt32 flags = this->MakeMMFlags(wr, user);
-            mm_map_page(ptr_bit_set, ptr_bit_set, flags);
+            mm_map_page(ptr_bit_set, (VoidPtr)mm_get_page_addr(ptr_bit_set), flags);
 
             if (biggest < (size + pad)) biggest = (size + pad);
 
@@ -136,7 +137,6 @@ namespace HAL {
                                  : ptr_bit_set[kBitMapSizeIdx];
 
           base = reinterpret_cast<VoidPtr>(raw_base + offset);
-
           if (base == nullptr) return nullptr;
         }
 
@@ -166,9 +166,10 @@ namespace HAL {
     };
   }  // namespace Detail
 
+  STATIC Detail::IBitMapProxy kBitMapMgr;
+
   auto mm_is_bitmap(VoidPtr ptr) -> BOOL {
-    Detail::IBitMapProxy bitmp;
-    return bitmp.IsBitMap(ptr);
+    return kBitMapMgr.IsBitMap(ptr);
   }
 
   /***********************************************************************************/
@@ -178,12 +179,10 @@ namespace HAL {
   /// @return a new bitmap allocated pointer.
   /***********************************************************************************/
   auto mm_alloc_bitmap(Boolean wr, Boolean user, SizeT size, Bool is_page, SizeT pad) -> VoidPtr {
-    VoidPtr              ptr_new = nullptr;
-    Detail::IBitMapProxy bitmp;
-
+    VoidPtr ptr_new = nullptr;
     if (is_page) return nullptr;
 
-    ptr_new = bitmp.FindBitMap(kKernelBitMpStart, size, wr, user, pad);
+    ptr_new = kBitMapMgr.FindBitMap(kKernelBitMpStart, size, wr, user, pad);
 
     if (!ptr_new) {
       ke_panic(RUNTIME_CHECK_VIRTUAL_OUT_OF_MEM, "Out of memory bitmap");
@@ -200,9 +199,7 @@ namespace HAL {
   auto mm_free_bitmap(VoidPtr ptr) -> Bool {
     if (!ptr) return No;
 
-    Detail::IBitMapProxy bitmp;
-    Bool                 ret = bitmp.FreeBitMap(ptr);
-
+    Bool ret = kBitMapMgr.FreeBitMap(ptr);
     return ret;
   }
 }  // namespace HAL

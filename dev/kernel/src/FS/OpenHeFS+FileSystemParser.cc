@@ -764,9 +764,6 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
 
   if (drv_std_get_size() < kHeFSMinimumDiskSize) {
     (Void)(kout << "OpenHeFS recommends at least 128 GiB of free space." << kendl);
-    (Void)(kout << "The OS will still try to format a OpenHeFS disk here anyway, don't expect "
-                   "perfect geometry."
-                << kendl);
   }
 
   HEFS_BOOT_NODE* boot = (HEFS_BOOT_NODE*) RTL_ALLOCA(sizeof(HEFS_BOOT_NODE));
@@ -880,12 +877,12 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
     return NO;
   }
 
-  constexpr const SizeT kHeFSPreallocateCount = 0x6UL;
+  /// AMLALE: Better way to create default directories than before.
+  const Utf8Char* kFileMap[] = {u8"/",        u8"/boot",  u8"/system", u8"/network",
+                                u8"/devices", u8"/media", u8"/dev",    (Utf8Char*) nullptr};
 
-  const Utf8Char* kFileMap[kHeFSPreallocateCount] = {u8"/",        u8"/boot",    u8"/system",
-                                                     u8"/network", u8"/devices", u8"/media"};
-
-  for (SizeT i = 0; i < kHeFSPreallocateCount; ++i) {
+  SizeT i = 0;
+  while (kFileMap[++i] != nullptr) {
     this->CreateINodeDirectory(mnt, kHeFSEncodingFlagsUTF8, kFileMap[i]);
   }
 
@@ -1153,19 +1150,10 @@ Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
 
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES) {
     kout << "Main disk cannot be mounted (read-only media).\r";
-    return NO;
+    return YES;
   }
 
-  HeFileSystemParser parser;
-
-  if (!parser.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName)) {
-    kout << "Failed to format OpenHeFS partition!\r";
-    return NO;
-  }
-
-  kout << "Valid OpenHeFS disk...\r";
-
-  return YES;
+  return HeFileSystemParser{}.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName);
 }
 }  // namespace Kernel
 

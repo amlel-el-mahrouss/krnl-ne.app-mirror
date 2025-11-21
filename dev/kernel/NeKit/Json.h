@@ -19,54 +19,68 @@
 #define kNeJsonLen (256)
 #define kNeJsonNullArr "[]"
 #define kNeJsonNullObj "{}"
+#define kNeJsonNullKey "null"
+#define kNeJsonNullValue kNeJsonNullKey
 
 namespace Kernel {
-/// @brief JavaScript object class
+/// ================================================================================
+/// @brief JSON object representation.
+/// ================================================================================
+template <typename CharKind = Char>
 class JsonObject final {
  public:
   explicit JsonObject() {
-    auto           len = kNeJsonMaxLen;
-    KBasicString<> key = KString(len);
-    key += kNeJsonNullObj;
+    KBasicString<CharKind> key = KString(kNeJsonMaxLen);
+    key += kNeJsonNullValue;
 
     this->AsKey()   = key;
-    this->AsValue() = key;
+    this->AsValue()   = key;
   }
 
-  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {}
+  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {
+
+    KBasicString<CharKind> key = KString(lhsLen);
+    this->AsKey()   = key;
+
+    KBasicString<CharKind> value = KString(rhsLen);
+    this->AsValue()   = value;
+  }
 
   ~JsonObject() = default;
 
   NE_COPY_DEFAULT(JsonObject)
+  NE_MOVE_DEFAULT(JsonObject)
 
   Bool& IsUndefined() { return fUndefined; }
 
  private:
   Bool           fUndefined;  // is this instance undefined?
-  KBasicString<> fKey;
-  KBasicString<> fValue;
+  KBasicString<CharKind> fKey;
+  KBasicString<CharKind> fValue;
 
  public:
   /// @brief returns the key of the json
   /// @return the key as string view.
-  KBasicString<>& AsKey() { return fKey; }
+  KBasicString<CharKind>& AsKey() { return fKey; }
 
   /// @brief returns the value of the json.
   /// @return the key as string view.
-  KBasicString<>& AsValue() { return fValue; }
+  KBasicString<CharKind>& AsValue() { return fValue; }
 
-  static JsonObject kNull;
+  STATIC JsonObject<CharKind> kNull;
 };
 
-/// @brief JsonObject stream reader helper.
-struct JsonStreamReader final {
-  STATIC JsonObject In(const Char* full_array) {
+/// ================================================================================
+/// @brief JsonObject stream reader helper for ASCII.
+/// ================================================================================
+struct AsciiJsonStreamReader final {
+  STATIC JsonObject<Char> In(const Char* full_array) {
     auto    start_val   = '{';
     auto    end_val     = '}';
     Boolean probe_value = false;
 
     if (full_array[0] != start_val) {
-      if (full_array[0] != '[') return JsonObject::kNull;
+      if (full_array[0] != '[') return JsonObject<Char>{0, 0};
 
       start_val = '[';
       end_val   = ']';
@@ -79,7 +93,7 @@ struct JsonStreamReader final {
     SizeT key_len   = 0;
     SizeT value_len = 0;
 
-    JsonObject type(kNeJsonMaxLen, kNeJsonMaxLen);
+    JsonObject<Char> type(kNeJsonMaxLen, kNeJsonMaxLen);
 
     for (SizeT i = 1; i < len; ++i) {
       if (full_array[i] == '\r' || full_array[i] == '\n') continue;
@@ -125,5 +139,8 @@ struct JsonStreamReader final {
   }
 };
 
-using JsonStream = Stream<JsonStreamReader, JsonObject>;
+/// ================================================================================
+/// @brief AsciiJsonStream type definition.
+/// ================================================================================
+using AsciiJsonStream = Stream<AsciiJsonStreamReader, JsonObject<Char>>;
 }  // namespace Kernel

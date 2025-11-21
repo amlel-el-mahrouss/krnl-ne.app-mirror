@@ -8,6 +8,7 @@
 
 #include <NeKit/Defines.h>
 #include <NeKit/Json.h>
+#include <NeKit/TOML.h>
 #include <NeKit/KString.h>
 #include <SwapKit/DiskSwap.h>
 
@@ -15,13 +16,13 @@ namespace Kernel {
 class Variant final {
  public:
   enum class VariantKind {
-    kString,
+    kInvalid = 0,
+    kString = 200,
     kBlob,
     kNull,
     kJson,
-    kXML,
+    kTOML,
     kSwap,
-    kInvalid,
   };
 
  public:
@@ -37,7 +38,9 @@ class Variant final {
   explicit Variant(KBasicString<CharKind>* stringView)
       : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
 
-  explicit Variant(JsonObject* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
+  explicit Variant(JsonObject<>* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
+
+  explicit Variant(TOMLObject* toml) : fPtr((VoidPtr) toml), fKind(VariantKind::kTOML) {}
 
   explicit Variant(nullPtr ptr) : fPtr(ptr), fKind(VariantKind::kNull) {}
 
@@ -47,10 +50,15 @@ class Variant final {
 
  public:
   const Char* ToString();
+
+  /// ========================================================================
+  /// @brief Returns the underlying pointer.
+  /// @return the underlying pointer.
+  /// ========================================================================
   VoidPtr     Leak();
 
   template <typename T>
-  T* As() {
+  T* As() noexcept {
     return reinterpret_cast<T*>(fPtr);
   }
 

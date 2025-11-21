@@ -4,13 +4,15 @@
 
 ======================================== */
 
-#ifndef _INC_FUNCTION_H_
-#define _INC_FUNCTION_H_
+#pragma once
 
 #include <NeKit/Defines.h>
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
+/// ================================================================================
+/// @brief Function wrapper class.
+/// ================================================================================
 template <typename T, typename... Args>
 class Function final {
  public:
@@ -40,11 +42,10 @@ class Function final {
 
  private:
   T(*fFn)
-  (Args... args);
+  (Args... args){nullptr};
 };
 
 template <typename T, typename... Args>
 using FunctionOr = ErrorOr<Function<T, Args...>>;
 }  // namespace Kernel
 
-#endif  // !_INC_FUNCTION_H__

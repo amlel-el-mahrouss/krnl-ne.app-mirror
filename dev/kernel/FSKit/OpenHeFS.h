@@ -17,9 +17,9 @@
 /// @file OpenHeFS.h
 /// @brief OpenHeFS filesystem support.
 
-#define kHeFSVersion (0x0103)
-#define kHeFSMagic "  HeFS"
-#define kHeFSMagicLen (8)
+#define kHeFSVersion (0x0104)
+#define kHeFSMagic "OpenHeFS"
+#define kHeFSMagicLen (9U)
 
 #define kHeFSBlockLen (512U)
 #define kHeFSFileNameLen (256U)

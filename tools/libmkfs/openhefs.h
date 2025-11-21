@@ -10,8 +10,8 @@
 #include <cstring>
 
 #define kHeFSVersion (0x0101)
-#define kHeFSMagic "  HeFS"
-#define kHeFSMagicLen (8)
+#define kHeFSMagic "OpenHeFS"
+#define kHeFSMagicLen (9U)
 
 #define kHeFSFileNameLen (256U)
 #define kHeFSPartNameLen (128U)

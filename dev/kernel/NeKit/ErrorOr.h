@@ -15,6 +15,9 @@
 namespace Kernel {
 using ErrorT = Int32;
 
+/// ================================================================================
+/// @brief ErrorOr class for error handling.
+/// ================================================================================
 template <typename T>
 class ErrorOr final {
  public:

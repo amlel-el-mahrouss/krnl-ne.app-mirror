@@ -14,7 +14,7 @@
 
 namespace CF {
 class CFString;
-class CFGUID;
+union CFGUID;
 class CFProperty;
 class CFObject;
 
@@ -72,4 +72,20 @@ struct CFRect final {
   BOOL SizeMatches(CFRect& rect) noexcept;
   BOOL PositionMatches(CFRect& rect) noexcept;
 };
+
+union CFGUID final {
+  alignas(8) UInt16 fU8[16];
+  alignas(8) UInt16 fU16[8];
+  alignas(8) UInt32 fU32[4];
+  alignas(8) UInt64 fU64[2];
+
+  struct {
+    alignas(8) UInt32 fMs1;
+    UInt16 fMs2;
+    UInt16 fMs3;
+    UInt8  fMs4[8];
+  } fUuid;
+};
+
+using CF_GUID_TYPE = union CFGUID;
 }  // namespace CF

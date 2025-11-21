@@ -148,8 +148,6 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   HAL::IDTLoader idt_loader;
   idt_loader.Load(idt_reg);
 
-  HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
-
   while (YES)
     ;
 }

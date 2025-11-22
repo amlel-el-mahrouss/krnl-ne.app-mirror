@@ -8,3 +8,11 @@
 
 #include <KernelKit/KernelTaskScheduler.h>
 #include <KernelKit/UserProcessScheduler.h>
+
+#ifdef __NEOSKRNL__
+namespace Kernel {
+inline UserProcessTeam kLowUserTeam;
+inline UserProcessTeam kHighUserTeam;
+inline UserProcessTeam kMidUserTeam;
+}  // namespace Kernel
+#endif

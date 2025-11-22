@@ -50,7 +50,7 @@ class ErrorOr final {
   /// @note DO NOT MAKE THIS EXPLICIT! IT WILL BREAK THE COMPILATION.
   operator bool() { return mRef; }
 
-  BOOL HasError() { return this->mId > 0; }
+  BOOL HasError() { return this->mId < 0; }
 
  private:
   Ref<T> mRef;

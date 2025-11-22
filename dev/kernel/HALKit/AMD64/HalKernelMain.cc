@@ -142,6 +142,12 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   NeFS::fs_init_nefs();
 #endif
 
+  UserProcessScheduler::The().SwitchTeam(kHighUserTeam);
+
+  rtl_create_user_process([]() -> void { while (YES); }, "NeKernel");
+
+  HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
+
   HAL::Register64 idt_reg;
   idt_reg.Base = reinterpret_cast<UIntPtr>(kInterruptVectorTable);
 

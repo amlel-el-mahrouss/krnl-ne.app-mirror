@@ -116,13 +116,12 @@ EXTERN_C HAL::StackFramePtr mp_get_current_task(ThreadID thrdid) {
 EXTERN_C BOOL mp_register_task(HAL::StackFramePtr stack_frame, ThreadID thrdid) {
   if (!stack_frame) return NO;
 
-  if (thrdid > kSMPCount) return NO;
-
   if (!kSMPAware) {
     sched_jump_to_task(kHWThread[thrdid].mFramePtr);
-
     return YES;
   }
+
+  if (thrdid > kSMPCount) return NO;
 
   HardwareThreadScheduler::The()[thrdid].Leak()->Busy(NO);
   kHWThread[thrdid].mFramePtr = stack_frame;
@@ -146,12 +145,6 @@ Bool mp_is_smp(Void) noexcept {
 
 Void mp_init_cores(VoidPtr vendor_ptr) noexcept {
   if (!vendor_ptr) return;
-  if (!kHandoverHeader) return;
-
-  if (!kHandoverHeader->f_HardwareTables.f_MultiProcessingEnabled) {
-    kSMPAware = NO;
-    return;
-  }
 
   PowerFactoryInterface hw_and_pow_int{vendor_ptr};
 
@@ -210,9 +203,6 @@ Void mp_init_cores(VoidPtr vendor_ptr) noexcept {
           ++kSMPCount;
 
           kout << "AP: kind: LAPIC: ON.\r";
-
-          // 0x7c00, as recommended by the Intel SDM.
-          hal_send_ipi_msg(kApicBaseAddress, entry_struct->ProcessorID, 0x7c);
         } else {
           kout << "AP: kind: LAPIC: OFF.\r";
         }

@@ -46,7 +46,7 @@
 ## 🧷 Notes
 
 - Default sector size is `512` bytes.
-- Default volume name is `"HeFS_VOLUME"`, defined as `kHeFSDefaultVolumeName`.
+- Default volume name is `"HeFS_VOLUME"`, defined as `kOpenHeFSDefaultVolumeName`.
 - The tool writes a `BootNode` at the beginning of the index node range.
 - A CRC-safe magic signature is embedded for boot and integrity validation.
 - After writing the metadata, the tool flushes and closes the file stream.

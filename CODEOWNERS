@@ -1,9 +1,9 @@
 # boot, user, and kernel are owned by amlal@nekernel.org.
-/dev/kernel/ @amlel-el-mahrouss
-/dev/boot/ @amlel-el-mahrouss
-/dev/libDDK/ @amlel-el-mahrouss
-/dev/libMsg/ @0xf00sec
-/dev/libSystem/ @0xf00sec
+/src/kernel/ @amlel-el-mahrouss
+/src/boot/ @amlel-el-mahrouss
+/src/libDDK/ @amlel-el-mahrouss
+/src/libMsg/ @0xf00sec
+/src/libSystem/ @0xf00sec
 # some other parts (tools, frameworks) need ownership too.
 /public/ @amlel-el-mahrouss
 /tools/ @0xf00sec

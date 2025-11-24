@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gdb -q -x dev/boot/gdbinit
+gdb -q -x src/boot/gdbinit

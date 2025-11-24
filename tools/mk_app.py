@@ -46,7 +46,7 @@ def create_directory_structure(base_path, project_name):
     manifest = {
         "compiler_path": "clang++",
         "compiler_std": "c++20",
-        "headers_path": ["./", "../../../dev/kernel", "../../../public/frameworks/", "../../../dev/", "./"],
+        "headers_path": ["./", "../../../src/kernel", "../../../public/frameworks/", "../../../src/", "./"],
         "sources_path": [
             
         ],

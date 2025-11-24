@@ -41,7 +41,7 @@ The JSON manifest file defines the build configuration, compilation flags, and m
 
 - **`headers_path`** (array): Array of header search paths (relative to framework)
   - Include paths for finding dependencies and kernel interfaces
-  - Example: `["./", "../../../dev/kernel", "../../../public/frameworks/", "../../../dev/"]`
+  - Example: `["./", "../../../src/kernel", "../../../public/frameworks/", "../../../src/"]`
 
 - **`sources_path`** (array): Array of source file globs to compile
   - Example: `["src/*.cc"]`
@@ -62,7 +62,7 @@ The JSON manifest file defines the build configuration, compilation flags, and m
 {
     "compiler_path": "x86_64-w64-mingw32-g++",
     "compiler_std": "c++20",
-    "headers_path": ["../", "./", "../../../dev", "../../../dev/kernel"],
+    "headers_path": ["../", "./", "../../../dev", "../../../src/kernel"],
     "sources_path": ["src/*.cc"],
     "output_name": "./dist/libCoreFoundation.fwrk.dylib",
     "compiler_flags": [

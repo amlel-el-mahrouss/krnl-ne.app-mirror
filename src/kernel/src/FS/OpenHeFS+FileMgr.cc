@@ -86,19 +86,19 @@ NodePtr HeFileSystemMgr::CreateSwapFile(const Char* path) {
 /// @brief Gets the root directory.
 /// @return
 const Char* NeFileSystemHelper::Root() {
-  return kHeFSRootDirectory;
+  return kOpenHeFSRootDirectory;
 }
 
 /// @brief Gets the up-dir directory.
 /// @return
 const Char* NeFileSystemHelper::UpDir() {
-  return kHeFSUpDir;
+  return kOpenHeFSUpDir;
 }
 
 /// @brief Gets the separator character.
 /// @return
 Char NeFileSystemHelper::Separator() {
-  return kHeFSSeparator;
+  return kOpenHeFSSeparator;
 }
 
 /// @brief Gets the metafile character.

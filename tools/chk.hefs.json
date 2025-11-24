@@ -9,8 +9,8 @@
     ],
     "output_name": "./dist/chk.hefs",
     "cpp_macros": [
-        "kFsckHeFSVersion=0x0100",
-        "kFsckHeFSVersionHighest=0x0100",
-        "kFsckHeFSVersionLowest=0x0100"
+        "kFsckOpenHeFSVersion=0x0100",
+        "kFsckOpenHeFSVersionHighest=0x0100",
+        "kFsckOpenHeFSVersionLowest=0x0100"
     ]
 }

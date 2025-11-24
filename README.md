@@ -63,16 +63,16 @@ cd nekernel
 ./debug_ata_x64.sh   # For generic ATA PIO target (QEMU)
 ```
 
-- For ARM64 or other targets, see the scripts in `dev/boot/`.
+- For ARM64 or other targets, see the scripts in `src/boot/`.
 
 ---
 
 ## Structure
 
-- `dev/kernel/` — Core kernel source (scheduling, memory, VFS, drivers)
-- `dev/boot/` — Bootloader, platform bring-up, and early system code
-- `dev/libDDK/` — Driver Development Kit (DDK) and sample drivers
-- `dev/libSystem/` — Userland system call interface and runtime
+- `src/kernel/` — Core kernel source (scheduling, memory, VFS, drivers)
+- `src/boot/` — Bootloader, platform bring-up, and early system code
+- `src/libDDK/` — Driver Development Kit (DDK) and sample drivers
+- `src/libSystem/` — Userland system call interface and runtime
 - `public/tools/` — CLI tools (mkfs, fsck, open, manual, etc.)
 - `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)
 - `docs/` — Specifications, design docs, and diagrams

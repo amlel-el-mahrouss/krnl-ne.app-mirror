@@ -1,10 +1,10 @@
--Idev/kernel
--Idev/
--Idev/user
--Idev/boot
--Idev/launch
--Idev/misc
--Idev/libDDK
+-Isrc/kernel
+-Isrc/
+-Isrc/user
+-Isrc/boot
+-Isrc/launch
+-Isrc/misc
+-Isrc/libDDK
 -Ipublic/tools
 -Ipublic/tools/mk.app
 -Ipublic/tools/mk.fwrk
@@ -14,7 +14,7 @@
 -Ipublic/tools/ld.fwrk
 -Ipublic/tools/open
 -Ipublic/frameworks
--Idev/boot/BootKit
+-Isrc/boot/BootKit
 -Itools/
 -I./
 -std=c++20

@@ -9,90 +9,90 @@
 #include <cstdint>
 #include <cstring>
 
-#define kHeFSVersion (0x0101)
-#define kHeFSMagic "OpenHeFS"
-#define kHeFSMagicLen (9U)
+#define kOpenHeFSVersion (0x0101)
+#define kOpenHeFSMagic "OpenHeFS"
+#define kOpenHeFSMagicLen (9U)
 
-#define kHeFSFileNameLen (256U)
-#define kHeFSPartNameLen (128U)
+#define kOpenHeFSFileNameLen (256U)
+#define kOpenHeFSPartNameLen (128U)
 
-#define kHeFSDefaultVolumeName u8"OpenHeFS Volume"
+#define kOpenHeFSDefaultVolumeName u8"OpenHeFS Volume"
 
 namespace mkfs::hefs {
 
 // Drive kinds
 enum {
-  kHeFSHardDrive         = 0xC0,  // Hard Drive
-  kHeFSSolidStateDrive   = 0xC1,  // Solid State Drive
-  kHeFSOpticalDrive      = 0x0C,  // Blu-Ray/DVD
-  kHeFSMassStorageDevice = 0xCC,  // USB
-  kHeFSScsiDrive         = 0xC4,  // SCSI Hard Drive
-  kHeFSFlashDrive        = 0xC6,
-  kHeFSUnknown           = 0xFF,  // Unknown device.
-  kHeFSDriveCount        = 8,
+  kOpenHeFSHardDrive         = 0xC0,  // Hard Drive
+  kOpenHeFSSolidStateDrive   = 0xC1,  // Solid State Drive
+  kOpenHeFSOpticalDrive      = 0x0C,  // Blu-Ray/DVD
+  kOpenHeFSMassStorageDevice = 0xCC,  // USB
+  kOpenHeFSScsiDrive         = 0xC4,  // SCSI Hard Drive
+  kOpenHeFSFlashDrive        = 0xC6,
+  kOpenHeFSUnknown           = 0xFF,  // Unknown device.
+  kOpenHeFSDriveCount        = 8,
 };
 
 // Disk status
 enum {
-  kHeFSStatusUnlocked = 0x18,
-  kHeFSStatusLocked,
-  kHeFSStatusError,
-  kHeFSStatusInvalid,
-  kHeFSStatusCount,
+  kOpenHeFSStatusUnlocked = 0x18,
+  kOpenHeFSStatusLocked,
+  kOpenHeFSStatusError,
+  kOpenHeFSStatusInvalid,
+  kOpenHeFSStatusCount,
 };
 
 // Encodings
 enum {
-  kHeFSEncodingFlagsUTF8 = 0x50,
-  kHeFSEncodingFlagsUTF16,
-  kHeFSEncodingFlagsUTF32,
-  kHeFSEncodingFlagsUTF16BE,
-  kHeFSEncodingFlagsUTF16LE,
-  kHeFSEncodingFlagsUTF32BE,
-  kHeFSEncodingFlagsUTF32LE,
-  kHeFSEncodingFlagsUTF8BE,
-  kHeFSEncodingFlagsUTF8LE,
-  kHeFSEncodingFlagsBinary,
-  kHeFSEncodingFlagsCount = 11,
-  kHeFSFlagsNone          = 0,
-  kHeFSFlagsReadOnly      = 0x100,
-  kHeFSFlagsHidden,
-  kHeFSFlagsSystem,
-  kHeFSFlagsArchive,
-  kHeFSFlagsDevice,
-  kHeFSFlagsCount = 7
+  kOpenHeFSEncodingFlagsUTF8 = 0x50,
+  kOpenHeFSEncodingFlagsUTF16,
+  kOpenHeFSEncodingFlagsUTF32,
+  kOpenHeFSEncodingFlagsUTF16BE,
+  kOpenHeFSEncodingFlagsUTF16LE,
+  kOpenHeFSEncodingFlagsUTF32BE,
+  kOpenHeFSEncodingFlagsUTF32LE,
+  kOpenHeFSEncodingFlagsUTF8BE,
+  kOpenHeFSEncodingFlagsUTF8LE,
+  kOpenHeFSEncodingFlagsBinary,
+  kOpenHeFSEncodingFlagsCount = 11,
+  kOpenHeFSFlagsNone          = 0,
+  kOpenHeFSFlagsReadOnly      = 0x100,
+  kOpenHeFSFlagsHidden,
+  kOpenHeFSFlagsSystem,
+  kOpenHeFSFlagsArchive,
+  kOpenHeFSFlagsDevice,
+  kOpenHeFSFlagsCount = 7
 };
 
 // Time type
 using ATime = std::uint64_t;
 
 // File kinds
-inline constexpr uint16_t kHeFSFileKindRegular      = 0x00;
-inline constexpr uint16_t kHeFSFileKindDirectory    = 0x01;
-inline constexpr uint16_t kHeFSFileKindBlock        = 0x02;
-inline constexpr uint16_t kHeFSFileKindCharacter    = 0x03;
-inline constexpr uint16_t kHeFSFileKindFIFO         = 0x04;
-inline constexpr uint16_t kHeFSFileKindSocket       = 0x05;
-inline constexpr uint16_t kHeFSFileKindSymbolicLink = 0x06;
-inline constexpr uint16_t kHeFSFileKindUnknown      = 0x07;
-inline constexpr uint16_t kHeFSFileKindCount        = 0x08;
+inline constexpr uint16_t kOpenHeFSFileKindRegular      = 0x00;
+inline constexpr uint16_t kOpenHeFSFileKindDirectory    = 0x01;
+inline constexpr uint16_t kOpenHeFSFileKindBlock        = 0x02;
+inline constexpr uint16_t kOpenHeFSFileKindCharacter    = 0x03;
+inline constexpr uint16_t kOpenHeFSFileKindFIFO         = 0x04;
+inline constexpr uint16_t kOpenHeFSFileKindSocket       = 0x05;
+inline constexpr uint16_t kOpenHeFSFileKindSymbolicLink = 0x06;
+inline constexpr uint16_t kOpenHeFSFileKindUnknown      = 0x07;
+inline constexpr uint16_t kOpenHeFSFileKindCount        = 0x08;
 
 // Red-black tree colors
 enum {
-  kHeFSInvalidColor = 0,
-  kHeFSRed          = 100,
-  kHeFSBlack,
-  kHeFSColorCount,
+  kOpenHeFSInvalidColor = 0,
+  kOpenHeFSRed          = 100,
+  kOpenHeFSBlack,
+  kOpenHeFSColorCount,
 };
 
 // Time constants
-inline constexpr ATime kHeFSTimeInvalid = 0x0000000000000000;
-inline constexpr ATime kHeFSTimeMax     = 0xFFFFFFFFFFFFFFFF - 1;
+inline constexpr ATime kOpenHeFSTimeInvalid = 0x0000000000000000;
+inline constexpr ATime kOpenHeFSTimeMax     = 0xFFFFFFFFFFFFFFFF - 1;
 
 // Boot Node
 struct __attribute__((packed)) BootNode {
-  char          magic[kHeFSMagicLen]{};
-  char8_t       volumeName[kHeFSPartNameLen]{};
+  char          magic[kOpenHeFSMagicLen]{};
+  char8_t       volumeName[kOpenHeFSPartNameLen]{};
   std::uint32_t version{};
   std::uint64_t badSectors{};
   std::uint64_t sectorCount{};

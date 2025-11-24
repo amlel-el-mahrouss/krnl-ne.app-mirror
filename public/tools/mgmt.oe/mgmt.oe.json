@@ -3,9 +3,9 @@
     "compiler_std": "c++20",
     "headers_path": [
         "./",
-        "../../../dev/kernel",
+        "../../../src/kernel",
         "../../../public/frameworks/",
-        "../../../dev/",
+        "../../../src/",
         "./"
     ],
     "sources_path": [],

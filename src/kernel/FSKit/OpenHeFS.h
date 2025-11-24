@@ -17,30 +17,30 @@
 /// @file OpenHeFS.h
 /// @brief OpenHeFS filesystem support.
 
-#define kHeFSVersion (0x0104)
-#define kHeFSMagic "OpenHeFS"
-#define kHeFSMagicLen (9U)
+#define kOpenHeFSVersion (0x0104)
+#define kOpenHeFSMagic "OpenHeFS"
+#define kOpenHeFSMagicLen (9U)
 
-#define kHeFSBlockLen (512U)
-#define kHeFSFileNameLen (256U)
-#define kHeFSPartNameLen (128U)
+#define kOpenHeFSBlockLen (512U)
+#define kOpenHeFSFileNameLen (256U)
+#define kOpenHeFSPartNameLen (128U)
 
-#define kHeFSMinimumDiskSize (gib_cast(128))
+#define kOpenHeFSMinimumDiskSize (gib_cast(128))
 
-#define kHeFSDefaultVolumeName u8"OpenHeFS Volume"
+#define kOpenHeFSDefaultVolumeName u8"OpenHeFS Volume"
 
-#define kHeFSINDStartOffset (sizeof(HEFS_BOOT_NODE))
-#define kHeFSINStartOffset (sizeof(HEFS_INDEX_NODE_DIRECTORY))
+#define kOpenHeFSINDStartOffset (sizeof(HEFS_BOOT_NODE))
+#define kOpenHeFSINStartOffset (sizeof(HEFS_INDEX_NODE_DIRECTORY))
 
-#define kHeFSRootDirectory "/"
-#define kHeFSRootDirectoryU8 u8"/"
+#define kOpenHeFSRootDirectory "/"
+#define kOpenHeFSRootDirectoryU8 u8"/"
 
-#define kHeFSSeparator '/'
-#define kHeFSUpDir ".."
+#define kOpenHeFSSeparator '/'
+#define kOpenHeFSUpDir ".."
 
-#define kHeFSRootDirectoryLen (2U)
+#define kOpenHeFSRootDirectoryLen (2U)
 
-#define kHeFSSearchAllStr u8"*"
+#define kOpenHeFSSearchAllStr u8"*"
 
 struct HEFS_BOOT_NODE;
 struct HEFS_INDEX_NODE;
@@ -48,61 +48,61 @@ struct HEFS_INDEX_NODE_DIRECTORY;
 struct HEFS_JOURNAL_NODE;
 
 enum : UInt8 {
-  kHeFSHardDrive         = 0xC0,  // Hard Drive
-  kHeFSSolidStateDrive   = 0xC1,  // Solid State Drive
-  kHeFSOpticalDrive      = 0x0C,  // Blu-Ray/DVD
-  kHeFSMassStorageDevice = 0xCC,  // USB
-  kHeFSScsiDrive         = 0xC4,  // SCSI Hard Drive
-  kHeFSFlashDrive        = 0xC6,
-  kHeFSUnknown           = 0xFF,  // Unknown device.
-  kHeFSDriveCount        = 8,
+  kOpenHeFSHardDrive         = 0xC0,  // Hard Drive
+  kOpenHeFSSolidStateDrive   = 0xC1,  // Solid State Drive
+  kOpenHeFSOpticalDrive      = 0x0C,  // Blu-Ray/DVD
+  kOpenHeFSMassStorageDevice = 0xCC,  // USB
+  kOpenHeFSScsiDrive         = 0xC4,  // SCSI Hard Drive
+  kOpenHeFSFlashDrive        = 0xC6,
+  kOpenHeFSUnknown           = 0xFF,  // Unknown device.
+  kOpenHeFSDriveCount        = 8,
 };
 
 enum : UInt8 {
-  kHeFSStatusUnlocked = 0x18,
-  kHeFSStatusLocked,
-  kHeFSStatusError,
-  kHeFSStatusInvalid,
-  kHeFSStatusCount,
+  kOpenHeFSStatusUnlocked = 0x18,
+  kOpenHeFSStatusLocked,
+  kOpenHeFSStatusError,
+  kOpenHeFSStatusInvalid,
+  kOpenHeFSStatusCount,
 };
 
 enum : UInt16 {
-  kHeFSEncodingFlagsUTF8 = 0x50,
-  kHeFSEncodingFlagsUTF16,
-  kHeFSEncodingFlagsUTF32,
-  kHeFSEncodingFlagsUTF16BE,
-  kHeFSEncodingFlagsUTF16LE,
-  kHeFSEncodingFlagsUTF32BE,
-  kHeFSEncodingFlagsUTF32LE,
-  kHeFSEncodingFlagsUTF8BE,
-  kHeFSEncodingFlagsUTF8LE,
-  kHeFSEncodingFlagsBinary,
-  kHeFSEncodingFlagsCount = 11,
-  kHeFSFlagsNone          = 0,
-  kHeFSFlagsReadOnly      = 0x100,
-  kHeFSFlagsHidden,
-  kHeFSFlagsSystem,
-  kHeFSFlagsArchive,
-  kHeFSFlagsDevice,
-  kHeFSFlagsCount = 7
+  kOpenHeFSEncodingFlagsUTF8 = 0x50,
+  kOpenHeFSEncodingFlagsUTF16,
+  kOpenHeFSEncodingFlagsUTF32,
+  kOpenHeFSEncodingFlagsUTF16BE,
+  kOpenHeFSEncodingFlagsUTF16LE,
+  kOpenHeFSEncodingFlagsUTF32BE,
+  kOpenHeFSEncodingFlagsUTF32LE,
+  kOpenHeFSEncodingFlagsUTF8BE,
+  kOpenHeFSEncodingFlagsUTF8LE,
+  kOpenHeFSEncodingFlagsBinary,
+  kOpenHeFSEncodingFlagsCount = 11,
+  kOpenHeFSFlagsNone          = 0,
+  kOpenHeFSFlagsReadOnly      = 0x100,
+  kOpenHeFSFlagsHidden,
+  kOpenHeFSFlagsSystem,
+  kOpenHeFSFlagsArchive,
+  kOpenHeFSFlagsDevice,
+  kOpenHeFSFlagsCount = 7
 };
 
-inline constexpr UInt16 kHeFSFileKindRegular      = 0x00;
-inline constexpr UInt16 kHeFSFileKindDirectory    = 0x01;
-inline constexpr UInt16 kHeFSFileKindBlock        = 0x02;
-inline constexpr UInt16 kHeFSFileKindCharacter    = 0x03;
-inline constexpr UInt16 kHeFSFileKindFIFO         = 0x04;
-inline constexpr UInt16 kHeFSFileKindSocket       = 0x05;
-inline constexpr UInt16 kHeFSFileKindSymbolicLink = 0x06;
-inline constexpr UInt16 kHeFSFileKindUnknown      = 0x07;
-inline constexpr UInt16 kHeFSFileKindCount        = 0x08;
+inline constexpr UInt16 kOpenHeFSFileKindRegular      = 0x00;
+inline constexpr UInt16 kOpenHeFSFileKindDirectory    = 0x01;
+inline constexpr UInt16 kOpenHeFSFileKindBlock        = 0x02;
+inline constexpr UInt16 kOpenHeFSFileKindCharacter    = 0x03;
+inline constexpr UInt16 kOpenHeFSFileKindFIFO         = 0x04;
+inline constexpr UInt16 kOpenHeFSFileKindSocket       = 0x05;
+inline constexpr UInt16 kOpenHeFSFileKindSymbolicLink = 0x06;
+inline constexpr UInt16 kOpenHeFSFileKindUnknown      = 0x07;
+inline constexpr UInt16 kOpenHeFSFileKindCount        = 0x08;
 
 /// @brief OpenHeFS blocks are array containing sparse blocks of data.
 /// @details The blocks are used to store the data of a file. Each block is a pointer to a block of
 /// data on the disk.
-inline constexpr UInt16 kHeFSSliceCount = 0x10;
+inline constexpr UInt16 kOpenHeFSSliceCount = 0x10;
 
-inline constexpr UInt16 kHeFSInvalidVID = 0xFFFF;
+inline constexpr UInt16 kOpenHeFSInvalidVID = 0xFFFF;
 
 namespace Kernel {
 /// @brief Access time type.
@@ -113,8 +113,8 @@ typedef UInt64 ATime;
 /// @details Acts like a superblock, it contains the information about the filesystem.
 /// @note The boot node is the first block of the filesystem.
 struct PACKED HEFS_BOOT_NODE final {
-  Char     fMagic[kHeFSMagicLen];       /// @brief Magic number of the filesystem.
-  Utf8Char fVolName[kHeFSPartNameLen];  /// @brief Volume name.
+  Char     fMagic[kOpenHeFSMagicLen];       /// @brief Magic number of the filesystem.
+  Utf8Char fVolName[kOpenHeFSPartNameLen];  /// @brief Volume name.
   UInt32   fVersion;                    /// @brief Version of the filesystem.
   UInt64   fBadSectors;                 /// @brief Number of bad sectors in the filesystem.
   UInt64   fSectorCount;                /// @brief Number of sectors in the filesystem.
@@ -139,8 +139,8 @@ struct PACKED HEFS_BOOT_NODE final {
   Char   fPad[264];
 };
 
-inline constexpr ATime kHeFSTimeInvalid = 0x0000000000000000;
-inline constexpr ATime kHeFSTimeMax     = 0xFFFFFFFFFFFFFFFF - 1;
+inline constexpr ATime kOpenHeFSTimeInvalid = 0x0000000000000000;
+inline constexpr ATime kOpenHeFSTimeMax     = 0xFFFFFFFFFFFFFFFF - 1;
 
 /// @brief Journal Node structure
 /// @param fHashPath target hash path
@@ -194,10 +194,10 @@ struct PACKED HEFS_INDEX_NODE final {
 };
 
 enum {
-  kHeFSInvalidColor = 0,
-  kHeFSRed          = 100,
-  kHeFSBlack,
-  kHeFSColorCount,
+  kOpenHeFSInvalidColor = 0,
+  kOpenHeFSRed          = 100,
+  kOpenHeFSBlack,
+  kOpenHeFSColorCount,
 };
 
 /// @brief OpenHeFS directory node.
@@ -220,7 +220,7 @@ struct PACKED HEFS_INDEX_NODE_DIRECTORY final {
   /// [0] = OFFSET
   /// [1] = SIZE
   /// @note Thus the += 2 when iterating over them.
-  UInt64 fINSlices[kHeFSSliceCount];  /// @brief Start of the index node.
+  UInt64 fINSlices[kOpenHeFSSliceCount];  /// @brief Start of the index node.
 
   UInt8 fColor;                         /// @brief Color of the node. (Red or Black).
   Lba   fNext, fPrev, fChild, fParent;  /// @brief Red-black tree pointers.
@@ -270,21 +270,21 @@ inline UInt32 hefs_minute_get(ATime raw_atime) noexcept {
   return (raw_atime) &0xFF;
 }
 
-inline constexpr UInt32 kHeFSBaseYear   = 1970;
-inline constexpr UInt32 kHeFSBaseMonth  = 1;
-inline constexpr UInt32 kHeFSBaseDay    = 1;
-inline constexpr UInt32 kHeFSBaseHour   = 0;
-inline constexpr UInt32 kHeFSBaseMinute = 0;
+inline constexpr UInt32 kOpenHeFSBaseYear   = 1970;
+inline constexpr UInt32 kOpenHeFSBaseMonth  = 1;
+inline constexpr UInt32 kOpenHeFSBaseDay    = 1;
+inline constexpr UInt32 kOpenHeFSBaseHour   = 0;
+inline constexpr UInt32 kOpenHeFSBaseMinute = 0;
 
 inline const Char* hefs_status_to_string(UInt16 status) noexcept {
   switch (status) {
-    case kHeFSStatusUnlocked:
+    case kOpenHeFSStatusUnlocked:
       return "Unlocked";
-    case kHeFSStatusLocked:
+    case kOpenHeFSStatusLocked:
       return "Locked";
-    case kHeFSStatusError:
+    case kOpenHeFSStatusError:
       return "Error";
-    case kHeFSStatusInvalid:
+    case kOpenHeFSStatusInvalid:
       return "Invalid";
     default:
       return "Unknown";
@@ -293,19 +293,19 @@ inline const Char* hefs_status_to_string(UInt16 status) noexcept {
 
 inline const Char* hefs_drive_kind_to_string(UInt8 kind) noexcept {
   switch (kind) {
-    case kHeFSHardDrive:
+    case kOpenHeFSHardDrive:
       return "Hard Drive";
-    case kHeFSSolidStateDrive:
+    case kOpenHeFSSolidStateDrive:
       return "Solid State Drive";
-    case kHeFSOpticalDrive:
+    case kOpenHeFSOpticalDrive:
       return "Optical Drive";
-    case kHeFSMassStorageDevice:
+    case kOpenHeFSMassStorageDevice:
       return "Mass Storage Device";
-    case kHeFSScsiDrive:
+    case kOpenHeFSScsiDrive:
       return "SCSI/SAS Drive";
-    case kHeFSFlashDrive:
+    case kOpenHeFSFlashDrive:
       return "Flash Drive";
-    case kHeFSUnknown:
+    case kOpenHeFSUnknown:
     default:
       return "Unknown";
   }
@@ -313,23 +313,23 @@ inline const Char* hefs_drive_kind_to_string(UInt8 kind) noexcept {
 
 inline const Char* hefs_encoding_to_string(UInt8 encoding) noexcept {
   switch (encoding) {
-    case kHeFSEncodingFlagsUTF8:
+    case kOpenHeFSEncodingFlagsUTF8:
       return "UTF-8";
-    case kHeFSEncodingFlagsUTF16:
+    case kOpenHeFSEncodingFlagsUTF16:
       return "UTF-16";
-    case kHeFSEncodingFlagsUTF32:
+    case kOpenHeFSEncodingFlagsUTF32:
       return "UTF-32";
-    case kHeFSEncodingFlagsUTF16BE:
+    case kOpenHeFSEncodingFlagsUTF16BE:
       return "UTF-16BE";
-    case kHeFSEncodingFlagsUTF16LE:
+    case kOpenHeFSEncodingFlagsUTF16LE:
       return "UTF-16LE";
-    case kHeFSEncodingFlagsUTF32BE:
+    case kOpenHeFSEncodingFlagsUTF32BE:
       return "UTF-32BE";
-    case kHeFSEncodingFlagsUTF32LE:
+    case kOpenHeFSEncodingFlagsUTF32LE:
       return "UTF-32LE";
-    case kHeFSEncodingFlagsUTF8BE:
+    case kOpenHeFSEncodingFlagsUTF8BE:
       return "UTF-8BE";
-    case kHeFSEncodingFlagsUTF8LE:
+    case kOpenHeFSEncodingFlagsUTF8LE:
       return "UTF-8LE";
     default:
       return "Unknown";
@@ -338,21 +338,21 @@ inline const Char* hefs_encoding_to_string(UInt8 encoding) noexcept {
 
 inline const Char* hefs_file_kind_to_string(UInt16 kind) noexcept {
   switch (kind) {
-    case kHeFSFileKindRegular:
+    case kOpenHeFSFileKindRegular:
       return "Regular File";
-    case kHeFSFileKindDirectory:
+    case kOpenHeFSFileKindDirectory:
       return "Directory";
-    case kHeFSFileKindBlock:
+    case kOpenHeFSFileKindBlock:
       return "Block Device";
-    case kHeFSFileKindCharacter:
+    case kOpenHeFSFileKindCharacter:
       return "Character Device";
-    case kHeFSFileKindFIFO:
+    case kOpenHeFSFileKindFIFO:
       return "FIFO";
-    case kHeFSFileKindSocket:
+    case kOpenHeFSFileKindSocket:
       return "Socket";
-    case kHeFSFileKindSymbolicLink:
+    case kOpenHeFSFileKindSymbolicLink:
       return "Symbolic Link";
-    case kHeFSFileKindUnknown:
+    case kOpenHeFSFileKindUnknown:
     default:
       return "Unknown";
   }
@@ -360,17 +360,17 @@ inline const Char* hefs_file_kind_to_string(UInt16 kind) noexcept {
 
 inline const Char* hefs_file_flags_to_string(UInt32 flags) noexcept {
   switch (flags) {
-    case kHeFSFlagsNone:
+    case kOpenHeFSFlagsNone:
       return "No Flags";
-    case kHeFSFlagsReadOnly:
+    case kOpenHeFSFlagsReadOnly:
       return "Read Only";
-    case kHeFSFlagsHidden:
+    case kOpenHeFSFlagsHidden:
       return "Hidden";
-    case kHeFSFlagsSystem:
+    case kOpenHeFSFlagsSystem:
       return "System";
-    case kHeFSFlagsArchive:
+    case kOpenHeFSFlagsArchive:
       return "Archive";
-    case kHeFSFlagsDevice:
+    case kOpenHeFSFlagsDevice:
       return "Device";
     default:
       return "Unknown";

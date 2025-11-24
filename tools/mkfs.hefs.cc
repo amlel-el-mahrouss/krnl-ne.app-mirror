@@ -12,7 +12,7 @@
 #include <fstream>
 #include <limits>
 
-static uint16_t kVersion       = kHeFSVersion;
+static uint16_t kVersion       = kOpenHeFSVersion;
 static uint16_t kNumericalBase = 10;
 
 static size_t        kDiskSize = mkfs::detail::gib_cast(4UL);
@@ -58,8 +58,8 @@ int main(int argc, char** argv) {
     for (char c : opt_L) kDiskLabel.push_back(static_cast<char8_t>(c));
   } else {
     kDiskLabel.clear();
-    for (size_t i = 0; i < kHeFSPartNameLen && kHeFSDefaultVolumeName[i] != u'\0'; ++i) {
-      kDiskLabel.push_back(static_cast<char8_t>(kHeFSDefaultVolumeName[i]));
+    for (size_t i = 0; i < kOpenHeFSPartNameLen && kOpenHeFSDefaultVolumeName[i] != u'\0'; ++i) {
+      kDiskLabel.push_back(static_cast<char8_t>(kOpenHeFSDefaultVolumeName[i]));
     }
   }
 
@@ -135,8 +135,8 @@ int main(int argc, char** argv) {
   std::memset(&boot_node, 0, sizeof(boot_node));
 
   boot_node.version     = kVersion;
-  boot_node.diskKind    = mkfs::hefs::kHeFSHardDrive;
-  boot_node.encoding    = mkfs::hefs::kHeFSEncodingFlagsUTF8;
+  boot_node.diskKind    = mkfs::hefs::kOpenHeFSHardDrive;
+  boot_node.encoding    = mkfs::hefs::kOpenHeFSEncodingFlagsUTF8;
   boot_node.diskSize    = kDiskSize;
   boot_node.sectorSize  = kDiskSectorSz;
   boot_node.sectorCount = kDiskSize / kDiskSectorSz;
@@ -147,18 +147,18 @@ int main(int argc, char** argv) {
   boot_node.startBlock  = static_cast<size_t>(start_block);
   boot_node.endBlock    = static_cast<size_t>(end_block);
   boot_node.indCount    = 0UL;
-  boot_node.diskStatus  = mkfs::hefs::kHeFSStatusUnlocked;
+  boot_node.diskStatus  = mkfs::hefs::kOpenHeFSStatusUnlocked;
 
-  static_assert(sizeof(boot_node.magic) >= kHeFSMagicLen,
-                "BootNode::magic too small to hold kHeFSMagicLen");
+  static_assert(sizeof(boot_node.magic) >= kOpenHeFSMagicLen,
+                "BootNode::magic too small to hold kOpenHeFSMagicLen");
 
   std::memset(boot_node.magic, 0, sizeof(boot_node.magic));
   size_t magic_copy =
-      (sizeof(boot_node.magic) < kHeFSMagicLen - 1) ? sizeof(boot_node.magic) : (kHeFSMagicLen - 1);
-  std::memcpy(boot_node.magic, kHeFSMagic, magic_copy);
+      (sizeof(boot_node.magic) < kOpenHeFSMagicLen - 1) ? sizeof(boot_node.magic) : (kOpenHeFSMagicLen - 1);
+  std::memcpy(boot_node.magic, kOpenHeFSMagic, magic_copy);
   boot_node.magic[magic_copy] = 0;
 
-  constexpr size_t vol_slots = kHeFSPartNameLen;
+  constexpr size_t vol_slots = kOpenHeFSPartNameLen;
 
   std::memset(boot_node.volumeName, 0, sizeof(boot_node.volumeName));
 

@@ -365,7 +365,7 @@ namespace Detail {
           dirent->fColor  = tmpdir->fColor;
 
           if (dirent->fColor == 0) {
-            dirent->fColor = dirent->fNext ? kHeFSRed : kHeFSBlack;
+            dirent->fColor = dirent->fNext ? kOpenHeFSRed : kOpenHeFSBlack;
           }
 
           if (dirent->fPrev == 0) {
@@ -397,13 +397,13 @@ namespace Detail {
               if (child > boot->fEndIND) break;
             }
 
-            dirent->fColor = kHeFSRed;
+            dirent->fColor = kOpenHeFSRed;
             dirent->fChild = child;
 
             if (child > boot->fEndIND) dirent->fChild = boot->fStartIND;
           }
 
-          for (SizeT index = 0UL; index < kHeFSSliceCount; ++index) {
+          for (SizeT index = 0UL; index < kOpenHeFSSliceCount; ++index) {
             dirent->fINSlices[index] = 0UL;
           }
 
@@ -497,7 +497,7 @@ namespace Detail {
         if (dir->fHashPath == 0) break;
 
         if (hefsi_hash_64(dir_name) == dir->fHashPath) {
-          for (SizeT inode_index = 0UL; inode_index < kHeFSSliceCount; ++inode_index) {
+          for (SizeT inode_index = 0UL; inode_index < kOpenHeFSSliceCount; ++inode_index) {
             mnt->fPacket.fPacketLba     = dir->fINSlices[inode_index];
             mnt->fPacket.fPacketSize    = sizeof(HEFS_INDEX_NODE);
             mnt->fPacket.fPacketContent = node;
@@ -563,7 +563,7 @@ namespace Detail {
         (Void)(kout << hex_number(dir->fHashPath) << kendl);
 
         if (hefsi_hash_64(dir_name) == dir->fHashPath) {
-          for (SizeT inode_index = 0UL; inode_index < kHeFSSliceCount; ++inode_index) {
+          for (SizeT inode_index = 0UL; inode_index < kOpenHeFSSliceCount; ++inode_index) {
             if (dir->fINSlices[inode_index] == 0 && !delete_or_create) {
               dir->fINSlices[inode_index] = boot->fStartIN;
 
@@ -591,7 +591,7 @@ namespace Detail {
               mnt->fOutput(mnt->fPacket);
 
               boot->fStartIN += sizeof(HEFS_INDEX_NODE);
-              boot->fStartBlock += kHeFSBlockLen;
+              boot->fStartBlock += kOpenHeFSBlockLen;
 
               boot->fChecksum = ke_calculate_crc32((Char*) boot, sizeof(HEFS_BOOT_NODE));
 
@@ -623,7 +623,7 @@ namespace Detail {
               node->fOffsetSliceHigh = 0;
 
               boot->fStartIN -= sizeof(HEFS_INDEX_NODE);
-              boot->fStartBlock -= kHeFSBlockLen;
+              boot->fStartBlock -= kOpenHeFSBlockLen;
 
               boot->fChecksum = ke_calculate_crc32((Char*) boot, sizeof(HEFS_BOOT_NODE));
 
@@ -698,7 +698,7 @@ namespace Detail {
         }
 
         if (start == boot->fStartIND) {
-          dir->fColor = kHeFSBlack;
+          dir->fColor = kOpenHeFSBlack;
 
           mnt->fPacket.fPacketLba     = start;
           mnt->fPacket.fPacketSize    = sizeof(HEFS_INDEX_NODE_DIRECTORY);
@@ -707,11 +707,11 @@ namespace Detail {
           mnt->fOutput(mnt->fPacket);
         }
 
-        if (dir->fColor == kHeFSBlack && dir->fChild != 0UL) {
-          dir->fColor = kHeFSRed;
+        if (dir->fColor == kOpenHeFSBlack && dir->fChild != 0UL) {
+          dir->fColor = kOpenHeFSRed;
           hefsi_rotate_tree(start, mnt);
-        } else if (dir->fColor == kHeFSBlack && dir->fChild == 0UL) {
-          dir->fColor = kHeFSBlack;
+        } else if (dir->fColor == kOpenHeFSBlack && dir->fChild == 0UL) {
+          dir->fColor = kOpenHeFSBlack;
 
           mnt->fPacket.fPacketLba     = start;
           mnt->fPacket.fPacketSize    = sizeof(HEFS_INDEX_NODE_DIRECTORY);
@@ -762,7 +762,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
     return NO;
   }
 
-  if (drv_std_get_size() < kHeFSMinimumDiskSize) {
+  if (drv_std_get_size() < kOpenHeFSMinimumDiskSize) {
     (Void)(kout << "OpenHeFS recommends at least 128 GiB of free space." << kendl);
   }
 
@@ -782,7 +782,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
 
   // Check if the disk is already formatted.
 
-  if (KStringBuilder::Equals(boot->fMagic, kHeFSMagic) && boot->fVersion == kHeFSVersion) {
+  if (KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) && boot->fVersion == kOpenHeFSVersion) {
     if (ke_calculate_crc32((Char*) boot, sizeof(HEFS_BOOT_NODE)) != boot->fChecksum &&
         boot->fChecksum > 0) {
       err_global_get() = kErrorDiskIsCorrupted;
@@ -803,7 +803,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
                       rt_string_len("fs/hefs-packet"), sizeof(mnt->fPacket.fPacketMime));
 
   urt_copy_memory((VoidPtr) vol_name, boot->fVolName, urt_string_len(vol_name) + 1);
-  rt_copy_memory_safe((VoidPtr) kHeFSMagic, boot->fMagic, kHeFSMagicLen - 1, sizeof(boot->fMagic));
+  rt_copy_memory_safe((VoidPtr) kOpenHeFSMagic, boot->fMagic, kOpenHeFSMagicLen - 1, sizeof(boot->fMagic));
 
   if (mnt->fLbaStart > mnt->fLbaEnd) {
     err_global_get() = kErrorDiskIsCorrupted;
@@ -824,7 +824,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
   const SizeT dir_max   = max_lba / 300;  // 5% for directory inodes
   const SizeT inode_max = max_lba / 400;  // 5% for inodes
 
-  boot->fStartIND = mnt->fLbaStart + kHeFSINDStartOffset;
+  boot->fStartIND = mnt->fLbaStart + kOpenHeFSINDStartOffset;
   boot->fEndIND   = boot->fStartIND + dir_max;
 
   boot->fStartIN = boot->fEndIND;
@@ -836,21 +836,21 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
   boot->fINDCount = 0;
 
   boot->fDiskSize   = drv_std_get_size();
-  boot->fDiskStatus = kHeFSStatusUnlocked;
+  boot->fDiskStatus = kOpenHeFSStatusUnlocked;
 
   boot->fDiskFlags = flags;
 
   if (mnt->fKind & kMassStorageDrive) {
-    boot->fDiskKind = kHeFSMassStorageDevice;
-  } else if (mnt->fKind & kHeFSOpticalDrive) {
-    boot->fDiskKind = kHeFSOpticalDrive;
+    boot->fDiskKind = kOpenHeFSMassStorageDevice;
+  } else if (mnt->fKind & kOpenHeFSOpticalDrive) {
+    boot->fDiskKind = kOpenHeFSOpticalDrive;
   } else {
-    boot->fDiskKind = kHeFSUnknown;
+    boot->fDiskKind = kOpenHeFSUnknown;
   }
 
-  boot->fVersion = kHeFSVersion;
+  boot->fVersion = kOpenHeFSVersion;
 
-  boot->fVID = kHeFSInvalidVID;
+  boot->fVID = kOpenHeFSInvalidVID;
 
   boot->fChecksum = ke_calculate_crc32((Char*) boot, sizeof(HEFS_BOOT_NODE));
 
@@ -883,7 +883,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
 
   SizeT i = 0;
   while (kFileMap[++i] != nullptr) {
-    this->CreateINodeDirectory(mnt, kHeFSEncodingFlagsUTF8, kFileMap[i]);
+    this->CreateINodeDirectory(mnt, kOpenHeFSEncodingFlagsUTF8, kFileMap[i]);
   }
 
   err_global_get() = kErrorSuccess;
@@ -900,7 +900,7 @@ _Output Bool HeFileSystemParser::INodeDirectoryCtlManip(_Input DriveTrait* mnt,
                                                         _Input const Int32 flags,
                                                         const Utf8Char*    dir,
                                                         const BOOL         delete_or_create) {
-  if (urt_string_len(dir) > kHeFSFileNameLen) {
+  if (urt_string_len(dir) > kOpenHeFSFileNameLen) {
     err_global_get() = kErrorDisk;
     return NO;
   }
@@ -916,12 +916,12 @@ _Output Bool HeFileSystemParser::INodeDirectoryCtlManip(_Input DriveTrait* mnt,
 
   mnt->fInput(mnt->fPacket);
 
-  if (!KStringBuilder::Equals(boot->fMagic, kHeFSMagic) || boot->fVersion != kHeFSVersion) {
+  if (!KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) || boot->fVersion != kOpenHeFSVersion) {
     err_global_get() = kErrorDisk;
     return YES;
   }
 
-  if (!KStringBuilder::Equals(boot->fMagic, kHeFSMagic) || boot->fVersion != kHeFSVersion) {
+  if (!KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) || boot->fVersion != kOpenHeFSVersion) {
     err_global_get() = kErrorDiskIsCorrupted;
 
     kout << "Invalid Boot Node, this can't continue!\r";
@@ -929,7 +929,7 @@ _Output Bool HeFileSystemParser::INodeDirectoryCtlManip(_Input DriveTrait* mnt,
     return NO;
   }
 
-  if (KStringBuilder::Equals(dir, kHeFSSearchAllStr)) {
+  if (KStringBuilder::Equals(dir, kOpenHeFSSearchAllStr)) {
     kout << "Error: Invalid directory name.\r";
 
     err_global_get() = kErrorInvalidData;
@@ -976,12 +976,12 @@ _Output Bool HeFileSystemParser::CreateINode(_Input DriveTrait* mnt, _Input cons
 _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr block, SizeT block_sz,
                                             const Utf8Char* dir, const Utf8Char* name,
                                             const UInt8 kind, const BOOL is_input) {
-  if (urt_string_len(dir) > kHeFSFileNameLen) {
+  if (urt_string_len(dir) > kOpenHeFSFileNameLen) {
     err_global_get() = kErrorDisk;
     return NO;
   }
 
-  if (urt_string_len(name) > kHeFSFileNameLen) {
+  if (urt_string_len(name) > kOpenHeFSFileNameLen) {
     err_global_get() = kErrorDisk;
     return NO;
   }
@@ -1002,7 +1002,7 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
 
   mnt->fInput(mnt->fPacket);
 
-  if (!KStringBuilder::Equals(boot->fMagic, kHeFSMagic) || boot->fVersion != kHeFSVersion) {
+  if (!KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) || boot->fVersion != kOpenHeFSVersion) {
     (Void)(kout << "Invalid Boot Node, OpenHeFS partition is invalid." << kendl);
     mm_free_ptr((VoidPtr) boot);
     err_global_get() = kErrorDisk;
@@ -1023,7 +1023,7 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
       if (is_input) {
         mnt->fInput(mnt->fPacket);
       } else {
-        if (start->fFlags & kHeFSFlagsReadOnly) {
+        if (start->fFlags & kOpenHeFSFlagsReadOnly) {
           mm_free_ptr((VoidPtr) boot);
           delete start;
 
@@ -1051,12 +1051,12 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
 _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input const Int32 flags,
                                                const Utf8Char* dir, const Utf8Char* name,
                                                const BOOL delete_or_create, const UInt8 kind) {
-  if (urt_string_len(name) > kHeFSFileNameLen) {
+  if (urt_string_len(name) > kOpenHeFSFileNameLen) {
     err_global_get() = kErrorDisk;
     return NO;
   }
 
-  if (urt_string_len(dir) > kHeFSFileNameLen) {
+  if (urt_string_len(dir) > kOpenHeFSFileNameLen) {
     err_global_get() = kErrorDisk;
     return NO;
   }
@@ -1088,12 +1088,12 @@ _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input co
 
   mnt->fInput(mnt->fPacket);
 
-  if (!KStringBuilder::Equals(boot->fMagic, kHeFSMagic) || boot->fVersion != kHeFSVersion) {
+  if (!KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) || boot->fVersion != kOpenHeFSVersion) {
     err_global_get() = kErrorDisk;
     return YES;
   }
 
-  if (KStringBuilder::Equals(dir, kHeFSSearchAllStr)) {
+  if (KStringBuilder::Equals(dir, kOpenHeFSSearchAllStr)) {
     kout << "Error: Invalid file name.\r";
 
     err_global_get() = kErrorInvalidData;
@@ -1107,7 +1107,7 @@ _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input co
     }
   }
 
-  if (KStringBuilder::Equals(dir, kHeFSSearchAllStr)) {
+  if (KStringBuilder::Equals(dir, kOpenHeFSSearchAllStr)) {
     kout << "Error: Invalid directory name.\r";
 
     err_global_get() = kErrorInvalidData;
@@ -1153,7 +1153,7 @@ Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
     return YES;
   }
 
-  return HeFileSystemParser{}.Format(&kMountpoint.A(), kHeFSEncodingFlagsUTF8, kHeFSDefaultVolumeName);
+  return HeFileSystemParser{}.Format(&kMountpoint.A(), kOpenHeFSEncodingFlagsUTF8, kOpenHeFSDefaultVolumeName);
 }
 }  // namespace Kernel
 

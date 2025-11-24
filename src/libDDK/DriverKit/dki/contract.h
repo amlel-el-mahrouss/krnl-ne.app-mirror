@@ -12,7 +12,7 @@
 #include <CompilerKit/CompilerKit.h>
 #include <libDDK/DriverKit/macros.h>
 
-#define DKI_CONTRACT_IMPL : public ::Kernel::DKIContract
+#define DKI_CONTRACT_IMPL final : public ::Kernel::DKI::DKIContract
 
 /// @author Amlal El Mahrouss
 
@@ -24,8 +24,10 @@ class DKIContract {
 
   NE_COPY_DEFAULT(DKIContract);
 
-  virtual BOOL    IsCastable() { return false; }
-  virtual BOOL    IsActive() { return false; }
+  using PtrType = VoidPtr;
+
+  virtual BOOL    IsCastable() { return NO; }
+  virtual BOOL    IsActive() { return NO; }
   virtual VoidPtr Leak() { return nullptr; }
   virtual Int32   Type() { return 0; }
 };

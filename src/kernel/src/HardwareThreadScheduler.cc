@@ -146,7 +146,7 @@ HAL::StackFramePtr HardwareThreadScheduler::Leak() noexcept {
 /***********************************************************************************/
 Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
   if (idx > kMaxAPInsideSched) {
-    HardwareThread* kFakeThread = nullptr;
+    static HardwareThread* kFakeThread = nullptr;
     return {kFakeThread};
   }
 

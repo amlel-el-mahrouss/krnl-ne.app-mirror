@@ -7,7 +7,7 @@
 
 ======================================== */
 
-/// @brief USER_PROCESS inline definitions.
+/// @brief UPS inline definitions.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /// @date Tue Apr 22 22:01:07 CEST 2025
 
@@ -25,7 +25,7 @@ BOOL USER_PROCESS::Delete(ErrorOr<T*> ptr) {
   if (!ptr) return No;
 
   if (!this->HeapTree) {
-    kout << "USER_PROCESS's heap is empty.\r";
+    kout << "USER_PROCESS: Heap is empty.\r";
     return No;
   }
 
@@ -36,20 +36,16 @@ BOOL USER_PROCESS::Delete(ErrorOr<T*> ptr) {
       this->UsedMemory -= entry->EntrySize;
 
 #ifdef __NE_AMD64__
-      auto pd = hal_read_cr3();
+      auto page_dir = hal_read_cr3();
 
       hal_write_cr3(this->VMRegister);
-
       auto ret = mm_free_ptr(entry->Entry);
-
-      hal_write_cr3(pd);
-
-      return ret == kErrorSuccess;
+      hal_write_cr3(page_dir);
 #else
-      Bool ret = mm_free_ptr(ptr.Leak().Leak());
+      auto ret = mm_free_ptr(ptr.Leak().Leak());
+#endif
 
       return ret == kErrorSuccess;
-#endif
     }
 
     entry = entry->Next;

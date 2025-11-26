@@ -16,9 +16,11 @@ struct ZXD_EXEC_HEADER;
 struct ZXD_STUB_HEADER;
 
 enum ZXD_FLAGS {
-  kZXDFlagsInvalid,
-  kZXDFlagsDriver,
-  kZXDFlagsCount,
+  kZXDFlagsInvalid = 0,
+  kZXDFlagsDriver = 120,
+  kZXDFlagsBoot,
+  kZXDFlagsKernel,
+  kZXDFlagsCount = kZXDFlagsKernel - kZXDFlagsDriver + 1,
 };
 
 /// @brief ZXD executable header

@@ -27,6 +27,9 @@ typedef struct _DDK_DEVICE DDK_FINAL {
   size_t (*d_tell)(struct _DDK_DEVICE* dev);
 } DDK_DEVICE, *DDK_DEVICE_PTR;
 
+#define kopen kopen_dev
+#define kclose kclose_dev
+
 /// @brief Open a new device from path.
 /// @param path the device's path.
 DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* path);

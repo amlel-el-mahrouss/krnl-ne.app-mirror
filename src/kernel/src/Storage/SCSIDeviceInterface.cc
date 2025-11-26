@@ -6,4 +6,17 @@
 
 #include <StorageKit/SCSI.h>
 
-using namespace Kernel;
+namespace Kernel {
+SCSIDeviceInterface::SCSIDeviceInterface(void (*out)(DeviceInterface*, IMountpoint* outpacket),
+                                         void (*in)(DeviceInterface*, IMountpoint* inpacket),
+                                         void (*cleanup)(void))
+    : DeviceInterface(out, in), fCleanup(cleanup) {}
+
+SCSIDeviceInterface::~SCSIDeviceInterface() {
+  if (fCleanup) fCleanup();
+}
+
+const Char* SCSIDeviceInterface::Name() const {
+  return ("/devices/sda{}");
+}
+}  // namespace Kernel

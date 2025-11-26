@@ -55,7 +55,7 @@ AHCIDeviceInterface& AHCIDeviceInterface::operator>>(IMountpoint* mnt) {
   for (SizeT driveCount = 0; driveCount < kDriveMaxCount; ++driveCount) {
     auto interface = mnt->GetAddressOf(driveCount);
 
-    // really check if it's ATA.
+    // really check if it's AHCI.
     if ((interface) &&
         rt_string_cmp((interface)->fProtocol(), "AHCI", rt_string_len("AHCI")) == 0) {
       continue;

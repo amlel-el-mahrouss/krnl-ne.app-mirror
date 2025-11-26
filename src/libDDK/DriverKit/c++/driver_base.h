@@ -2,8 +2,8 @@
 
    Copyright Amlal El Mahrouss 2025, licensed under the Apache 2.0 license.
 
-   FILE: ddk.h
-   PURPOSE: Driver Kernel Interface Model base header.
+   FILE: driver_base.h
+   PURPOSE: IDriverBase and friends.
 
    ======================================== */
 
@@ -41,8 +41,8 @@ concept IsValidDriver = requires(T a) {
   { a.IsActive() && a.Type() > 0 };
 };
 
+/// @brief Consteval helper to detect whether a template is truly based on IDriverBase.
 /// @note This helper is consteval only.
 template<IsValidDriver T>
 inline consteval void ce_ddk_is_valid(T) {}
-
 }  // namespace Kernel::DDK

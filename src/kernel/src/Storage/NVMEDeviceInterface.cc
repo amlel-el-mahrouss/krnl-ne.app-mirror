@@ -17,6 +17,15 @@ NVMEDeviceInterface::~NVMEDeviceInterface() {
 }
 
 const Char* NVMEDeviceInterface::Name() const {
-  return ("/devices/nvme{}");
+  return ("/devices/nvm{}");
+}
+
+OwnPtr<IMountpoint*> NVMEDeviceInterface::operator()(UInt32 dma_low, UInt32 dma_high,
+                                                     SizeT dma_sz) {
+  NE_UNUSED(dma_low);
+  NE_UNUSED(dma_high);
+  NE_UNUSED(dma_sz);
+
+  return {};
 }
 }  // namespace Kernel

@@ -2,7 +2,6 @@
 
 <div align="center">
   <img src="meta/png/nekernel.png" alt="NeKernel Logo" width="180"/>
-  <h1>NeKernel</h1>
   <p>
     <b>Modern, Modular, and Secure Microkernel for Next-Generation Systems</b>
   </p>
@@ -13,6 +12,8 @@
     <img src="https://img.shields.io/badge/QEMU-Tested-success" alt="QEMU Tested">
   </p>
 </div>
+
+<img src="meta/png/demo.gif" alt="NeKernel Logo" width="1280"/>
 
 ---
 

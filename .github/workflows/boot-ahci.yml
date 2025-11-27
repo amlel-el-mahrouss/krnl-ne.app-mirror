@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build CI
-      run: sudo curl https://github.com/nekernel-org/nebuild/releases/download/v0.0.6-apple-m1/nebuild-debian -o /bin/nebuild && sudo apt update && sudo apt install mingw-w64 qemu-utils nasm |
+      run: sudo curl https://github.com/nekernel-org/nebuild/releases/download/v0.0.6-apple-m1/nebuild-debian -o /bin/nebuild && sudo chmod +x /bin/nebuild && sudo apt update && sudo apt install mingw-w64 qemu-utils nasm |
           cd src/boot export ATA_PIO_SUPPORT=1 && make -f amd64-ci.make all
     
 

@@ -1,7 +1,7 @@
 <!-- Read Me of NeKernel -->
 
 <div align="center">
-  <img src="meta/png/nekernel.png" alt="NeKernel Logo" width="180"/>
+  <img src="meta/media/nekernel.png" alt="NeKernel Logo" width="180"/>
   <p>
     <b>Modern, Modular, and Secure Microkernel for Next-Generation Systems</b>
   </p>
@@ -13,7 +13,7 @@
   </p>
 </div>
 
-<img src="meta/png/demo.gif" alt="NeKernel Logo" width="1280"/>
+<img src="meta/media/demo.gif" alt="NeKernel Logo" width="1280"/>
 
 ---
 
@@ -60,8 +60,9 @@
 ```sh
 git clone https://github.com/nekernel-org/nekernel.git
 cd nekernel
-./setup_x64.sh
-./debug_ata_x64.sh   # For generic ATA PIO target (QEMU)
+./setup_x64_project.sh
+./modules_ahci_x64.sh
+./debug_ahci_x64.sh   # For generic ATA PIO target (QEMU)
 ```
 
 - For ARM64 or other targets, see the scripts in `src/boot/`.

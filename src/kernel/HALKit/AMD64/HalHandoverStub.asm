@@ -18,7 +18,7 @@ global _HandoverType
 global _HandoverPad
 global _HandoverArch
 
-section .ldr
+section .botz
 
 _HandoverMagic:
     dq kHandoverMagic

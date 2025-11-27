@@ -13,7 +13,11 @@
 #include <KernelKit/PE.h>
 
 #ifdef __BOOTZ_STANDALONE__
-EXTERN_C int atexit(void (*f)()) { NE_UNUSED(f); return 0; }
+/// @note This function is a stub, not implemented by the bootloader as of right now. (AMLALE)
+EXTERN_C int atexit(void (*f)()) {
+  NE_UNUSED(f);
+  return 0;
+}
 
 /// @brief memset definition in C++.
 /// @param dst destination pointer.

@@ -1,4 +1,4 @@
-name: BootZ CI (ATA PIO)
+name: BootZ CI (AHCI)
 
 on:
   push:
@@ -14,6 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Packages
-      run: sudo apt update && sudo apt install mingw-w64 qemu-utils nasm
+      run: sudo apt update && sudo apt install mingw-w64 qemu-utils nasm |
+          cd src/boot export AHCI_SUPPORT=1 && make -f amd64-ci.make all
     
 

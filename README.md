@@ -60,8 +60,9 @@
 ```sh
 git clone https://github.com/nekernel-org/nekernel.git
 cd nekernel
-./setup_x64.sh
-./debug_ata_x64.sh   # For generic ATA PIO target (QEMU)
+./setup_x64_project.sh
+./modules_ahci_x64.sh
+./debug_ahci_x64.sh   # For generic ATA PIO target (QEMU)
 ```
 
 - For ARM64 or other targets, see the scripts in `src/boot/`.

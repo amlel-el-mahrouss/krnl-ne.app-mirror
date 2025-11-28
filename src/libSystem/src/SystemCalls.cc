@@ -18,7 +18,7 @@ IMPORT_C Char* StrFmt(const Char* fmt, ...) {
 }
 
 // memmove-style copy
-IMPORT_C VoidPtr MmCopyMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input SizeT len) {
+IMPORT_C VoidPtr MmCopyMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input UInt64 len) {
   // handles overlap, prefers 64-bit word copies when aligned
   if (!len || !dest || !src) return nullptr;
 
@@ -91,7 +91,7 @@ IMPORT_C SInt64 MmStrLen(const Char* in) {
   return static_cast<SInt64>(p - in);
 }
 
-IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input SizeT len, _Input UInt8 value) {
+IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input UInt64 len, _Input UInt8 value) {
   if (!len || !dest) return nullptr;
 
   auto d = static_cast<UInt8*>(dest);

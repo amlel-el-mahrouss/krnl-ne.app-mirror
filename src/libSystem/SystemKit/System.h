@@ -97,13 +97,13 @@ IMPORT_C const Char* IoDimFile(_Input Ref dir_desc);
 /// @param out_data the data to write.
 /// @param sz_data the size of the data to write.
 /// @return the number of bytes written.
-IMPORT_C UInt32 IoWriteFile(_Input Ref file_desc, _Output VoidPtr out_data, SizeT sz_data);
+IMPORT_C UInt32 IoWriteFile(_Input Ref file_desc, _Output VoidPtr out_data, UInt64 sz_data);
 
 /// @brief Read data from a file.
 /// @param file_desc the file descriptor.
 /// @param out_data the data to read.
 /// @param sz_data the size of the data to read.
-IMPORT_C UInt32 IoReadFile(_Input Ref file_desc, _Output VoidPtr* out_data, SizeT sz_data);
+IMPORT_C UInt32 IoReadFile(_Input Ref file_desc, _Output VoidPtr* out_data, UInt64 sz_data);
 
 /// @brief Rewind the file pointer to the beginning of the file.
 /// @param file_desc the file descriptor.
@@ -131,8 +131,8 @@ IMPORT_C UInt32 RtlSpawnIB(UIntPtr process_id);
 /// @brief Spawns a process with a unique pid (stored as UIntPtr).
 /// @param process_path process filesystem path.
 /// @return > 0 process was created.
-IMPORT_C UIntPtr RtlSpawnProcess(const Char* process_path, SizeT argc, Char** argv, Char** envp,
-                                 SizeT envp_len);
+IMPORT_C UIntPtr RtlSpawnProcess(const Char* process_path, UInt32 argc, Char** argv, Char** envp,
+                                 UInt32 envp_len);
 
 /// @brief Exits a process with an exit_code.
 /// @return if it has succeeded true, otherwise false.
@@ -146,7 +146,7 @@ IMPORT_C Bool RtlExitProcess(UIntPtr handle, UIntPtr exit_code);
 /// @param len the length of it.
 /// @param flags the flags of it.
 /// @return heap pointer.
-IMPORT_C VoidPtr MmCreateHeap(_Input SizeT len, _Input UInt32 flags);
+IMPORT_C VoidPtr MmCreateHeap(_Input UInt64 len, _Input UInt32 flags);
 
 /// @brief Destroys the pointer
 /// @param heap the heap itself.
@@ -163,13 +163,13 @@ IMPORT_C UInt32 MmGetHeapFlags(_Input VoidPtr heap);
 IMPORT_C UInt32 MmFillCRC32Heap(_Input VoidPtr heap);
 
 /// @brief Copy memory region.
-IMPORT_C VoidPtr MmCopyMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input SizeT len);
+IMPORT_C VoidPtr MmCopyMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input UInt64 len);
 
 /// @brief Compare memory regions.
-IMPORT_C SInt64 MmCmpMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input SizeT len);
+IMPORT_C SInt64 MmCmpMemory(_Input VoidPtr dest, _Input VoidPtr src, _Input UInt64 len);
 
 /// @brief Fill memory region.
-IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input SizeT len, _Input UInt8 value);
+IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input UInt64 len, _Input UInt8 value);
 
 /// @brief Compare string regions.
 IMPORT_C SInt64 MmStrCmp(_Input const Char* dest, _Input const Char* src);

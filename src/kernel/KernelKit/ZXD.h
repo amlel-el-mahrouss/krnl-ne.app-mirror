@@ -17,7 +17,7 @@ struct ZXD_STUB_HEADER;
 
 enum ZXD_FLAGS {
   kZXDFlagsInvalid = 0,
-  kZXDFlagsDriver = 120,
+  kZXDFlagsDriver  = 120,
   kZXDFlagsBoot,
   kZXDFlagsKernel,
   kZXDFlagsCount = kZXDFlagsKernel - kZXDFlagsDriver + 1,

@@ -40,7 +40,7 @@ Boolean tls_check_tib(THREAD_INFORMATION_BLOCK* tib_ptr) {
  * @param tib_ptr The TIB record.
  * @return if the TIB record is valid or not.
  */
-EXTERN_C Bool tls_check_syscall_impl(Kernel::VoidPtr tib_ptr) noexcept {
+EXTERN_C Bool tls_check_syscall_impl(Kernel::VoidPtr tib_ptr) {
   if (!tib_ptr) {
     kout << "TLS: Failed because of an invalid TIB...\r";
     return No;

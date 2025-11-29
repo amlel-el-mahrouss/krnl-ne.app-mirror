@@ -8,8 +8,8 @@
 
 #include <NeKit/Defines.h>
 #include <NeKit/Json.h>
-#include <NeKit/TOML.h>
 #include <NeKit/KString.h>
+#include <NeKit/TOML.h>
 #include <SwapKit/DiskSwap.h>
 
 namespace Kernel {
@@ -17,7 +17,7 @@ class Variant final {
  public:
   enum class VariantKind {
     kInvalid = 0,
-    kString = 200,
+    kString  = 200,
     kBlob,
     kNull,
     kJson,
@@ -55,10 +55,10 @@ class Variant final {
   /// @brief Returns the underlying pointer.
   /// @return the underlying pointer.
   /// ========================================================================
-  VoidPtr     Leak();
+  VoidPtr Leak();
 
   template <typename T>
-  T* As() noexcept {
+  T* As() {
     return reinterpret_cast<T*>(fPtr);
   }
 

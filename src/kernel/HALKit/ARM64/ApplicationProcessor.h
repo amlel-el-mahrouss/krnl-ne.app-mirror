@@ -15,5 +15,5 @@
 /************************************************** */
 
 namespace Kernel {
-Void mp_init_cores(Void) noexcept;
+Void mp_init_cores(Void);
 }

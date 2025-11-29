@@ -54,18 +54,18 @@ class HardwareThread final {
   operator bool();
 
  public:
-  void Wake(const BOOL wakeup = false) noexcept;
-  void Busy(const BOOL busy = false) noexcept;
+  void Wake(const BOOL wakeup = false);
+  void Busy(const BOOL busy = false);
 
  public:
   BOOL Switch(HAL::StackFramePtr frame);
-  BOOL IsWakeup() noexcept;
+  BOOL IsWakeup();
 
  public:
-  HAL::StackFramePtr StackFrame() noexcept;
-  ThreadKind&        Kind() noexcept;
-  BOOL               IsBusy() noexcept;
-  ThreadID&          ID() noexcept;
+  HAL::StackFramePtr StackFrame();
+  ThreadKind&        Kind();
+  BOOL               IsBusy();
+  ThreadID&          ID();
 
  private:
   HAL::StackFramePtr fStack{nullptr};
@@ -95,12 +95,12 @@ class HardwareThreadScheduler final : public ISchedulable {
   NE_COPY_DEFAULT(HardwareThreadScheduler)
 
  public:
-  HAL::StackFramePtr Leak() noexcept;
+  HAL::StackFramePtr Leak();
 
  public:
   Ref<HardwareThread*> operator[](SizeT idx);
-  bool                 operator!() noexcept;
-                       operator bool() noexcept;
+  bool                 operator!();
+  operator bool();
 
   Bool IsUser() override { return Yes; }
 
@@ -116,7 +116,7 @@ class HardwareThreadScheduler final : public ISchedulable {
  public:
   /// @brief Returns the amount of threads present in the system.
   /// @returns SizeT the amount of cores present.
-  SizeT Capacity() noexcept;
+  SizeT Capacity();
 
  private:
   Array<HardwareThread, kMaxAPInsideSched> fThreadList;

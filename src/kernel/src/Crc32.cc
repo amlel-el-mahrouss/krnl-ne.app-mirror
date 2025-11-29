@@ -51,7 +51,7 @@ UInt32 kChecksumPolys[kCrcCnt] = {
 /// @param in the data to compute.
 /// @param len the length of the data.
 /// @return CRC32 of **in**.
-UInt32 ke_calculate_crc32(const VoidPtr inp, Int32 len) noexcept {
+UInt32 ke_calculate_crc32(const VoidPtr inp, Int32 len) {
   if (!inp) return ~0;
 
   UInt32 crc = 0xffffffff;

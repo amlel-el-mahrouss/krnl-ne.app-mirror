@@ -76,7 +76,7 @@ User::User(const UserRingKind& ring_kind, const Char* user_name) : mUserRing(rin
 ////////////////////////////////////////////////////////////
 User::~User() = default;
 
-Bool User::Save(const UserPublicKey password) noexcept {
+Bool User::Save(const UserPublicKey password) {
   if (!password || *password == 0) return No;
 
   this->mUserFNV = Detail::user_fnv_generator(password, this);
@@ -86,7 +86,7 @@ Bool User::Save(const UserPublicKey password) noexcept {
   return Yes;
 }
 
-Bool User::Login(const UserPublicKey password) noexcept {
+Bool User::Login(const UserPublicKey password) {
   if (!password || !*password) return No;
 
   auto ret = this->mUserFNV == Detail::user_fnv_generator(password, this);
@@ -108,7 +108,7 @@ Bool User::operator!=(const User& lhs) {
 /// @brief Returns the user's name.
 ////////////////////////////////////////////////////////////
 
-Char* User::Name() noexcept {
+Char* User::Name() {
   return this->mUserName;
 }
 
@@ -117,15 +117,15 @@ Char* User::Name() noexcept {
 /// @return The king of ring the user is attached to.
 ////////////////////////////////////////////////////////////
 
-const UserRingKind& User::Ring() noexcept {
+const UserRingKind& User::Ring() {
   return this->mUserRing;
 }
 
-Bool User::IsStdUser() noexcept {
+Bool User::IsStdUser() {
   return this->Ring() == UserRingKind::kRingStdUser;
 }
 
-Bool User::IsSuperUser() noexcept {
+Bool User::IsSuperUser() {
   return this->Ring() == UserRingKind::kRingSuperUser;
 }
 }  // namespace Kernel

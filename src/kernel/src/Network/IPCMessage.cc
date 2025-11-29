@@ -100,7 +100,7 @@ Bool ipc_construct_packet(_Output IPC_MSG** pckt_in) {
 /// @param src Source message.
 /// @param target Target message.
 /***********************************************************************************/
-Bool IPC_MSG::Pass(IPC_MSG* src, IPC_MSG* target) noexcept {
+Bool IPC_MSG::Pass(IPC_MSG* src, IPC_MSG* target) {
   if (src && target && (target != src)) {
     if (src->IpcMsgSz > target->IpcMsgSz) return No;
     if (target->IpcMsgSz > src->IpcMsgSz) return No;

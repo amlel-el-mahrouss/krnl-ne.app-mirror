@@ -18,7 +18,7 @@ class BootDeviceATA final : public Device {
     kSecondary = ATA_SECONDARY_IO,
   };
 
-  explicit BootDeviceATA() noexcept;
+  explicit BootDeviceATA();
   ~BootDeviceATA() = default;
 
   enum { kSectorSize = kATASectorSize };
@@ -34,8 +34,8 @@ class BootDeviceATA final : public Device {
  public:
   operator bool();
 
-  SizeT GetSectorsCount() noexcept;
-  SizeT GetDiskSize() noexcept;
+  SizeT GetSectorsCount();
+  SizeT GetDiskSize();
 
   BootDeviceATA& Read(Char* Buf, SizeT SecCount) override;
   BootDeviceATA& Write(Char* Buf, SizeT SecCount) override;

@@ -16,14 +16,14 @@ CF::CFRect::operator bool() {
 /***********************************************************************************/
 /// @brief returns true if size matches.
 /***********************************************************************************/
-BOOL CF::CFRect::SizeMatches(CF::CFRect& rect) noexcept {
+BOOL CF::CFRect::SizeMatches(CF::CFRect& rect) {
   return rect.height == height && rect.width == width;
 }
 
 /***********************************************************************************/
 /// @brief returns true if position matches.
 /***********************************************************************************/
-BOOL CF::CFRect::PositionMatches(CF::CFRect& rect) noexcept {
+BOOL CF::CFRect::PositionMatches(CF::CFRect& rect) {
   return rect.y == y && rect.x == x;
 }
 

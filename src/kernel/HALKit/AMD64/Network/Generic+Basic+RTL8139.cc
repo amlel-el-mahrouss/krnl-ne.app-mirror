@@ -25,7 +25,7 @@ STATIC UInt8* kRXBuffer     = nullptr;
 ///@brief RTL8139 Init routine.
 /***********************************************************************************/
 
-EXTERN_C BOOL rtl_init_nic_rtl8139(UInt16 io_base) noexcept {
+EXTERN_C BOOL rtl_init_nic_rtl8139(UInt16 io_base) {
   if (kTXRXEnabled) return NO;
 
   kRTLIOBase = io_base;

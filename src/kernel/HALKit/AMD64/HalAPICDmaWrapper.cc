@@ -18,7 +18,7 @@ LAPICDmaWrapper::~LAPICDmaWrapper() = default;
 /// @brief Read from APIC controller.
 /// @param reg register.
 /***********************************************************************************/
-UInt32 LAPICDmaWrapper::Read(UInt16 reg) noexcept {
+UInt32 LAPICDmaWrapper::Read(UInt16 reg) {
   MUST_PASS(this->fApic);
 
   UInt32 volatile* io_apic = (UInt32 volatile*) this->fApic;
@@ -30,7 +30,7 @@ UInt32 LAPICDmaWrapper::Read(UInt16 reg) noexcept {
 /// @param reg register.
 /// @param value value.
 /***********************************************************************************/
-Void LAPICDmaWrapper::Write(UInt16 reg, UInt32 value) noexcept {
+Void LAPICDmaWrapper::Write(UInt16 reg, UInt32 value) {
   MUST_PASS(this->fApic);
 
   UInt32 volatile* io_apic = (UInt32 volatile*) this->fApic;

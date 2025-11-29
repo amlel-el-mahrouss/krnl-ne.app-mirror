@@ -41,11 +41,9 @@ class Function final {
   bool operator!() { return !fFn; }
 
  private:
-  T(*fFn)
-  (Args... args){nullptr};
+  T (*fFn)(Args... args){nullptr};
 };
 
 template <typename T, typename... Args>
 using FunctionOr = ErrorOr<Function<T, Args...>>;
 }  // namespace Kernel
-

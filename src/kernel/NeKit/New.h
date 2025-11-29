@@ -15,6 +15,6 @@ typedef __SIZE_TYPE__ size_t;
 void* operator new(size_t);
 void* operator new[](size_t);
 
-void operator delete(void*) noexcept;
+void operator delete(void*);
 void operator delete(void*, unsigned long);
-void operator delete[](void*) noexcept;
+void operator delete[](void*);

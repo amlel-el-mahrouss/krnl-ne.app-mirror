@@ -31,7 +31,7 @@ namespace Detail {
   /***********************************************************************************/
   /// @brief Get the PEF platform signature according to the compiled architecture.
   /***********************************************************************************/
-  static UInt32 ldr_get_platform(void) noexcept {
+  static UInt32 ldr_get_platform(void) {
 #if defined(__NE_32X0__)
     return kPefArch32x0;
 #elif defined(__NE_64X0__)
@@ -261,7 +261,7 @@ ErrorOr<VoidPtr> PEFLoader::FindStart() {
 
 /// @brief Tells if the executable is loaded or not.
 /// @return Whether it's not bad and is cached.
-bool PEFLoader::IsLoaded() noexcept {
+bool PEFLoader::IsLoaded() {
   return !fBad && fCachedBlob;
 }
 
@@ -294,7 +294,7 @@ ErrorOr<VoidPtr> PEFLoader::GetBlob() {
 }
 
 namespace Utils {
-  ProcessID rtl_create_user_process(PEFLoader& exec, const Int32& process_kind) noexcept {
+  ProcessID rtl_create_user_process(PEFLoader& exec, const Int32& process_kind) {
     auto errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;

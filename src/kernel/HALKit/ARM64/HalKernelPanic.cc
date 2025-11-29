@@ -22,7 +22,7 @@ namespace Kernel {
 /// @brief Dumping factory class.
 class RecoveryFactory final {
  public:
-  STATIC Void Recover() noexcept;
+  STATIC Void Recover();
 };
 
 /***********************************************************************************/
@@ -37,7 +37,7 @@ Void ke_panic(const Kernel::Int32& id, const Char* message) {
   RecoveryFactory::Recover();
 }
 
-Void RecoveryFactory::Recover() noexcept {
+Void RecoveryFactory::Recover() {
   while (YES) {
     HAL::rt_halt();
   }

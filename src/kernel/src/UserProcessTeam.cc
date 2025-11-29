@@ -40,7 +40,7 @@ Array<USER_PROCESS, kSchedProcessLimitPerTeam>& UserProcessTeam::AsArray() {
 /// @return The team's ID.
 /***********************************************************************************/
 
-ProcessID& UserProcessTeam::Id() noexcept {
+ProcessID& UserProcessTeam::Id() {
   return this->mTeamId;
 }
 

@@ -12,7 +12,7 @@
 #endif
 
 template <typename T>
-inline T* tls_new_ptr(void) noexcept {
+inline T* tls_new_ptr(void) {
   using namespace Kernel;
 
   auto ref_process = UserProcessScheduler::The().TheCurrentProcess();
@@ -28,7 +28,7 @@ inline T* tls_new_ptr(void) noexcept {
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <typename T>
-inline Kernel::Bool tls_delete_ptr(T* obj) noexcept {
+inline Kernel::Bool tls_delete_ptr(T* obj) {
   using namespace Kernel;
 
   if (!obj) return No;
@@ -44,14 +44,14 @@ inline Kernel::Bool tls_delete_ptr(T* obj) noexcept {
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <typename T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj) noexcept {
+inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj) {
   return tls_delete_ptr(obj.Leak());
 }
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <typename T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) noexcept {
+inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) {
   return tls_delete_ptr(obj->Leak());
 }
 

@@ -12,7 +12,7 @@ namespace Kernel {
 /// @brief Unlocks the binary mutex.
 /***********************************************************************************/
 
-Bool BinaryMutex::Unlock() noexcept {
+Bool BinaryMutex::Unlock() {
   if (fLockingProcess->Status == ProcessStatusKind::kRunning) {
     fLockingProcess = nullptr;
 
@@ -61,7 +61,7 @@ Bool BinaryMutex::LockAndWait(USER_PROCESS* process, TimerInterface* timer) {
 /// @param sec seconds.
 /***********************************************************************************/
 
-BOOL BinaryMutex::WaitForProcess(const UInt32& sec) noexcept {
+BOOL BinaryMutex::WaitForProcess(const UInt32& sec) {
   HardwareTimer hw_timer(rtl_milliseconds(sec));
   hw_timer.Wait();
 

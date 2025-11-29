@@ -37,7 +37,7 @@ class TerminalDevice final NE_DEVICE<const Char*> {
 
   NE_COPY_DEFAULT(TerminalDevice)
 
-  STATIC TerminalDevice The() noexcept;
+  STATIC TerminalDevice The();
 };
 
 class Utf8TerminalDevice final NE_DEVICE<const Utf8Char*> {
@@ -54,7 +54,7 @@ class Utf8TerminalDevice final NE_DEVICE<const Utf8Char*> {
 
   NE_COPY_DEFAULT(Utf8TerminalDevice)
 
-  STATIC Utf8TerminalDevice The() noexcept;
+  STATIC Utf8TerminalDevice The();
 };
 
 inline TerminalDevice end_line() {

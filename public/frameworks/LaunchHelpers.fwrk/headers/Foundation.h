@@ -25,5 +25,5 @@ struct LHLaunchInfo final {
 
 /// @brief Get launch information.
 /// @return the launch information structure.
-LHLaunchInfo* LHGetLaunchInfo(Void) noexcept;
+LHLaunchInfo* LHGetLaunchInfo(Void);
 }  // namespace LaunchHelpers

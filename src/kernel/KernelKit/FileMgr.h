@@ -169,7 +169,7 @@ class NeFileSystemMgr final : public IFilesystemMgr {
  public:
   /// @brief Get NeFS parser class.
   /// @return The filesystem parser class.
-  NeFileSystemParser* GetParser() noexcept;
+  NeFileSystemParser* GetParser();
 
  private:
   NeFileSystemParser* mParser{nullptr};
@@ -215,7 +215,7 @@ class Ext2FileSystemMgr final : public IFilesystemMgr {
  public:
   /// @brief Get NeFS parser class.
   /// @return The filesystem parser class.
-  Ext2FileSystemParser* GetParser() noexcept;
+  Ext2FileSystemParser* GetParser();
 
  private:
   Ext2FileSystemParser* mParser{nullptr};
@@ -261,7 +261,7 @@ class HeFileSystemMgr final : public IFilesystemMgr {
  public:
   /// @brief Get NeFS parser class.
   /// @return The filesystem parser class.
-  HeFileSystemParser* GetParser() noexcept;
+  HeFileSystemParser* GetParser();
 
  private:
   HeFileSystemParser* mParser{nullptr};
@@ -285,7 +285,7 @@ class FileStream final {
   FileStream(const FileStream&);
 
  public:
-  ErrorOr<Int64> Write(SizeT offset, const VoidPtr data, SizeT len) noexcept {
+  ErrorOr<Int64> Write(SizeT offset, const VoidPtr data, SizeT len) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictWrite &&
@@ -304,7 +304,7 @@ class FileStream final {
     return ErrorOr<Int64>(kErrorInvalidData);
   }
 
-  ErrorOr<Int64> Write(const Char* name, const VoidPtr data, SizeT len) noexcept {
+  ErrorOr<Int64> Write(const Char* name, const VoidPtr data, SizeT len) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictWrite &&
@@ -323,7 +323,7 @@ class FileStream final {
     return ErrorOr<Int64>(kErrorInvalidData);
   }
 
-  VoidPtr Read(const Char* name, SizeT sz) noexcept {
+  VoidPtr Read(const Char* name, SizeT sz) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictRead &&
@@ -366,7 +366,7 @@ class FileStream final {
 
   /// @brief Leak MIME.
   /// @return The MIME.
-  Char* MIME() noexcept { return const_cast<Char*>(fMime); }
+  Char* MIME() { return const_cast<Char*>(fMime); }
 
   enum {
     kFileMgrRestrictRead = 100,

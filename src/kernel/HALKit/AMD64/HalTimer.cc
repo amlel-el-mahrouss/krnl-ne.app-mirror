@@ -79,7 +79,7 @@ HardwareTimer::~HardwareTimer() {
 /// @brief Wait for the timer to stop spinning.
 /***********************************************************************************/
 
-BOOL HardwareTimer::Wait() noexcept {
+BOOL HardwareTimer::Wait() {
   if (fWaitFor < 1) return NO;
   if (fWaitFor > 1'000'000) return NO;  // max 1000s = 16 minutes
 

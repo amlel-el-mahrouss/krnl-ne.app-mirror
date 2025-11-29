@@ -803,7 +803,8 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
                       rt_string_len("fs/hefs-packet"), sizeof(mnt->fPacket.fPacketMime));
 
   urt_copy_memory((VoidPtr) vol_name, boot->fVolName, urt_string_len(vol_name) + 1);
-  rt_copy_memory_safe((VoidPtr) kOpenHeFSMagic, boot->fMagic, kOpenHeFSMagicLen - 1, sizeof(boot->fMagic));
+  rt_copy_memory_safe((VoidPtr) kOpenHeFSMagic, boot->fMagic, kOpenHeFSMagicLen - 1,
+                      sizeof(boot->fMagic));
 
   if (mnt->fLbaStart > mnt->fLbaEnd) {
     err_global_get() = kErrorDiskIsCorrupted;
@@ -1145,7 +1146,7 @@ STATIC IMountpoint kMountpoint;
 
 /// @brief Initialize the OpenHeFS filesystem.
 /// @return To check its status, see err_local_get().
-Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
+Boolean OpenHeFS::fs_init_openhefs(Void) {
   io_construct_main_drive(kMountpoint.A());
 
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES) {
@@ -1153,7 +1154,8 @@ Boolean OpenHeFS::fs_init_openhefs(Void) noexcept {
     return YES;
   }
 
-  return HeFileSystemParser{}.Format(&kMountpoint.A(), kOpenHeFSEncodingFlagsUTF8, kOpenHeFSDefaultVolumeName);
+  return HeFileSystemParser{}.Format(&kMountpoint.A(), kOpenHeFSEncodingFlagsUTF8,
+                                     kOpenHeFSDefaultVolumeName);
 }
 }  // namespace Kernel
 

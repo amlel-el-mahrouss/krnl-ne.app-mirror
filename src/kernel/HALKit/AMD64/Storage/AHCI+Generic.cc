@@ -64,11 +64,11 @@ STATIC             ALIGN(kib_cast(4)) UInt8 kIdentifyData[kAHCISectorSize] = {0}
 
 template <BOOL Write, BOOL CommandOrCTRL, BOOL Identify>
 STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz,
-                                      SizeT size_buffer) noexcept;
+                                      SizeT size_buffer);
 
-STATIC Int32 drv_find_cmd_slot_ahci(HbaPort* port) noexcept;
+STATIC Int32 drv_find_cmd_slot_ahci(HbaPort* port);
 
-STATIC Void drv_compute_disk_ahci() noexcept;
+STATIC Void drv_compute_disk_ahci();
 
 STATIC SizeT drv_get_size_ahci();
 
@@ -77,7 +77,7 @@ STATIC SizeT drv_get_sector_count_ahci();
 /***********************************************************************************/
 /// @brief Identify device and read LBA info, Disk OEM vendor.
 /***********************************************************************************/
-STATIC Void drv_compute_disk_ahci() noexcept {
+STATIC Void drv_compute_disk_ahci() {
   kSATASectorCount = 0UL;
 
   rt_set_memory(kIdentifyData, 0, kAHCISectorSize);
@@ -114,7 +114,7 @@ STATIC Void drv_compute_disk_ahci() noexcept {
 /// @param port The port to search on.
 /// @return The slot, or -1.
 /***********************************************************************************/
-STATIC Int32 drv_find_cmd_slot_ahci(HbaPort* port) noexcept {
+STATIC Int32 drv_find_cmd_slot_ahci(HbaPort* port) {
   UInt32 slots = port->Sact | port->Ci;
 
   for (Int32 i = 0; i < kSATAPortCnt; ++i)  // AHCI supports up to 32 slots
@@ -134,7 +134,7 @@ STATIC Int32 drv_find_cmd_slot_ahci(HbaPort* port) noexcept {
 /***********************************************************************************/
 template <BOOL Write, BOOL CommandOrCTRL, BOOL Identify>
 STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz,
-                                      SizeT size_buffer) noexcept {
+                                      SizeT size_buffer) {
   if (sector_sz == 0) {
     kout << "ahci: Invalid sector size.\r";
     err_global_get() = kErrorDisk;
@@ -294,8 +294,7 @@ STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz
       goto ahci_io_end;
     } else {
       kout << "ahci: Disk still busy after command completion!\r";
-      while (kSATAHba->Ports[kSATAIndex].Tfd & (kSATASRBsy | kSATASRDrq))
-        ;
+      while (kSATAHba->Ports[kSATAIndex].Tfd & (kSATASRBsy | kSATASRDrq));
     }
 
   ahci_io_end:
@@ -308,13 +307,15 @@ STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz
   @brief Gets the number of sectors inside the drive.
   @return Sector size in bytes.
  */
-STATIC ATTRIBUTE(unused) SizeT drv_get_sector_count_ahci() {
+STATIC ATTRIBUTE(unused)
+SizeT  drv_get_sector_count_ahci() {
   return kSATASectorCount;
 }
 
 /// @brief Get the drive size.
 /// @return Disk size in bytes.
-STATIC ATTRIBUTE(unused) SizeT drv_get_size_ahci() {
+STATIC ATTRIBUTE(unused)
+SizeT  drv_get_size_ahci() {
   return drv_std_get_sector_count() * kAHCISectorSize;
 }
 

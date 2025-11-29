@@ -69,8 +69,8 @@ struct CFRect final {
 
   operator bool();
 
-  BOOL SizeMatches(CFRect& rect) noexcept;
-  BOOL PositionMatches(CFRect& rect) noexcept;
+  BOOL SizeMatches(CFRect& rect);
+  BOOL PositionMatches(CFRect& rect);
 };
 
 union CFGUID final {

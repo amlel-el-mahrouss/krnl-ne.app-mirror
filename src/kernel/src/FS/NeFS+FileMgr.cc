@@ -243,7 +243,7 @@ _Output Bool NeFileSystemMgr::Rewind(NodePtr node) {
 }
 
 /// @brief Returns the parser of NeFS.
-_Output NeFileSystemParser* NeFileSystemMgr::GetParser() noexcept {
+_Output NeFileSystemParser* NeFileSystemMgr::GetParser() {
   return mParser;
 }
 

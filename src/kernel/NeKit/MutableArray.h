@@ -180,7 +180,7 @@ class MutableArray : public NullableMutableArray<voidPtr, nullptr> {
 
   SizeT Count() const { return fNodeCount; }
 
-  bool Contains(T& value) noexcept {
+  bool Contains(T& value) {
     MutableLinkedList<T>* first = fFirstNode;
 
     while (first) {

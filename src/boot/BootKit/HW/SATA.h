@@ -14,7 +14,7 @@
 
 class BootDeviceSATA final {
  public:
-  explicit BootDeviceSATA() noexcept;
+  explicit BootDeviceSATA();
   ~BootDeviceSATA() = default;
 
   NE_COPY_DEFAULT(BootDeviceSATA)

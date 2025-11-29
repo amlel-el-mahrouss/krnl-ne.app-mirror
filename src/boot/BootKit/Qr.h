@@ -235,7 +235,7 @@ template <int V>
 struct Qr {
  private:
   friend class QrDelegate;
-  bool draw(int x, int y) noexcept;
+  bool draw(int x, int y);
 
  public:
   constexpr auto side_size() const { return SIDE; }
@@ -303,7 +303,7 @@ bool Qr<V>::module(int x, int y) {
 
 /// @brief draw a new QR code.
 template <int V>
-bool Qr<V>::draw(int whereX, int whereY) noexcept {
+bool Qr<V>::draw(int whereX, int whereY) {
   if (!this->status) return false;  // it may be invalid.
 
   cg_init();
@@ -784,7 +784,7 @@ class QrDelegate final {
 
   /// @brief Draw method delegate.
   template <Int32 V>
-  bool draw(Qr<V>& subject, Int32 x, Int32 y) noexcept {
+  bool draw(Qr<V>& subject, Int32 x, Int32 y) {
     return subject.draw(x, y);
   }
 };

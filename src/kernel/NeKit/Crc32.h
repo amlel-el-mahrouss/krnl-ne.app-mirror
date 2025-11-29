@@ -14,7 +14,7 @@
 #include <NeKit/Defines.h>
 
 namespace Kernel {
-UInt32 ke_calculate_crc32(const VoidPtr crc, Int32 len) noexcept;
+UInt32 ke_calculate_crc32(const VoidPtr crc, Int32 len);
 }  // namespace Kernel
 
 #endif  // !NEKIT_CRC32_H

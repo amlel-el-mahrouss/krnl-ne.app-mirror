@@ -45,7 +45,7 @@ inline SizeT rt_hash_seed(const Char* seed, UInt32 mul) {
 /// @param reg the register.
 /// @param value the write to write on it.
 template <typename DataKind>
-inline Void ke_dma_write(UIntPtr base, DataKind reg, DataKind value) noexcept {
+inline Void ke_dma_write(UIntPtr base, DataKind reg, DataKind value) {
   *(volatile DataKind*) (base + reg) = value;
 }
 
@@ -54,7 +54,7 @@ inline Void ke_dma_write(UIntPtr base, DataKind reg, DataKind value) noexcept {
 /// @param reg the register.
 /// @return the value inside the register.
 template <typename DataKind>
-inline UInt32 ke_dma_read(UIntPtr base, DataKind reg) noexcept {
+inline UInt32 ke_dma_read(UIntPtr base, DataKind reg) {
   return *(volatile DataKind*) (base + reg);
 }
 

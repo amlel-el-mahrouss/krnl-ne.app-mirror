@@ -59,7 +59,7 @@ USER_PROCESS::operator bool() {
 /// @return Int32 the last exit code.
 /***********************************************************************************/
 
-KPCError& USER_PROCESS::GetExitCode() noexcept {
+KPCError& USER_PROCESS::GetExitCode() {
   return this->LastExitCode;
 }
 
@@ -67,7 +67,7 @@ KPCError& USER_PROCESS::GetExitCode() noexcept {
 /// @brief Error code variable getter.
 /***********************************************************************************/
 
-KPCError& USER_PROCESS::GetLocalCode() noexcept {
+KPCError& USER_PROCESS::GetLocalCode() {
   return this->LocalCode;
 }
 
@@ -122,7 +122,7 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
 
   hal_write_cr3(vm_register);
 #else
-  auto ptr           = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
+  auto ptr = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
 #endif
 
   if (!this->HeapTree) {
@@ -203,7 +203,7 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
 /// @brief Gets the name of the current process.
 /***********************************************************************************/
 
-const Char* USER_PROCESS::GetName() noexcept {
+const Char* USER_PROCESS::GetName() {
   return this->Name;
 }
 
@@ -211,12 +211,12 @@ const Char* USER_PROCESS::GetName() noexcept {
 /// @brief Gets the owner of the process.
 /***********************************************************************************/
 
-const User* USER_PROCESS::GetOwner() noexcept {
+const User* USER_PROCESS::GetOwner() {
   return this->Owner;
 }
 
 /// @brief USER_PROCESS status getter.
-const ProcessStatusKind& USER_PROCESS::GetStatus() noexcept {
+const ProcessStatusKind& USER_PROCESS::GetStatus() {
   return this->Status;
 }
 
@@ -226,7 +226,7 @@ const ProcessStatusKind& USER_PROCESS::GetStatus() noexcept {
 */
 /***********************************************************************************/
 
-const AffinityKind& USER_PROCESS::GetAffinity() noexcept {
+const AffinityKind& USER_PROCESS::GetAffinity() {
   return this->Affinity;
 }
 
@@ -492,7 +492,7 @@ Bool UserProcessScheduler::HasMP() {
 /// @return USER_PROCESS count executed within a team.
 /***********************************************************************************/
 
-SizeT UserProcessScheduler::Run() noexcept {
+SizeT UserProcessScheduler::Run() {
   if (mTeam.mProcessCur < 1) {
     return 0UL;
   }

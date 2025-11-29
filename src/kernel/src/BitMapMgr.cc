@@ -106,7 +106,7 @@ namespace HAL {
               this->GetBitMapStatus(ptr_bit_set);
 
               UInt32 flags = this->MakeMMFlags(wr, user);
-              mm_map_page(ptr_bit_set, (VoidPtr)mm_get_page_addr(ptr_bit_set), flags);
+              mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
               if (biggest < (size + pad)) biggest = size + pad;
 
@@ -122,7 +122,7 @@ namespace HAL {
             this->GetBitMapStatus(ptr_bit_set);
 
             UInt32 flags = this->MakeMMFlags(wr, user);
-            mm_map_page(ptr_bit_set, (VoidPtr)mm_get_page_addr(ptr_bit_set), flags);
+            mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
             if (biggest < (size + pad)) biggest = (size + pad);
 

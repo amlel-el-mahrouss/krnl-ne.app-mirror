@@ -38,7 +38,7 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
   DylibTraits* Get() { return fMounted; }
 
  public:
-  void Mount(DylibTraits* to_mount) noexcept {
+  void Mount(DylibTraits* to_mount) {
     if (!to_mount || !to_mount->ImageObject) return;
 
     fMounted = to_mount;
@@ -53,7 +53,7 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
     }
   }
 
-  void Unmount() noexcept {
+  void Unmount() {
     if (fMounted) fMounted = nullptr;
   };
 

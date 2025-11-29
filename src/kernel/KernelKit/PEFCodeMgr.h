@@ -50,7 +50,7 @@ class PEFLoader : public ILoader {
   ErrorOr<VoidPtr> GetBlob() override;
 
  public:
-  bool IsLoaded() noexcept;
+  bool IsLoaded();
 
  private:
 #ifdef __FSKIT_INCLUDES_NEFS__
@@ -68,7 +68,7 @@ class PEFLoader : public ILoader {
 };
 
 namespace Utils {
-  ProcessID rtl_create_user_process(PEFLoader& exec, const Int32& procKind) noexcept;
+  ProcessID rtl_create_user_process(PEFLoader& exec, const Int32& procKind);
 }  // namespace Utils
 }  // namespace Kernel
 

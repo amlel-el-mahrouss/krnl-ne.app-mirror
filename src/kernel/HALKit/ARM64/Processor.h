@@ -60,7 +60,7 @@ struct PACKED StackFrame {
 
 typedef StackFrame* StackFramePtr;
 
-inline Void rt_halt() noexcept {
+inline Void rt_halt() {
   while (Yes) {
   }
 }

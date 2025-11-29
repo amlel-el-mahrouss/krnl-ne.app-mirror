@@ -127,7 +127,7 @@ class ICodec {
   /// @param type (a1) the data.
   /// @return a1 as Char*
   template <typename T>
-  const Char* AsBytes(T type) noexcept {
+  const Char* AsBytes(T type) {
     NE_UNUSED(type);
     return nullptr;
   }
@@ -137,7 +137,7 @@ class ICodec {
   /// @param type (a1) the data.
   /// @return a1 as Char*
   template <typename OutputClass, typename FactoryClass>
-  OutputClass* Construct(Char* type) noexcept {
+  OutputClass* Construct(Char* type) {
     FactoryClass class_fac;
     return class_fac.template From<OutputClass>(type);
   }
@@ -148,7 +148,7 @@ class ICodec {
   /// @param type the class to cast.
   /// @return the class as Y.
   template <typename T, typename Y>
-  Y As(T type) noexcept {
+  Y As(T type) {
     if (type.template IsSerializable()) {
       return reinterpret_cast<Char*>(type);
     }

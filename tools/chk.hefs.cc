@@ -57,8 +57,8 @@ int main(int argc, char** argv) {
 
   output_device.read(reinterpret_cast<char*>(&boot_node), sizeof(boot_node));
 
-  if (strncmp(boot_node.magic, kOpenHeFSMagic, kOpenHeFSMagicLen) != 0 || boot_node.sectorCount < 1 ||
-      boot_node.sectorSize < kMkFsSectorSz) {
+  if (strncmp(boot_node.magic, kOpenHeFSMagic, kOpenHeFSMagicLen) != 0 ||
+      boot_node.sectorCount < 1 || boot_node.sectorSize < kMkFsSectorSz) {
     mkfs::console_out() << "hefs: error: Device is not an OpenHeFS disk: " << opt_disk << "\n";
     return EXIT_FAILURE;
   }

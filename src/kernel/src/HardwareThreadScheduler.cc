@@ -41,14 +41,14 @@ HardwareThread::~HardwareThread() = default;
 /***********************************************************************************/
 //! @brief returns the id of the thread.
 /***********************************************************************************/
-ThreadID& HardwareThread::ID() noexcept {
+ThreadID& HardwareThread::ID() {
   return fID;
 }
 
 /***********************************************************************************/
 //! @brief returns the kind of thread we have.
 /***********************************************************************************/
-ThreadKind& HardwareThread::Kind() noexcept {
+ThreadKind& HardwareThread::Kind() {
   return fKind;
 }
 
@@ -56,7 +56,7 @@ ThreadKind& HardwareThread::Kind() noexcept {
 //! @brief is the thread busy?
 //! @return whether the thread is busy or not.
 /***********************************************************************************/
-Bool HardwareThread::IsBusy() noexcept {
+Bool HardwareThread::IsBusy() {
   return fBusy;
 }
 
@@ -64,12 +64,12 @@ Bool HardwareThread::IsBusy() noexcept {
 /// @brief Get processor stack frame.
 /***********************************************************************************/
 
-HAL::StackFramePtr HardwareThread::StackFrame() noexcept {
+HAL::StackFramePtr HardwareThread::StackFrame() {
   MUST_PASS(this->fStack);
   return this->fStack;
 }
 
-Void HardwareThread::Busy(Bool busy) noexcept {
+Void HardwareThread::Busy(Bool busy) {
   this->fBusy = busy;
 }
 
@@ -81,7 +81,7 @@ HardwareThread::operator bool() {
 /// @brief Wakeup the processor.
 /***********************************************************************************/
 
-Void HardwareThread::Wake(const bool wakeup) noexcept {
+Void HardwareThread::Wake(const bool wakeup) {
   this->fWakeup = wakeup;
 }
 
@@ -107,7 +107,7 @@ Bool HardwareThread::Switch(HAL::StackFramePtr frame) {
 /***********************************************************************************/
 ///! @brief Tells if processor is waked up.
 /***********************************************************************************/
-bool HardwareThread::IsWakeup() noexcept {
+bool HardwareThread::IsWakeup() {
   return this->fWakeup;
 }
 
@@ -133,7 +133,7 @@ HardwareThreadScheduler& HardwareThreadScheduler::The() {
 /***********************************************************************************/
 /// @brief Get Stack Frame of AP.
 /***********************************************************************************/
-HAL::StackFramePtr HardwareThreadScheduler::Leak() noexcept {
+HAL::StackFramePtr HardwareThreadScheduler::Leak() {
   return fThreadList[fCurrentThreadIdx].fStack;
 }
 
@@ -160,7 +160,7 @@ Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
  * @return
  */
 /***********************************************************************************/
-HardwareThreadScheduler::operator bool() noexcept {
+HardwareThreadScheduler::operator bool() {
   return !fThreadList.Empty();
 }
 
@@ -170,7 +170,7 @@ HardwareThreadScheduler::operator bool() noexcept {
  * @return
  */
 /***********************************************************************************/
-bool HardwareThreadScheduler::operator!() noexcept {
+bool HardwareThreadScheduler::operator!() {
   return fThreadList.Empty();
 }
 
@@ -178,7 +178,7 @@ bool HardwareThreadScheduler::operator!() noexcept {
 /// @brief Returns the amount of core present.
 /// @return the number of APs.
 /***********************************************************************************/
-SizeT HardwareThreadScheduler::Capacity() noexcept {
+SizeT HardwareThreadScheduler::Capacity() {
   return fThreadList.Count();
 }
 }  // namespace Kernel

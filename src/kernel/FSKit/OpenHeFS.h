@@ -115,11 +115,11 @@ typedef UInt64 ATime;
 struct PACKED HEFS_BOOT_NODE final {
   Char     fMagic[kOpenHeFSMagicLen];       /// @brief Magic number of the filesystem.
   Utf8Char fVolName[kOpenHeFSPartNameLen];  /// @brief Volume name.
-  UInt32   fVersion;                    /// @brief Version of the filesystem.
-  UInt64   fBadSectors;                 /// @brief Number of bad sectors in the filesystem.
-  UInt64   fSectorCount;                /// @brief Number of sectors in the filesystem.
-  UInt64   fSectorSize;                 /// @brief Size of the sector.
-  UInt32   fChecksum;                   /// @brief Checksum of the boot node.
+  UInt32   fVersion;                        /// @brief Version of the filesystem.
+  UInt64   fBadSectors;                     /// @brief Number of bad sectors in the filesystem.
+  UInt64   fSectorCount;                    /// @brief Number of sectors in the filesystem.
+  UInt64   fSectorSize;                     /// @brief Size of the sector.
+  UInt32   fChecksum;                       /// @brief Checksum of the boot node.
   UInt8    fDiskKind;  /// @brief Kind of the drive. (Hard Drive, Solid State Drive, Optical
                        /// Drive, etc).
   UInt8  fEncoding;    /// @brief Encoding of the filesystem. (UTF-8, UTF-16, etc).
@@ -234,7 +234,7 @@ namespace Kernel::Detail {
 /// @param raw_atime the raw ATime value.
 /// @return the year value.
 /// @note The year is stored in the upper 32 bits of the ATime value.
-inline UInt32 hefs_year_get(ATime raw_atime) noexcept {
+inline UInt32 hefs_year_get(ATime raw_atime) {
   return (raw_atime) >> 32;
 }
 
@@ -242,7 +242,7 @@ inline UInt32 hefs_year_get(ATime raw_atime) noexcept {
 /// @param raw_atime the raw ATime value.
 /// @return the month value.
 /// @note The month is stored in the upper 24 bits of the ATime value.
-inline UInt32 hefs_month_get(ATime raw_atime) noexcept {
+inline UInt32 hefs_month_get(ATime raw_atime) {
   return (raw_atime) >> 24;
 }
 
@@ -250,7 +250,7 @@ inline UInt32 hefs_month_get(ATime raw_atime) noexcept {
 /// @param raw_atime the raw ATime value.
 /// @return the day value.
 /// @note The day is stored in the upper 16 bits of the ATime value.
-inline UInt32 hefs_day_get(ATime raw_atime) noexcept {
+inline UInt32 hefs_day_get(ATime raw_atime) {
   return (raw_atime) >> 16;
 }
 
@@ -258,7 +258,7 @@ inline UInt32 hefs_day_get(ATime raw_atime) noexcept {
 /// @param raw_atime the raw ATime value.
 /// @return the hour value.
 /// @note The hour is stored in the upper 8 bits of the ATime value.
-inline UInt32 hefs_hour_get(ATime raw_atime) noexcept {
+inline UInt32 hefs_hour_get(ATime raw_atime) {
   return (raw_atime) >> 8;
 }
 
@@ -266,8 +266,8 @@ inline UInt32 hefs_hour_get(ATime raw_atime) noexcept {
 /// @param raw_atime the raw ATime value.
 /// @return the minute value.
 /// @note The minute is stored in the lower 8 bits of the ATime value.
-inline UInt32 hefs_minute_get(ATime raw_atime) noexcept {
-  return (raw_atime) &0xFF;
+inline UInt32 hefs_minute_get(ATime raw_atime) {
+  return (raw_atime) & 0xFF;
 }
 
 inline constexpr UInt32 kOpenHeFSBaseYear   = 1970;
@@ -276,7 +276,7 @@ inline constexpr UInt32 kOpenHeFSBaseDay    = 1;
 inline constexpr UInt32 kOpenHeFSBaseHour   = 0;
 inline constexpr UInt32 kOpenHeFSBaseMinute = 0;
 
-inline const Char* hefs_status_to_string(UInt16 status) noexcept {
+inline const Char* hefs_status_to_string(UInt16 status) {
   switch (status) {
     case kOpenHeFSStatusUnlocked:
       return "Unlocked";
@@ -291,7 +291,7 @@ inline const Char* hefs_status_to_string(UInt16 status) noexcept {
   }
 }
 
-inline const Char* hefs_drive_kind_to_string(UInt8 kind) noexcept {
+inline const Char* hefs_drive_kind_to_string(UInt8 kind) {
   switch (kind) {
     case kOpenHeFSHardDrive:
       return "Hard Drive";
@@ -311,7 +311,7 @@ inline const Char* hefs_drive_kind_to_string(UInt8 kind) noexcept {
   }
 }
 
-inline const Char* hefs_encoding_to_string(UInt8 encoding) noexcept {
+inline const Char* hefs_encoding_to_string(UInt8 encoding) {
   switch (encoding) {
     case kOpenHeFSEncodingFlagsUTF8:
       return "UTF-8";
@@ -336,7 +336,7 @@ inline const Char* hefs_encoding_to_string(UInt8 encoding) noexcept {
   }
 }
 
-inline const Char* hefs_file_kind_to_string(UInt16 kind) noexcept {
+inline const Char* hefs_file_kind_to_string(UInt16 kind) {
   switch (kind) {
     case kOpenHeFSFileKindRegular:
       return "Regular File";
@@ -358,7 +358,7 @@ inline const Char* hefs_file_kind_to_string(UInt16 kind) noexcept {
   }
 }
 
-inline const Char* hefs_file_flags_to_string(UInt32 flags) noexcept {
+inline const Char* hefs_file_flags_to_string(UInt32 flags) {
   switch (flags) {
     case kOpenHeFSFlagsNone:
       return "No Flags";
@@ -387,10 +387,10 @@ class HeFileSystemParser final {
   ~HeFileSystemParser() = default;
 
  public:
-  HeFileSystemParser(const HeFileSystemParser&) = delete;
+  HeFileSystemParser(const HeFileSystemParser&)            = delete;
   HeFileSystemParser& operator=(const HeFileSystemParser&) = delete;
 
-  HeFileSystemParser(HeFileSystemParser&&) = delete;
+  HeFileSystemParser(HeFileSystemParser&&)            = delete;
   HeFileSystemParser& operator=(HeFileSystemParser&&) = delete;
 
  public:
@@ -429,6 +429,6 @@ namespace OpenHeFS {
 
   /// @brief Initialize OpenHeFS inside the main disk.
   /// @return Whether it successfuly formated it or not.
-  Boolean fs_init_openhefs(Void) noexcept;
+  Boolean fs_init_openhefs(Void);
 }  // namespace OpenHeFS
 }  // namespace Kernel

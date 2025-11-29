@@ -25,7 +25,7 @@ class TimerInterface {
   NE_COPY_DEFAULT(TimerInterface)
 
  public:
-  virtual BOOL Wait() noexcept;
+  virtual BOOL Wait();
 };
 
 class SoftwareTimer final : public TimerInterface {
@@ -37,7 +37,7 @@ class SoftwareTimer final : public TimerInterface {
   NE_COPY_DEFAULT(SoftwareTimer)
 
  public:
-  BOOL Wait() noexcept override;
+  BOOL Wait() override;
 
  private:
   UIntPtr* fDigitalTimer{nullptr};
@@ -53,7 +53,7 @@ class HardwareTimer final : public TimerInterface {
   NE_COPY_DEFAULT(HardwareTimer)
 
  public:
-  BOOL Wait() noexcept override;
+  BOOL Wait() override;
 
  private:
   volatile UInt8* fDigitalTimer{nullptr};

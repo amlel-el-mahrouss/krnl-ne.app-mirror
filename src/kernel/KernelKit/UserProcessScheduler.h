@@ -128,23 +128,23 @@ class USER_PROCESS final {
   /***********************************************************************************/
   //! @brief Gets the local exit code.
   /***********************************************************************************/
-  KPCError& GetExitCode() noexcept;
+  KPCError& GetExitCode();
 
   /***********************************************************************************/
   ///! @brief Get the process's name
   ///! @example 'C Runtime Library'
   /***********************************************************************************/
-  const Char* GetName() noexcept;
+  const Char* GetName();
 
   /***********************************************************************************/
   //! @brief return local error code of process.
   //! @return Int32 local error code.
   /***********************************************************************************/
-  KPCError& GetLocalCode() noexcept;
+  KPCError& GetLocalCode();
 
-  const User*              GetOwner() noexcept;
-  const ProcessStatusKind& GetStatus() noexcept;
-  const AffinityKind&      GetAffinity() noexcept;
+  const User*              GetOwner();
+  const ProcessStatusKind& GetStatus();
+  const AffinityKind&      GetAffinity();
 
  private:
   KPCError LastExitCode{0};
@@ -168,7 +168,7 @@ class UserProcessTeam final {
 
   Array<USER_PROCESS, kSchedProcessLimitPerTeam>& AsArray();
   Ref<USER_PROCESS>&                              AsRef();
-  ProcessID&                                      Id() noexcept;
+  ProcessID&                                      Id();
 
  public:
   USER_PROCESS_ARRAY mProcessList;
@@ -209,7 +209,7 @@ class UserProcessScheduler final : public ISchedulable {
 
  public:
   USER_PROCESS_REF& TheCurrentProcess();
-  SizeT             Run() noexcept;
+  SizeT             Run();
 
  public:
   STATIC UserProcessScheduler& The();

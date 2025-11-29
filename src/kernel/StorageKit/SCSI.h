@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include <modules/SCSI/SCSI.h>
 #include <KernelKit/DriveMgr.h>
 #include <NeKit/OwnPtr.h>
+#include <modules/SCSI/SCSI.h>
 
 namespace Kernel {
 class SCSIDeviceInterface final NE_DEVICE<IMountpoint*> {

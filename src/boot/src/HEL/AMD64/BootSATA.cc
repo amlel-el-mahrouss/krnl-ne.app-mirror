@@ -38,7 +38,7 @@ using namespace Boot;
  * @brief ATA Device constructor.
  * @param void none.
  */
-BootDeviceSATA::BootDeviceSATA() noexcept {
+BootDeviceSATA::BootDeviceSATA() {
   UInt16 pi = 0u;
   drv_std_init(pi);
 }

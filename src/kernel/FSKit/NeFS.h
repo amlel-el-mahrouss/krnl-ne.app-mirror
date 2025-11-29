@@ -408,6 +408,6 @@ class NeFileSystemJournal final {
 };
 
 namespace NeFS {
-  Boolean fs_init_nefs(Void) noexcept;
+  Boolean fs_init_nefs(Void);
 }  // namespace NeFS
 }  // namespace Kernel

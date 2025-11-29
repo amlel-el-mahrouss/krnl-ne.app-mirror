@@ -20,7 +20,7 @@ namespace Detail {
   /// @brief Get the PE32+ platform signature according to the compiled architecture.
   /***********************************************************************************/
 
-  UInt32 ldr_get_platform_pe(void) noexcept {
+  UInt32 ldr_get_platform_pe(void) {
 #if defined(__NE_AMD64__)
     return kPEPlatformAMD64;
 #elif defined(__NE_ARM64__)
@@ -183,7 +183,7 @@ ErrorOr<VoidPtr> PE32Loader::FindStart() {
 
 /// @brief Tells if the executable is loaded or not.
 /// @return Whether it's not bad and is cached.
-bool PE32Loader::IsLoaded() noexcept {
+bool PE32Loader::IsLoaded() {
   return !fBad && fCachedBlob;
 }
 
@@ -216,7 +216,7 @@ ErrorOr<VoidPtr> PE32Loader::GetBlob() {
 }
 
 namespace Utils {
-  ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) noexcept {
+  ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) {
     auto errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;

@@ -162,20 +162,20 @@ class IDTLoader final {
 /// @return True if YES, False if not.
 /***********************************************************************************/
 
-Bool mp_is_smp(Void) noexcept;
+Bool mp_is_smp(Void);
 
 /***********************************************************************************/
 /// @brief Fetch and enable SMP scheduler.
 /// @param vendor_ptr SMP containing structure.
 /***********************************************************************************/
-Void mp_init_cores(VoidPtr vendor_ptr) noexcept;
+Void mp_init_cores(VoidPtr vendor_ptr);
 
 /***********************************************************************************/
 /// @brief Do a cpuid to check if MSR exists on CPU.
 /// @retval true it does exists.
 /// @retval false it doesn't.
 /***********************************************************************************/
-Bool hal_has_msr() noexcept;
+Bool hal_has_msr();
 
 /***********************************************************************************/
 /// @brief Get Model specific register inside core.
@@ -183,13 +183,13 @@ Bool hal_has_msr() noexcept;
 /// @param lo low byte
 /// @param hi high byte
 /***********************************************************************************/
-Void hal_get_msr(UInt32 msr, UInt32* lo, UInt32* hi) noexcept;
+Void hal_get_msr(UInt32 msr, UInt32* lo, UInt32* hi);
 
 /// @brief Set Model-specific register.
 /// @param msr MSR
 /// @param lo low byte
 /// @param hi high byte
-Void hal_set_msr(UInt32 msr, UInt32 lo, UInt32 hi) noexcept;
+Void hal_set_msr(UInt32 msr, UInt32 lo, UInt32 hi);
 
 /// @brief Processor specific namespace.
 namespace Detail {
@@ -234,8 +234,8 @@ class LAPICDmaWrapper final {
   NE_COPY_DEFAULT(LAPICDmaWrapper)
 
  public:
-  UInt32 Read(UInt16 reg) noexcept;
-  Void   Write(UInt16 reg, UInt32 value) noexcept;
+  UInt32 Read(UInt16 reg);
+  Void   Write(UInt16 reg, UInt32 value);
 
  private:
   VoidPtr fApic{nullptr};

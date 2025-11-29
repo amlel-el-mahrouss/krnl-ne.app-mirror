@@ -88,8 +88,7 @@ ATAInit_Retry:
   /// fetch serial info
   /// model, speed, number of sectors...
 
-  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ))
-    ;
+  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ));
 
   for (SizeT indexData = 0ul; indexData < kATADataLen; ++indexData) {
     kATAData[indexData] = rt_in16(IO + ATA_REG_DATA);
@@ -115,15 +114,14 @@ Void boot_ata_read(UInt64 Lba, UInt16 IO, UInt8 Master, CharacterTypeASCII* Buf,
 
   rt_out8(IO + ATA_REG_SEC_COUNT0, ((Size + SectorSz) / SectorSz));
 
-  rt_out8(IO + ATA_REG_LBA0, (Lba) &0xFF);
+  rt_out8(IO + ATA_REG_LBA0, (Lba) & 0xFF);
   rt_out8(IO + ATA_REG_LBA1, (Lba) >> 8);
   rt_out8(IO + ATA_REG_LBA2, (Lba) >> 16);
   rt_out8(IO + ATA_REG_LBA3, (Lba) >> 24);
 
   rt_out8(IO + ATA_REG_COMMAND, ATA_CMD_READ_PIO);
 
-  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ))
-    ;
+  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ));
 
   for (SizeT IndexOff = 0; IndexOff < Size; IndexOff += 2) {
     boot_ata_wait_io(IO);
@@ -149,15 +147,14 @@ Void boot_ata_write(UInt64 Lba, UInt16 IO, UInt8 Master, CharacterTypeASCII* Buf
 
   rt_out8(IO + ATA_REG_SEC_COUNT0, ((Size + (SectorSz)) / SectorSz));
 
-  rt_out8(IO + ATA_REG_LBA0, (Lba) &0xFF);
+  rt_out8(IO + ATA_REG_LBA0, (Lba) & 0xFF);
   rt_out8(IO + ATA_REG_LBA1, (Lba) >> 8);
   rt_out8(IO + ATA_REG_LBA2, (Lba) >> 16);
   rt_out8(IO + ATA_REG_LBA3, (Lba) >> 24);
 
   rt_out8(IO + ATA_REG_COMMAND, ATA_CMD_WRITE_PIO);
 
-  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ))
-    ;
+  while (!(rt_in8(IO + ATA_REG_STATUS) & ATA_SR_DRQ));
 
   for (SizeT IndexOff = 0; IndexOff < Size; IndexOff += 2) {
     boot_ata_wait_io(IO);
@@ -191,7 +188,7 @@ Boolean boot_ata_detected(Void) {
  * @brief ATA Device constructor.
  * @param void none.
  */
-BootDeviceATA::BootDeviceATA() noexcept {
+BootDeviceATA::BootDeviceATA() {
   if (boot_ata_init(ATA_PRIMARY_IO, true, this->Leak().mBus, this->Leak().mMaster) ||
       boot_ata_init(ATA_SECONDARY_IO, true, this->Leak().mBus, this->Leak().mMaster)) {
     kATADetected = true;
@@ -260,10 +257,10 @@ BootDeviceATA::ATATrait& BootDeviceATA::Leak() {
 /***
   @brief Getter, gets the number of sectors inside the drive.
 */
-SizeT BootDeviceATA::GetSectorsCount() noexcept {
+SizeT BootDeviceATA::GetSectorsCount() {
   return (kATAData[61] << 16) | kATAData[60];
 }
 
-SizeT BootDeviceATA::GetDiskSize() noexcept {
+SizeT BootDeviceATA::GetDiskSize() {
   return this->GetSectorsCount() * BootDeviceATA::kSectorSize;
 }

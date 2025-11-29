@@ -66,7 +66,7 @@ class PE32Loader : public ILoader {
   ErrorOr<VoidPtr> GetBlob() override;
 
  public:
-  bool IsLoaded() noexcept;
+  bool IsLoaded();
 
  private:
 #ifdef __FSKIT_INCLUDES_NEFS__
@@ -87,5 +87,5 @@ enum { kPETypeInvalid, kPETypeText = 100, kPETypeData, kPETypeBSS };
 
 typedef LDR_SECTION_HEADER PE_SECTION_INFO;
 
-ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) noexcept;
+ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind);
 }  // namespace Kernel

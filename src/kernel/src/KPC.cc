@@ -14,7 +14,7 @@ STATIC Bool kRaiseOnBugCheck = false;
 /// @brief Does a system wide bug check.
 /// @param void no params are needed.
 /// @return if error-free: false, otherwise true.
-Boolean err_bug_check_raise(Void) noexcept {
+Boolean err_bug_check_raise(Void) {
   Char* ptr = new Char[512];
 
   if (ptr == nullptr) goto bug_check_fail;

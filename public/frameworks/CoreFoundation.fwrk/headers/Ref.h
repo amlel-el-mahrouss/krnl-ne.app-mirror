@@ -44,16 +44,16 @@ class CFRef final CF_OBJECT {
     return *fClass;
   }
 
-  T& Leak() noexcept { return *fClass; }
+  T& Leak() { return *fClass; }
 
-  T& TryLeak() const noexcept {
+  T& TryLeak() const {
     MUST_PASS(*fClass);
     return *fClass;
   }
 
   T operator*() { return *fClass; }
 
-  operator bool() noexcept { return fClass; }
+  operator bool() { return fClass; }
 
  private:
   T* fClass{nullptr};
@@ -83,4 +83,3 @@ class CFNonNullRef final {
   CFRef<T> fRef{nullptr};
 };
 }  // namespace CF
-

@@ -74,5 +74,5 @@ inline constexpr KPCError kErrorUnimplemented = -1;
 /// @brief Does a system wide bug check.
 /// @param void no params are needed.
 /// @return if error-free: false, otherwise true.
-Boolean err_bug_check_raise(Void) noexcept;
+Boolean err_bug_check_raise(Void);
 }  // namespace Kernel

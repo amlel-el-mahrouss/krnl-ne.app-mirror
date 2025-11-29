@@ -19,7 +19,7 @@ class CFStringBuilder;
 class CFString final CF_OBJECT {
  public:
   CFString() = delete;
-  
+
   explicit CFString(const SizeT sz);
   explicit CFString(const Char* str);
 
@@ -40,7 +40,7 @@ class CFStringBuilder final {
  public:
   static CFRef<CFString> Construct(const Char*);
   static const Char*     FromBool(const Char*, BOOL);
-  static const Char* Format(const Char*, const Char*);
+  static const Char*     Format(const Char*, const Char*);
 
   static BOOL Equals(const Char, const Char*);
   static BOOL Equals(const Char*, const Char*);

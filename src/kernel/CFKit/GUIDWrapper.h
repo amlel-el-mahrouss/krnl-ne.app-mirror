@@ -39,8 +39,8 @@ class GUID final {
   NE_COPY_DEFAULT(GUID)
 
  public:
-  GUIDSequence& operator->() noexcept { return fUUID; }
-  GUIDSequence& Leak() noexcept { return fUUID; }
+  GUIDSequence& operator->() { return fUUID; }
+  GUIDSequence& Leak() { return fUUID; }
 
  private:
   GUIDSequence fUUID;

@@ -36,21 +36,21 @@ Kernel::Boolean tls_check_tib(THREAD_INFORMATION_BLOCK* the_tib);
 
 ///! @brief new ptr syscall.
 template <typename T>
-T* tls_new_ptr(void) noexcept;
+T* tls_new_ptr(void);
 
 ///! @brief delete ptr syscall.
 template <typename T>
-Kernel::Boolean tls_delete_ptr(T* ptr) noexcept;
+Kernel::Boolean tls_delete_ptr(T* ptr);
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <typename T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj) noexcept;
+inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj);
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <typename T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) noexcept;
+inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj);
 
 template <typename T, typename... Args>
 T* tls_new_class(Args&&... args);
@@ -59,7 +59,7 @@ T* tls_new_class(Args&&... args);
 EXTERN_C Kernel::Void rt_install_tib(THREAD_INFORMATION_BLOCK* TIB, THREAD_INFORMATION_BLOCK* PIB);
 
 /// @brief TLS check (syscall)
-EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB) noexcept;
+EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB);
 
 #include <KernelKit/ThreadLocalStorage.inl>
 

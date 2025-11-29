@@ -82,8 +82,8 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
     LDR_SECTION_HEADER_PTR sectPtr =
         (LDR_SECTION_HEADER_PTR) (((Char*) opt_header_ptr) + header_ptr->SizeOfOptionalHeader);
 
-    constexpr auto sectionForCode  = ".text";
-    constexpr auto sectionForBootZ = ".ldr";
+    constexpr auto sectionForCode     = ".text";
+    constexpr auto sectionForBootZ    = ".ldr";
     constexpr auto sectionForBootZAlt = ".botz";
 
     for (SizeT sectIndex = 0; sectIndex < numSecs; ++sectIndex) {
@@ -113,7 +113,7 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
 
 #endif
       } else if (StrCmp(sectionForBootZ, sect->Name) == 0 ||
-                StrCmp(sectionForBootZAlt, sect->Name) == 0) {
+                 StrCmp(sectionForBootZAlt, sect->Name) == 0) {
         struct HANDOVER_INFORMATION_STUB {
           UInt64 HandoverMagic;
           UInt32 HandoverType;

@@ -34,16 +34,15 @@ class JsonObject final {
     key += kNeJsonNullValue;
 
     this->AsKey()   = key;
-    this->AsValue()   = key;
+    this->AsValue() = key;
   }
 
   explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {
-
     KBasicString<CharKind> key = KString(lhsLen);
-    this->AsKey()   = key;
+    this->AsKey()              = key;
 
     KBasicString<CharKind> value = KString(rhsLen);
-    this->AsValue()   = value;
+    this->AsValue()              = value;
   }
 
   ~JsonObject() = default;
@@ -54,7 +53,7 @@ class JsonObject final {
   Bool& IsUndefined() { return fUndefined; }
 
  private:
-  Bool           fUndefined;  // is this instance undefined?
+  Bool                   fUndefined;  // is this instance undefined?
   KBasicString<CharKind> fKey;
   KBasicString<CharKind> fValue;
 

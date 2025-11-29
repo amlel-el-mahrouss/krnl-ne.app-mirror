@@ -32,15 +32,15 @@ class Ext2Context final {
     }
   }
 
-  Ext2Context(const Ext2Context&) = delete;
+  Ext2Context(const Ext2Context&)            = delete;
   Ext2Context& operator=(const Ext2Context&) = delete;
 
-  Ext2Context(Ext2Context&& other) noexcept : drive(other.drive), superblock(other.superblock) {
+  Ext2Context(Ext2Context&& other) : drive(other.drive), superblock(other.superblock) {
     other.drive      = nullptr;
     other.superblock = nullptr;
   }
 
-  Ext2Context& operator=(Ext2Context&& other) noexcept {
+  Ext2Context& operator=(Ext2Context&& other) {
     if (this != &other) {
       if (superblock) {
         Kernel::mm_free_ptr(superblock);

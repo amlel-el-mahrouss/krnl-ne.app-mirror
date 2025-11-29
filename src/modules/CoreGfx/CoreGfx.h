@@ -111,7 +111,7 @@
 #endif  // ifndef CORE_GFX_ACCESSIBILITY_H
 
 namespace FB {
-inline Void cg_clear_video() noexcept {
+inline Void cg_clear_video() {
   FBDrawInRegion(cg_get_clear_clr(), FB::CGAccessibilty::Height(), FB::CGAccessibilty::Width(), 0,
                  0);
 }

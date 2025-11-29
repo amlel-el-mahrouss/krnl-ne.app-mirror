@@ -26,7 +26,7 @@ namespace Detail {
   /// @brief Init COM1.
   /// @return
   template <UInt16 PORT>
-  bool hal_serial_init() noexcept {
+  bool hal_serial_init() {
     if (kState == kStateReady || kState == kStateTransmit) return true;
 
     HAL::rt_out8(PORT + 1, 0x00);  // Disable all interrupts
@@ -211,14 +211,14 @@ EXTERN_C void ke_io_read(DeviceInterface<const Char*>*, const Char* bytes) {
 #endif  // __DEBUG__
 }
 
-TerminalDevice TerminalDevice::The() noexcept {
+TerminalDevice TerminalDevice::The() {
   TerminalDevice out(Kernel::ke_io_write, Kernel::ke_io_read);
   return out;
 }
 
 Utf8TerminalDevice::~Utf8TerminalDevice() = default;
 
-Utf8TerminalDevice Utf8TerminalDevice::The() noexcept {
+Utf8TerminalDevice Utf8TerminalDevice::The() {
   Utf8TerminalDevice out(Kernel::ke_utf_io_write,
                          [](DeviceInterface<const Utf8Char*>*, const Utf8Char*) -> Void {});
   return out;

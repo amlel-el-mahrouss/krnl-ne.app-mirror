@@ -63,7 +63,7 @@ EXTERN_C void ke_io_read(DeviceInterface<const Char*>* self, const Char* bytes) 
 #endif  // __DEBUG__
 }
 
-TerminalDevice TerminalDevice::The() noexcept {
+TerminalDevice TerminalDevice::The() {
   TerminalDevice out(Kernel::ke_io_write, Kernel::ke_io_read);
   return out;
 }

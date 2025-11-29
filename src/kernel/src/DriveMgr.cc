@@ -124,13 +124,13 @@ const Char* io_drv_kind(Void) {
 
 /// @brief Unimplemented drive function.
 /// @param pckt the packet to read.
-Void io_drv_unimplemented(DriveTrait::DrivePacket& pckt) noexcept {
+Void io_drv_unimplemented(DriveTrait::DrivePacket& pckt) {
   NE_UNUSED(pckt);
 }
 
 /// @brief Makes a new drive.
 /// @return the new blank drive.
-DriveTrait io_construct_blank_drive() noexcept {
+DriveTrait io_construct_blank_drive() {
   DriveTrait trait;
 
   constexpr auto kBlankDrive = "/media/blank/";
@@ -216,7 +216,7 @@ namespace Probe {
 
 /// @brief Fetches the main drive.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)
-DriveTrait io_construct_main_drive() noexcept {
+DriveTrait io_construct_main_drive() {
   constexpr auto kMainDrive = "/media/main/";
 
   DriveTrait trait;
@@ -237,7 +237,7 @@ DriveTrait io_construct_main_drive() noexcept {
 
 /// @brief Replacement for io_construct_main_drive that works with IMountpoint.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)
-Void io_construct_main_drive(DriveTrait& trait) noexcept {
+Void io_construct_main_drive(DriveTrait& trait) {
   constexpr auto kMainDrive = "/media/main/";
 
   rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));

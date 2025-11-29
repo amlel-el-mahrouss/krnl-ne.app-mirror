@@ -24,9 +24,9 @@ class CGAccessibilty final {
  public:
   NE_COPY_DELETE(CGAccessibilty)
 
-  static UInt64 Width() noexcept { return kHandoverHeader->f_GOP.f_Width; }
+  static UInt64 Width() { return kHandoverHeader->f_GOP.f_Width; }
 
-  static UInt64 Height() noexcept { return kHandoverHeader->f_GOP.f_Height; }
+  static UInt64 Height() { return kHandoverHeader->f_GOP.f_Height; }
 };
 }  // namespace FB
 

@@ -74,7 +74,7 @@ struct DriveTrait final {
   Void (*fOutput)(DrivePacket& packet){nullptr};
   Void (*fVerify)(DrivePacket& packet){nullptr};
   Void (*fInit)(DrivePacket& packet){nullptr};
-  const Char* (*fProtocol)(Void){nullptr};
+  const Char* (*fProtocol)(Void) {nullptr};
 };
 
 namespace Probe {
@@ -143,7 +143,7 @@ class IMountpoint final {
 /// @brief Unimplemented drive.
 /// @param pckt the packet to read.
 /// @return
-Void io_drv_unimplemented(DriveTrait::DrivePacket* pckt) noexcept;
+Void io_drv_unimplemented(DriveTrait::DrivePacket* pckt);
 
 /// @brief Gets the drive kind (ATA, SCSI, AHCI...)
 /// @param void none.
@@ -152,16 +152,16 @@ const Char* io_drv_kind(Void);
 
 /// @brief Makes a new drive.
 /// @return the new drive as a trait.
-DriveTrait io_construct_blank_drive(Void) noexcept;
+DriveTrait io_construct_blank_drive(Void);
 
 /// @brief Fetches the main drive.
 /// @param trait the new drive as a trait.
-Void io_construct_main_drive(DriveTrait& trait) noexcept;
+Void io_construct_main_drive(DriveTrait& trait);
 
 /// @brief Fetches the main drive.
 /// @return the new drive as a trait.
 /// @deprecated use io_construct_main_drive(DriveTrait& trait) instead.
-DriveTrait io_construct_main_drive(Void) noexcept;
+DriveTrait io_construct_main_drive(Void);
 
 namespace Detect {
   Void io_detect_drive(DriveTrait& trait);

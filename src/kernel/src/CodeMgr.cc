@@ -15,7 +15,7 @@ namespace Kernel {
 /// accessible.
 /// @param main the start of the process.
 /// @return The team's process id.
-BOOL rtl_create_kernel_task(HAL::StackFramePtr task, const KID kid) noexcept {
+BOOL rtl_create_kernel_task(HAL::StackFramePtr task, const KID kid) {
   if (!kid || task == nullptr) return FALSE;
   return KernelTaskHelper::Add(task, kid);
 }
@@ -28,7 +28,7 @@ BOOL rtl_create_kernel_task(HAL::StackFramePtr task, const KID kid) noexcept {
 /// @return if the process was started or not.
 /***********************************************************************************/
 
-ProcessID rtl_create_user_process(rtl_main_kind main, const Char* process_name) noexcept {
+ProcessID rtl_create_user_process(rtl_main_kind main, const Char* process_name) {
   if (!process_name || *process_name == 0) return kSchedInvalidPID;
   return UserProcessScheduler::The().Spawn(process_name, reinterpret_cast<VoidPtr>(main), nullptr);
 }

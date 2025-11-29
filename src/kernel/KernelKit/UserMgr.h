@@ -64,23 +64,23 @@ class User final {
 
  public:
   /// @brief Get software ring
-  const UserRingKind& Ring() noexcept;
+  const UserRingKind& Ring();
 
   /// @brief Get user name
-  Char* Name() noexcept;
+  Char* Name();
 
   /// @brief Is he a standard user?
-  Bool IsStdUser() noexcept;
+  Bool IsStdUser();
 
   /// @brief Is she a super user?
-  Bool IsSuperUser() noexcept;
+  Bool IsSuperUser();
 
   /// @brief Saves a password from the public key.
-  Bool Save(const UserPublicKey password) noexcept;
+  Bool Save(const UserPublicKey password);
 
   /// @brief Checks if a password matches the **password**.
   /// @param password the password to check.
-  Bool Login(const UserPublicKey password) noexcept;
+  Bool Login(const UserPublicKey password);
 
  private:
   UserRingKind mUserRing{UserRingKind::kRingStdUser};

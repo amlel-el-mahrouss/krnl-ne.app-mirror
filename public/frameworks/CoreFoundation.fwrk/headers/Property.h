@@ -42,12 +42,11 @@ class CFProperty final CF_OBJECT {
   CFString&     GetKey();
 
  private:
-  CFString*    fName{nullptr};
-  CFPropertyId fValue{0UL};
-  CFRef<CFGUID>  fGUID{};
+  CFString*     fName{nullptr};
+  CFPropertyId  fValue{0UL};
+  CFRef<CFGUID> fGUID{};
 };
 
 template <SizeT N>
 using CFPropertyArray = CFArray<CFProperty, N>;
 }  // namespace CF
-

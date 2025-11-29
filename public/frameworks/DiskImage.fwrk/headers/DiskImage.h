@@ -45,16 +45,16 @@ struct DI_DISK_IMAGE {
 /// @brief Format with an EPM partition.
 /// @param img disk image structure.
 /// @return Status code upon completion.
-SInt32 DIFormatPartitionEPM(struct DI_DISK_IMAGE& img) noexcept;
+SInt32 DIFormatPartitionEPM(struct DI_DISK_IMAGE& img);
 
 /// @brief NeFS format over EPM.
 /// @param img disk image structure.
 /// @return Status code upon completion.
-SInt32 DIFormatFilesystemNeFS(struct DI_DISK_IMAGE& img) noexcept;
+SInt32 DIFormatFilesystemNeFS(struct DI_DISK_IMAGE& img);
 
 /// @brief OpenHeFS format over EPM.
 /// @param img disk image structure.
 /// @return Status code upon completion.
-SInt32 DIFormatFilesystemHeFS(struct DI_DISK_IMAGE& img) noexcept;
+SInt32 DIFormatFilesystemHeFS(struct DI_DISK_IMAGE& img);
 
 }  // namespace DI

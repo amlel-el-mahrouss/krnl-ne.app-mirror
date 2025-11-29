@@ -31,7 +31,7 @@ EXTERN_C void rt_halt();
 namespace Boot {
 /// @brief Halt and clear interrut flag on x86.
 /// @return
-inline Void Stop() noexcept {
+inline Void Stop() {
   while (YES) {
     rt_cli();
     rt_halt();
@@ -42,13 +42,13 @@ inline Void Stop() noexcept {
 @brief Exit EFI API to let the OS load correctly.
 Bascially frees everything we have in the EFI side.
 */
-inline Void ExitBootServices(UInt64 MapKey, EfiHandlePtr ImageHandle) noexcept {
+inline Void ExitBootServices(UInt64 MapKey, EfiHandlePtr ImageHandle) {
   if (!ST) return;
 
   ST->BootServices->ExitBootServices(ImageHandle, MapKey);
 }
 
-inline UInt32 Platform() noexcept {
+inline UInt32 Platform() {
   return kPeMachineAMD64;
 }
 
@@ -57,7 +57,7 @@ inline UInt32 Platform() noexcept {
  * @param ErrorCode error code to be print.
  * @param Reason reason to be print.
  */
-inline void ThrowError(const EfiCharType* ErrorCode, const EfiCharType* Reason) noexcept {
+inline void ThrowError(const EfiCharType* ErrorCode, const EfiCharType* Reason) {
   ST->ConOut->OutputString(ST->ConOut, L"\r*** STOP ***\r");
 
   ST->ConOut->OutputString(ST->ConOut, L"*** ERROR: ");
@@ -72,7 +72,7 @@ inline void ThrowError(const EfiCharType* ErrorCode, const EfiCharType* Reason) 
 }
 }  // namespace Boot
 
-inline void fw_init_efi(EfiSystemTable* SystemTable) noexcept {
+inline void fw_init_efi(EfiSystemTable* SystemTable) {
   if (!SystemTable) return;
 
   ST = SystemTable;

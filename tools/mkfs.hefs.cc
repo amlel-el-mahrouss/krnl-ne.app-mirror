@@ -153,8 +153,8 @@ int main(int argc, char** argv) {
                 "BootNode::magic too small to hold kOpenHeFSMagicLen");
 
   std::memset(boot_node.magic, 0, sizeof(boot_node.magic));
-  size_t magic_copy =
-      (sizeof(boot_node.magic) < kOpenHeFSMagicLen - 1) ? sizeof(boot_node.magic) : (kOpenHeFSMagicLen - 1);
+  size_t magic_copy = (sizeof(boot_node.magic) < kOpenHeFSMagicLen - 1) ? sizeof(boot_node.magic)
+                                                                        : (kOpenHeFSMagicLen - 1);
   std::memcpy(boot_node.magic, kOpenHeFSMagic, magic_copy);
   boot_node.magic[magic_copy] = 0;
 

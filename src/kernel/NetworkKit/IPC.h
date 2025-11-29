@@ -38,10 +38,10 @@ struct PACKED IPC_ADDR final {
   // some operators.
   ////////////////////////////////////
 
-  BOOL operator==(const IPC_ADDR& addr) noexcept;
-  BOOL operator==(IPC_ADDR& addr) noexcept;
-  BOOL operator!=(const IPC_ADDR& addr) noexcept;
-  BOOL operator!=(IPC_ADDR& addr) noexcept;
+  BOOL operator==(const IPC_ADDR& addr);
+  BOOL operator==(IPC_ADDR& addr);
+  BOOL operator!=(const IPC_ADDR& addr);
+  BOOL operator!=(IPC_ADDR& addr);
 };
 
 typedef struct IPC_ADDR IPC_ADDR;
@@ -73,7 +73,7 @@ typedef struct IPC_MSG final {
   UInt8    IpcData[kIPCMsgSize];
   UInt32   IpcLock;
   /// @brief Passes the message to target, could be anything, HTTP packet, JSON or whatever.
-  static Bool Pass(IPC_MSG* self, IPC_MSG* target) noexcept;
+  static Bool Pass(IPC_MSG* self, IPC_MSG* target);
 } PACKED ALIGN(8) IPC_MSG;
 
 /// @brief Sanitize packet function

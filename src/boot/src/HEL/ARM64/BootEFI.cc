@@ -38,7 +38,7 @@ EXTERN EfiBootServices* BS;
 /**
   @brief Finds and stores the GOP object.
 */
-STATIC Bool boot_init_fb() noexcept {
+STATIC Bool boot_init_fb() {
   kGopGuid = EFI_GUID(EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID);
   kGop     = nullptr;
 

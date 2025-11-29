@@ -37,13 +37,13 @@ class Ref final {
  public:
   T operator->() const { return fClass; }
 
-  T& Leak() noexcept { return fClass; }
+  T& Leak() { return fClass; }
 
-  T& TryLeak() noexcept { return fClass; }
+  T& TryLeak() { return fClass; }
 
   T operator*() { return fClass; }
 
-  operator bool() noexcept { return true; }
+  operator bool() { return true; }
 
  private:
   T fClass;

@@ -182,7 +182,7 @@ _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
 }
 
 /// @brief Returns the parser of OpenHeFS.
-_Output HeFileSystemParser* HeFileSystemMgr::GetParser() noexcept {
+_Output HeFileSystemParser* HeFileSystemMgr::GetParser() {
   return mParser;
 }
 }  // namespace Kernel

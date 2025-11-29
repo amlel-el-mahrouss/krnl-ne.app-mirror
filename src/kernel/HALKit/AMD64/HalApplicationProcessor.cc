@@ -134,7 +134,7 @@ EXTERN_C BOOL mp_register_task(HAL::StackFramePtr stack_frame, ThreadID thrdid) 
 /// @return True if YES, False if not.
 /***********************************************************************************/
 
-Bool mp_is_smp(Void) noexcept {
+Bool mp_is_smp(Void) {
   return kSMPAware;
 }
 
@@ -143,7 +143,7 @@ Bool mp_is_smp(Void) noexcept {
 /// @param vendor_ptr SMP containing structure.
 /***********************************************************************************/
 
-Void mp_init_cores(VoidPtr vendor_ptr) noexcept {
+Void mp_init_cores(VoidPtr vendor_ptr) {
   if (!vendor_ptr) return;
 
   PowerFactoryInterface hw_and_pow_int{vendor_ptr};

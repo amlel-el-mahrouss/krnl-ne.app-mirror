@@ -36,7 +36,7 @@ namespace Indexer {
     NE_COPY_DEFAULT(IndexableProperty)
 
    public:
-    Index& Leak() noexcept;
+    Index& Leak();
 
    public:
     Void   AddFlag(UInt16 flag);

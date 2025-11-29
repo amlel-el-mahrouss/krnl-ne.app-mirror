@@ -25,7 +25,7 @@ SoftwareTimer::~SoftwareTimer() {
   fWaitFor = 0;
 }
 
-BOOL SoftwareTimer::Wait() noexcept {
+BOOL SoftwareTimer::Wait() {
   if (fWaitFor < 1) return NO;
 
   while (*fDigitalTimer < (*fDigitalTimer + fWaitFor)) {

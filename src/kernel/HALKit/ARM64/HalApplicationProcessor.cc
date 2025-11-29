@@ -131,7 +131,7 @@ EXTERN_C Bool mp_register_task(HAL::StackFramePtr stack_frame, ProcessID thrdid)
 /// @brief Initialize the Global Interrupt Controller.
 /// @internal
 /***********************************************************************************/
-Void mp_init_cores(Void) noexcept {
+Void mp_init_cores(Void) {
   if (!Detail::kGICEnabled) {
     Detail::kGICEnabled = YES;
     Detail::mp_setup_gic_el0();

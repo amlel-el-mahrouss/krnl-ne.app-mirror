@@ -1,4 +1,17 @@
-# STANDARD NEKERNEL FRAMEWORK SPECIFICATION
+===================================
+
+# 0: General Information
+
+===================================
+
+- ABI and Format: PEF/PE32+.
+- Target: NeKernel.
+
+===================================
+
+# 1: The specification
+
+===================================
 
 ## Overview
 

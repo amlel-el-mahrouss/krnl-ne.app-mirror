@@ -6,7 +6,7 @@
 
 - ABI and Format: PEF/PE32+.
 - Kernel architecture: Portable hybrid Kernel.
-- Language: C++/(Assembly (AMD64, X64000, X86S, ARM64, POWER, RISCV))
+- Used Languages: C++, and Assembly Assembly (AMD64, X64000, X86S, ARM64, POWER, RISCV)
 
 ===================================
 

@@ -57,7 +57,7 @@ OwnPtr<IOBuf<Char*>> DMAFactory::Construct(OwnPtr<DMAWrapper>& dma) {
   if (!dma) return {};
 
   OwnPtr<IOBuf<Char*>> dmaOwnPtr =
-      mm_make_own_ptr<IOBuf<Char*>, char*>(reinterpret_cast<char*>(dma->fAddress));
+      make_ptr<IOBuf<Char*>, char*>(reinterpret_cast<char*>(dma->fAddress));
 
   if (!dmaOwnPtr) return {};
 

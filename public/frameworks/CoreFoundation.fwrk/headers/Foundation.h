@@ -14,7 +14,7 @@
 
 namespace CF {
 class CFString;
-union CFGUID;
+union CFGuid;
 class CFProperty;
 class CFObject;
 
@@ -47,7 +47,7 @@ struct CFPoint {
   CFInteger64 y_2{0UL};
   CFReal      ang{0UL};
 
-  operator bool();
+  explicit operator bool();
 
   /// @brief Check if point is within the current CFPoint.
   /// @param point the current point to check.
@@ -67,13 +67,13 @@ struct CFRect final {
   CFInteger64 width{0UL};
   CFInteger64 height{0UL};
 
-  operator bool();
+  explicit operator bool();
 
   BOOL SizeMatches(CFRect& rect);
   BOOL PositionMatches(CFRect& rect);
 };
 
-union CFGUID final {
+union CFGuid final {
   alignas(8) UInt16 fU8[16];
   alignas(8) UInt16 fU16[8];
   alignas(8) UInt32 fU32[4];
@@ -86,6 +86,4 @@ union CFGUID final {
     UInt8  fMs4[8];
   } fUuid;
 };
-
-using CF_GUID_TYPE = union CFGUID;
 }  // namespace CF

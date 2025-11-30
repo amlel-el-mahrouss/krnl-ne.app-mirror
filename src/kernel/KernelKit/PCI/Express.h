@@ -7,6 +7,6 @@
 #pragma once
 
 #include <KernelKit/PCI/PCI.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define PCI_EXPRESS_BUS_COUNT (4096)

@@ -14,7 +14,7 @@
 #ifndef INC_XOCFF_H
 #define INC_XOCFF_H
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kXCOFF64Magic (0x01F7)
 #define kXCOFF64ForkNameLen (256U)

@@ -8,7 +8,7 @@ Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 #define BENCHKIT_CHRONO_H
 
 #include <CompilerKit/CompilerKit.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 /// @author Amlal El Mahrouss
 /// @brief BenchKit Chrono contract.

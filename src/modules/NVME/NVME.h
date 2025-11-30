@@ -5,14 +5,14 @@
   Revision History:
 
   ??/??/24: Added file (amlel)
-  23 Jul 24: Update filename to Defines.h and using NE_ALIGN_NVME for NVME structs. (amlel)
+  23 Jul 24: Update filename to Config.h and using NE_ALIGN_NVME for NVME structs. (amlel)
 
 ======================================== */
 
 #ifndef __MODULE_NVME_H__
 #define __MODULE_NVME_H__
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 /// @file NVME.h
 /// @brief Non Volatile Memory.

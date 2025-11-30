@@ -10,8 +10,9 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/HeapMgr.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
+#include <NeKit/Vet.h>
 
 namespace Kernel {
 /// =========================================================== ///
@@ -43,7 +44,7 @@ class Ref final {
 
   T operator*() { return fClass; }
 
-  operator bool() { return true; }
+  operator bool() { return Vettable<T>::kValue; }
 
  private:
   T fClass;

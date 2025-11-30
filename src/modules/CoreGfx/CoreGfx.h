@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define cg_init() Kernel::UInt32 kCGCursor = 0
 

@@ -9,7 +9,7 @@
 
 #include <CFKit/GUIDWrapper.h>
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Function.h>
 #include <NeKit/KString.h>
 

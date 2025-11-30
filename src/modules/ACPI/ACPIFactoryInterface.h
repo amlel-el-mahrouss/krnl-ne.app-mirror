@@ -8,7 +8,7 @@
 #define __MOD_ACPI_H__
 
 #include <KernelKit/DebugOutput.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 #include <NeKit/Ref.h>
 #include <modules/ACPI/ACPI.h>

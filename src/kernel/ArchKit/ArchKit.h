@@ -7,7 +7,7 @@
 #pragma once
 
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Function.h>
 
 #include <FirmwareKit/Handover.h>

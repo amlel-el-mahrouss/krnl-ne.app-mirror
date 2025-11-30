@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 #include <NeKit/Stream.h>
 

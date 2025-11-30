@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 /// @file KPC.h
 /// @brief Kernel Procedure Code.

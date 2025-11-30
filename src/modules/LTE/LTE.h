@@ -10,7 +10,7 @@ Purpose: LTE Standard Library.
 #ifndef _INC_NETWORK_LTE_H_
 #define _INC_NETWORK_LTE_H_
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 
 /// @brief Long Term Evolution I/O routines.

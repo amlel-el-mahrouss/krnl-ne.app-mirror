@@ -15,18 +15,12 @@
 /// @brief format OpenHeFS over an EPM disk.
 /// @param img disk image structure.
 /// @return Status code upon completion.
-SInt32 DI::DIFormatFilesystemHeFS(struct DI_DISK_IMAGE& img) {
-  if (!img.sector_sz || (img.sector_sz % kDISectorSz != 0)) return kDIFailureStatus;
+SInt32 DI::DIFormatFilesystemOpenHeFS(struct DI_DISK_IMAGE& img) {
+  NE_UNUSED(img);
 
-  if (*img.out_name == 0 || *img.disk_name == 0) return kDIFailureStatus;
+  PrintOut(nullptr, "%s",
+           "DIFormatFilesystemOpenHeFS is not formattable on DI, work may be done in the future to "
+           "address that.");
 
-  IORef handle = IoOpenFile(img.out_name, nullptr);
-
-  if (!handle) return kDIFailureStatus;
-
-  ::IoCloseFile(handle);
-
-  handle = nullptr;
-
-  return kDISuccessStatus;
+  return kDIFailureStatus;
 }

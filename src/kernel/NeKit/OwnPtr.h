@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Ref.h>
 
@@ -21,8 +21,8 @@ class NonNullRefPtr;
 template <typename T>
 class OwnPtr final {
  public:
-  OwnPtr() {}
-  ~OwnPtr() { this->Delete(); }
+  OwnPtr() = default;
+  ~OwnPtr() { this->Reset(); }
 
   OwnPtr& operator=(const OwnPtr&) = default;
   OwnPtr(const OwnPtr&)            = default;
@@ -38,9 +38,8 @@ class OwnPtr final {
     return fCls;
   }
 
-  void Delete() {
+  void Reset() {
     if (fCls) delete fCls;
-
     fCls = nullptr;
   }
 
@@ -50,15 +49,15 @@ class OwnPtr final {
 
   Ref<T> AsRef() { return Ref<T>(fCls); }
 
-  operator bool() { return fCls; }
+  explicit operator bool() { return fCls; }
   bool operator!() { return !fCls; }
 
  private:
-  T* fCls;
+  T* fCls{nullptr};
 };
 
 template <typename T, typename... Args>
-inline OwnPtr<T> mm_make_own_ptr(Args... args) {
+inline OwnPtr<T> make_ptr(Args... args) {
   OwnPtr<T> ret;
   ret.template New<Args...>(forward(args)...);
 

@@ -5,7 +5,7 @@
 ======================================== */
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #ifndef __NECTI__
 

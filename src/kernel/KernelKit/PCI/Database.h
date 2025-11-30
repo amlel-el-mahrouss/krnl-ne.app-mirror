@@ -6,7 +6,7 @@
 #pragma once
 
 #include <KernelKit/PCI/Device.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel {
 namespace Types {

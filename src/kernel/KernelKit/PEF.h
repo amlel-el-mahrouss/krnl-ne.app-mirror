@@ -16,7 +16,7 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/ILoader.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kPefMagic "Open"
 #define kPefMagicFat "nepO"

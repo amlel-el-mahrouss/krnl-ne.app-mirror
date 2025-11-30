@@ -10,7 +10,7 @@
 
 #include <FirmwareKit/Handover.h>
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Utils.h>
 
 #define kCPUBackendName "aarch64"

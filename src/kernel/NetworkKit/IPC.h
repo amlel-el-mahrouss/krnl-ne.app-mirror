@@ -10,7 +10,7 @@
 #ifndef INC_IPC_H
 #define INC_IPC_H
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 #include <hint/CompilerHint.h>
 

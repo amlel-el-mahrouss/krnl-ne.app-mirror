@@ -7,7 +7,7 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define RTL_TRY_FIND_NODE(NAME, NODE)             \
   auto* NAME = NODE;                              \

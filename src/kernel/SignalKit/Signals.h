@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define SIGKILL 1 /* kill */
 #define SIGPAUS 2 /* pause */

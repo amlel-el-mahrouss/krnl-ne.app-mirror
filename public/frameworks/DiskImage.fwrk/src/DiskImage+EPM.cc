@@ -12,7 +12,7 @@
 #include <FSKit/NeFS.h>
 #include <FirmwareKit/EPM.h>
 
-/// @brief EPM format disk
+/// @brief Format a disk under the EPM scheme.
 /// @param img disk image structure.
 /// @return Status code upon completion.
 SInt32 DI::DIFormatPartitionEPM(struct DI_DISK_IMAGE& img) {

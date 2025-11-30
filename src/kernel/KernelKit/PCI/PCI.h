@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kPCIConfigAddressPort (0xCF8)
 #define kPCIConfigDataPort (0xCFC)

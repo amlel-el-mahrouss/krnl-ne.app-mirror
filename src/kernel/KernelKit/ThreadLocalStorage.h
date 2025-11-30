@@ -7,7 +7,7 @@
 #ifndef KERNELKIT_TLS_H
 #define KERNELKIT_TLS_H
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
 ///! @brief Thread Local Storage for NeKernel.

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <CompilerKit/CompilerKit.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {

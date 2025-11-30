@@ -11,7 +11,7 @@ license.
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/PEFCodeMgr.h>
 #include <KernelKit/ProcessScheduler.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/OwnPtr.h>
@@ -138,7 +138,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
 PEFLoader::~PEFLoader() {
   if (fCachedBlob) mm_free_ptr(fCachedBlob);
 
-  fFile.Delete();
+  fFile.Reset();
 }
 
 /***********************************************************************************/

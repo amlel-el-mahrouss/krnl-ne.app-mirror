@@ -7,7 +7,7 @@
 #pragma once
 
 #include <NeKit/Atom.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel {
 enum {

@@ -7,7 +7,7 @@
 #pragma once
 
 #include <FirmwareKit/EFI/EFI.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kSectorAlignGPT_PartTbl (420U)
 #define kSectorAlignGPT_PartEntry (72U)

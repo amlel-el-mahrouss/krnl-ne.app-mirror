@@ -8,7 +8,7 @@
 
 #include <ArchKit/ArchKit.h>
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
 namespace Kernel {

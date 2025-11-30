@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel {
 typedef Int64 hal_ap_kind;

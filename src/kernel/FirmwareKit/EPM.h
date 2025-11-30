@@ -11,7 +11,7 @@
 #ifndef FIRMWAREKIT_EPM_H
 #define FIRMWAREKIT_EPM_H
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kEPMNameLength (32)
 #define kEPMFilesystemLength (16)

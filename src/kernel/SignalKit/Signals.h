@@ -7,7 +7,9 @@
 #pragma once
 
 #include <NeKit/Config.h>
+#include <NeKit/KernelPanic.h>
 
+#define SIGBAD 0 /* bad signal*/
 #define SIGKILL 1 /* kill */
 #define SIGPAUS 2 /* pause */
 #define SIGEXEC 3 /* execute */
@@ -34,7 +36,7 @@ inline constexpr auto kKernelSignalSeed = 0x0895034f9fUL;
 /// @brief Generate signal from **Sig**
 template <rt_signal_kind Sig, SizeT Seed = kUserSignalSeed>
 inline rt_signal_kind sig_generate_unique() {
-  static_assert(Sig > 0, "Signal is zero (invalid)");
+  STATIC_PASS(Sig > SIGBAD, "Signal is zero (invalid)");
   return Sig ^ Seed;
 }
 
@@ -44,8 +46,8 @@ inline BOOL sig_matches_seed(rt_signal_kind sig) {
   return (sig & 0xFF000000) == (Seed & 0xFF000000);
 }
 
-/// @brief Validate signal from **sig**
+/// @brief Validate signal from **sig** and whtether the signal is greater than SIGDTCH.
 inline BOOL sig_validate_unique(rt_signal_kind sig) {
-  return sig > 0;
+  return sig > SIGBAD && sig > SIGDTCH;
 }
 }  // namespace Kernel

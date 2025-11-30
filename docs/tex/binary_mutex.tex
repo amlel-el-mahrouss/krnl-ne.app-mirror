@@ -44,10 +44,10 @@ class BinaryMutex final {
 
  public:
   bool IsLocked() const;
-  bool Unlock() ;
+  bool Unlock();
 
  public:
-  BOOL WaitForProcess(const UInt32& sec) ;
+  BOOL WaitForProcess(const UInt32& sec);
 
  public:
   bool Lock(USER_PROCESS* process);

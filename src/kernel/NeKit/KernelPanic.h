@@ -9,11 +9,8 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
-void ke_runtime_check(bool expr, const Char* file, const Char* line);
-}
-
-#define MUST_PASS_COMPILER(EXPR, MSG) static_assert(EXPR, MSG)
+/// @brief Checks during compile time whether a condition passes.
+#define STATIC_PASS(EXPR, MSG) static_assert(EXPR, MSG)
 
 #ifdef TRY
 #undef TRY
@@ -65,5 +62,6 @@ enum RUNTIME_CHECK {
 typedef enum RUNTIME_CHECK RTL_RUNTIME_CHECK;
 
 namespace Kernel {
+void ke_runtime_check(bool expr, const Char* file, const Char* line);
 void ke_panic(const Int32& id, const Char* message = nullptr);
 }  // namespace Kernel

@@ -3,7 +3,7 @@
 
 #include <BootKit/Shared/base.h>
 #include <BootKit/Shared/bit.h>
-
+#include <NeKit/KernelPanic.h>
 #include <BootKit/QrPrelude.h>
 #include <BootKit/Support.h>
 #include <CompilerKit/Detail.h>
@@ -265,7 +265,7 @@ struct Qr {
   void apply_mask(int mask, uint8_t* patterns);
 
  private:
-  static_assert(V >= 1 && V <= 40, "invalid version");
+  STATIC_PASS(V >= 1 && V <= 40, "invalid version");
   static constexpr int SIDE          = 17 + V * 4;
   static constexpr int N_BITS        = SIDE * SIDE;
   static constexpr int N_ALIGN       = V == 1 ? 0 : V / 7 + 2;

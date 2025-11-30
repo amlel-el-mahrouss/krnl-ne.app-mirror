@@ -10,6 +10,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Ref.h>
+#include <NeKit/ErrorOr.h>
 
 namespace Kernel {
 template <typename T>
@@ -56,8 +57,11 @@ class OwnPtr final {
   T* fCls{nullptr};
 };
 
+template <typename T>
+using OwnOr = ErrorOr<OwnPtr<T>>;
+
 template <typename T, typename... Args>
-inline OwnPtr<T> make_ptr(Args... args) {
+inline OwnPtr<T> make_ptr(Args&&... args) {
   OwnPtr<T> ret;
   ret.template New<Args...>(forward(args)...);
 

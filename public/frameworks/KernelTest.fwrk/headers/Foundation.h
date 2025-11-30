@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Err.h>
+#include <libSystem/SystemKit/System.h>
 
 #include <CoreFoundation.fwrk/headers/Object.h>
 #include <CoreFoundation.fwrk/headers/String.h>

@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <NeKit/Config.h>
 #include <NeKit/PageMgr.h>
 #include <NeKit/Ref.h>
 

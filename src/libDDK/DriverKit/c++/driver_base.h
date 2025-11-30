@@ -37,8 +37,8 @@ class IDriverBase {
 
 /// @brief This concept requires the Driver to be IDriverBase compliant.
 template <typename T>
-concept IsValidDriver = requires(T a) {
-  { a.IsActive() && a.Type() > 0 };
+concept IsValidDriver = requires(T driver_base) {
+  { driver_base.IsActive() && driver_base.Type() > 0 };
 };
 
 /// @brief Consteval helper to detect whether a template is truly based on IDriverBase.

@@ -13,13 +13,15 @@
 #define NE_VETTABLE : public IVet
 
 namespace Kernel {
+/// @brief Vet interface for objects.
 struct IVet {
   IVet()          = default;
   virtual ~IVet() = default;
 
   NE_COPY_DEFAULT(IVet)
 
-  operator bool() = delete;
+  /// @brief Start vetting object for validity.
+  auto DoVet() const { return false; }
 };
 
 template <typename T>
@@ -30,5 +32,11 @@ struct Vettable final {
 template <>
 struct Vettable<IVet> final {
   static constexpr bool kValue = true;
+};
+
+/// @brief Concept version of Vettable.
+template <typename T, typename Fallback>
+concept IVettable = requires(IVet vettable, Fallback fallback) {
+  { Vettable<T>::kValue ? vettable.DoVet() : fallback(vettable) };
 };
 }  // namespace Kernel

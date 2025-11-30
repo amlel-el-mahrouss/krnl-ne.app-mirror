@@ -18,13 +18,14 @@ class CFDictionary final {
   CFDictionary& operator=(const CFDictionary&) = default;
   CFDictionary(const CFDictionary&)            = default;
 
-  Value& operator[](Key& at) {
-    return this->Find(at);
-  }
+  Value& operator[](Key& at) { return this->Find(at); }
 
   Bool Empty() { return this->fCount > 0; }
 
-  Bool Find(Key& key) { NE_UNUSED(key); return false; }
+  Bool Find(Key& key) {
+    NE_UNUSED(key);
+    return false;
+  }
 
   operator bool() { return !this->Empty(); }
 

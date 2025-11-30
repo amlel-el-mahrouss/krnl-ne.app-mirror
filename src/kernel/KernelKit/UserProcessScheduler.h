@@ -37,6 +37,8 @@ class USER_PROCESS final NE_VETTABLE {
   explicit USER_PROCESS();
   ~USER_PROCESS();
 
+  auto DoVet() const { return *this; }
+
  public:
   NE_COPY_DEFAULT(USER_PROCESS)
 

@@ -15,7 +15,7 @@ class KTSourceLocation;
 /// ================================================================================
 class KTSourceLocation final CF_OBJECT {
  public:
-  KTSourceLocation()  = delete;
+  KTSourceLocation()           = delete;
   ~KTSourceLocation() override = default;
 
   LIBSYS_COPY_DELETE(KTSourceLocation);

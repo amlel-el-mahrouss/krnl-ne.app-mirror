@@ -171,6 +171,7 @@ int main(int argc, char** argv) {
   boot_node.volumeName[label_units] = 0U;
 
   output_device.seekp(static_cast<std::streamoff>(start_ind));
+
   if (!output_device.good()) {
     mkfs::console_out() << "hefs: error: Failed seek to index start.\n";
     return EXIT_FAILURE;
@@ -189,7 +190,10 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
+  output_device.seekp(static_cast<std::streamoff>(kDiskSize - 1));
+  output_device.put(0);
   output_device.flush();
+
   output_device.close();
 
   mkfs::console_out() << "hefs: info: Wrote filesystem to output device: " << output_path << "\n";

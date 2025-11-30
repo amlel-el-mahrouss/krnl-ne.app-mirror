@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kBootNetINetMagic "ONET"
 #define kBootNetINetMagicLength (4)

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel {
 MAKE_STRING_ENUM(HYPERVISOR)

@@ -7,7 +7,7 @@
 #ifndef _INC_MODULE_MBCI_H_
 #define _INC_MODULE_MBCI_H_
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <hint/CompilerHint.h>
 #include <modules/ACPI/ACPI.h>
 

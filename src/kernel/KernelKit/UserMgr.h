@@ -17,7 +17,7 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/KPC.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 
 ///! We got the MGMT, STD (%s format) and GUEST users,

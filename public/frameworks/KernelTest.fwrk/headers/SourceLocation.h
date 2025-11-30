@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <CoreFoundation.fwrk/headers/Object.h>
-#include <CoreFoundation.fwrk/headers/String.h>
 #include <KernelTest.fwrk/headers/Foundation.h>
 
 class KTSourceLocation;
@@ -17,7 +15,7 @@ class KTSourceLocation;
 /// ================================================================================
 class KTSourceLocation final CF_OBJECT {
  public:
-  explicit KTSourceLocation()  = delete;
+  KTSourceLocation()  = delete;
   ~KTSourceLocation() override = default;
 
   LIBSYS_COPY_DELETE(KTSourceLocation);
@@ -25,8 +23,8 @@ class KTSourceLocation final CF_OBJECT {
  public:
   KTSourceLocation(const Char*, const SInt32 = 0UL);
 
-  CF::CFString File();
-  SInt32       Line();
+  CF::CFString& File() { return mFile; }
+  SInt32        Line() { return mLine; }
 
   CF::CFString operator()();
 

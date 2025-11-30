@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kZXDMagicNumber (0x2010AF)
 #define kZXDVersion (0x0001)

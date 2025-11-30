@@ -10,7 +10,7 @@
 #include <KernelKit/PCI/Database.h>
 #include <KernelKit/PCI/Device.h>
 #include <NeKit/Array.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
 #define NE_BUS_COUNT (256)

@@ -18,34 +18,29 @@
     KTTestCase##OBJECT{}.Run(); \
   }
 
-#define KT_MUST_PASS(MSG, LEFT_COND, RIGHT_COND)                                          \
-  if (LEFT_COND != RIGHT_COND) {                                                          \
-    (Kernel::Void)(Kernel::kout << "[KERNEL-TEST] BREAK: LEFT_COND: " << #LEFT_COND       \
-                                << " RIGHT_COND: " << #RIGHT_COND << Kernel::kendl);      \
-    (Kernel::Void)(Kernel::kout << "[KERNEL-TEST] BREAK: MSG: " << MSG << Kernel::kendl); \
-    MUST_PASS(NO);                                                                        \
-  } else {                                                                                \
-    (Kernel::Void)(Kernel::kout << "[KERNEL-TEST] PASS: MSG: " << MSG << Kernel::kendl);  \
+#define KT_MUST_PASS(MSG, LEFT_COND, RIGHT_COND) \
+  if (LEFT_COND != RIGHT_COND) {                 \
+    MUST_PASS(NO);                               \
   }
 
-#define KT_DECL_TEST(NAME, FN)                                       \
-  class KTTestCase##NAME final {                                     \
-   public:                                                           \
-    explicit KTTestCase##NAME() = default;                           \
-    ~KTTestCase##NAME()         = default;                           \
-    LIBSYS_COPY_DELETE(KTTestCase##NAME);                            \
-    Kernel::Void        Run();                                       \
-    const Kernel::Char* ToString();                                  \
-  };                                                                 \
-  inline Kernel::Void KTTestCase##NAME::Run() {                      \
-    auto ret = FN() == YES;                                          \
-    if (!ret) {                                                      \
-      Kernel::kout << "[KERNEL-TEST] TEST FAILED!" << Kernel::kendl; \
-      MUST_PASS(ret);                                                \
-    }                                                                \
-  }                                                                  \
-  inline const Kernel::Char* KTTestCase##NAME::ToString() {          \
-    return #FN;                                                      \
+#define KT_DECL_TEST(NAME, FN)                         \
+  class KTTestCase##NAME final {                       \
+   public:                                             \
+    KTTestCase##NAME()  = default;                     \
+    ~KTTestCase##NAME() = default;                     \
+    LIBSYS_COPY_DELETE(KTTestCase##NAME);              \
+    Void        Run();                                 \
+    const Char* ToString();                            \
+  };                                                   \
+  inline Void KTTestCase##NAME::Run() {                \
+    auto ret = FN() == YES;                            \
+    if (!ret) {                                        \
+      PrintOut(nullptr, "[KERNEL-TEST] TEST FAILED!"); \
+      MUST_PASS(ret);                                  \
+    }                                                  \
+  }                                                    \
+  inline const Char* KTTestCase##NAME::ToString() {    \
+    return #FN;                                        \
   }
 
 KT_DECL_TEST(AlwaysBreak, []() -> bool {

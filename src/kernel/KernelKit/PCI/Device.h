@@ -5,7 +5,7 @@
 ======================================== */
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel::PCI {
 enum class PciConfigKind : UShort {

@@ -4,4 +4,4 @@
 
 ======================================== */
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>

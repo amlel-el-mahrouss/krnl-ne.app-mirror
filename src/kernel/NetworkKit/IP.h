@@ -7,7 +7,7 @@
 #pragma once
 
 #include <KernelKit/DebugOutput.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 #include <NeKit/Ref.h>
 

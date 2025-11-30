@@ -15,7 +15,7 @@
 #define __MSDOS_EXEC__
 
 #include <KernelKit/PE.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 // Last Rev
 // Sat Feb 24 CET 2024

@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 namespace Kernel {
 struct HAL_HARDWARE_THREAD;

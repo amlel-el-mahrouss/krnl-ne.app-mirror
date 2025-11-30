@@ -7,7 +7,7 @@
 #pragma once
 
 #include <KernelKit/DebugOutput.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
@@ -27,8 +27,7 @@ class Array final {
   SizeT Capacity() { return N; }
 
   SizeT Count() {
-    const static SizeT kArrCnt = N;
-    return kArrCnt;  // avoid constexpr error.
+    return N;  // avoid constexpr error.
   }
 
   const T* CData() { return fArray; }

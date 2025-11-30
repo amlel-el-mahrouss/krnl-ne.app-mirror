@@ -14,7 +14,7 @@
 
 #ifdef __NE_ARM64__
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #ifndef kPageMax
 #define kPageMax (0x200)

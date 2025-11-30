@@ -14,7 +14,7 @@
 #ifndef __KERNELKIT_INC_PE_H__
 #define __KERNELKIT_INC_PE_H__
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kPeSignature (0x00004550)
 

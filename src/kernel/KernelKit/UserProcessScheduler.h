@@ -32,7 +32,7 @@ class UserProcessHelper;
 /// @name USER_PROCESS
 /// @brief USER_PROCESS class, holds information about the running process/thread.
 /***********************************************************************************/
-class USER_PROCESS final {
+class USER_PROCESS final NE_VETTABLE {
  public:
   explicit USER_PROCESS();
   ~USER_PROCESS();
@@ -142,9 +142,11 @@ class USER_PROCESS final {
   /***********************************************************************************/
   KPCError& GetLocalCode();
 
-  const User*              GetOwner();
+  const User* GetOwner();
+
   const ProcessStatusKind& GetStatus();
-  const AffinityKind&      GetAffinity();
+
+  const AffinityKind& GetAffinity();
 
  private:
   KPCError LastExitCode{0};

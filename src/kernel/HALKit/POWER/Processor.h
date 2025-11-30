@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/Utils.h>
 
 #define rtl_nop_op() asm volatile("mr 0, 0")

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 /// @file SCSI.h
 /// @brief Small Computer System Interface device.

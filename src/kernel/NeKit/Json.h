@@ -10,7 +10,7 @@
 /// @brief Kernel JSON API.
 
 #include <CompilerKit/CompilerKit.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 #include <NeKit/KString.h>
 #include <NeKit/Stream.h>
 #include <NeKit/Utils.h>

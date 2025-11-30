@@ -12,7 +12,7 @@
 #include <KernelKit/PEF.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/ThreadLocalStorage.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 /* ========================================
 

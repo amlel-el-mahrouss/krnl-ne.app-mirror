@@ -12,7 +12,7 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/Timer.h>
-#include <NeKit/Defines.h>
+#include <NeKit/Config.h>
 
 #define kSemaphoreOwnerIndex (0U)
 #define kSemaphoreCountIndex (1U)

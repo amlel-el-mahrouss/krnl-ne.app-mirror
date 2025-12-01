@@ -33,7 +33,7 @@ struct must_cast_traits<T, T> {
 /// @author Amlal El Mahrouss
 /// @brief Safe constexpr cast.
 template <typename T, typename R>
-inline constexpr R* sys_constexpr_cast(T* ptr) {
+constexpr R* sys_constexpr_cast(T* ptr) {
   static_assert(must_cast_traits<T, R>::value, "constexpr cast failed! types are mismatching!");
   return static_cast<R*>(ptr);
 }

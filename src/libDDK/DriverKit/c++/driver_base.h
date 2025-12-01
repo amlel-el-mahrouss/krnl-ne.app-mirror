@@ -20,6 +20,8 @@
 /// @author Amlal El Mahrouss
 
 namespace Kernel::DDK {
+constexpr auto kInvalidType = 0;
+
 class IDriverBase {
  public:
   explicit IDriverBase() = default;
@@ -32,17 +34,17 @@ class IDriverBase {
   virtual BOOL            IsCastable() { return NO; }
   virtual constexpr BOOL  IsActive() { return NO; }
   virtual PtrType         Leak() { return nullptr; }
-  virtual constexpr Int32 Type() { return 0; }
+  virtual constexpr Int32 Type() { return kInvalidType; }
 };
 
 /// @brief This concept requires the Driver to be IDriverBase compliant.
 template <typename T>
 concept IsValidDriver = requires(T driver_base) {
-  { driver_base.IsActive() && driver_base.Type() > 0 };
+  { driver_base.IsActive() && driver_base.Type() > kInvalidType };
 };
 
 /// @brief Consteval helper to detect whether a template is truly based on IDriverBase.
 /// @note This helper is consteval only.
 template <IsValidDriver T>
-inline consteval void ce_ddk_is_valid(T) {}
+consteval void ce_ddk_is_valid(T) {}
 }  // namespace Kernel::DDK

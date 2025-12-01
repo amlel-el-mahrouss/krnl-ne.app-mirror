@@ -3,9 +3,11 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
+
 #pragma once
 
 #include <NeKit/Config.h>
+#include <NeKit/KernelPanic.h>
 
 namespace Kernel::PCI {
 enum class PciConfigKind : UShort {
@@ -38,13 +40,13 @@ class Device final {
  public:
   template <typename T>
   UInt Read(UInt bar) {
-    static_assert(sizeof(T) <= sizeof(UInt32), "64-bit PCI addressing is unsupported");
+    STATIC_PASS(sizeof(T) <= sizeof(UInt32), "64-bit PCI addressing is unsupported");
     return Read(bar, sizeof(T));
   }
 
   template <typename T>
   void Write(UInt bar, UIntPtr data) {
-    static_assert(sizeof(T) <= sizeof(UInt32), "64-bit PCI addressing is unsupported");
+    STATIC_PASS(sizeof(T) <= sizeof(UInt32), "64-bit PCI addressing is unsupported");
     Write(bar, data, sizeof(T));
   }
 

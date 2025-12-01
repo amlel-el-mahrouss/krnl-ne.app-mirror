@@ -24,8 +24,8 @@
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 namespace Kernel {
-/// @brief Main process entrypoint.
-typedef void (*rtl_main_kind)(void);
+/// @brief Image process entrypoint.
+typedef void (*rtl_start_kind)(void);
 
 /// @brief C++ Constructor entrypoint.
 typedef void (*rtl_cxx_ctor_kind)(void);
@@ -45,5 +45,5 @@ BOOL rtl_create_kernel_task(HAL::StackFramePtr main, const KID kid);
 /// accessible.
 /// @param main the start of the process.
 /// @return The team's process id.
-ProcessID rtl_create_user_process(rtl_main_kind main, const Char* process_name);
+ProcessID rtl_create_user_process(rtl_start_kind main, const Char* process_name);
 }  // namespace Kernel

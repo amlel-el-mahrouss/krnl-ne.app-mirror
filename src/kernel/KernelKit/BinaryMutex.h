@@ -16,6 +16,8 @@ class USER_PROCESS;
 /// @brief Access control class, which locks a task until one is done.
 class BinaryMutex final {
  public:
+  using LockedPtr = USER_PROCESS*;
+
   explicit BinaryMutex() = default;
   ~BinaryMutex()         = default;
 
@@ -27,13 +29,13 @@ class BinaryMutex final {
   BOOL WaitForProcess(const UInt32& sec);
 
  public:
-  bool Lock(USER_PROCESS* process);
-  bool LockAndWait(USER_PROCESS* process, TimerInterface* timer);
+  bool Lock(LockedPtr process);
+  bool LockAndWait(LockedPtr process, TimerInterface* timer);
 
  public:
   NE_COPY_DEFAULT(BinaryMutex)
 
  private:
-  USER_PROCESS* fLockingProcess{nullptr};
+  LockedPtr fLockingProcess{nullptr};
 };
 }  // namespace Kernel

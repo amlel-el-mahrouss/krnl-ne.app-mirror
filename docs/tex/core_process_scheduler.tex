@@ -55,7 +55,7 @@ class UserProcessTeam final {
 
   Array<USER_PROCESS, kSchedProcessLimitPerTeam>& AsArray();
   Ref<USER_PROCESS>&                              AsRef();
-  ProcessID&                                      Id();
+  ProcessID&                                      Id() noexcept;
 
  public:
   USER_PROCESS_ARRAY mProcessList;
@@ -77,8 +77,8 @@ class UserProcessTeam final {
 {The following sample is a C++ container used to hold process data and metadata.} {This is part of the NeKernel source tree.}
 
 \begin{verbatim}
-struct ProcessImage final {
-  explicit ProcessImage() = default;
+struct PROCESS_IMAGE final {
+  explicit PROCESS_IMAGE() = default;
 
  private:
   friend USER_PROCESS;
@@ -123,8 +123,6 @@ struct ProcessImage final {
 
 {NeKernel}: \href{https://github.com/nekernel-org/nekernel}{NeKernel}
 
-{Legacy VMKernel}: \href{https://snu.systems/specs/vmkernel}{Legacy VMKernel}
-
-{CoreProcessScheduler C++ Header}: \href{https://github.com/nekernel-org/nekernel/blob/src/src/kernel/KernelKit/CoreProcessScheduler.h}{CoreProcessScheduler}
+{CoreProcessScheduler}: \href{https://github.com/nekernel-org/nekernel/blob/dev/src/kernel/KernelKit/CoreProcessScheduler.h}{CoreProcessScheduler}
 
 \end{document}

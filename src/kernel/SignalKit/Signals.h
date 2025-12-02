@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
 
-#define SIGBAD 0 /* bad signal*/
+#define SIGBAD 0  /* bad signal*/
 #define SIGKILL 1 /* kill */
 #define SIGPAUS 2 /* pause */
 #define SIGEXEC 3 /* execute */

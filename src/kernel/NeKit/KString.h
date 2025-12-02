@@ -13,14 +13,14 @@
 #include <NeKit/Utils.h>
 
 namespace Kernel {
-inline auto kMinimumStringSize = 8196;
+inline constexpr Int kMinimumStringSize = 8196;
 
 /// @brief Kernel string class, not dynamic.
-template <typename CharKind = Char>
+template <typename CharKind = Char, Int MinSz = kMinimumStringSize>
 class KBasicString final {
  public:
   explicit KBasicString() {
-    fDataSz = kMinimumStringSize;
+    fDataSz = MinSz;
 
     fData = new CharKind[fDataSz];
     MUST_PASS(fData);
@@ -53,15 +53,15 @@ class KBasicString final {
   bool operator==(const CharKind* rhs) const;
   bool operator!=(const CharKind* rhs) const;
 
-  bool operator==(const KBasicString<CharKind>& rhs) const;
-  bool operator!=(const KBasicString<CharKind>& rhs) const;
+  bool operator==(const KBasicString<CharKind, MinSz>& rhs) const;
+  bool operator!=(const KBasicString<CharKind, MinSz>& rhs) const;
 
-  KBasicString<CharKind>& operator+=(const CharKind* rhs);
-  KBasicString<CharKind>& operator+=(const KBasicString<CharKind>& rhs);
+  KBasicString<CharKind, MinSz>& operator+=(const CharKind* rhs);
+  KBasicString<CharKind, MinSz>& operator+=(const KBasicString<CharKind, MinSz>& rhs);
 
   operator const char*() { return fData; }
 
-  operator bool() { return fData; }
+  explicit operator bool() { return fData; }
 
   bool operator!() { return fData; }
 
@@ -78,8 +78,8 @@ using KStringOr = ErrorOr<KString>;
 
 class KStringBuilder final {
  public:
-  template <typename CharKind = Char>
-  static ErrorOr<KBasicString<CharKind>> Construct(const CharKind* data);
+  template <typename CharKind = Char, Int MinSz = kMinimumStringSize>
+  static ErrorOr<KBasicString<CharKind, MinSz>> Construct(const CharKind* data);
   template <typename CharKind = Char>
   static const CharKind* FromBool(const CharKind* fmt, bool n);
   template <typename CharKind = Char>

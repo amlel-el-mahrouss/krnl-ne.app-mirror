@@ -1,12 +1,12 @@
 #ifndef QR_H
 #define QR_H
 
+#include <BootKit/QrPrelude.h>
 #include <BootKit/Shared/base.h>
 #include <BootKit/Shared/bit.h>
-#include <NeKit/KernelPanic.h>
-#include <BootKit/QrPrelude.h>
 #include <BootKit/Support.h>
 #include <CompilerKit/Detail.h>
+#include <NeKit/KernelPanic.h>
 #include <modules/CoreGfx/CoreGfx.h>
 
 /// @note the QR code is still code 128, it utilizes the same concept of having it's own character

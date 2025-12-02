@@ -18,23 +18,24 @@ inline void ort_string_append(CharKind* lhs, const CharKind* rhs, Int32 cur) {
   }
 }
 
-template <typename CharKind>
-inline CharKind* KBasicString<CharKind>::Data() {
+template <typename CharKind, Int MinSz>
+inline CharKind* KBasicString<CharKind, MinSz>::Data() {
   return this->fData;
 }
 
-template <typename CharKind>
-inline const CharKind* KBasicString<CharKind>::CData() const {
+template <typename CharKind, Int MinSz>
+inline const CharKind* KBasicString<CharKind, MinSz>::CData() const {
   return const_cast<const CharKind*>(this->fData);
 }
 
-template <typename CharKind>
-inline SizeT KBasicString<CharKind>::Length() const {
+template <typename CharKind, Int MinSz>
+inline SizeT KBasicString<CharKind, MinSz>::Length() const {
   return this->fDataSz;
 }
 
-template <typename CharKind>
-inline bool KBasicString<CharKind>::operator==(const KBasicString<CharKind>& rhs) const {
+template <typename CharKind, Int MinSz>
+inline bool KBasicString<CharKind, MinSz>::operator==(
+    const KBasicString<CharKind, MinSz>& rhs) const {
   if (rhs.Length() != this->Length()) return false;
 
   for (Size index = 0; index < this->Length(); ++index) {
@@ -44,8 +45,8 @@ inline bool KBasicString<CharKind>::operator==(const KBasicString<CharKind>& rhs
   return true;
 }
 
-template <typename CharKind>
-inline bool KBasicString<CharKind>::operator==(const CharKind* rhs) const {
+template <typename CharKind, Int MinSz>
+inline bool KBasicString<CharKind, MinSz>::operator==(const CharKind* rhs) const {
   if (oe_string_len<CharKind>(rhs) != this->Length()) return false;
 
   for (Size index = 0; index < oe_string_len<CharKind>(rhs); ++index) {
@@ -55,8 +56,9 @@ inline bool KBasicString<CharKind>::operator==(const CharKind* rhs) const {
   return true;
 }
 
-template <typename CharKind>
-inline bool KBasicString<CharKind>::operator!=(const KBasicString<CharKind>& rhs) const {
+template <typename CharKind, Int MinSz>
+inline bool KBasicString<CharKind, MinSz>::operator!=(
+    const KBasicString<CharKind, MinSz>& rhs) const {
   if (rhs.Length() != this->Length()) return false;
 
   for (Size index = 0; index < rhs.Length(); ++index) {
@@ -66,8 +68,8 @@ inline bool KBasicString<CharKind>::operator!=(const KBasicString<CharKind>& rhs
   return true;
 }
 
-template <typename CharKind>
-inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
+template <typename CharKind, Int MinSz>
+inline bool KBasicString<CharKind, MinSz>::operator!=(const CharKind* rhs) const {
   if (oe_string_len<CharKind>(rhs) != this->Length()) return false;
 
   for (Size index = 0; index < oe_string_len<CharKind>(rhs); ++index) {
@@ -77,9 +79,9 @@ inline bool KBasicString<CharKind>::operator!=(const CharKind* rhs) const {
   return true;
 }
 
-template <typename CharKind>
-inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(
-    const KBasicString<CharKind>& rhs) {
+template <typename CharKind, Int MinSz>
+inline KBasicString<CharKind, MinSz>& KBasicString<CharKind, MinSz>::operator+=(
+    const KBasicString<CharKind, MinSz>& rhs) {
   if (oe_string_len<CharKind>(rhs.fData) > this->Length()) return *this;
 
   ort_string_append(this->fData, const_cast<CharKind*>(rhs.fData), this->fCur);
@@ -88,22 +90,23 @@ inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(
   return *this;
 }
 
-template <typename CharKind>
-inline KBasicString<CharKind>& KBasicString<CharKind>::operator+=(const CharKind* rhs) {
+template <typename CharKind, Int MinSz>
+inline KBasicString<CharKind, MinSz>& KBasicString<CharKind, MinSz>::operator+=(
+    const CharKind* rhs) {
   ort_string_append(this->fData, const_cast<CharKind*>(rhs), this->fCur);
   this->fCur += oe_string_len<CharKind>(const_cast<CharKind*>(rhs));
 
   return *this;
 }
 
-template <typename CharKind>
-inline ErrorOr<KBasicString<CharKind>> KStringBuilder::Construct(const CharKind* data) {
-  if (!data || *data == 0) return ErrorOr<KBasicString<CharKind>>(nullptr);
+template <typename CharKind, Int MinSz>
+inline ErrorOr<KBasicString<CharKind, MinSz>> KStringBuilder::Construct(const CharKind* data) {
+  if (!data || *data == 0) return ErrorOr<KBasicString<CharKind, MinSz>>(-kErrorInvalidData);
 
-  KBasicString<CharKind>* view = new KBasicString<CharKind>(oe_string_len<CharKind>(data));
+  KBasicString<CharKind>* view = new KBasicString<CharKind, MinSz>(oe_string_len<CharKind>(data));
   (*view) += data;
 
-  return ErrorOr<KBasicString<CharKind>>(*view);
+  return ErrorOr<KBasicString<CharKind, MinSz>>(*view);
 }
 template <typename CharKind>
 inline const CharKind* KStringBuilder::FromBool(const CharKind* fmt, bool i) {

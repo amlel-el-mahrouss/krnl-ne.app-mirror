@@ -28,7 +28,7 @@ class ArrayList final {
     return fList[index];
   }
 
-  operator bool() { return fList; }
+  explicit operator bool() { return fList; }
 
   SizeT Count() const { return fLen; }
 

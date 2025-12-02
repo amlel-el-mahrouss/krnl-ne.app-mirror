@@ -8,9 +8,9 @@
 #pragma once
 
 #include <NeKit/Config.h>
+#include <NeKit/ErrorOr.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Ref.h>
-#include <NeKit/ErrorOr.h>
 
 namespace Kernel {
 template <typename T>

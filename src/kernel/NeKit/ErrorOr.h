@@ -26,12 +26,9 @@ class ErrorOr final {
 
  public:
   explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {}
-
   explicit ErrorOr(nullPtr) {}
-
-  explicit ErrorOr(T* Class) : mRef(Class) {}
-
-  explicit ErrorOr(T Class) : mRef(Class) {}
+  explicit ErrorOr(T* klass) : mRef(klass) {}
+  explicit ErrorOr(T klass) : mRef(klass) {}
 
   ErrorOr& operator=(const ErrorOr&) = default;
   ErrorOr(const ErrorOr&)            = default;

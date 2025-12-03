@@ -142,7 +142,8 @@ class ICodec {
     return class_fac.template From<OutputClass>(type);
   }
 
-  /// @brief Convert T class to Y class.
+  /// @brief Convert T to a Y type.
+  /// @note The class must be serializable, otherwise this will fail.
   /// @tparam T the class type of type.
   /// @tparam Y the result class.
   /// @param type the class to cast.
@@ -150,7 +151,7 @@ class ICodec {
   template <typename T, typename Y>
   Y As(T type) {
     if (type.template IsSerializable()) {
-      return reinterpret_cast<Char*>(type);
+      return type.template Error();
     }
 
     return type.template As<Y>();

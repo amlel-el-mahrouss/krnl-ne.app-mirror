@@ -29,7 +29,7 @@ namespace Kernel {
 template <typename CharKind = Char>
 class JsonObject final {
  public:
-  explicit JsonObject() {
+  explicit JsonObject() : fUndefined(NO) {
     KBasicString<CharKind> key = KString(kNeJsonMaxLen);
     key += kNeJsonNullValue;
 
@@ -37,7 +37,7 @@ class JsonObject final {
     this->AsValue() = key;
   }
 
-  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fKey(lhsLen), fValue(rhsLen) {
+  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fUndefined(NO), fKey(lhsLen), fValue(rhsLen) {
     KBasicString<CharKind> key = KString(lhsLen);
     this->AsKey()              = key;
 

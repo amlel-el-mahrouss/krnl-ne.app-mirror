@@ -90,8 +90,8 @@ cd nekernel
 
 ## Documentation
 
-- [OpenKnowledge](https://docs.nekernel.org/)
-- [Filesystem Specifications](docs/tex/)
+- [Documentation](https://docs.nekernel.org/)
+- [Technical Specifications](docs/tex/)
 
 ---
 

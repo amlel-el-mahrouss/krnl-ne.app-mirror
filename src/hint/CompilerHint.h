@@ -7,7 +7,7 @@
 #ifndef _NE_COMPILERHINT_H_
 #define _NE_COMPILERHINT_H_
 
-#ifdef __LIBCOMPILER__
+#ifdef __NECTI__
 #pragma compiler(hint_manifest)
 #endif
 

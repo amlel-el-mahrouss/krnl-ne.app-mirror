@@ -8,23 +8,11 @@
 
 #include <NeKit/Macros.h>
 
-#define NEKIT_VERSION_STR "0.0.1"
-#define NEKIT_VERSION_BCD 0x0001
+#define NEKIT_VERSION_STR "0.0.2"
+#define NEKIT_VERSION_BCD 0x0002
 
-#ifndef __cplusplus
-#error !!! Kernel compiles only with a C++ compiler. !!!
-#endif
-
-#if __cplusplus <= 201703L
-#define char8_t char
-#endif
-
-#ifdef __has_feature
-#if !__has_feature(cxx_nullptr)
-#if !__has_nullptr
-#error !!! You must at least have nullptr featured on your C++ compiler. !!!
-#endif
-#endif
+#if __cplusplus < 202002L
+#error !!! NeKernel compiles with C++20 as of December 4, 2025 !!!
 #endif
 
 /// @brief The **Kernel** namespace.

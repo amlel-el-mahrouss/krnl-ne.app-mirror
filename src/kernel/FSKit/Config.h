@@ -8,5 +8,5 @@
 
 #include <NeKit/Config.h>
 
-#define FSKIT_VERSION "1.0.0"
-#define FSKIT_VERSION_BCD 0x0100
+#define FSKIT_VERSION "0.0.2"
+#define FSKIT_VERSION_BCD 0x0002

@@ -12,7 +12,7 @@
 #include <CompilerKit/CompilerKit.h>
 #include <libDDK/DriverKit/macros.h>
 
-#define DKI_DRIVER_IMPL \
+#define DDK_DRIVER_IMPL \
   final:                \
   public                \
   ::Kernel::DDK::IDriverBase

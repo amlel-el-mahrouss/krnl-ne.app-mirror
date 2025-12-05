@@ -50,9 +50,9 @@
 ## Getting Started
 
 ### **Requirements**
-- [MinGW](https://www.mingw-w64.org/) (cross-compiling)
-- [Clang](https://clang.llvm.org/)
-- [NASM](https://nasm.us/)
+- [MinGW](https://www.mingw-w64.org/) (AMD64 targets)
+- [Clang](https://clang.llvm.org/) (ARM targets)
+- [NASM](https://nasm.us/) (AMD64 targets)
 - [NeBuild](https://github.com/nekernel-org/nebuild) (build system)
 
 ### **Build & Run**
@@ -75,6 +75,8 @@ cd nekernel
 - `src/boot/` — Bootloader, platform bring-up, and early system code
 - `src/libDDK/` — Driver Development Kit (DDK) and sample drivers
 - `src/libSystem/` — Userland system call interface and runtime
+- `src/launch/` — NeKernel Launch System
+- `src/libMsg/` — NeKernel OpenMSG framework
 - `public/tools/` — CLI tools (mkfs, fsck, open, manual, etc.)
 - `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)
 - `docs/` — Specifications, design docs, and diagrams

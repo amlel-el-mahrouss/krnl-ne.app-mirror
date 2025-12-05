@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import subprocess
-import glob as file_glob
+import os, sys, subprocess, glob as file_glob
 
 def copy_to_fat(image_path, source_dir):
     if not os.path.isfile(image_path):

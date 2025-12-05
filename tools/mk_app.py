@@ -1,9 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import json
-import sys
+import os, json, sys
 
 def create_directory_structure(base_path, project_name):
     # Define the directory structure

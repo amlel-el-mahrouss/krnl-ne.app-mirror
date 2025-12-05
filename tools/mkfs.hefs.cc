@@ -20,7 +20,7 @@ static std::u8string kDiskLabel;
 static size_t        kDiskSectorSz = 512;
 
 int main(int argc, char** argv) {
-  if (argc < 2) {
+  if (argc != 10) {
     mkfs::console_out()
         << "hefs: usage: mkfs.hefs -L=<label> -s=<sector_size> -b=<ind_start> -e=<ind_end> "
            "-bs=<block_start> -be=<block_end> -is=<in_start> -ie=<in_end> "

@@ -28,7 +28,6 @@ if __name__ == "__main__":
                 print(f"ERROR: Manual file '{manual_path}' is empty.")
                 sys.exit(os.EX_DATAERR)
         html_content = f"<html><head><title>NeKernel Manual: {manual_path}</title></head><body><pre>{content}</pre></body></html>"
-
         html_path = manual_path.replace('.man', '.html')
         
         with open(html_path, 'w') as html_file:

@@ -9,7 +9,7 @@ authors:
 identifiers:
   - type: url
     value: 'https://nekernel.org'
-    description: NeKernel Website.
+    description: NeKernel.org
 repository-code: 'https://github.com/nekernel-org/nekernel'
 url: 'https://nekernel.org'
 abstract: >-

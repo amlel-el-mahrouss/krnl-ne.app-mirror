@@ -23,49 +23,23 @@
 
 ---
 
-## Features
-
-- **Modular Microkernel Architecture**: Clean separation of kernel, drivers, userland, and frameworks. 
-
-- **Custom Filesystems**: (OpenHeFS), catalog/fork model (NeFS), and metadata handling.
-
-- **Memory Management**: Custom heap manager, page manager, and safe memory utilities. Kernel heap allocations are protected with metadata and CRCs. Userland and kernel memory separation.
-
-- **Device and Driver Model**: Abstracted device interfaces for storage, network, and more. DDK (Device Driver Kit) for writing drivers in C/C++ with kernel RPC and memory-safe APIs.
-
-- **Userland Tooling**: CLI tools for formatting, checking, and managing filesystems, disk image utilities, and system utilities. All tools interact with kernel or disk images using well-defined APIs.
-
-- **System Call Interface**: low-level syscall ABI, with a stable high-level SDK for user applications. System calls are routed through a syscall manager and abstracted by `libSystem`.
-
-- **Security and Robustness**: kernel and tools (bounds checks, safe memory copy/set, error codes). Kernel panics and error reporting for critical failures. No dynamic code loading in kernel space.
-
-- **Documentation and Specs**: Full LaTeX specifications for OpenHeFS and NeFS, with on-disk structure diagrams and API documentation. Markdown docs for tools and usage.
-
-- **Cross-Platform Boot Support**: Bootloader and platform code for AMD64 and ARM64, with handover and hardware abstraction layers.
-
-- **Testing and Debugging**: Logging, debug output, and kernel test framework headers. (Note: Fuzzing/sanitizer support is planned but not fully implemented.)
-
----
-
 ## Getting Started
 
 ### **Requirements**
 - [MinGW](https://www.mingw-w64.org/) (AMD64 targets)
-- [Clang](https://clang.llvm.org/) (ARM targets)
+- [Clang](https://clang.llvm.org/) (ARM64 targets)
 - [NASM](https://nasm.us/) (AMD64 targets)
 - [NeBuild](https://github.com/nekernel-org/nebuild) (build system)
 
-### **Build & Run**
+### **Building & Running**
 
 ```sh
 git clone https://github.com/nekernel-org/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh
-./scripts/debug_ahci_x64.sh   # For generic ATA PIO target (QEMU)
+./scripts/debug_ahci_x64.sh   # For debug generic AHCI target (QEMU)
 ```
-
-- For ARM64 or other targets, see the scripts in `src/boot/`.
 
 ---
 
@@ -93,7 +67,7 @@ cd nekernel
 ## Documentation
 
 - [Documentation](https://docs.nekernel.org/)
-- [Technical Specifications](docs/tex/)
+- [Specifications](docs/tex/)
 
 ---
 

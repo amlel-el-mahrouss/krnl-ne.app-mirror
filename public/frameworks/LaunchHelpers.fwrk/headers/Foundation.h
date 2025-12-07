@@ -23,6 +23,8 @@ struct LHLaunchInfo final {
   CF::CFInteger64 fGID{0};
 };
 
+using LHLaunchInfoPtr = LHLaunchInfo*;
+
 /// @brief Get launch information.
 /// @return the launch information structure.
 LHLaunchInfo* LHGetLaunchInfo(Void);

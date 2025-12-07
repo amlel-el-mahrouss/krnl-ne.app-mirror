@@ -14,14 +14,6 @@
 
 <img src="meta/media/demo.gif" alt="NeKernel Logo" width="1280"/>
 
----
-
-## Overview
-
-**NeKernel** is a modern, multi-platform microkernel designed for security, modularity, and performance. It features a custom VFS, advanced memory management, a flexible DDK (Driver Development Kit), and robust userland tools. NeKernel is built for research, education, and next-generation OS development.
-
----
-
 ## Getting Started
 
 ### **Requirements**
@@ -32,8 +24,10 @@
 
 ### **Building & Running**
 
+Please fork, and clone the repository. Then follow those steps:
+
 ```sh
-git clone https://github.com/nekernel-org/nekernel.git
+git clone https://github.com/<your-username>/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh

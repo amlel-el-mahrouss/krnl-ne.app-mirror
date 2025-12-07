@@ -6,10 +6,9 @@
     <b>Modern, Modular, and Secure Microkernel for Next-Generation Systems</b>
   </p>
   <p>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio.yml"><img src="https://github.com/amlel-el-mahrouss/nekernel/actions/workflows/boot-pio.yml/badge.svg" alt="CI"></a>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci.yml"><img src="https://github.com/amlel-el-mahrouss/nekernel/actions/workflows/kernel-ahci.yml/badge.svg" alt="CI"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
-    <img src="https://img.shields.io/badge/QEMU-Tested-success" alt="QEMU Tested">
+    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio.yml/badge.svg" alt="CI"></a>
+    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci.yml/badge.svg" alt="CI"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
   </p>
 </div>
 

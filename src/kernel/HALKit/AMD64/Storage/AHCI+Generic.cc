@@ -277,7 +277,7 @@ STATIC Void drv_std_input_output_ahci(UInt64 lba, UInt8* buffer, SizeT sector_sz
   rtl_dma_flush(ptr, size_buffer);
 
   if (kSATAHba->Is & kSATAErrTaskFile) {
-    kout << "ahci: Task File Error during I/O.\r";
+    kout << "ahci: tf-error when doing I/O.\r";
 
     rtl_dma_free(size_buffer);
     err_global_get() = kErrorDiskIsCorrupted;

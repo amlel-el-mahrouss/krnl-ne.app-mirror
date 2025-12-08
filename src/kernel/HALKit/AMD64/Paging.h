@@ -43,7 +43,7 @@ EXTERN_C Kernel::VoidPtr hal_read_cr3();  // @brief Page directory inside cr3 re
 
 namespace Kernel::HAL {
 namespace Detail {
-  enum class ControlRegisterBits {
+  enum struct ControlRegisterBits {
     kProtectedModeEnable = 0,
     kMonitorCoProcessor  = 1,
     kEmulation           = 2,

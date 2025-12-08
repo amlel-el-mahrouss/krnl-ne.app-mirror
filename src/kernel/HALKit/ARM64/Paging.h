@@ -68,7 +68,7 @@ struct PACKED PTE_4KB final {
 };
 
 namespace Detail {
-  enum class ControlRegisterBits {
+  enum struct ControlRegisterBits {
     ProtectedModeEnable = 0,
     MonitorCoProcessor  = 1,
     Emulation           = 2,

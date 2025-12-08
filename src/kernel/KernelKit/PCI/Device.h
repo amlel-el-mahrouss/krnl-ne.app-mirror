@@ -10,7 +10,7 @@
 #include <NeKit/KernelPanic.h>
 
 namespace Kernel::PCI {
-enum class PciConfigKind : UShort {
+enum struct PciConfigKind : UShort {
   ConfigAddress = 0xCF8,
   ConfigData    = 0xCFC,
   CommandReg    = 0x0004,

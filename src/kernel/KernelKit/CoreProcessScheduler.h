@@ -142,7 +142,7 @@ struct PROCESS_SPECIAL_TREE {
 /// @brief Subsystem enum type.
 /***********************************************************************************/
 
-enum class ProcessSubsystem : Int32 {
+enum struct ProcessSubsystem : Int32 {
   kProcessSubsystemSecurity = 100,
   kProcessSubsystemUser,
   kProcessSubsystemService,
@@ -155,7 +155,7 @@ enum class ProcessSubsystem : Int32 {
 /***********************************************************************************/
 //! @brief Local Process status enum.
 /***********************************************************************************/
-enum class ProcessStatusKind : Int32 {
+enum struct ProcessStatusKind : Int32 {
   kInvalid  = 0,
   kStarting = 100,
   kRunning,
@@ -168,7 +168,7 @@ enum class ProcessStatusKind : Int32 {
 /***********************************************************************************/
 //! @brief Affinity is the amount of nano-seconds this process is going to run.
 /***********************************************************************************/
-enum class AffinityKind : Int32 {
+enum struct AffinityKind : Int32 {
   kInvalid      = 0,
   kRealTime     = 100,
   kVeryHigh     = 150,
@@ -221,7 +221,7 @@ using ProcessID = Int64;
 /***********************************************************************************/
 /// @note For User manager, tells where we run the code.
 /***********************************************************************************/
-enum class ProcessLevelRing : Int32 {
+enum struct ProcessLevelRing : Int32 {
   kRingStdUser   = 1,
   kRingSuperUser = 2,
   kRingGuestUser = 5,

@@ -12,5 +12,5 @@ nebuild libSystem.json
 cd ../ddk
 nebuild ddk.json
 cd ../boot
-make -f amd64-desktop.make efi
-make -f amd64-desktop.make epm-img
+make -f amd64-desktop.make  efi
+make -f amd64-desktop.make  epm-img

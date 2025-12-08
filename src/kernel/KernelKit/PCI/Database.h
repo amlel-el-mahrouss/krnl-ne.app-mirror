@@ -11,7 +11,7 @@
 namespace Kernel {
 namespace Types {
   // https://wiki.osdev.org/PCI
-  enum class PciDeviceKind : UChar {
+  enum struct PciDeviceKind : UChar {
     MassStorageController             = 0x1,
     NetworkController                 = 0x2,
     DisplayController                 = 0x3,

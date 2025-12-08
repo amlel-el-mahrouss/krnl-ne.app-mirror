@@ -34,7 +34,7 @@
 namespace Kernel {
 class User;
 
-enum class UserRingKind : Int32 {
+enum struct UserRingKind : Int32 {
   kRingInvalid   = 0,
   kRingStdUser   = 444,
   kRingSuperUser = 666,

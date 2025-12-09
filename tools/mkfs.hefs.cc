@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
   std::string args = mkfs::detail::build_args(argc, argv);
 
   auto output_path = mkfs::get_option<char>(args, "o");
-  
+
   if (output_path.empty()) {
     mkfs::console_out() << "hefs: error: Missing -o <output_device> argument.\n";
     return EXIT_FAILURE;
@@ -198,7 +198,6 @@ int main(int argc, char** argv) {
     mkfs::console_out() << "hefs: error: Failed seek to startIND.\n";
     return EXIT_FAILURE;
   }
-
 
   output_device.put(0);
   output_device.flush();

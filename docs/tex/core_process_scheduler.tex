@@ -58,8 +58,8 @@ class UserProcessTeam final {
   ProcessID&                                      Id() noexcept;
 
  public:
-  USER_PROCESS_ARRAY mProcessList;
-  USER_PROCESS_REF   mCurrentProcess;
+  UserProcessArray mProcessList;
+  UserProcessRef   mCurrentProcess;
   ProcessID          mTeamId{0};
   ProcessID          mProcessCur{0};
 };

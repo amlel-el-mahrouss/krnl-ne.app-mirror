@@ -20,26 +20,25 @@ class Array final {
   Array& operator=(const Array&) = default;
   Array(const Array&)            = default;
 
-  T& operator[](SizeT at) { return fArray[at]; }
+  T&       operator[](const SizeT& at) { return fArray[at]; }
+  const T& operator[](const SizeT& at) const { return fArray[at]; }
 
   Boolean Empty() { return this->Count() > 0; }
 
   SizeT Capacity() { return N; }
 
-  SizeT Count() {
-    return N;  // avoid constexpr error.
-  }
+  SizeT Count() { return N; }
 
   const T* CData() { return fArray; }
 
-  operator bool() { return !Empty(); }
+  explicit operator bool() { return !this->Empty(); }
 
  private:
   T fArray[N];
 };
 
 template <typename ValueType>
-auto make_list(ValueType val) {
+inline auto make_array(ValueType& val) -> auto {
   return Array<ValueType, ARRAY_SIZE(val)>{val};
 }
 }  // namespace Kernel

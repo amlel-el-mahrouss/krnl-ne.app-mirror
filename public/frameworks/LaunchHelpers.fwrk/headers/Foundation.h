@@ -12,15 +12,20 @@
 namespace LaunchHelpers {
 struct LHLaunchInfo;
 
+inline constexpr auto kMaxPath = 4096;
+inline constexpr auto kMaxArgs = 256;
+
 /// @brief Launch information structure.
 /// @note This structure is read-only. Modyfing its members wo't have any effect.
 struct LHLaunchInfo final {
-  CF::CFString    fExecutablePath;
-  CF::CFString    fWorkingDirectory;
-  CF::CFString    fArguments;
-  CF::CFString    fEnvironment;
+  CF::CFString    fExecutablePath{kMaxPath};
+  CF::CFString    fWorkingDirectory{kMaxPath};
+  CF::CFString    fArguments[kMaxArgs];
+  CF::CFString    fEnvironment{kMaxPath};
   CF::CFInteger64 fUID{0};
   CF::CFInteger64 fGID{0};
+
+  explicit operator bool() { return fUID && fGID; }
 };
 
 using LHLaunchInfoPtr = LHLaunchInfo*;

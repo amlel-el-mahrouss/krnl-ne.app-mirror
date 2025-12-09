@@ -337,4 +337,4 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
 }
 }  // namespace Boot
 
-#endif // __BOOTKIT_H__
+#endif  // __BOOTKIT_H__

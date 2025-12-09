@@ -63,10 +63,10 @@ class UserProcess final NE_VETTABLE {
     UIntPtr           SignalID{0};
   };
 
-  USER_PROCESS_SIGNAL         Signal;
+  USER_PROCESS_SIGNAL       Signal;
   ProcessFileTree<VoidPtr>* FileTree{nullptr};
   ProcessHeapTree<VoidPtr>* HeapTree{nullptr};
-  UserProcessTeam*            ParentTeam;
+  UserProcessTeam*          ParentTeam;
 
   VoidPtr VMRegister{0UL};
 
@@ -158,8 +158,8 @@ class UserProcess final NE_VETTABLE {
   friend UserProcessHelper;
 };
 
-typedef Array<UserProcess, kSchedProcessLimitPerTeam> USER_PROCESS_ARRAY;
-typedef Ref<UserProcess>                              USER_PROCESS_REF;
+typedef Array<UserProcess, kSchedProcessLimitPerTeam> UserProcessArray;
+typedef Ref<UserProcess>                              UserProcessRef;
 
 /// \brief Processs Team (contains multiple processes inside it.)
 /// Equivalent to a process batch
@@ -172,13 +172,13 @@ class UserProcessTeam final {
 
   Array<UserProcess, kSchedProcessLimitPerTeam>& AsArray();
   Ref<UserProcess>&                              AsRef();
-  ProcessID&                                      Id();
+  ProcessID&                                     Id();
 
  public:
-  USER_PROCESS_ARRAY mProcessList;
-  USER_PROCESS_REF   mCurrentProcess;
-  ProcessID          mTeamId{0};
-  ProcessID          mProcessCur{0};
+  UserProcessArray mProcessList;
+  UserProcessRef   mCurrentProcess;
+  ProcessID        mTeamId{0};
+  ProcessID        mProcessCur{0};
 };
 
 /***********************************************************************************/
@@ -212,8 +212,8 @@ class UserProcessScheduler final : public ISchedulable {
   Bool HasMP() override;
 
  public:
-  USER_PROCESS_REF& TheCurrentProcess();
-  SizeT             Run();
+  UserProcessRef& TheCurrentProcess();
+  SizeT           Run();
 
  public:
   STATIC UserProcessScheduler& The();

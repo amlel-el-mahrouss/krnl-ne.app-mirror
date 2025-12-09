@@ -12,7 +12,7 @@
 #include <modules/ATA/ATA.h>
 
 namespace Boot {
-/// @brief Physical/Virtual device type. 
+/// @brief Physical/Virtual device type.
 class Device {
  public:
   explicit Device() = default;
@@ -21,7 +21,7 @@ class Device {
   NE_MOVE_DEFAULT(Device)
 
   struct Trait {
-    Lba mBase{0};
+    Lba   mBase{0};
     SizeT mSize{0};
   };
 
@@ -31,9 +31,9 @@ class Device {
   virtual Device& Write(Char* Buf, SizeT SecCount) = 0;
 };
 
-using BootDevice = Device;
+using BootDevice    = Device;
 using NetworkDevice = Device;
-using DiskDevice = Device;
+using DiskDevice    = Device;
 }  // namespace Boot
 
-#endif 
+#endif

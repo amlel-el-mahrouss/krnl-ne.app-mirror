@@ -8,8 +8,8 @@
 #pragma once
 
 #include <NeKit/Array.h>
-#include <NeKit/ArrayList.h>
 #include <NeKit/ErrorOr.h>
+#include <NeKit/InitializerList.h>
 #include <NeKit/Json.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/MutableArray.h>

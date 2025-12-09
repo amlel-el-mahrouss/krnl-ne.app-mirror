@@ -48,13 +48,13 @@ ifneq ($(DEBUG_SUPPORT), )
 DEBUG_MACRO = -D__DEBUG__
 endif
 
-ifeq ($(shell uname), Darwin)
+ifeq ($(KVM_SUPPORT),)
 EMU_FLAGS=-M q35 -smp 4 -m 8G \
     -bios $(BIOS) -cdrom $(BOOT) -boot d
 endif
 
-ifneq ($(shell uname), Darwin)
-EMU_FLAGS= -smp 4 -m 8G \
+ifneq ($(KVM_SUPPORT),)
+EMU_FLAGS=-M q35 -smp 4 -m 8G \
     -bios $(BIOS) -M q35 -cdrom $(BOOT) -boot d -accel kvm
 endif
 

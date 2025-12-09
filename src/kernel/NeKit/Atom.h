@@ -25,7 +25,7 @@ class Atom final {
 
   friend Boolean operator==(Atom<T>& atomic, const T& idx) { return atomic[idx] == idx; }
 
-  friend Boolean operator!=(Atom<T>& atomic, const T& idx) { return atomic[idx] == idx; }
+  friend Boolean operator!=(Atom<T>& atomic, const T& idx) { return atomic[idx] != idx; }
 
  private:
   T fArrayOfAtoms;

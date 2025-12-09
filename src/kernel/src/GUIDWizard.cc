@@ -18,7 +18,7 @@
 #define kGUIDSize 37
 
 namespace Kernel::CF::XRN::Version1 {
-auto cf_make_sequence(const ArrayList<UInt32>& uuidSeq) -> Ref<GUIDSequence*> {
+auto cf_make_sequence(const Array<UInt32, 10>& uuidSeq) -> Ref<GUIDSequence*> {
   GUIDSequence* seq = new GUIDSequence();
   MUST_PASS(seq);
 

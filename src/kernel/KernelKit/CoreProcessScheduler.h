@@ -60,19 +60,11 @@ struct ProcessHeapTree {
 
   TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct ProcessHeapTree<T>* Parent {
-    nullptr
-  };
-  struct ProcessHeapTree<T>* Child {
-    nullptr
-  };
+  struct ProcessHeapTree<T>* Parent{nullptr};
+  struct ProcessHeapTree<T>* Child{nullptr};
 
-  struct ProcessHeapTree<T>* Prev {
-    nullptr
-  };
-  struct ProcessHeapTree<T>* Next {
-    nullptr
-  };
+  struct ProcessHeapTree<T>* Prev{nullptr};
+  struct ProcessHeapTree<T>* Next{nullptr};
 };
 
 template <typename T>
@@ -87,21 +79,13 @@ struct ProcessFileTree {
 
   TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct ProcessFileTree<T>* Parent {
-    nullptr
-  };
+  struct ProcessFileTree<T>* Parent{nullptr};
 
-  struct ProcessFileTree<T>* Child {
-    nullptr
-  };
+  struct ProcessFileTree<T>* Child{nullptr};
 
-  struct ProcessFileTree<T>* Prev {
-    nullptr
-  };
+  struct ProcessFileTree<T>* Prev{nullptr};
 
-  struct ProcessFileTree<T>* Next {
-    nullptr
-  };
+  struct ProcessFileTree<T>* Next{nullptr};
 };
 
 using ProcessCtx = UInt32;
@@ -121,21 +105,13 @@ struct ProcessSpecialTree {
 
   TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct ProcessSpecialTree<T>* Parent {
-    nullptr
-  };
+  struct ProcessSpecialTree<T>* Parent{nullptr};
 
-  struct ProcessSpecialTree<T>* Child {
-    nullptr
-  };
+  struct ProcessSpecialTree<T>* Child{nullptr};
 
-  struct ProcessSpecialTree<T>* Prev {
-    nullptr
-  };
+  struct ProcessSpecialTree<T>* Prev{nullptr};
 
-  struct ProcessSpecialTree<T>* Next {
-    nullptr
-  };
+  struct ProcessSpecialTree<T>* Next{nullptr};
 };
 
 /***********************************************************************************/

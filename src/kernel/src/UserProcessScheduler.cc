@@ -26,8 +26,8 @@
 ///! BUGS: 0
 
 namespace Kernel {
-USER_PROCESS::USER_PROCESS()  = default;
-USER_PROCESS::~USER_PROCESS() = default;
+UserProcess::UserProcess()  = default;
+UserProcess::~UserProcess() = default;
 
 /// @brief Gets the last exit code.
 /// @note Not thread-safe.
@@ -37,7 +37,7 @@ USER_PROCESS::~USER_PROCESS() = default;
 /// @brief Crashes the current process.
 /***********************************************************************************/
 
-Void USER_PROCESS::Crash() {
+Void UserProcess::Crash() {
   if (this->Status != ProcessStatusKind::kRunning) return;
 
   this->Status = ProcessStatusKind::kKilled;
@@ -49,7 +49,7 @@ Void USER_PROCESS::Crash() {
 /// @brief boolean operator, check status.
 /***********************************************************************************/
 
-USER_PROCESS::operator bool() {
+UserProcess::operator bool() {
   return this->Status == ProcessStatusKind::kRunning;
 }
 
@@ -59,7 +59,7 @@ USER_PROCESS::operator bool() {
 /// @return Int32 the last exit code.
 /***********************************************************************************/
 
-KPCError& USER_PROCESS::GetExitCode() {
+KPCError& UserProcess::GetExitCode() {
   return this->LastExitCode;
 }
 
@@ -67,7 +67,7 @@ KPCError& USER_PROCESS::GetExitCode() {
 /// @brief Error code variable getter.
 /***********************************************************************************/
 
-KPCError& USER_PROCESS::GetLocalCode() {
+KPCError& UserProcess::GetLocalCode() {
   return this->LocalCode;
 }
 
@@ -76,7 +76,7 @@ KPCError& USER_PROCESS::GetLocalCode() {
 /// @param should_wakeup if the program shall wakeup or not.
 /***********************************************************************************/
 
-Void USER_PROCESS::Wake(Bool should_wakeup) {
+Void UserProcess::Wake(Bool should_wakeup) {
   this->Status = should_wakeup ? ProcessStatusKind::kRunning : ProcessStatusKind::kFrozen;
 }
 
@@ -91,9 +91,9 @@ STATIC T* sched_try_go_upper_ptr_tree(T* tree) {
     return nullptr;
   }
 
-  tree = tree->Parent;
-
   if (tree) {
+    if (tree->Parent) tree = tree->Parent;
+
     auto tree_tmp = tree->Next;
 
     if (!tree_tmp) {
@@ -110,7 +110,7 @@ STATIC T* sched_try_go_upper_ptr_tree(T* tree) {
 /** @brief Allocate pointer to heap/file tree. */
 /***********************************************************************************/
 
-ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
+ErrorOr<VoidPtr> UserProcess::New(SizeT sz, SizeT pad_amount) {
   if (this->UsedMemory > kSchedMaxMemoryLimit) return ErrorOr<VoidPtr>(-kErrorHeapOutOfMemory);
 
 #ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
@@ -126,7 +126,7 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
 #endif
 
   if (!this->HeapTree) {
-    this->HeapTree = new PROCESS_HEAP_TREE<VoidPtr>();
+    this->HeapTree = new ProcessHeapTree<VoidPtr>();
 
     if (!this->HeapTree) {
       this->Crash();
@@ -138,15 +138,15 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
 
     this->HeapTree->Entry = ptr;
 
-    this->HeapTree->Color = kBlackTreeKind;
+    this->HeapTree->Color = TreeKind::kBlackTreeKind;
 
     this->HeapTree->Prev   = nullptr;
     this->HeapTree->Next   = nullptr;
     this->HeapTree->Parent = nullptr;
     this->HeapTree->Child  = nullptr;
   } else {
-    PROCESS_HEAP_TREE<VoidPtr>* entry      = this->HeapTree;
-    PROCESS_HEAP_TREE<VoidPtr>* prev_entry = entry;
+    ProcessHeapTree<VoidPtr>* entry      = this->HeapTree;
+    ProcessHeapTree<VoidPtr>* prev_entry = entry;
 
     BOOL is_parent = NO;
 
@@ -163,11 +163,11 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
         entry     = entry->Next;
       } else {
         entry = sched_try_go_upper_ptr_tree(entry);
-        if (entry && entry->Color == kBlackTreeKind) break;
+        if (entry && entry->Color == TreeKind::kBlackTreeKind) break;
       }
     }
 
-    auto new_entry = new PROCESS_HEAP_TREE<VoidPtr>();
+    auto new_entry = new ProcessHeapTree<VoidPtr>();
 
     if (!new_entry) {
       this->Crash();
@@ -182,8 +182,8 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
     new_entry->Next      = nullptr;
     new_entry->Prev      = nullptr;
 
-    new_entry->Color  = kBlackTreeKind;
-    prev_entry->Color = kRedTreeKind;
+    new_entry->Color  = TreeKind::kBlackTreeKind;
+    prev_entry->Color = TreeKind::kRedTreeKind;
 
     if (is_parent) {
       prev_entry->Child = new_entry;
@@ -203,7 +203,7 @@ ErrorOr<VoidPtr> USER_PROCESS::New(SizeT sz, SizeT pad_amount) {
 /// @brief Gets the name of the current process.
 /***********************************************************************************/
 
-const Char* USER_PROCESS::GetName() {
+const Char* UserProcess::GetName() {
   return this->Name;
 }
 
@@ -211,12 +211,12 @@ const Char* USER_PROCESS::GetName() {
 /// @brief Gets the owner of the process.
 /***********************************************************************************/
 
-const User* USER_PROCESS::GetOwner() {
+const User* UserProcess::GetOwner() {
   return this->Owner;
 }
 
-/// @brief USER_PROCESS status getter.
-const ProcessStatusKind& USER_PROCESS::GetStatus() {
+/// @brief UserProcess status getter.
+const ProcessStatusKind& UserProcess::GetStatus() {
   return this->Status;
 }
 
@@ -226,7 +226,7 @@ const ProcessStatusKind& USER_PROCESS::GetStatus() {
 */
 /***********************************************************************************/
 
-const AffinityKind& USER_PROCESS::GetAffinity() {
+const AffinityKind& UserProcess::GetAffinity() {
   return this->Affinity;
 }
 
@@ -262,7 +262,7 @@ STATIC Void sched_free_ptr_tree(T* tree) {
 */
 /***********************************************************************************/
 
-Void USER_PROCESS::Exit(const Int32& exit_code) {
+Void UserProcess::Exit(const Int32& exit_code) {
   this->Status       = exit_code > 0 ? ProcessStatusKind::kKilled : ProcessStatusKind::kFrozen;
   this->LastExitCode = exit_code;
 
@@ -323,10 +323,10 @@ Void USER_PROCESS::Exit(const Int32& exit_code) {
 /// @brief Add dylib to the process object.
 /***********************************************************************************/
 
-Bool USER_PROCESS::InitDylib() {
+Bool UserProcess::InitDylib() {
   // React according to the process's kind.
   switch (this->Kind) {
-    case USER_PROCESS::kExecutableDylibKind: {
+    case UserProcess::kExecutableDylibKind: {
       this->DylibDelegate = rtl_init_dylib_pef(*this);
 
       if (!this->DylibDelegate) {
@@ -336,7 +336,7 @@ Bool USER_PROCESS::InitDylib() {
 
       return YES;
     }
-    case USER_PROCESS::kExecutableKind: {
+    case UserProcess::kExecutableKind: {
       return NO;
     }
     default: {
@@ -373,7 +373,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
   ++this->mTeam.mProcessCur;
 
-  USER_PROCESS& process = this->mTeam.mProcessList[pid];
+  UserProcess& process = this->mTeam.mProcessList[pid];
 
   process.Image.fCode = code;
   process.Image.fBlob = image;
@@ -427,7 +427,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
   process.RTime     = 0;
 
   if (!process.FileTree) {
-    process.FileTree = new PROCESS_FILE_TREE<VoidPtr>();
+    process.FileTree = new ProcessFileTree<VoidPtr>();
 
     if (!process.FileTree) {
       process.Crash();
@@ -489,7 +489,7 @@ Bool UserProcessScheduler::HasMP() {
 
 /***********************************************************************************/
 /// @brief Run User scheduler object.
-/// @return USER_PROCESS count executed within a team.
+/// @return UserProcess count executed within a team.
 /***********************************************************************************/
 
 SizeT UserProcessScheduler::Run() {
@@ -562,12 +562,12 @@ BOOL UserProcessScheduler::SwitchTeam(UserProcessTeam& team) {
 
 /// @brief Gets current running process.
 /// @return
-Ref<USER_PROCESS>& UserProcessScheduler::TheCurrentProcess() {
+Ref<UserProcess>& UserProcessScheduler::TheCurrentProcess() {
   return mTeam.AsRef();
 }
 
 /// @brief Current proccess id getter.
-/// @return USER_PROCESS ID integer.
+/// @return UserProcess ID integer.
 ErrorOr<ProcessID> UserProcessHelper::TheCurrentPID() {
   if (!UserProcessScheduler::The().TheCurrentProcess())
     return ErrorOr<ProcessID>{-kErrorProcessFault};
@@ -580,7 +580,7 @@ ErrorOr<ProcessID> UserProcessHelper::TheCurrentPID() {
 /// @param process the process reference.
 /// @retval true can be schedulded.
 /// @retval false cannot be schedulded.
-Bool UserProcessHelper::CanBeScheduled(const USER_PROCESS& process) {
+Bool UserProcessHelper::CanBeScheduled(const UserProcess& process) {
   if (process.Affinity == AffinityKind::kRealTime) return Yes;
 
   if (process.Status != ProcessStatusKind::kRunning) return No;

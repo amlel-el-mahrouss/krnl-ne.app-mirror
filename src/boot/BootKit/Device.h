@@ -4,13 +4,15 @@
 
 ======================================== */
 
-#pragma once
+#ifndef __BOOTKIT_DEVICE_H__
+#define __BOOTKIT_DEVICE_H__
 
+#include <BootKit/Config.h>
 #include <modules/AHCI/AHCI.h>
 #include <modules/ATA/ATA.h>
 
-namespace Kernel {
-/// @brief Device type.
+namespace Boot {
+/// @brief Physical/Virtual device type. 
 class Device {
  public:
   explicit Device() = default;
@@ -19,7 +21,7 @@ class Device {
   NE_MOVE_DEFAULT(Device)
 
   struct Trait {
-    SizeT mBase{0};
+    Lba mBase{0};
     SizeT mSize{0};
   };
 
@@ -29,7 +31,9 @@ class Device {
   virtual Device& Write(Char* Buf, SizeT SecCount) = 0;
 };
 
-typedef Device BootDevice;
-typedef Device NetworkDevice;
-typedef Device DiskDevice;
-}  // namespace Kernel
+using BootDevice = Device;
+using NetworkDevice = Device;
+using DiskDevice = Device;
+}  // namespace Boot
+
+#endif 

@@ -50,14 +50,14 @@ class BinaryMutex final {
   BOOL WaitForProcess(const UInt32& sec);
 
  public:
-  bool Lock(USER_PROCESS* process);
-  bool LockAndWait(USER_PROCESS* process, TimerInterface* timer);
+  bool Lock(UserProcess* process);
+  bool LockAndWait(UserProcess* process, TimerInterface* timer);
 
  public:
   NE_COPY_DEFAULT(BinaryMutex)
 
  private:
-  USER_PROCESS* fLockingProcess;
+  UserProcess* fLockingProcess;
 };
 \end{verbatim}
 

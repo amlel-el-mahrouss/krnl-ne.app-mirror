@@ -19,11 +19,11 @@ class KernelTaskHelper;
 
 typedef ProcessID KID;
 
-/// @brief Equivalent of USER_PROCESS, but for kernel tasks.
+/// @brief Equivalent of UserProcess, but for kernel tasks.
 /// @author Amlal
-class KERNEL_TASK final {
+class KernelTask final {
  public:
-  Char               Name[kSchedNameLen] = {"KERNEL_TASK"};
+  Char               Name[kSchedNameLen] = {"KernelTask"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemKernel};
   HAL::StackFramePtr StackFrame{nullptr};
   UInt8*             StackReserve{nullptr};
@@ -40,7 +40,7 @@ class KernelTaskHelper final {
  public:
   STATIC Bool Add(HAL::StackFramePtr frame_ptr, ProcessID new_kid);
   STATIC Bool Remove(const KID kid);
-  STATIC Bool CanBeScheduled(const KERNEL_TASK& process);
+  STATIC Bool CanBeScheduled(const KernelTask& process);
   STATIC ErrorOr<KID> TheCurrentKID();
   STATIC SizeT        StartScheduling();
 };

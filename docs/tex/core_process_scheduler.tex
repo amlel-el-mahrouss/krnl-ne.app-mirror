@@ -53,8 +53,8 @@ class UserProcessTeam final {
 
   NE_COPY_DEFAULT(UserProcessTeam)
 
-  Array<USER_PROCESS, kSchedProcessLimitPerTeam>& AsArray();
-  Ref<USER_PROCESS>&                              AsRef();
+  Array<UserProcess, kSchedProcessLimitPerTeam>& AsArray();
+  Ref<UserProcess>&                              AsRef();
   ProcessID&                                      Id() noexcept;
 
  public:
@@ -81,8 +81,8 @@ struct PROCESS_IMAGE final {
   explicit PROCESS_IMAGE() = default;
 
  private:
-  friend USER_PROCESS;
-  friend KERNEL_TASK;
+  friend UserProcess;
+  friend KernelTask;
 
   friend class UserProcessScheduler;
 

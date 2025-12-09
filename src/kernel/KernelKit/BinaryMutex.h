@@ -11,12 +11,12 @@
 #include <NeKit/Config.h>
 
 namespace Kernel {
-class USER_PROCESS;
+class UserProcess;
 
 /// @brief Access control class, which locks a task until one is done.
 class BinaryMutex final {
  public:
-  using LockedPtr = USER_PROCESS*;
+  using LockedPtr = UserProcess*;
 
   explicit BinaryMutex() = default;
   ~BinaryMutex()         = default;

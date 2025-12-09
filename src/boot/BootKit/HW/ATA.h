@@ -9,8 +9,7 @@
 #include <BootKit/Device.h>
 #include <modules/ATA/ATA.h>
 
-using namespace Kernel;
-
+namespace Boot {
 class BootDeviceATA final : public Device {
  public:
   enum {
@@ -45,3 +44,4 @@ class BootDeviceATA final : public Device {
  private:
   ATATrait mTrait;
 };
+}  // namespace Boot

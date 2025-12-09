@@ -12,6 +12,7 @@
 
 #define kAHCISectorSz (512)
 
+namespace Boot {
 class BootDeviceSATA final {
  public:
   explicit BootDeviceSATA();
@@ -23,7 +24,7 @@ class BootDeviceSATA final {
     Kernel::Boolean mErr{false};
     Kernel::Boolean mDetected{false};
 
-    operator bool() { return !this->mErr; }
+    explicit operator bool() { return !this->mErr; }
   };
 
   operator bool() { return this->Leak().mDetected; }
@@ -40,3 +41,4 @@ class BootDeviceSATA final {
  private:
   SATATrait mTrait;
 };
+}  // namespace Boot

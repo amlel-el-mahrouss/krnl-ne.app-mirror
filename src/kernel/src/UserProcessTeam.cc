@@ -15,7 +15,7 @@
 namespace Kernel {
 UserProcessTeam::UserProcessTeam() {
   for (SizeT i = 0U; i < this->mProcessList.Count(); ++i) {
-    this->mProcessList[i]            = USER_PROCESS();
+    this->mProcessList[i]            = UserProcess();
     this->mProcessList[i].PTime      = 0;
     this->mProcessList[i].RTime      = 0;
     this->mProcessList[i].UTime      = 0;
@@ -31,7 +31,7 @@ UserProcessTeam::UserProcessTeam() {
 /// @return The list of process to schedule.
 /***********************************************************************************/
 
-Array<USER_PROCESS, kSchedProcessLimitPerTeam>& UserProcessTeam::AsArray() {
+Array<UserProcess, kSchedProcessLimitPerTeam>& UserProcessTeam::AsArray() {
   return this->mProcessList;
 }
 
@@ -49,7 +49,7 @@ ProcessID& UserProcessTeam::Id() {
 /// @return The current process header.
 /***********************************************************************************/
 
-Ref<USER_PROCESS>& UserProcessTeam::AsRef() {
+Ref<UserProcess>& UserProcessTeam::AsRef() {
   return this->mCurrentProcess;
 }
 }  // namespace Kernel

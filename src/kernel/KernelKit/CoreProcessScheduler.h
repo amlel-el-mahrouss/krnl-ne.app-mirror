@@ -26,22 +26,22 @@
 EXTERN_C void sched_idle_task(void);
 
 namespace Kernel {
-class USER_PROCESS;
-class KERNEL_TASK;
+class UserProcess;
+class KernelTask;
 class KernelTaskScheduler;
 class UserProcessScheduler;
 class UserProcessTeam;
 
 template <typename T>
-struct PROCESS_HEAP_TREE;
+struct ProcessHeapTree;
 
 template <typename T>
-struct PROCESS_SPECIAL_TREE;
+struct ProcessSpecialTree;
 
 template <typename T>
-struct PROCESS_FILE_TREE;
+struct ProcessFileTree;
 
-enum {
+enum struct TreeKind : UInt32 {
   kInvalidTreeKind = 0U,
   kRedTreeKind     = 100U,
   kBlackTreeKind   = 101U,
@@ -49,7 +49,7 @@ enum {
 };
 
 template <typename T>
-struct PROCESS_HEAP_TREE {
+struct ProcessHeapTree {
   static constexpr auto kHeap    = true;
   static constexpr auto kFile    = false;
   static constexpr auto kSpecial = false;
@@ -58,25 +58,25 @@ struct PROCESS_HEAP_TREE {
   SizeT EntrySize{0UL};
   SizeT EntryPad{0UL};
 
-  UInt32 Color{kBlackTreeKind};
+  TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct PROCESS_HEAP_TREE<T>* Parent {
+  struct ProcessHeapTree<T>* Parent {
     nullptr
   };
-  struct PROCESS_HEAP_TREE<T>* Child {
+  struct ProcessHeapTree<T>* Child {
     nullptr
   };
 
-  struct PROCESS_HEAP_TREE<T>* Prev {
+  struct ProcessHeapTree<T>* Prev {
     nullptr
   };
-  struct PROCESS_HEAP_TREE<T>* Next {
+  struct ProcessHeapTree<T>* Next {
     nullptr
   };
 };
 
 template <typename T>
-struct PROCESS_FILE_TREE {
+struct ProcessFileTree {
   static constexpr auto kHeap    = false;
   static constexpr auto kFile    = true;
   static constexpr auto kSpecial = false;
@@ -85,21 +85,21 @@ struct PROCESS_FILE_TREE {
   SizeT EntrySize{0UL};
   SizeT EntryPad{0UL};
 
-  UInt32 Color{kBlackTreeKind};
+  TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct PROCESS_FILE_TREE<T>* Parent {
+  struct ProcessFileTree<T>* Parent {
     nullptr
   };
 
-  struct PROCESS_FILE_TREE<T>* Child {
+  struct ProcessFileTree<T>* Child {
     nullptr
   };
 
-  struct PROCESS_FILE_TREE<T>* Prev {
+  struct ProcessFileTree<T>* Prev {
     nullptr
   };
 
-  struct PROCESS_FILE_TREE<T>* Next {
+  struct ProcessFileTree<T>* Next {
     nullptr
   };
 };
@@ -107,7 +107,7 @@ struct PROCESS_FILE_TREE {
 using ProcessCtx = UInt32;
 
 template <typename T>
-struct PROCESS_SPECIAL_TREE {
+struct ProcessSpecialTree {
   static constexpr auto kHeap    = false;
   static constexpr auto kFile    = false;
   static constexpr auto kSpecial = true;
@@ -119,21 +119,21 @@ struct PROCESS_SPECIAL_TREE {
   /// @brief a context is where the resource comes from.
   ProcessCtx EntryContext{0UL};  // could be a socket, printer, device...
 
-  UInt32 Color{kBlackTreeKind};
+  TreeKind Color{TreeKind::kBlackTreeKind};
 
-  struct PROCESS_SPECIAL_TREE<T>* Parent {
+  struct ProcessSpecialTree<T>* Parent {
     nullptr
   };
 
-  struct PROCESS_SPECIAL_TREE<T>* Child {
+  struct ProcessSpecialTree<T>* Child {
     nullptr
   };
 
-  struct PROCESS_SPECIAL_TREE<T>* Prev {
+  struct ProcessSpecialTree<T>* Prev {
     nullptr
   };
 
-  struct PROCESS_SPECIAL_TREE<T>* Next {
+  struct ProcessSpecialTree<T>* Next {
     nullptr
   };
 };
@@ -240,8 +240,8 @@ struct ProcessImage final {
   explicit ProcessImage() = default;
 
  private:
-  friend USER_PROCESS;
-  friend KERNEL_TASK;
+  friend UserProcess;
+  friend KernelTask;
 
   friend UserProcessScheduler;
   friend KernelTaskScheduler;

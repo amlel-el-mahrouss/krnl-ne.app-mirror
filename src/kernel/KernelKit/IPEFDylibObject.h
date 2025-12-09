@@ -79,8 +79,8 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
 
 typedef IPEFDylibObject* IDylibRef;
 
-EXTERN_C IDylibRef rtl_init_dylib_pef(USER_PROCESS& header);
-EXTERN_C Void      rtl_fini_dylib_pef(USER_PROCESS& header, IDylibRef lib, Bool* successful);
+EXTERN_C IDylibRef rtl_init_dylib_pef(UserProcess& header);
+EXTERN_C Void      rtl_fini_dylib_pef(UserProcess& header, IDylibRef lib, Bool* successful);
 }  // namespace Kernel
 
 #endif /* ifndef __KERNELKIT_PEF_SHARED_OBJECT_H__ */

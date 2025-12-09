@@ -12,12 +12,12 @@
 #include <fstream>
 #include <limits>
 
-static uint16_t kVersion       = kOpenHeFSVersion;
-static uint16_t kNumericalBase = 10;
+static std::uint16_t kVersion       = kOpenHeFSVersion;
+static std::uint16_t kNumericalBase = 10;
 
-static size_t        kDiskSize = mkfs::detail::gib_cast(4UL);
+static std::size_t   kDiskSize = mkfs::detail::gib_cast(4UL);
 static std::u8string kDiskLabel;
-static size_t        kDiskSectorSz = 512;
+static std::size_t   kDiskSectorSz = 512;
 
 int main(int argc, char** argv) {
   if (argc != 10) {
@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
   std::string args = mkfs::detail::build_args(argc, argv);
 
   auto output_path = mkfs::get_option<char>(args, "o");
+  
   if (output_path.empty()) {
     mkfs::console_out() << "hefs: error: Missing -o <output_device> argument.\n";
     return EXIT_FAILURE;
@@ -39,6 +40,7 @@ int main(int argc, char** argv) {
 
   auto opt_s    = mkfs::get_option<char>(args, "s");
   long parsed_s = 0;
+
   if (!mkfs::detail::parse_signed(opt_s, parsed_s, kNumericalBase) || parsed_s == 0) {
     mkfs::console_out() << "hefs: error: Invalid sector size \"" << opt_s
                         << "\". Must be a positive integer.\n";
@@ -50,9 +52,11 @@ int main(int argc, char** argv) {
                         << "\" is not a power of two.\n";
     return EXIT_FAILURE;
   }
+
   kDiskSectorSz = static_cast<size_t>(parsed_s);
 
   auto opt_L = mkfs::get_option<char>(args, "L");
+
   if (!opt_L.empty()) {
     kDiskLabel.clear();
     for (char c : opt_L) kDiskLabel.push_back(static_cast<char8_t>(c));
@@ -65,16 +69,19 @@ int main(int argc, char** argv) {
 
   auto               opt_S = mkfs::get_option<char>(args, "S");
   unsigned long long gb    = 0;
+
   if (!mkfs::detail::parse_decimal(opt_S, gb) || gb == 0ULL) {
     mkfs::console_out() << "hefs: error: Invalid disk size \"" << opt_S
                         << "\". Must be a positive integer.\n";
     return EXIT_FAILURE;
   }
   unsigned long long max_gb = std::numeric_limits<uint64_t>::max() / (1024ULL * 1024ULL * 1024ULL);
+
   if (gb > max_gb) {
     mkfs::console_out() << "hefs: error: Disk size \"" << gb << "GB\" is too large.\n";
     return EXIT_FAILURE;
   }
+
   kDiskSize = static_cast<size_t>(gb * 1024ULL * 1024ULL * 1024ULL);
 
   auto opt_b  = mkfs::get_option<char>(args, "b");
@@ -178,19 +185,21 @@ int main(int argc, char** argv) {
   }
 
   output_device.write(reinterpret_cast<const char*>(&boot_node), sizeof(boot_node));
+
   if (!output_device.good()) {
     mkfs::console_out() << "hefs: error: Unable to write BootNode to output device: " << output_path
                         << "\n";
     return EXIT_FAILURE;
   }
 
-  output_device.seekp(static_cast<std::streamoff>(boot_node.startIND));
+  output_device.seekp(static_cast<std::streamoff>(kDiskSize - 1));
+
   if (!output_device.good()) {
     mkfs::console_out() << "hefs: error: Failed seek to startIND.\n";
     return EXIT_FAILURE;
   }
 
-  output_device.seekp(static_cast<std::streamoff>(kDiskSize - 1));
+
   output_device.put(0);
   output_device.flush();
 

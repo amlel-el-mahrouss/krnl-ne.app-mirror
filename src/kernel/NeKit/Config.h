@@ -79,7 +79,13 @@ using Lba = UInt64;
 
 using Char16 = char16_t;
 
-enum struct Endian : UInt8 { kEndianInvalid, kEndianBig, kEndianLittle, kEndianMixed, kEndianCount };
+enum struct Endian : UInt8 {
+  kEndianInvalid,
+  kEndianBig,
+  kEndianLittle,
+  kEndianMixed,
+  kEndianCount
+};
 
 /// @brief Forward object.
 /// @tparam Args the object type.

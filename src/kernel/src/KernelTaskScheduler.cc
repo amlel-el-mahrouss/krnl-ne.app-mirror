@@ -31,7 +31,7 @@ Bool KernelTaskHelper::Remove(const KID kid) {
   return NO;
 }
 
-Bool KernelTaskHelper::CanBeScheduled(const KERNEL_TASK& task) {
+Bool KernelTaskHelper::CanBeScheduled(const KernelTask& task) {
   return task.Kid > 0 && task.Image.HasCode();
 }
 }  // namespace Kernel

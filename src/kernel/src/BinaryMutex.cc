@@ -26,7 +26,7 @@ Bool BinaryMutex::Unlock() {
 /// @brief Locks process in the binary mutex.
 /***********************************************************************************/
 
-Bool BinaryMutex::Lock(USER_PROCESS* process) {
+Bool BinaryMutex::Lock(UserProcess* process) {
   if (!process || this->IsLocked()) return No;
 
   this->fLockingProcess = process;
@@ -46,7 +46,7 @@ Bool BinaryMutex::IsLocked() const {
 /// @brief Try lock or wait.
 /***********************************************************************************/
 
-Bool BinaryMutex::LockAndWait(USER_PROCESS* process, TimerInterface* timer) {
+Bool BinaryMutex::LockAndWait(UserProcess* process, TimerInterface* timer) {
   if (timer == nullptr) return No;
 
   this->Lock(process);

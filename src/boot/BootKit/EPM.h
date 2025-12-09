@@ -4,6 +4,9 @@
 
 ======================================== */
 
-#pragma once
+#ifndef __BOOTKIT_EPM_H__
+#define __BOOTKIT_EPM_H__
 
 #include <FirmwareKit/EPM.h>
+
+#endif

@@ -13,7 +13,7 @@ namespace Kernel {
 /// @param
 /***********************************************************************************/
 
-EXTERN_C Void __ne_pure_call(USER_PROCESS* process) {
+EXTERN_C Void __ne_pure_call(UserProcess* process) {
   if (process) process->Crash();
 }
 

@@ -59,7 +59,8 @@ int main(int argc, char** argv) {
 
   if (strncmp(boot_node.magic, kOpenHeFSMagic, kOpenHeFSMagicLen) != 0 ||
       boot_node.sectorCount < 1 || boot_node.sectorSize < kMkFsSectorSz) {
-    mkfs::console_out() << "hefs: error: Device does not contain an OpenHeFS disk: " << opt_disk << "\n";
+    mkfs::console_out() << "hefs: error: Device does not contain an OpenHeFS disk: " << opt_disk
+                        << "\n";
     return EXIT_FAILURE;
   }
 

@@ -14,6 +14,6 @@
 namespace Kernel {
 class UserProcessScheduler;
 class IDylibObject;
-class USER_PROCESS;
-class KERNEL_TASK;
+class UserProcess;
+class KernelTask;
 }  // namespace Kernel

@@ -29,21 +29,21 @@ class UserProcessScheduler;
 class UserProcessHelper;
 
 /***********************************************************************************/
-/// @name USER_PROCESS
-/// @brief USER_PROCESS class, holds information about the running process/thread.
+/// @name UserProcess
+/// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class USER_PROCESS final NE_VETTABLE {
+class UserProcess final NE_VETTABLE {
  public:
-  explicit USER_PROCESS();
-  ~USER_PROCESS();
+  explicit UserProcess();
+  ~UserProcess();
 
   auto DoVet() const { return *this; }
 
  public:
-  NE_COPY_DEFAULT(USER_PROCESS)
+  NE_COPY_DEFAULT(UserProcess)
 
  public:
-  Char               Name[kSchedNameLen] = {"USER_PROCESS"};
+  Char               Name[kSchedNameLen] = {"UserProcess"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemUser};
   User*              Owner{nullptr};
   HAL::StackFramePtr StackFrame{nullptr};
@@ -64,8 +64,8 @@ class USER_PROCESS final NE_VETTABLE {
   };
 
   USER_PROCESS_SIGNAL         Signal;
-  PROCESS_FILE_TREE<VoidPtr>* FileTree{nullptr};
-  PROCESS_HEAP_TREE<VoidPtr>* HeapTree{nullptr};
+  ProcessFileTree<VoidPtr>* FileTree{nullptr};
+  ProcessHeapTree<VoidPtr>* HeapTree{nullptr};
   UserProcessTeam*            ParentTeam;
 
   VoidPtr VMRegister{0UL};
@@ -158,8 +158,8 @@ class USER_PROCESS final NE_VETTABLE {
   friend UserProcessHelper;
 };
 
-typedef Array<USER_PROCESS, kSchedProcessLimitPerTeam> USER_PROCESS_ARRAY;
-typedef Ref<USER_PROCESS>                              USER_PROCESS_REF;
+typedef Array<UserProcess, kSchedProcessLimitPerTeam> USER_PROCESS_ARRAY;
+typedef Ref<UserProcess>                              USER_PROCESS_REF;
 
 /// \brief Processs Team (contains multiple processes inside it.)
 /// Equivalent to a process batch
@@ -170,8 +170,8 @@ class UserProcessTeam final {
 
   NE_COPY_DEFAULT(UserProcessTeam)
 
-  Array<USER_PROCESS, kSchedProcessLimitPerTeam>& AsArray();
-  Ref<USER_PROCESS>&                              AsRef();
+  Array<UserProcess, kSchedProcessLimitPerTeam>& AsArray();
+  Ref<UserProcess>&                              AsRef();
   ProcessID&                                      Id();
 
  public:
@@ -182,7 +182,7 @@ class UserProcessTeam final {
 };
 
 /***********************************************************************************/
-/// @brief USER_PROCESS scheduler class.
+/// @brief UserProcess scheduler class.
 /// The main class which you call to schedule user processes.
 /***********************************************************************************/
 class UserProcessScheduler final : public ISchedulable {
@@ -224,14 +224,14 @@ class UserProcessScheduler final : public ISchedulable {
 
 /***********************************************************************************/
 /**
- * \brief USER_PROCESS helper class, which contains needed utilities for the scheduler.
+ * \brief UserProcess helper class, which contains needed utilities for the scheduler.
  */
 /***********************************************************************************/
 
 class UserProcessHelper final {
  public:
   STATIC Bool Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid);
-  STATIC Bool CanBeScheduled(const USER_PROCESS& process);
+  STATIC Bool CanBeScheduled(const UserProcess& process);
   STATIC ErrorOr<ProcessID> TheCurrentPID();
   STATIC SizeT              StartScheduling();
 };

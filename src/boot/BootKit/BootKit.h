@@ -9,7 +9,10 @@
 /// @brief Bootloader Application Programming Interface.
 /***********************************************************************************/
 
-#pragma once
+#ifndef __BOOTKIT_H__
+#define __BOOTKIT_H__
+
+#include <BootKit/Config.h>
 
 #include <BootKit/HW/ATA.h>
 #include <CompilerKit/Version.h>
@@ -333,3 +336,5 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
   return YES;
 }
 }  // namespace Boot
+
+#endif // __BOOTKIT_H__

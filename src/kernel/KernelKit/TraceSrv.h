@@ -18,6 +18,6 @@ namespace Detail {
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
 
-  typedef UInt64 dk_socket_type;
+  using dk_socket_type = UInt64;
 }  // namespace Detail
 }  // namespace Kernel

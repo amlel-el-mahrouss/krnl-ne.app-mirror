@@ -7,9 +7,10 @@
 #pragma once
 
 #include <NeKit/Config.h>
+#include <NeKit/ErrorOr.h>
 
 namespace Kernel {
-template <typename T, SizeT N>
+template <class T, SizeT N>
 class InitializerList final {
  public:
   explicit InitializerList(const T* list) {
@@ -22,21 +23,20 @@ class InitializerList final {
 
   ~InitializerList() = default;
 
-  InitializerList& operator=(const InitializerList&) = default;
-  InitializerList(const InitializerList&)            = default;
+  InitializerList& operator=(const InitializerList&) = delete;
+  InitializerList(const InitializerList&)            = delete;
 
   T*              begin() { return fList; }
-  T*              operator->() { return fList; }
-  T*              operator*() { return fList; }
   T*              end() { return fList + N; }
   constexpr SizeT size() const { return N; }
+  
+  T*              operator->() { return fList; }
+  T*              operator*() { return fList; }
 
  private:
   T fList[N];
 };
 
-template <typename ValueType, SizeT N>
-inline InitializerList<ValueType, N> make_list(ValueType& val) {
-  return InitializerList<ValueType, N>{val};
-}
+template <class T, SizeT N>
+using ErrorOrList = ErrorOr<InitializerList<T, N>>;
 }  // namespace Kernel

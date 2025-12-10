@@ -4,8 +4,8 @@
 
 ======================================== */
 
-#ifndef INC_USER_H
-#define INC_USER_H
+#ifndef __KERNEL_KIT_USER_MGR_H__
+#define __KERNEL_KIT_USER_MGR_H__
 
 /* ========================================
 
@@ -92,4 +92,4 @@ inline User* kCurrentUser = nullptr;
 inline User* kRootUser    = nullptr;
 }  // namespace Kernel
 
-#endif /* ifndef INC_USER_H */
+#endif /* ifndef __KERNEL_KIT_USER_MGR_H__ */

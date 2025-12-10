@@ -7,7 +7,7 @@
 #pragma once
 
 /// @file KernelTaskScheduler.h
-/// @brief Kernel Task Scheduler header file.
+/// @brief Kernel Task Scheduler backend file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 #include <ArchKit/ArchKit.h>

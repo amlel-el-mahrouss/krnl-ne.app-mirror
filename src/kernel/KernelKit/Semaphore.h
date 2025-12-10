@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef __KERNEL_KIT_TLS_H__
+#define __KERNEL_KIT_TLS_H__
 
 /// @author Amlal El Mahrouss
 /// @file Semaphore.h
@@ -108,3 +109,5 @@ inline BOOL rtl_sem_wait(SemaphoreArr& sem, UInt64 owner, UInt64 timeout,
   return FALSE;  // Failed to acquire semaphore
 }
 }  // namespace Kernel
+
+#endif // !__KERNEL_KIT_TLS_H__

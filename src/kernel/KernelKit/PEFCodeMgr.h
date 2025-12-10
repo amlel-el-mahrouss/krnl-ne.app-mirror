@@ -16,7 +16,7 @@
 #include <NeKit/ErrorOr.h>
 #include <NeKit/KString.h>
 
-#ifndef INC_PROCESS_SCHEDULER_H
+#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
 #include <KernelKit/ProcessScheduler.h>
 #endif
 

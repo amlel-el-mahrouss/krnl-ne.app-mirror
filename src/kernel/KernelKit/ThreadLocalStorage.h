@@ -4,8 +4,8 @@
 
 ======================================== */
 
-#ifndef KERNELKIT_TLS_H
-#define KERNELKIT_TLS_H
+#ifndef __KERNEL_KIT_TLS_H__
+#define __KERNEL_KIT_TLS_H__
 
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
@@ -65,4 +65,4 @@ EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB);
 
 // last rev 7/7/24
 
-#endif /* ifndef KERNELKIT_TLS_H */
+#endif /* ifndef __KERNEL_KIT_TLS_H__ */

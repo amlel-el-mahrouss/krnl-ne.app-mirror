@@ -14,6 +14,6 @@
 using namespace Kernel;
 
 /// @brief Unimplemented as it is an interface.
-BOOL TimerInterface::Wait() {
+BOOL ITimer::Wait() {
   return NO;
 }

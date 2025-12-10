@@ -30,7 +30,7 @@ class BinaryMutex final {
 
  public:
   bool Lock(LockedPtr process);
-  bool LockAndWait(LockedPtr process, TimerInterface* timer);
+  bool LockAndWait(LockedPtr process, ITimer* timer);
 
  public:
   NE_COPY_DEFAULT(BinaryMutex)

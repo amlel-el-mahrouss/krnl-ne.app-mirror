@@ -11,8 +11,8 @@
 
 ======================================== */
 
-#ifndef __MSDOS_EXEC__
-#define __MSDOS_EXEC__
+#ifndef __KERNEL_KIT_MSDOS_H__
+#define __KERNEL_KIT_MSDOS_H__
 
 #include <KernelKit/PE.h>
 #include <NeKit/Config.h>
@@ -48,4 +48,4 @@ typedef struct _DosHeader {
   DosLong       eLfanew;
 } DosHeader, *DosHeaderPtr;
 
-#endif /* ifndef __MSDOS_EXEC__ */
+#endif /* ifndef __KERNEL_KIT_MSDOS_H__ */

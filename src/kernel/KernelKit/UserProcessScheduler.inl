@@ -11,9 +11,9 @@
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /// @date Tue Apr 22 22:01:07 CEST 2025
 
-#ifndef INC_PROCESS_SCHEDULER_H
+#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
 #include <KernelKit/UserProcessScheduler.h>
-#endif  // INC_PROCESS_SCHEDULER_H
+#endif  // __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
 
 namespace Kernel {
 /***********************************************************************************/

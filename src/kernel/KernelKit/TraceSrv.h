@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef __KERNELKIT_TRACESRV_H__
+#define __KERNELKIT_TRACESRV_H__
 
 #include <CompilerKit/CompilerKit.h>
 
@@ -21,3 +22,5 @@ namespace Detail {
   using dk_socket_type = UInt64;
 }  // namespace Detail
 }  // namespace Kernel
+
+#endif // !__KERNELKIT_TRACESRV_H__

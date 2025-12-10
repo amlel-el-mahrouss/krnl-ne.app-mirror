@@ -4,31 +4,32 @@
 
 ======================================== */
 
-#pragma once
+#ifndef __KERNEL_KIT_TIMER_H__
+#define __KERNEL_KIT_TIMER_H__
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/KPC.h>
 
 namespace Kernel {
 class SoftwareTimer;
-class TimerInterface;
+class ITimer;
 
 inline constexpr Int16 kTimeUnit = 1000;
 
-class TimerInterface {
+class ITimer {
  public:
   /// @brief Default constructor
-  explicit TimerInterface() = default;
-  virtual ~TimerInterface() = default;
+  explicit ITimer() = default;
+  virtual ~ITimer() = default;
 
  public:
-  NE_COPY_DEFAULT(TimerInterface)
+  NE_COPY_DEFAULT(ITimer)
 
  public:
   virtual BOOL Wait();
 };
 
-class SoftwareTimer final : public TimerInterface {
+class SoftwareTimer final : public ITimer {
  public:
   explicit SoftwareTimer(Int64 seconds);
   ~SoftwareTimer() override;
@@ -44,7 +45,7 @@ class SoftwareTimer final : public TimerInterface {
   Int64    fWaitFor{0};
 };
 
-class HardwareTimer final : public TimerInterface {
+class HardwareTimer final : public ITimer {
  public:
   explicit HardwareTimer(UInt64 seconds);
   ~HardwareTimer() override;
@@ -73,3 +74,5 @@ inline UInt64 rtl_milliseconds(UInt64 time) {
   return time;
 }
 }  // namespace Kernel
+
+#endif // !__KERNEL_KIT_TIMER_H__

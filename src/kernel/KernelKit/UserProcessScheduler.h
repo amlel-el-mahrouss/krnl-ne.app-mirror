@@ -4,11 +4,11 @@
 
 ======================================== */
 
-#ifndef INC_PROCESS_SCHEDULER_H
-#define INC_PROCESS_SCHEDULER_H
+#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
+#define __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
 
 /// @file UserProcessScheduler.h
-/// @brief User Process Scheduler header file.
+/// @brief User Process Scheduler backend file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 #include <ArchKit/ArchKit.h>
@@ -244,4 +244,4 @@ class UserProcessHelper final {
 // END
 ////////////////////////////////////////////////////
 
-#endif /* ifndef INC_PROCESS_SCHEDULER_H */
+#endif /* ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__ */

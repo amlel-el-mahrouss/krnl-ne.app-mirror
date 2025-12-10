@@ -46,7 +46,7 @@ Bool BinaryMutex::IsLocked() const {
 /// @brief Try lock or wait.
 /***********************************************************************************/
 
-Bool BinaryMutex::LockAndWait(UserProcess* process, TimerInterface* timer) {
+Bool BinaryMutex::LockAndWait(UserProcess* process, ITimer* timer) {
   if (timer == nullptr) return No;
 
   this->Lock(process);

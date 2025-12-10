@@ -66,7 +66,7 @@ class NonNullRef final {
   }
 
   NonNullRef& operator=(const NonNullRef<T>& ref) = delete;
-  NonNullRef(const NonNullRef<T>& ref)            = default;
+  NonNullRef(const NonNullRef<T>& ref)            = delete;
 
  private:
   Ref<T> fRef{};

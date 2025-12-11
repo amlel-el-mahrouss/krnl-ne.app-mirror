@@ -25,7 +25,8 @@
 #define err_global_get() (Kernel::kErrorLocalNumber)
 
 namespace Kernel {
-typedef Int32 KPCError;
+using ErrorT = Int32;
+using KPCError = ErrorT;
 
 inline KPCError kErrorLocalNumber = 0UL;
 

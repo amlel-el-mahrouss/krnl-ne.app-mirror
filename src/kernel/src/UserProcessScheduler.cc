@@ -431,7 +431,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
     if (!process.FileTree) {
       process.Crash();
-      return ErrorOr<VoidPtr>(-kErrorHeapOutOfMemory);
+      return -kErrorHeapOutOfMemory;
     }
 
     /// @todo File Tree allocation and dispose methods (amlal)

@@ -61,16 +61,13 @@ class HardwareTimer final : public ITimer {
   Int64           fWaitFor{0};
 };
 
-inline UInt64 rtl_microseconds(UInt64 time) {
+inline constexpr UInt64 rtl_microseconds(UInt64 time) {
   if (time < 1) return 0;
-
-  // TODO: nanoseconds maybe?
   return time / kTimeUnit;
 }
 
-inline UInt64 rtl_milliseconds(UInt64 time) {
+inline constexpr UInt64 rtl_milliseconds(UInt64 time) {
   if (time < 1) return 0;
-
   return time;
 }
 }  // namespace Kernel

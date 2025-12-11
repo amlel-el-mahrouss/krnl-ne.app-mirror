@@ -16,25 +16,21 @@ namespace Kernel {
 template <typename T, typename... Args>
 class Function final {
  public:
-  Function() = delete;
+  Function()        = delete;
   Function(nullPtr) = delete;
-  ~Function() = default;
+  ~Function()       = default;
 
   explicit Function(T (*Fn)(Args... args)) : fFn(Fn) { MUST_PASS(fFn); }
 
   Function& operator=(const Function&) = delete;
   Function(const Function&)            = delete;
 
-  T operator()(Args&&... args) {
-    return fFn(args...);
-  }
+  T operator()(Args&&... args) { return fFn(args...); }
 
-  T Call(Args&&... args) {
-    return fFn(args...);
-  }
+  T Call(Args&&... args) { return fFn(args...); }
 
   explicit operator bool() { return fFn; }
-  bool operator!() { return !fFn; }
+  bool     operator!() { return !fFn; }
 
  private:
   T (*fFn)(Args... args){nullptr};

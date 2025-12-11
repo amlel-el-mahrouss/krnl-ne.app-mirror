@@ -75,4 +75,4 @@ inline UInt64 rtl_milliseconds(UInt64 time) {
 }
 }  // namespace Kernel
 
-#endif // !__KERNEL_KIT_TIMER_H__
+#endif  // !__KERNEL_KIT_TIMER_H__

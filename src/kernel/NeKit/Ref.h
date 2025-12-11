@@ -12,7 +12,7 @@
 #include <KernelKit/HeapMgr.h>
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
-#include <NeKit/Vet.h>
+#include <NeKit/Vettable.h>
 
 namespace Kernel {
 /// =========================================================== ///
@@ -25,10 +25,12 @@ class Ref final {
   ~Ref()         = default;
 
  public:
-  Ref(T* cls) : fClass(*cls) {}
-  Ref(T cls) : fClass(cls) {}
+  using Type = T;
 
-  Ref& operator=(T ref) {
+  Ref(Type* cls) : fClass(*cls) {}
+  Ref(Type cls) : fClass(cls) {}
+
+  Ref& operator=(Type ref) {
     fClass = ref;
     return *this;
   }
@@ -36,29 +38,32 @@ class Ref final {
   NE_COPY_DEFAULT(Ref)
 
  public:
-  T operator->() const { return fClass; }
+  Type operator->() const { return fClass; }
 
-  T& Leak() { return fClass; }
+  Type& Leak() { return fClass; }
 
-  T& TryLeak() { return fClass; }
+  Type& TryLeak() { return fClass; }
 
-  T operator*() { return fClass; }
+  Type operator*() { return fClass; }
 
-  operator bool() { return Vettable<T>::kValue; }
-  bool operator!() { return !Vettable<T>::kValue; }
+  operator bool() { return Vettable<Type>::kValue; }
+  bool operator!() { return !Vettable<Type>::kValue; }
 
  private:
-  T fClass;
+  Type fClass;
 };
 
 template <typename T>
 class NonNullRef final {
  public:
+  using RefType = Ref<T>;
+  using Type    = T;
+
   NonNullRef()        = delete;
   NonNullRef(nullPtr) = delete;
 
-  NonNullRef(T* ref) : fRef(ref) { MUST_PASS(ref); }
-  NonNullRef(Ref<T> ref) : fRef(ref) { MUST_PASS(ref); }
+  NonNullRef(Type* ref) : fRef(ref) { MUST_PASS(ref); }
+  NonNullRef(RefType ref) : fRef(ref) { MUST_PASS(ref); }
 
   Ref<T>& operator->() {
     MUST_PASS(fRef);

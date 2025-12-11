@@ -23,4 +23,4 @@ namespace Detail {
 }  // namespace Detail
 }  // namespace Kernel
 
-#endif // !__KERNELKIT_TRACESRV_H__
+#endif  // !__KERNELKIT_TRACESRV_H__

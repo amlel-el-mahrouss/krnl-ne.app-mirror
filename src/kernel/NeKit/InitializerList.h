@@ -29,9 +29,9 @@ class InitializerList final {
   T*              begin() { return fList; }
   T*              end() { return fList + N; }
   constexpr SizeT size() const { return N; }
-  
-  T*              operator->() { return fList; }
-  T*              operator*() { return fList; }
+
+  T* operator->() { return fList; }
+  T* operator*() { return fList; }
 
  private:
   T fList[N];

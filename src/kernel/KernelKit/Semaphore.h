@@ -110,4 +110,4 @@ inline BOOL rtl_sem_wait(SemaphoreArr& sem, UInt64 owner, UInt64 timeout,
 }
 }  // namespace Kernel
 
-#endif // !__KERNEL_KIT_TLS_H__
+#endif  // !__KERNEL_KIT_TLS_H__

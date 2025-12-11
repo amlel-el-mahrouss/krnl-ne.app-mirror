@@ -25,33 +25,36 @@ class ErrorOr final {
   ~ErrorOr()         = default;
 
  public:
+  using RefType = Ref<T>;
+  using Type    = T;
+
   explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {}
   explicit ErrorOr(nullPtr) {}
-  explicit ErrorOr(T* klass) : mRef(klass) {}
-  explicit ErrorOr(T klass) : mRef(klass) {}
+  explicit ErrorOr(Type* klass) : mRef(klass) {}
+  explicit ErrorOr(Type klass) : mRef(klass) {}
 
   ErrorOr& operator=(const ErrorOr&) = default;
   ErrorOr(const ErrorOr&)            = default;
 
-  ErrorOr& operator=(const Ref<T>& refErr) {
-    mRef = refErr;
+  ErrorOr& operator=(const RefType& ref) {
+    mRef = ref;
     return *this;
   }
 
-  const T& Value() { return mRef.TryLeak(); }
+  const Type& Value() { return mRef.TryLeak(); }
 
-  Ref<T>& Leak() { return mRef; }
+  RefType& Leak() { return mRef; }
 
   ErrorT Error() { return mId; }
 
   /// @note DO NOT MAKE THIS EXPLICIT! IT WILL BREAK THE COMPILATION.
-  operator bool() { return mRef; }
+  explicit operator bool() { return mRef.Leak(); }
 
-  BOOL HasError() { return this->mId < 0; }
+  BOOL HasError() { return this->mId < kErrorSuccess; }
 
  private:
-  Ref<T> mRef;
-  ErrorT mId{0};
+  RefType mRef;
+  ErrorT  mId{0};
 };
 
 using ErrorOrAny = ErrorOr<voidPtr>;

@@ -15,7 +15,7 @@
 namespace Kernel {
 class Variant final {
  public:
-  enum struct VariantKind {
+  enum struct VariantKind : Int {
     kInvalid = 0,
     kString  = 200,
     kBlob,
@@ -23,6 +23,7 @@ class Variant final {
     kJson,
     kTOML,
     kSwap,
+    kCount = kSwap - kString + 1,
   };
 
  public:

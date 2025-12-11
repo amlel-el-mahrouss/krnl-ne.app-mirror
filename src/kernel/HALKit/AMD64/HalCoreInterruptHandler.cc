@@ -9,16 +9,16 @@
 #include <KernelKit/UserMgr.h>
 #include <NeKit/KString.h>
 #include <SignalKit/Signals.h>
+#include <NeKit/Atom.h>
 
 EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip);
-
 EXTERN_C Kernel::UIntPtr kApicBaseAddress;
 
-STATIC BOOL kIsRunning = NO;
+static bool kIsRunning = NO;
 
 /// @brief Notify APIC and PIC that we're done with the interrupt.
 /// @note
-STATIC void hal_idt_send_eoi(UInt8 vector) {
+static void hal_idt_send_eoi(UInt8 vector) {
   ((volatile UInt32*) kApicBaseAddress)[0xB0 / 4] = 0;
 
   if (vector >= kPICCommand && vector <= 0x2F) {
@@ -32,7 +32,7 @@ STATIC void hal_idt_send_eoi(UInt8 vector) {
 /// @brief Handle GPF fault.
 /// @param rsp
 EXTERN_C Kernel::Void idt_handle_gpf(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_idt_send_eoi(13);
@@ -45,7 +45,7 @@ EXTERN_C Kernel::Void idt_handle_gpf(Kernel::UIntPtr rsp) {
 /// @brief Handle page fault.
 /// @param rsp
 EXTERN_C void idt_handle_pf(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_idt_send_eoi(14);
@@ -73,7 +73,7 @@ EXTERN_C void idt_handle_scheduler(Kernel::UIntPtr rsp) {
 /// @brief Handle math fault.
 /// @param rsp
 EXTERN_C void idt_handle_math(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_idt_send_eoi(8);
@@ -87,7 +87,7 @@ EXTERN_C void idt_handle_math(Kernel::UIntPtr rsp) {
 /// @brief Handle any generic fault.
 /// @param rsp
 EXTERN_C void idt_handle_generic(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_idt_send_eoi(30);
@@ -103,7 +103,7 @@ EXTERN_C void idt_handle_generic(Kernel::UIntPtr rsp) {
 }
 
 EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
 
   hal_idt_send_eoi(3);
 
@@ -118,7 +118,7 @@ EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip) {
 /// @brief Handle #UD fault.
 /// @param rsp
 EXTERN_C void idt_handle_ud(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_idt_send_eoi(6);

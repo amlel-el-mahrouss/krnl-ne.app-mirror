@@ -244,8 +244,8 @@ namespace Utils {
         *(volatile UIntPtr*) stacksym.Leak().Leak() = kSchedMaxStackSz;
       }
 
-      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].Kind = process_kind;
-      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].StackSize =
+      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].Kind = process_kind;
+      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].StackSize =
           *(UIntPtr*) stacksym.Leak().Leak();
 
       mm_free_ptr(stacksym.Leak().Leak());

@@ -541,8 +541,8 @@ SizeT UserProcessScheduler::Run() {
 
 /// @brief Gets the current scheduled team.
 /// @return
-UserProcessTeam& UserProcessScheduler::TheCurrentTeam() {
-  return mTeam;
+Ref<UserProcessTeam> UserProcessScheduler::TheCurrentTeam() {
+  return {mTeam};
 }
 
 /***********************************************************************************/
@@ -562,7 +562,7 @@ BOOL UserProcessScheduler::SwitchTeam(UserProcessTeam& team) {
 
 /// @brief Gets current running process.
 /// @return
-Ref<UserProcess>& UserProcessScheduler::TheCurrentProcess() {
+Ref<UserProcess> UserProcessScheduler::TheCurrentProcess() {
   return mTeam.AsRef();
 }
 
@@ -649,7 +649,7 @@ Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) 
     UserProcessHelper::TheCurrentPID().Leak().Leak() = new_pid;
 
     HardwareThreadScheduler::The()[index].Leak()->fPTime =
-        UserProcessScheduler::The().TheCurrentTeam().AsArray()[new_pid].PTime;
+        UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[new_pid].PTime;
 
     (Void)(kout << "AP_" << hex_number(index));
     kout << " is now running a new task!\r";

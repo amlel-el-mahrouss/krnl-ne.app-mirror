@@ -28,6 +28,7 @@ using namespace Kernel;
  */
 
 Boolean tls_check_tib(THREAD_INFORMATION_BLOCK* tib_ptr) {
+  MUST_PASS(tib_ptr);
   if (!tib_ptr) return false;
 
   return tib_ptr->Cookie[kCookieMag0Idx] == kCookieMag0 &&
@@ -46,7 +47,6 @@ EXTERN_C Bool tls_check_syscall_impl(Kernel::VoidPtr tib_ptr) {
     return No;
   }
 
-  THREAD_INFORMATION_BLOCK* tib = reinterpret_cast<THREAD_INFORMATION_BLOCK*>(tib_ptr);
-
+  THREAD_INFORMATION_BLOCK* tib = static_cast<THREAD_INFORMATION_BLOCK*>(tib_ptr);
   return tls_check_tib(tib);
 }

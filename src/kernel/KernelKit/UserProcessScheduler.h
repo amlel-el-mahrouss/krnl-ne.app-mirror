@@ -200,8 +200,8 @@ class UserProcessScheduler final : public ISchedulable {
   bool     operator!();
 
  public:
-  UserProcessTeam& TheCurrentTeam();
-  BOOL             SwitchTeam(UserProcessTeam& team);
+  Ref<UserProcessTeam> TheCurrentTeam();
+  BOOL                 SwitchTeam(UserProcessTeam& team);
 
  public:
   ProcessID Spawn(const Char* name, VoidPtr code, VoidPtr image);
@@ -212,8 +212,8 @@ class UserProcessScheduler final : public ISchedulable {
   Bool HasMP() override;
 
  public:
-  UserProcessRef& TheCurrentProcess();
-  SizeT           Run();
+  Ref<UserProcess> TheCurrentProcess();
+  SizeT            Run();
 
  public:
   STATIC UserProcessScheduler& The();

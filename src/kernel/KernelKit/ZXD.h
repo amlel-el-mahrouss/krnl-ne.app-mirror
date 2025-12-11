@@ -12,10 +12,10 @@
 #define kZXDVersion (0x0001)
 
 namespace Kernel {
-struct ZXD_EXEC_HEADER;
-struct ZXD_STUB_HEADER;
+struct ZxdExec;
+struct ZxdStub;
 
-enum ZXD_FLAGS {
+enum struct ZxdFlags {
   kZXDFlagsInvalid = 0,
   kZXDFlagsDriver  = 120,
   kZXDFlagsBoot,
@@ -25,7 +25,7 @@ enum ZXD_FLAGS {
 
 /// @brief ZXD executable header
 /// @details This header is used to identify ZXD executable files.
-struct PACKED ZXD_EXEC_HEADER final {
+struct PACKED ZxdExec final {
   UInt32  fMagic;
   UInt32  fVersion;
   UInt32  fFlags;
@@ -44,12 +44,12 @@ struct PACKED ZXD_EXEC_HEADER final {
 /// @brief ZXD stub header
 /// @details This header is used to identify ZXD stub files. It contains the size of the stub, the
 /// offset of the stub, and the CRC32 checksum of the stub.
-struct PACKED ZXD_STUB_HEADER final {
+struct PACKED ZxdStub final {
   UInt32 fStubSize;
   UInt32 fStubOffset;
   UInt32 fStubCRC32;
 };
 
-using ZXD_EXEC_HEADER_PTR = ZXD_EXEC_HEADER*;
-using ZXD_STUB_HEADER_PTR = ZXD_STUB_HEADER*;
+using ZxdExecPtr = ZxdExec*;
+using ZxdStubPtr = ZxdStub*;
 }  // namespace Kernel

@@ -56,4 +56,4 @@ concept IsNotVettable = requires(OnFallback fallback) {
 };
 }  // namespace Kernel
 
-#endif // !__NE_KIT_VETTABLE_H__
+#endif  // !__NE_KIT_VETTABLE_H__

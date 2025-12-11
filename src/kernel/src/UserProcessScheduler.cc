@@ -505,7 +505,7 @@ SizeT UserProcessScheduler::Run() {
 
     //! Check if the process needs to be run.
     if (UserProcessHelper::CanBeScheduled(process)) {
-      kout << process.Name << " will be run...\r";
+      kout << process.Name << " will be scheduled to run...\r";
 
       //! Increase the usage time of the process.
       if (process.UTime < process.PTime) {

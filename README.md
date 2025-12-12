@@ -1,10 +1,9 @@
 <!-- Read Me of NeKernel -->
 
 <div align="center">
-  <img src="meta/media/nekernel.png" alt="NeKernel Logo" width="180"/>
-  <p>
-    <b>Modern, Modular, and Secure Microkernel for Next-Generation Systems</b>
-  </p>
+  <h1>
+    <b>NeKernel</b>
+  </h1>
   <p>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio.yml/badge.svg" alt="CI"></a>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci.yml/badge.svg" alt="CI"></a>

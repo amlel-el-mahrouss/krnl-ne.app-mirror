@@ -20,26 +20,27 @@
 /// @author Amlal El Mahrouss
 
 namespace Kernel::DDK {
-constexpr auto kInvalidType = 0;
+inline constexpr auto kInvalidType = 0;
 
 class IDriverBase {
  public:
   explicit IDriverBase() = default;
   virtual ~IDriverBase() = default;
 
-  NE_COPY_DEFAULT(IDriverBase);
+  NE_COPY_DELETE(IDriverBase);
+  NE_MOVE_DEFAULT(IDriverBase);
 
   using PtrType = VoidPtr;
 
-  virtual BOOL            IsCastable() { return NO; }
+  virtual constexpr BOOL            IsCastable() { return NO; }
   virtual constexpr BOOL  IsActive() { return NO; }
   virtual PtrType         Leak() { return nullptr; }
   virtual constexpr Int32 Type() { return kInvalidType; }
 };
 
 /// @brief This concept requires the Driver to be IDriverBase compliant.
-template <typename T>
-concept IsValidDriver = requires(T driver_base) {
+template <typename Driver>
+concept IsValidDriver = requires(Driver driver_base) {
   { driver_base.IsActive() && driver_base.Type() > kInvalidType };
 };
 

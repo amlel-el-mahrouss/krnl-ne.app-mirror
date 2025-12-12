@@ -1,10 +1,10 @@
-name: BootZ CI (AHCI)
+name: BootZ CI (Develop, AHCI)
 
 on:
   push:
-    branches: [ "stable" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "stable" ]
+    branches: [ "develop" ]
 
 jobs:
   build:

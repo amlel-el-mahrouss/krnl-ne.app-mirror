@@ -5,8 +5,8 @@
     <b>NeKernel</b>
   </h1>
   <p>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-pio.yml/badge.svg" alt="CI"></a>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci.yml/badge.svg" alt="CI"></a>
+    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
+    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg" alt="CI"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
   </p>
 </div>
@@ -16,10 +16,13 @@
 ## Getting Started
 
 ### **Requirements**
-- [MinGW](https://www.mingw-w64.org/) (AMD64 targets)
-- [Clang](https://clang.llvm.org/) (ARM64 targets)
-- [NASM](https://nasm.us/) (AMD64 targets)
-- [NeBuild](https://github.com/nekernel-org/nebuild) (build system)
+
+- [MinGW](https://www.mingw-w64.org/)
+- [Clang](https://clang.llvm.org/)
+- [NASM](https://nasm.us/)
+- [NeBuild](https://github.com/nekernel-org/nebuild)
+- CoreUtils
+- Git
 
 ### **Building & Running**
 

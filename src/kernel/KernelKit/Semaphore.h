@@ -25,37 +25,37 @@
 
 namespace Kernel {
 /// @brief Semaphore structure used for synchronization.
-typedef UInt64 SemaphoreArr[kSemaphoreCount];
+using SemaphoreArr = UInt64[kSemaphoreCount];
 
 /// @brief Checks if the semaphore is valid.
-inline BOOL rtl_sem_is_valid(const SemaphoreArr& sem, UInt64 owner = 0) {
+inline bool rtl_sem_is_valid(const SemaphoreArr& sem, UInt64 owner = 0) {
   return sem[kSemaphoreOwnerIndex] == owner && sem[kSemaphoreCountIndex] > 0;
 }
 
 /// @brief Releases the semaphore, resetting its owner and count.
 /// @param sem
 /// @return
-inline BOOL rtl_sem_release(SemaphoreArr& sem) {
+inline bool rtl_sem_release(SemaphoreArr& sem) {
   sem[kSemaphoreOwnerIndex] = 0;
   sem[kSemaphoreCountIndex] = 0;
 
-  return TRUE;
+  return true;
 }
 
 /// @brief Initializes the semaphore with an owner and a count of zero.
 /// @param sem the semaphore array to use.
 /// @param owner the owner to set, could be anything identifitable.
 /// @return
-inline BOOL rtl_sem_acquire(SemaphoreArr& sem, UInt64 owner) {
+inline bool rtl_sem_acquire(SemaphoreArr& sem, const UInt64 owner) {
   if (!owner) {
     err_global_get() = kErrorInvalidData;
-    return FALSE;  // Invalid owner
+    return false;  // Invalid owner
   }
 
   sem[kSemaphoreOwnerIndex] = owner;
   sem[kSemaphoreCountIndex] = 0;
 
-  return TRUE;
+  return true;
 }
 
 /// @brief Waits for the semaphore to be available, blocking until it is.
@@ -63,50 +63,50 @@ inline BOOL rtl_sem_acquire(SemaphoreArr& sem, UInt64 owner) {
 /// @param timeout
 /// @param condition condition pointer.
 /// @return
-inline BOOL rtl_sem_wait(SemaphoreArr& sem, UInt64 owner, UInt64 timeout,
-                         BOOL* condition = nullptr) {
+inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 timeout,
+                         bool& condition) {
   if (!rtl_sem_is_valid(sem, owner)) {
-    return FALSE;
+    return false;
   }
 
-  if (timeout <= 0) {
+  if (timeout < 1) {
     err_global_get() = kErrorTimeout;
 
-    return FALSE;
+    return false;
   }
 
-  if (!condition || *condition) {
+  if (!condition) {
     if (sem[kSemaphoreCountIndex] == 0) {
       err_global_get() = kErrorUnavailable;
-      return FALSE;
+      return false;
     }
 
     err_global_get() = kErrorSuccess;
     sem[kSemaphoreCountIndex]--;
 
-    return TRUE;
+    return true;
   }
 
   HardwareTimer timer(timeout);
-  BOOL          ret = timer.Wait();
+  bool          ret = timer.Wait();
 
   if (ret) {
-    if (!condition || *condition) {
+    if (!condition) {
       if (sem[kSemaphoreCountIndex] == 0) {
         err_global_get() = kErrorUnavailable;
-        return FALSE;
+        return false;
       }
 
       err_global_get() = kErrorSuccess;
       sem[kSemaphoreCountIndex]--;
 
-      return TRUE;
+      return true;
     }
   }
 
   err_global_get() = kErrorTimeout;
 
-  return FALSE;  // Failed to acquire semaphore
+  return false;  // Failed to acquire semaphore
 }
 }  // namespace Kernel
 

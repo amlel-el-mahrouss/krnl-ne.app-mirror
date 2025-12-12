@@ -46,7 +46,7 @@ class Ref final {
 
   Type operator*() { return fClass; }
 
-  operator bool() { return Vettable<Type>::kValue; }
+  explicit operator bool() { return Vettable<Type>::kValue; }
   bool operator!() { return !Vettable<Type>::kValue; }
 
  private:

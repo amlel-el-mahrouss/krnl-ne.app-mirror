@@ -17,7 +17,6 @@
 #include <misc/BenchKit/HWChronometer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
-#include "NeKit/InitializerList.h"
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];

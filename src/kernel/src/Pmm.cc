@@ -6,14 +6,7 @@
 
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Pmm.h>
-
-#if defined(__NE_ARM64__)
-#include <HALKit/ARM64/Processor.h>
-#endif  // defined(__NE_ARM64__)
-
-#if defined(__NE_AMD64__)
-#include <HALKit/AMD64/Processor.h>
-#endif  // defined(__NE_AMD64__)
+#include <ArchKit/ArchKit.h>
 
 namespace Kernel {
 /***********************************************************************************/

@@ -9,7 +9,7 @@
 
 /// @brief Get launch information.
 /// @return the launch information structure.
-LaunchHelpers::LHLaunchInfo* LaunchHelpers::LHGetLaunchInfo(Void) {
+CF::CFRef<LaunchHelpers::LHLaunchInfo> LaunchHelpers::LHGetLaunchInfo(Void) {
   return static_cast<LaunchHelpers::LHLaunchInfo*>(
-      libsys_syscall_arg_1(libsys_hash_64("__LHGetLaunchInfo")));
+      libsys_syscall_arg_1(libsys_hash_64("__LHGetLaunchInfoRef")));
 }

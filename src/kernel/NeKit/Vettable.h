@@ -29,7 +29,7 @@ struct INotVettable {
   NE_COPY_DEFAULT(INotVettable)
 };
 
-template <typename T>
+template <class Type>
 struct Vettable final {
   static constexpr bool kValue = false;
 };
@@ -50,9 +50,9 @@ concept IsVettable = requires(OnFallback fallback) {
   { Vettable<T>::kValue ? true : fallback() };
 };
 
-template <typename T, typename OnFallback>
+template <class Type, typename OnFallback>
 concept IsNotVettable = requires(OnFallback fallback) {
-  { !Vettable<T>::kValue ? true : fallback() };
+  { !Vettable<Type>::kValue ? true : fallback() };
 };
 }  // namespace Kernel
 

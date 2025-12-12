@@ -1,4 +1,4 @@
-name: BootZ CI (ATA PIO)
+name: BootZ CI (Develop,AHCI)
 
 on:
   push:

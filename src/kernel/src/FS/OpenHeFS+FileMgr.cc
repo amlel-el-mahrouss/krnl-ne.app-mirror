@@ -50,6 +50,24 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
     kout << "OpenHeFS: Create called with null or empty path\n";
     return nullptr;
   }
+
+  // AMLALE: TODO, its own helper!
+  SizeT len = oe_string_len<Char>(path);
+
+#if defined(__clang__)
+  Utf8Char out[len];
+  rt_set_memory(out, 0, len);
+#else
+  Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
+#endif
+
+  for (SizeT indx = 0UL; indx < len; ++indx) {
+    out[indx] = path[indx];
+  }
+
+  if (mParser->CreateINode(&mDriveTrait, 0, nullptr, out, 0))
+    return nullptr;  // AMLALE TODO: FetchINode method!
+
   return nullptr;
 }
 

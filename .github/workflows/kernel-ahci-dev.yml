@@ -1,4 +1,4 @@
-name: NeKernel CI (AHCI)
+name: NeKernel (Develop,AHCI)
 
 on:
   push:

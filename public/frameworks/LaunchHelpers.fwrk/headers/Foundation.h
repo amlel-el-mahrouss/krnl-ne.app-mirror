@@ -20,17 +20,27 @@ inline constexpr auto kMaxArgs = 256;
 struct LHLaunchInfo final {
   CF::CFString    fExecutablePath{kMaxPath};
   CF::CFString    fWorkingDirectory{kMaxPath};
-  CF::CFString    fArguments[kMaxArgs];
+  CF::CFRef<CF::CFString>    fArguments[kMaxArgs];
   CF::CFString    fEnvironment{kMaxPath};
   CF::CFInteger64 fUID{0};
   CF::CFInteger64 fGID{0};
 
+  LHLaunchInfo() = default;
+  ~LHLaunchInfo() = default;
+
+  LIBSYS_COPY_DELETE(LHLaunchInfo)
+
   explicit operator bool() { return fUID && fGID; }
+
+  CF::CFRef<CF::CFString>* begin() { return fArguments; }
+  CF::CFRef<CF::CFString>* end() { return fArguments + kMaxArgs; }
+
+  SizeT size() { return kMaxArgs; }
 };
 
 using LHLaunchInfoPtr = LHLaunchInfo*;
 
 /// @brief Get launch information.
 /// @return the launch information structure.
-LHLaunchInfo* LHGetLaunchInfo(Void);
+CF::CFRef<LHLaunchInfo> LHGetLaunchInfo(Void);
 }  // namespace LaunchHelpers

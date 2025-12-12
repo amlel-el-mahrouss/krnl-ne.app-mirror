@@ -26,16 +26,18 @@ constexpr ATTRIBUTE(unused) static UInt32 EXT2_SUPERBLOCK_BLOCK      = 1;
 constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_SMALL                  = 2;
 constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_LARGE                  = 1;
 
+namespace Detail {
 static inline SizeT ext2_min(SizeT a, SizeT b) {
   return a < b ? a : b;
 }
 
-struct Ext2GroupInfo {
+struct Ext2GroupInfo final {
   EXT2_GROUP_DESCRIPTOR* groupDesc;
   UInt32                 groupDescriptorBlock;
   UInt32                 offsetInGroupDescBlock;
   UInt8*                 blockBuffer;
 };
+}  // namespace Detail
 
 // Convert EXT2 block number -> LBA (sector index) for Drive I/O.
 static inline UInt32 ext2_block_to_lba(Ext2Context* ctx, UInt32 blockNumber) {
@@ -169,7 +171,7 @@ static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node, S
       return ErrorOr<voidPtr>(5);  // block read failed
     }
 
-    SizeT chunk = ext2_min(remaining, blockSize - offsetInBlock);
+    SizeT chunk = ::Detail::ext2_min(remaining, blockSize - offsetInBlock);
     rt_copy_memory_safe(static_cast<void*>(static_cast<UInt8*>(blockBuf) + offsetInBlock),
                         static_cast<void*>(dest), chunk, chunk);
 
@@ -185,9 +187,9 @@ static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node, S
 }
 
 // Get group descriptor information for a given block/inode number
-static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
+static ErrorOr<::Detail::Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
                                                               UInt32       targetBlockOrInode) {
-  if (!ctx || !ctx->superblock || !ctx->drive) return ErrorOr<Ext2GroupInfo*>(kErrorInvalidData);
+  if (!ctx || !ctx->superblock || !ctx->drive) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
 
   UInt32 blockSize      = ctx->BlockSize();
   UInt32 blocksPerGroup = ctx->superblock->fBlocksPerGroup;
@@ -195,7 +197,7 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
   UInt32 totalBlocks    = ctx->superblock->fBlockCount;
   UInt32 totalInodes    = ctx->superblock->fInodeCount;
 
-  if (blocksPerGroup == 0 || inodesPerGroup == 0) return ErrorOr<Ext2GroupInfo*>(kErrorInvalidData);
+  if (blocksPerGroup == 0 || inodesPerGroup == 0) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
 
   // block group index
   UInt32 groupIndex = 0;
@@ -215,7 +217,7 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
 
   // Calculate number of block groups
   UInt32 groupsCount = static_cast<UInt32>((totalBlocks + blocksPerGroup - 1) / blocksPerGroup);
-  if (groupIndex >= groupsCount) return ErrorOr<Ext2GroupInfo*>(kErrorInvalidData);
+  if (groupIndex >= groupsCount) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
 
   // Determine GDT start block
   UInt32 gdtStartBlock =
@@ -232,18 +234,18 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
 
   // Allocate buffer and read the block containing the descriptor
   auto blockBuffer = mm_alloc_ptr(blockSize, true, false);
-  if (!blockBuffer) return ErrorOr<Ext2GroupInfo*>(kErrorHeapOutOfMemory);
+  if (!blockBuffer) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorHeapOutOfMemory);
 
   UInt32 groupDescriptorLba = ext2_block_to_lba(ctx, groupDescriptorBlock);
   if (!ext2_read_block(ctx->drive, groupDescriptorLba, blockBuffer, blockSize)) {
     mm_free_ptr(blockBuffer);
-    return ErrorOr<Ext2GroupInfo*>(kErrorDisk);
+    return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorDisk);
   }
 
-  auto groupInfo = (Ext2GroupInfo*) mm_alloc_ptr(sizeof(Ext2GroupInfo), true, false);
+  auto groupInfo = (::Detail::Ext2GroupInfo*) mm_alloc_ptr(sizeof(::Detail::Ext2GroupInfo), true, false);
   if (!groupInfo) {
     mm_free_ptr(blockBuffer);
-    return ErrorOr<Ext2GroupInfo*>(kErrorHeapOutOfMemory);
+    return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorHeapOutOfMemory);
   }
 
   groupInfo->groupDesc = reinterpret_cast<EXT2_GROUP_DESCRIPTOR*>(
@@ -252,7 +254,7 @@ static ErrorOr<Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
   groupInfo->offsetInGroupDescBlock = offsetInGroupDescBlock;
   groupInfo->blockBuffer            = reinterpret_cast<UInt8*>(blockBuffer);
 
-  return ErrorOr<Ext2GroupInfo*>(groupInfo);
+  return ErrorOr<::Detail::Ext2GroupInfo*>(groupInfo);
 }
 
 // Allocate a new block
@@ -324,7 +326,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
       auto groupInfoRes = ext2_get_group_descriptor_info(ctx, node->inodeNumber);
       if (groupInfoRes.HasError()) return ErrorOr<Void*>(groupInfoRes.Error());
 
-      auto groupInfo   = groupInfoRes.Leak().Leak();  // Ref<Ext2GroupInfo*>
+      auto groupInfo   = groupInfoRes.Leak().Leak();  // Ref<::Detail::Ext2GroupInfo*>
       auto newBlockRes = ext2_alloc_block(ctx, groupInfo->groupDesc);
       if (newBlockRes.HasError()) {
         mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
@@ -332,7 +334,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
         return ErrorOr<Void*>(newBlockRes.Error());
       }
 
-      node->inode.fBlock[EXT2_SINGLE_INDIRECT_INDEX] = newBlockRes.Leak();
+      node->inode.fBlock[EXT2_SINGLE_INDIRECT_INDEX] = newBlockRes.Leak().Leak();
 
       UInt32 gdtLba = ext2_block_to_lba(ctx, groupInfo->groupDescriptorBlock);
       if (!ext2_write_block(ctx->drive, gdtLba, groupInfo->blockBuffer, blockSize)) {
@@ -391,7 +393,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
         return ErrorOr<Void*>(newBlockRes.Error());
       }
 
-      node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX] = newBlockRes.Leak();
+      node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX] = newBlockRes.Leak().Leak();
 
       UInt32 gdtLba = ext2_block_to_lba(ctx, groupInfo->groupDescriptorBlock);
       if (!ext2_write_block(ctx->drive, gdtLba, groupInfo->blockBuffer, blockSize)) {
@@ -445,7 +447,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
         return ErrorOr<Void*>(newBlockRes.Error());
       }
 
-      singleIndirectBlock = newBlockRes.Leak();
+      singleIndirectBlock = newBlockRes.Leak().Leak();
       doublePtr[firstIdx] = singleIndirectBlock;
 
       // Write back GDT
@@ -595,7 +597,7 @@ static ErrorOr<Void*> ext2_add_dir_entry(Ext2Context* ctx, Ext2Node* parentDirNo
         return ErrorOr<Void*>(groupInfoRes.Error());
       }
 
-      auto groupInfo     = *groupInfoRes.Leak();  // Dereference to get Ext2GroupInfo*
+      auto groupInfo     = *groupInfoRes.Leak();  // Dereference to get ::Detail::Ext2GroupInfo*
       auto allocBlockRes = ext2_alloc_block(ctx, groupInfo->groupDesc);
       if (!allocBlockRes) {
         mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
@@ -708,7 +710,7 @@ static ErrorOr<Void*> ext2_add_dir_entry(Ext2Context* ctx, Ext2Node* parentDirNo
     return ErrorOr<Void*>(groupInfoResult.Error());
   }
 
-  auto groupInfo   = *groupInfoResult.Leak();  // Dereference to get Ext2GroupInfo*
+  auto groupInfo   = *groupInfoResult.Leak();  // Dereference to get ::Detail::Ext2GroupInfo*
   auto newBlockRes = ext2_alloc_block(ctx, groupInfo->groupDesc);
   if (!newBlockRes) {
     mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
@@ -820,7 +822,7 @@ static ErrorOr<Void*> ext2_write_inode(Ext2Context* ctx, Ext2Node* node) {
   auto groupInfoResult = ext2_get_group_descriptor_info(ctx, node->inodeNumber);
   if (!groupInfoResult) return ErrorOr<Void*>(groupInfoResult.Error());
 
-  auto groupInfo = *groupInfoResult.Leak();  // Dereference to get Ext2GroupInfo*
+  auto groupInfo = *groupInfoResult.Leak();  // Dereference to get ::Detail::Ext2GroupInfo*
 
   // Calculate inode table position
   UInt32 inodeTableBlock = groupInfo->groupDesc->fInodeTable;
@@ -1131,7 +1133,7 @@ void Ext2FileSystemParser::Write(NodePtr node, void* data, Int32 flags, SizeT si
     }
 
     UInt32 bytesInCurrentBlock =
-        static_cast<UInt32>(ext2_min(size - bytesWritten, blockSize - offsetInBlock));
+        static_cast<UInt32>(::Detail::ext2_min(size - bytesWritten, blockSize - offsetInBlock));
     rt_copy_memory_safe(src, static_cast<void*>((UInt8*) blockBuf + offsetInBlock),
                         bytesInCurrentBlock, blockSize - offsetInBlock);
 

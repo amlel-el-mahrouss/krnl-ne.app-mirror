@@ -1,4 +1,4 @@
-name: NeKernel CI (ATA PIO)
+name: NeKernel (Develop,ATA PIO)
 
 on:
   push:

@@ -51,12 +51,22 @@ Size urt_string_len(const Utf8Char* str);
 /// =========================================================== ///
 
 template <typename CharType = Char>
-inline SizeT oe_string_len(const CharType* str) {
+inline constexpr SizeT oe_string_len(const CharType* str) {
   if (!str) return 0;
 
+#if __cplusplus == 202302L
+  if consteval {
+    return ARRAY_SIZE(str);
+  } else {
+    SizeT len{0};
+    while (str[len] != 0) ++len;
+    return len;
+  }
+#else
   SizeT len{0};
 
   while (str[len] != 0) ++len;
   return len;
+#endif
 }
 }  // namespace Kernel

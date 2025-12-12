@@ -16,7 +16,7 @@ namespace Kernel {
 /// ================================================================================
 /// @brief ErrorOr class for error handling.
 /// ================================================================================
-template <typename T>
+template <class T>
 class ErrorOr final {
  public:
   explicit ErrorOr() = default;

@@ -11,8 +11,8 @@
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
 
-#define NE_VETTABLE : public ::Kernel::IVettable
-#define NE_NOT_VETTABLE : public ::Kernel::INotVettable
+#define NE_VETTABLE final : public ::Kernel::IVettable
+#define NE_NOT_VETTABLE final : public ::Kernel::INotVettable
 
 namespace Kernel {
 /// @brief Vet interface for objects.

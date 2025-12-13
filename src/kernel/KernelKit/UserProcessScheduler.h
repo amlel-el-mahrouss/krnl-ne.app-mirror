@@ -32,7 +32,7 @@ class UserProcessHelper;
 /// @name UserProcess
 /// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class UserProcess final NE_VETTABLE {
+class UserProcess NE_VETTABLE {
  public:
   explicit UserProcess();
   ~UserProcess();

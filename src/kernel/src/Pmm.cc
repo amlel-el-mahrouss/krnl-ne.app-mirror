@@ -4,9 +4,9 @@
 
 ======================================== */
 
+#include <ArchKit/ArchKit.h>
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Pmm.h>
-#include <ArchKit/ArchKit.h>
 
 namespace Kernel {
 /***********************************************************************************/

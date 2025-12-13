@@ -32,7 +32,7 @@ class IDriverBase {
 
   using PtrType = VoidPtr;
 
-  virtual constexpr BOOL            IsCastable() { return NO; }
+  virtual constexpr BOOL  IsCastable() { return NO; }
   virtual constexpr BOOL  IsActive() { return NO; }
   virtual PtrType         Leak() { return nullptr; }
   virtual constexpr Int32 Type() { return kInvalidType; }

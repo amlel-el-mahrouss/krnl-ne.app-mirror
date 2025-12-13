@@ -29,17 +29,21 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
  public:
   NE_COPY_DEFAULT(IPEFDylibObject)
 
+  using DylibTraitsPtr   = DylibTraits*;
+  using DylibTraitsPtrX2 = DylibTraitsPtr*;
+
  private:
-  DylibTraits* fMounted{nullptr};
+  DylibTraitsPtr fMounted{nullptr};
 
  public:
-  DylibTraits** GetAddressOf() { return &fMounted; }
+  DylibTraitsPtrX2 GetAddressOf() { return &fMounted; }
 
-  DylibTraits* Get() { return fMounted; }
+  DylibTraitsPtr Get() { return fMounted; }
 
  public:
-  void Mount(DylibTraits* to_mount) {
-    if (!to_mount || !to_mount->ImageObject) return;
+  void Mount(DylibTraitsPtr to_mount) {
+    if (!to_mount) return;
+    if (!to_mount->ImageObject) return;
 
     fMounted = to_mount;
 
@@ -62,7 +66,7 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
     if (symbol_name == nullptr || *symbol_name == 0) return nullptr;
     if (len > kPathLen || len < 1) return nullptr;
 
-    auto ret = reinterpret_cast<SymbolType>(fLoader->FindSymbol(symbol_name, kind).Leak().Leak());
+    auto ret = static_cast<SymbolType>(fLoader->FindSymbol(symbol_name, kind).Leak().Leak());
 
     if (!ret) {
       if (kind == kPefCode) return (VoidPtr) &__ne_pure_call;
@@ -74,10 +78,12 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
   }
 
  private:
-  PEFLoader* fLoader{nullptr};
+  using LoaderType = PEFLoader;
+
+  LoaderType* fLoader{nullptr};
 };
 
-typedef IPEFDylibObject* IDylibRef;
+using IDylibRef = IPEFDylibObject*;
 
 EXTERN_C IDylibRef rtl_init_dylib_pef(UserProcess& header);
 EXTERN_C Void      rtl_fini_dylib_pef(UserProcess& header, IDylibRef lib, Bool* successful);

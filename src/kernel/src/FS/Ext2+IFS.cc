@@ -188,8 +188,9 @@ static ErrorOr<voidPtr> ext2_read_inode_data(Ext2Context* ctx, Ext2Node* node, S
 
 // Get group descriptor information for a given block/inode number
 static ErrorOr<::Detail::Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Context* ctx,
-                                                              UInt32       targetBlockOrInode) {
-  if (!ctx || !ctx->superblock || !ctx->drive) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
+                                                                        UInt32 targetBlockOrInode) {
+  if (!ctx || !ctx->superblock || !ctx->drive)
+    return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
 
   UInt32 blockSize      = ctx->BlockSize();
   UInt32 blocksPerGroup = ctx->superblock->fBlocksPerGroup;
@@ -197,7 +198,8 @@ static ErrorOr<::Detail::Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Cont
   UInt32 totalBlocks    = ctx->superblock->fBlockCount;
   UInt32 totalInodes    = ctx->superblock->fInodeCount;
 
-  if (blocksPerGroup == 0 || inodesPerGroup == 0) return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
+  if (blocksPerGroup == 0 || inodesPerGroup == 0)
+    return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorInvalidData);
 
   // block group index
   UInt32 groupIndex = 0;
@@ -242,7 +244,8 @@ static ErrorOr<::Detail::Ext2GroupInfo*> ext2_get_group_descriptor_info(Ext2Cont
     return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorDisk);
   }
 
-  auto groupInfo = (::Detail::Ext2GroupInfo*) mm_alloc_ptr(sizeof(::Detail::Ext2GroupInfo), true, false);
+  auto groupInfo =
+      (::Detail::Ext2GroupInfo*) mm_alloc_ptr(sizeof(::Detail::Ext2GroupInfo), true, false);
   if (!groupInfo) {
     mm_free_ptr(blockBuffer);
     return ErrorOr<::Detail::Ext2GroupInfo*>(kErrorHeapOutOfMemory);

@@ -18,14 +18,14 @@ inline constexpr auto kMaxArgs = 256;
 /// @brief Launch information structure.
 /// @note This structure is read-only. Modyfing its members wo't have any effect.
 struct LHLaunchInfo final {
-  CF::CFString    fExecutablePath{kMaxPath};
-  CF::CFString    fWorkingDirectory{kMaxPath};
-  CF::CFRef<CF::CFString>    fArguments[kMaxArgs];
-  CF::CFString    fEnvironment{kMaxPath};
-  CF::CFInteger64 fUID{0};
-  CF::CFInteger64 fGID{0};
+  CF::CFString            fExecutablePath{kMaxPath};
+  CF::CFString            fWorkingDirectory{kMaxPath};
+  CF::CFRef<CF::CFString> fArguments[kMaxArgs];
+  CF::CFString            fEnvironment{kMaxPath};
+  CF::CFInteger64         fUID{0};
+  CF::CFInteger64         fGID{0};
 
-  LHLaunchInfo() = default;
+  LHLaunchInfo()  = default;
   ~LHLaunchInfo() = default;
 
   LIBSYS_COPY_DELETE(LHLaunchInfo)

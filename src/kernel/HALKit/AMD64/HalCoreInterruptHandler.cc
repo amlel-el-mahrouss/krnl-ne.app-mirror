@@ -7,9 +7,9 @@
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/UserMgr.h>
+#include <NeKit/Atom.h>
 #include <NeKit/KString.h>
 #include <SignalKit/Signals.h>
-#include <NeKit/Atom.h>
 
 EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip);
 EXTERN_C Kernel::UIntPtr kApicBaseAddress;

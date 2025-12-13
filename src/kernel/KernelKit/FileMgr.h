@@ -265,7 +265,7 @@ class HeFileSystemMgr final : public IFilesystemMgr {
 
  private:
   HeFileSystemParser* mParser{nullptr};
-  DriveTrait mDriveTrait;
+  DriveTrait          mDriveTrait;
 };
 
 #endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__

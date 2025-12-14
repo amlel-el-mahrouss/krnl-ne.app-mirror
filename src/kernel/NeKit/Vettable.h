@@ -15,6 +15,7 @@
   final:            \
   public            \
   ::Kernel::IVettable
+
 #define NE_NOT_VETTABLE \
   final:                \
   public                \
@@ -29,26 +30,14 @@ struct IVettable {
   NE_COPY_DEFAULT(IVettable)
 };
 
-struct INotVettable {
-  explicit INotVettable() = default;
-  virtual ~INotVettable() = default;
-
-  NE_COPY_DEFAULT(INotVettable)
-};
-
 template <class Type>
 struct Vettable final {
-  static constexpr bool kValue   = false;
-};
-
-template <>
-struct Vettable<INotVettable> final {
-  static constexpr bool kValue   = false;
+  static constexpr bool kValue = false;
 };
 
 template <>
 struct Vettable<IVettable> final {
-  static constexpr bool kValue   = true;
+  static constexpr bool kValue = true;
 };
 
 /// @brief Concept version of Vettable.

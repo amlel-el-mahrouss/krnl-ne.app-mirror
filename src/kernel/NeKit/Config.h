@@ -15,7 +15,10 @@
 #error !!! NeKernel compiles with C++20 as of December 4, 2025 !!!
 #endif
 
-#define NE_ICODEC final : public ::Kernel::ICodec
+#define NE_ICODEC \
+  final:          \
+  public          \
+  ::Kernel::ICodec
 
 /// @brief The **Kernel** namespace.
 namespace Kernel {
@@ -114,7 +117,7 @@ concept IsSerializable = requires() {
 
 template <class Type>
 concept IsNotSerializable = requires() {
-    { !Type::kValue };
+  { !Type::kValue };
 };
 
 /// @brief Encoding interface, used as a proxy to convert T to Char*
@@ -190,9 +193,9 @@ struct FalseResult final {};
 
 template <class Type>
 struct TrueResult final {
-    using ResultType = Type;
-    using ResultTypeRef = ResultType&;
+  using ResultType    = Type;
+  using ResultTypeRef = ResultType&;
 
-    static constexpr bool kValue = true;
+  static constexpr bool kValue = true;
 };
 }  // namespace Kernel

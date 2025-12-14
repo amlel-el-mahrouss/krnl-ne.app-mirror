@@ -30,10 +30,9 @@ struct INotVettable {
   NE_COPY_DEFAULT(INotVettable)
 };
 
+// false_type equivalent tag.
 template <class Type>
-struct Vettable final {
-  static constexpr bool kValue = false;
-};
+struct Vettable final {};
 
 template <>
 struct Vettable<INotVettable> final {

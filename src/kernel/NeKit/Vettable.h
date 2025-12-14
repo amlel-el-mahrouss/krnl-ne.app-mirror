@@ -11,8 +11,14 @@
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
 
-#define NE_VETTABLE final : public ::Kernel::IVettable
-#define NE_NOT_VETTABLE final : public ::Kernel::INotVettable
+#define NE_VETTABLE \
+  final:            \
+  public            \
+  ::Kernel::IVettable
+#define NE_NOT_VETTABLE \
+  final:                \
+  public                \
+  ::Kernel::INotVettable
 
 namespace Kernel {
 /// @brief Vet interface for objects.
@@ -30,29 +36,30 @@ struct INotVettable {
   NE_COPY_DEFAULT(INotVettable)
 };
 
-// false_type equivalent tag.
 template <class Type>
-struct Vettable final {};
+struct Vettable final {
+  static constexpr bool kValue   = false;
+};
 
 template <>
 struct Vettable<INotVettable> final {
-  static constexpr bool kValue = false;
+  static constexpr bool kValue   = false;
 };
 
 template <>
 struct Vettable<IVettable> final {
-  static constexpr bool kValue = true;
+  static constexpr bool kValue   = true;
 };
 
 /// @brief Concept version of Vettable.
-template <typename T, typename OnFallback>
+template <typename Type, typename OnFallback>
 concept IsVettable = requires(OnFallback fallback) {
-  { Vettable<T>::kValue ? true : fallback() };
+  { Vettable<Type>::kValue ? TrueResult<Type>::kValue : fallback() };
 };
 
 template <class Type, typename OnFallback>
 concept IsNotVettable = requires(OnFallback fallback) {
-  { !Vettable<Type>::kValue ? true : fallback() };
+  { !Vettable<Type>::kValue ? TrueResult<Type>::kValue : fallback() };
 };
 }  // namespace Kernel
 

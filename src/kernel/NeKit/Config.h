@@ -15,6 +15,8 @@
 #error !!! NeKernel compiles with C++20 as of December 4, 2025 !!!
 #endif
 
+#define NE_ICODEC final : public ::Kernel::ICodec
+
 /// @brief The **Kernel** namespace.
 namespace Kernel {
 using voidPtr = void*;
@@ -105,6 +107,16 @@ inline Args&& move(Args&& arg) {
   return static_cast<Args&&>(arg);
 }
 
+template <class Type>
+concept IsSerializable = requires() {
+  { Type::kValue };
+};
+
+template <class Type>
+concept IsNotSerializable = requires() {
+    { !Type::kValue };
+};
+
 /// @brief Encoding interface, used as a proxy to convert T to Char*
 /// Used to cast A to B or B to A.
 class ICodec {
@@ -138,17 +150,18 @@ class ICodec {
 
   /// @brief Convert T to a Y type.
   /// @note The class must be serializable, otherwise this will fail.
-  /// @tparam T the class type of type.
-  /// @tparam Y the result class.
+  /// @tparam Concept the class type of type.
+  /// @tparam RetType the result class.
   /// @param type the class to cast.
   /// @return the class as Y.
-  template <typename T, typename Y>
-  Y As(T type) {
-    if (type.template IsSerializable()) {
-      return type.template Error();
-    }
+  template <IsSerializable Concept, typename RetType>
+  RetType As(Concept& type) {
+    return type.template As<RetType>();
+  }
 
-    return type.template As<Y>();
+  template <IsNotSerializable Concept>
+  Void As(Concept& type) {
+    static_assert(type, "Concept is not serializable.");
   }
 };
 
@@ -170,5 +183,16 @@ class ISchedulable {
 
   /// @brief Is this object offloading to another CPU?
   virtual Bool HasMP() { return NO; }
+};
+
+template <class Type>
+struct FalseResult final {};
+
+template <class Type>
+struct TrueResult final {
+    using ResultType = Type;
+    using ResultTypeRef = ResultType&;
+
+    static constexpr bool kValue = true;
 };
 }  // namespace Kernel

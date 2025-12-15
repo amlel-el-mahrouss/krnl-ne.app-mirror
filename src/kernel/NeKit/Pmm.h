@@ -15,6 +15,7 @@ namespace Kernel {
 class Pmm;
 class PTEWrapper;
 
+// AMLALE: A PMM stands for Page Memory Manager. Which guarantees page retrieval and free.
 class Pmm final {
  public:
   explicit Pmm();

@@ -12,6 +12,7 @@
 #include <KernelKit/HeapMgr.h>
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
+#include <NeKit/Nullable.h>
 #include <NeKit/Vettable.h>
 
 namespace Kernel {
@@ -29,6 +30,13 @@ class Ref final {
 
   Ref(Type* cls) : fClass(*cls) {}
   Ref(Type cls) : fClass(cls) {}
+
+  Ref& operator=(nullPtr) { return *this; }
+
+  Ref& operator=(Type* ref) {
+    fClass = *ref;
+    return *this;
+  }
 
   Ref& operator=(Type ref) {
     fClass = ref;
@@ -59,11 +67,13 @@ class NonNullRef final {
   using RefType = Ref<T>;
   using Type    = T;
 
-  NonNullRef()        = delete;
-  NonNullRef(nullPtr) = delete;
+  NonNullRef() = delete;
 
-  NonNullRef(Type* ref) : fRef(ref) { MUST_PASS(ref); }
-  NonNullRef(RefType ref) : fRef(ref) { MUST_PASS(ref); }
+  NonNullRef(Type* ref) : fRef(ref) {}
+
+  NonNullRef(nullPtr ref) = delete;
+
+  NonNullRef(RefType ref) : fRef(ref) {}
 
   Ref<T>& operator->() {
     MUST_PASS(fRef);

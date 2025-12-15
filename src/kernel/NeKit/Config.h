@@ -189,7 +189,12 @@ class ISchedulable {
 };
 
 template <class Type>
-struct FalseResult final {};
+struct FalseResult final {
+  using ResultType    = Type;
+  using ResultTypeRef = ResultType&;
+
+  static constexpr bool kValue = false;
+};
 
 template <class Type>
 struct TrueResult final {

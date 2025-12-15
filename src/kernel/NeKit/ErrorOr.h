@@ -25,10 +25,15 @@ class ErrorOr final {
  public:
   using RefType = Ref<T>;
   using Type    = T;
+  using TypePtr = T*;
 
-  explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {}
+  explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {
+    // AMLALE: Invalidate the value of mRef to make computational evaluations false.
+    mRef = nullptr;
+  }
+
   explicit ErrorOr(nullPtr) {}
-  explicit ErrorOr(Type* klass) : mRef(klass) {}
+  explicit ErrorOr(TypePtr klass) : mRef(klass) {}
   explicit ErrorOr(Type klass) : mRef(klass) {}
 
   ErrorOr& operator=(const ErrorOr&) = default;

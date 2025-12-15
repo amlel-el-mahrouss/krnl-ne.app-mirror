@@ -40,12 +40,12 @@ struct Vettable<IVettable> final {
   static constexpr bool kValue = true;
 };
 
-using FallbackType = bool (*)(bool);
+using FallbackType = bool (*)(bool type_value);
 
 /// @brief Concept version of Vettable.
 template <typename Type, FallbackType OnFallback>
 concept IsVettable = requires() {
-  { Vettable<Type>::kValue ? TrueResult<Type>::kValue : OnFallback(FalseResult<Type>::kValue) };
+  { Vettable<Type>::kValue ? TrueResult<Type>::kValue : OnFallback(PropertyResult<Type>::kValue) };
 };
 }  // namespace Kernel
 

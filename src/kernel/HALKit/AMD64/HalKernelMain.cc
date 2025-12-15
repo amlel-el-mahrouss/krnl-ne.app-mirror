@@ -17,6 +17,7 @@
 #include <misc/BenchKit/HWChronometer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
+#include "NeKit/Config.h"
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
@@ -142,9 +143,15 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   NeFS::fs_init_nefs();
 #endif
 
-  UserProcessScheduler::The().SwitchTeam(kHighUserTeam);
+  UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  rtl_create_user_process([]() -> void { while (YES); }, "NeKernel");
+  // AMLALE: TODO: Prosan, Process sanitizer.
+  rtl_create_user_process([]() -> void { while (YES); }, "Prosan");
+
+  UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
+
+  // AMLALE: TODO, Vet sanitizer.
+  rtl_create_user_process([]() -> void { while (YES); }, "Vetsan");
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 

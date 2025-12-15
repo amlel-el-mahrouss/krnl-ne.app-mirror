@@ -203,4 +203,12 @@ struct TrueResult final {
 
   static constexpr bool kValue = true;
 };
+
+template <class Type>
+struct PropertyResult final {
+  using ResultType    = Type;
+  using ResultTypeRef = ResultType&;
+
+  static constexpr bool kValue = Type::kValue;
+};
 }  // namespace Kernel

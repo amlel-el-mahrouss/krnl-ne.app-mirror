@@ -14,19 +14,26 @@
 namespace LibSystem::Verify {
 /// @author 0xf00sec, and Amlal El Mahrouss
 /// @brief safe cast operator.
-template <typename T, typename R = VoidPtr>
+template <class T, class R>
 inline R sys_safe_cast(const T* ptr) {
-  _rtl_assert(ptr, "safe cast failed!");
-  return static_cast<R>(const_cast<T*>(ptr));
+  ::_rtl_assert(ptr, "safe cast failed!");
+  return static_cast<R*>(const_cast<T*>(ptr));
 }
 
-template <typename T, typename U>
-struct must_cast_traits {
+template <class T, class R = Void>
+inline Void sys_safe_cast(const T* ptr) = delete;
+
+template <class T, class U>
+struct is_castable {
+  using return_type = U;
+
   constexpr static BOOL value = false;
 };
 
-template <typename T>
-struct must_cast_traits<T, T> {
+template <class T>
+struct is_castable<T, T> {
+  using return_type = T;
+
   constexpr static BOOL value = true;
 };
 
@@ -34,7 +41,7 @@ struct must_cast_traits<T, T> {
 /// @brief Safe constexpr cast.
 template <typename T, typename R>
 constexpr R* sys_constexpr_cast(T* ptr) {
-  static_assert(must_cast_traits<T, R>::value, "constexpr cast failed! types are mismatching!");
+  static_assert(is_castable<T, R>::value, "types cannot be casted.");
   return static_cast<R*>(ptr);
 }
 }  // namespace LibSystem::Verify

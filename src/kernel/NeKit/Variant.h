@@ -40,13 +40,9 @@ class Variant final {
       : fPtr((VoidPtr) stringView), fKind(VariantKind::kString) {}
 
   explicit Variant(JsonObject<>* json) : fPtr((VoidPtr) json), fKind(VariantKind::kJson) {}
-
   explicit Variant(TOMLObject* toml) : fPtr((VoidPtr) toml), fKind(VariantKind::kTOML) {}
-
   explicit Variant(nullPtr ptr) : fPtr(ptr), fKind(VariantKind::kNull) {}
-
-  explicit Variant(SWAP_DISK_HEADER* ptr) : fPtr(ptr), fKind(VariantKind::kSwap) {}
-
+  explicit Variant(SwapDiskHdr* ptr) : fPtr(ptr), fKind(VariantKind::kSwap) {}
   explicit Variant(VoidPtr ptr) : fPtr(ptr), fKind(VariantKind::kBlob) {}
 
  public:

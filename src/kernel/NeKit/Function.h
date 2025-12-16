@@ -27,8 +27,6 @@ class Function final {
 
   T operator()(Args&&... args) { return fFn(args...); }
 
-  T Call(Args&&... args) { return fFn(args...); }
-
   explicit operator bool() { return fFn; }
   bool     operator!() { return !fFn; }
 

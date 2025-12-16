@@ -18,19 +18,19 @@
 /// @brief Virtual memory swap disk.
 
 namespace Kernel {
-struct SWAP_DISK_HEADER;
-class DiskSwapInterface;
+struct SwapDiskHdr;
+class IDiskSwap;
 
 /// @brief Virtual memory interface to swap memory chunks onto disk.
 /// @note The class only supports the NeFS as of right now, as it is using forks to write data into
 /// disk.
-class DiskSwapInterface final {
+class IDiskSwap final {
  public:
-  explicit DiskSwapInterface() = default;
-  ~DiskSwapInterface()         = default;
+  explicit IDiskSwap() = default;
+  ~IDiskSwap()         = default;
 
-  NE_COPY_DELETE(DiskSwapInterface)
-  NE_MOVE_DELETE(DiskSwapInterface)
+  NE_COPY_DELETE(IDiskSwap)
+  NE_MOVE_DELETE(IDiskSwap)
 
  public:
   /***********************************************************************************/
@@ -40,7 +40,7 @@ class DiskSwapInterface final {
   /// @param data the data packet.
   /// @return Whether the swap was written to disk, or not.
   /***********************************************************************************/
-  BOOL Write(const Char* name, SizeT name_len, SWAP_DISK_HEADER* data);
+  BOOL Write(const Char* name, SizeT name_len, SwapDiskHdr* data);
 
   /***********************************************************************************/
   /// @brief Read memory chunk from disk.
@@ -49,7 +49,7 @@ class DiskSwapInterface final {
   /// @param data the data packet length.
   /// @return Whether the swap was fetched to disk, or not.
   /***********************************************************************************/
-  _Output SWAP_DISK_HEADER* Read(const Char* name, SizeT name_len, SizeT data_len);
+  _Output SwapDiskHdr* Read(const Char* name, SizeT name_len, SizeT data_len);
 };
 
 /// @brief Swap disk header, containing information about the held virtual memory.
@@ -60,7 +60,7 @@ class DiskSwapInterface final {
 /// @param fVirtualAddress Virtual address pointed by data.
 /// @param fBlobSz Blob's size.
 /// @param fBlob Data blob.
-typedef struct SWAP_DISK_HEADER {
+typedef struct SwapDiskHdr {
   UInt32 fMagic;
   SizeT  fHeaderSz;
   UInt64 fTeamID;
@@ -68,5 +68,5 @@ typedef struct SWAP_DISK_HEADER {
   UInt64 fVirtualAddress;
   SizeT  fBlobSz;
   UInt8  fBlob[1];
-} PACKED ALIGN(8) SWAP_DISK_HEADER;
+} PACKED ALIGN(8) SwapDiskHdr;
 }  // namespace Kernel

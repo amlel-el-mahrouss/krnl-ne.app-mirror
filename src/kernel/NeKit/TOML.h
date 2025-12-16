@@ -6,6 +6,8 @@
 
 #pragma once
 
+#include <NeKit/Config.h>
+
 namespace Kernel {
 class TOMLObject final {
  public:

@@ -59,7 +59,7 @@ namespace HAL {
         return Yes;
       }
 
-      UInt32 MakeMMFlags(Bool wr, Bool user) {
+      UInt32 MakeMMFlags(const Bool& wr, const Bool& user) {
         UInt32 flags = kMMFlagsPresent;
 
         if (wr) flags |= kMMFlagsWr;
@@ -87,7 +87,7 @@ namespace HAL {
           return nullptr;
         }
 
-        VoidPtr base = reinterpret_cast<VoidPtr>((UIntPtr) base_ptr);
+        VoidPtr base = reinterpret_cast<VoidPtr>(base_ptr);
         MUST_PASS(base);
 
         if (!base) return nullptr;
@@ -183,12 +183,6 @@ namespace HAL {
     if (is_page) return nullptr;
 
     ptr_new = kBitMapMgr.FindBitMap(kKernelBitMpStart, size, wr, user, pad);
-
-    if (!ptr_new) {
-      ke_panic(RUNTIME_CHECK_VIRTUAL_OUT_OF_MEM, "Out of memory bitmap");
-      return nullptr;
-    }
-
     return ptr_new;
   }
 

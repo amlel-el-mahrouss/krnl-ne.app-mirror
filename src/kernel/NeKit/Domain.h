@@ -4,8 +4,8 @@
 
 ======================================== */
 
-#ifndef __NE_KIT_NULLABLE_H__
-#define __NE_KIT_NULLABLE_H__
+#ifndef __NE_KIT_DOMAIN_H__
+#define __NE_KIT_DOMAIN_H__
 
 #include <NeKit/Config.h>
 
@@ -23,10 +23,15 @@ struct IsDefined<nullPtr> final {
   static constexpr bool kValue = false;
 };
 
+using NullDomain = IsDefined<nullPtr>;
+
+template <class Type>
+using Domain = IsDefined<Type>;
+
 template <class Type>
 concept IsAcceptable = requires() {
   { IsDefined<Type>::kValue };
 };
 }  // namespace Kernel
 
-#endif  // !__NE_KIT_NULLABLE_H__
+#endif  // !__NE_KIT_DOMAIN_H__

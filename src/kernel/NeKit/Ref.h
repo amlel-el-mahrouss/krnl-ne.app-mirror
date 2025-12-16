@@ -12,7 +12,7 @@
 #include <KernelKit/HeapMgr.h>
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
-#include <NeKit/Nullable.h>
+#include <NeKit/Domain.h>
 #include <NeKit/Vettable.h>
 
 namespace Kernel {

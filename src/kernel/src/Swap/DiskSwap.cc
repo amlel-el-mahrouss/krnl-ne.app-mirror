@@ -17,20 +17,17 @@ static constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
 /// @param data the data packet.
 /// @return Whether the swap was written to disk, or not.
 /***********************************************************************************/
-BOOL DiskSwapInterface::Write(const Char* fork_name, SizeT fork_name_len, SWAP_DISK_HEADER* data) {
+BOOL IDiskSwap::Write(const Char* fork_name, SizeT fork_name_len, SwapDiskHdr* data) {
   if (!fork_name || !fork_name_len) return NO;
-
   if (*fork_name == 0) return NO;
 
   if (!data || data->fMagic != kSwapDiskHeaderMagic) return NO;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
 
-  ErrorOr<Int64> ret = file.Write(fork_name, data, sizeof(SWAP_DISK_HEADER) + data->fBlobSz);
+  ErrorOr<Int64> ret = file.Write(fork_name, data, sizeof(SwapDiskHdr) + data->fBlobSz);
 
-  if (ret.Error()) return NO;
-
-  return YES;
+  return ret.Value() < kErrorSuccess;
 }
 
 /***********************************************************************************/
@@ -40,25 +37,23 @@ BOOL DiskSwapInterface::Write(const Char* fork_name, SizeT fork_name_len, SWAP_D
 /// @param data the data packet length.
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
-SWAP_DISK_HEADER* DiskSwapInterface::Read(const Char* fork_name, SizeT fork_name_len,
+SwapDiskHdr* IDiskSwap::Read(const Char* fork_name, SizeT fork_name_len,
                                           SizeT data_len) {
   if (!fork_name || !fork_name_len) return nullptr;
-
   if (*fork_name == 0) return nullptr;
 
   if (data_len > kSwapBlockMaxSize) return nullptr;
-
   if (data_len == 0) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
 
-  VoidPtr blob = file.Read(fork_name, sizeof(SWAP_DISK_HEADER) + data_len);
+  VoidPtr blob = file.Read(fork_name, sizeof(SwapDiskHdr) + data_len);
 
-  if (!blob || ((SWAP_DISK_HEADER*) blob)->fMagic != kSwapDiskHeaderMagic) {
+  if (!blob || (static_cast<SwapDiskHdr*>(blob))->fMagic != kSwapDiskHeaderMagic) {
     if (blob) mm_free_ptr(blob);
     return nullptr;
   }
 
-  return reinterpret_cast<SWAP_DISK_HEADER*>(blob);
+  return reinterpret_cast<SwapDiskHdr*>(blob);
 }
 }  // namespace Kernel

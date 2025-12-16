@@ -147,8 +147,7 @@ class ICodec {
   /// @return a1 as Char*
   template <typename OutputClass, typename FactoryClass>
   OutputClass* Construct(Char* type) {
-    FactoryClass class_fac;
-    return class_fac.template From<OutputClass>(type);
+    return FactoryClass{}.template From<OutputClass>(type);
   }
 
   /// @brief Convert T to a Y type.

@@ -1,7 +1,7 @@
 
 /* ========================================
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
 
@@ -22,7 +22,6 @@
   ::Kernel::INotVettable
 
 namespace Kernel {
-/// @brief Vet interface for objects.
 struct IVettable {
   explicit IVettable() = default;
   virtual ~IVettable() = default;

@@ -22,7 +22,8 @@
 - [NASM](https://nasm.us/)
 - [NeBuild](https://github.com/nekernel-org/nebuild)
 - CoreUtils
-- Git
+- [Git](https://git-scm.com/)
+- [Nectar](https://github.com/nekernel-org/nectar)
 
 ### **Building & Running**
 

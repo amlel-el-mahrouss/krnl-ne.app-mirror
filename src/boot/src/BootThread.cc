@@ -15,6 +15,7 @@
 #include <KernelKit/PEF.h>
 #include <modules/CoreGfx/TextGfx.h>
 
+// \brief This macro defines the maximum size of a image's stack.
 #define kBootThreadSz mib_cast(16)
 
 /// @brief External boot services symbol.
@@ -26,9 +27,8 @@ namespace Boot {
 EXTERN_C Int32 rt_jump_to_address(VoidPtr code, HEL::BootInfoHeader* handover, UInt8* stack);
 
 BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
-  // detect the format.
-  const Char* blob_bytes = reinterpret_cast<char*>(fBlob);
-
+  // detect the image format (PEF, PE32, etc.)
+  const Char* blob_bytes = static_cast<Char*>(fBlob);
   BootTextWriter writer;
 
   if (!blob_bytes) {
@@ -151,11 +151,12 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
              blob_bytes[2] == kPefMagic[2] && blob_bytes[3] == kPefMagic[3]) {
     //  =========================================  //
     //  PEF executable has been detected.
+    //  This is stricly firmware level, by convention we only accept PE32+ here.
     //  =========================================  //
 
     fStartAddress = nullptr;
 
-    writer.Write("BootZ: PEF executable detected, won't load it.\r");
+    writer.Write("BootZ: PEF executable detected, BootZ won't load it.\r");
     writer.Write("BootZ: note: PEF executables aren't supported for now.\r");
   } else {
     writer.Write("BootZ: Invalid Executable.\r");

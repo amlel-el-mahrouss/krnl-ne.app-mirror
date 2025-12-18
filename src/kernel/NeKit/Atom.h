@@ -3,12 +3,14 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
-#pragma once
+
+#ifndef __NE_KIT_ATOM_H__
+#define __NE_KIT_ATOM_H__
 
 #include <NeKit/Config.h>
 
 namespace Kernel {
-template <typename T>
+template <class TypeAtomic>
 class Atom final {
  public:
   explicit Atom() = default;
@@ -19,15 +21,19 @@ class Atom final {
   Atom(const Atom&)            = delete;
 
  public:
-  T operator[](Size bit) { return (fArrayOfAtoms & (1 << bit)); }
+  using Type = TypeAtomic;
+  
+  const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
 
-  void operator|(Size bit) { fArrayOfAtoms |= (1 << bit); }
-
-  friend Boolean operator==(Atom<T>& atomic, const T& idx) { return atomic[idx] == idx; }
-
-  friend Boolean operator!=(Atom<T>& atomic, const T& idx) { return atomic[idx] != idx; }
+  void operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
+  Atom& operator|=(const SizeT& bit) { this->operator|(bit); return *this; }
+ 
+  friend bool operator==(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) { return atomic[idx] == idx; }
+  friend bool operator!=(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) { return atomic[idx] != idx; }
 
  private:
-  T fArrayOfAtoms;
+  TypeAtomic fArrayOfAtoms;
 };
 }  // namespace Kernel
+
+#endif

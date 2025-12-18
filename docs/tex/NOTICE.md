@@ -1,8 +1,8 @@
-# Notice
+# Notice: NeKernel specifications.
 
-## CoreProcessScheduler has moved!
+## Notice: CoreProcessScheduler paper.
 
-The CPS is now part of WG02, for more information clone the following repository: [https://github.com/nekernel-org/draft](https://github.com/nekernel-org/draft).
+The CPS has been moved to WG02,for more information, clone the following repository: [https://github.com/nekernel-org/draft](https://github.com/nekernel-org/draft).
 
 ## Recommended:
 

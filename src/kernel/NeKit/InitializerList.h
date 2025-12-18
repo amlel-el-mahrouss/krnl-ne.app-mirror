@@ -1,19 +1,23 @@
 /* ========================================
 
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
+  Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
 
-#pragma once
+#ifndef __NE_KIT_INIT_LIST_H__
+#define __NE_KIT_INIT_LIST_H__
 
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
-template <class T, SizeT N>
+  // \brief Initalizer List object for containers.
+template <class Type, SizeT N>
 class InitializerList final {
  public:
-  explicit InitializerList(const T* list) {
+  InitializerList() = delete;
+  
+  explicit InitializerList(const Type* list) {
     if constexpr (N > 0) {
       for (auto i = 0UL; i < N; ++i) {
         fList[i] = list[i];
@@ -26,17 +30,20 @@ class InitializerList final {
   InitializerList& operator=(const InitializerList&) = delete;
   InitializerList(const InitializerList&)            = delete;
 
-  T*              begin() { return fList; }
-  T*              end() { return fList + N; }
+  Type*              begin() { return fList; }
+  Type*              end() { return fList + N; }
+  
   constexpr SizeT size() const { return N; }
 
-  T* operator->() { return fList; }
-  T* operator*() { return fList; }
+  Type* operator->() { return this->begin(); }
+  Type* operator*() { return this->begin(); }
 
  private:
-  T fList[N];
+  Type fList[N];
 };
 
 template <class T, SizeT N>
 using ErrorOrList = ErrorOr<InitializerList<T, N>>;
 }  // namespace Kernel
+
+#endif

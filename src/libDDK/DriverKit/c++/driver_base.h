@@ -3,13 +3,12 @@
    Copyright Amlal El Mahrouss 2025, licensed under the Apache 2.0 license.
 
    FILE: driver_base.h
-   PURPOSE: IDriverBase and friends.
+   PURPOSE: C++ Driver Wrapper.
 
    ======================================== */
 
 #pragma once
 
-#include <CompilerKit/CompilerKit.h>
 #include <libDDK/DriverKit/macros.h>
 
 #define DDK_DRIVER_IMPL \
@@ -30,12 +29,12 @@ class IDriverBase {
   NE_COPY_DELETE(IDriverBase);
   NE_MOVE_DEFAULT(IDriverBase);
 
-  using PtrType = VoidPtr;
+  using PtrType = void*;
 
-  virtual constexpr BOOL  IsCastable() { return NO; }
-  virtual constexpr BOOL  IsActive() { return NO; }
+  virtual constexpr bool  IsCastable() { return false; }
+  virtual constexpr bool  IsActive() { return false; }
   virtual PtrType         Leak() { return nullptr; }
-  virtual constexpr Int32 Type() { return kInvalidType; }
+  virtual constexpr int32_t Type() { return kInvalidType; }
 };
 
 /// @brief This concept requires the Driver to be IDriverBase compliant.
@@ -46,6 +45,6 @@ concept IsValidDriver = requires(Driver driver_base) {
 
 /// @brief Consteval helper to detect whether a template is truly based on IDriverBase.
 /// @note This helper is consteval only.
-template <IsValidDriver T>
-consteval void ce_ddk_is_valid(T) {}
+template <class Driver>
+inline bool ce_ddk_is_valid(Driver drv) { return IsValidDriver<Driver>(drv); }
 }  // namespace Kernel::DDK

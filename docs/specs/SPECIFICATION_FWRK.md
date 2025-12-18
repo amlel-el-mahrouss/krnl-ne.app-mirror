@@ -9,15 +9,17 @@
 
 ===================================
 
-# 1: The specification
+# 1: The specification:
 
 ===================================
 
-## Overview
-
 The NeKernel framework system (`.fwrk`) provides a standardized structure for creating modular, reusable libraries and components. Frameworks are self-contained packages that include headers, source code, metadata, and configuration for compilation and deployment within the NeKernel ecosystem.
 
-## Framework Directory Structure
+==================================
+
+# 2: Framework Directory Structure:
+
+==================================
 
 Each framework follows the standardized directory layout below:
 
@@ -38,7 +40,11 @@ Each framework follows the standardized directory layout below:
 └── .keep                         # Placeholder file
 ```
 
-## Component Specifications
+================================
+
+# 3: Component Specifications
+
+================================
 
 ### 1. Framework Manifest (`<FrameworkName>.json`)
 

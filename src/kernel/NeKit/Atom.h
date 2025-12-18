@@ -22,14 +22,21 @@ class Atom final {
 
  public:
   using Type = TypeAtomic;
-  
+
   const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
 
-  void operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
-  Atom& operator|=(const SizeT& bit) { this->operator|(bit); return *this; }
- 
-  friend bool operator==(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) { return atomic[idx] == idx; }
-  friend bool operator!=(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) { return atomic[idx] != idx; }
+  void  operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
+  Atom& operator|=(const SizeT& bit) {
+    this->operator|(bit);
+    return *this;
+  }
+
+  friend bool operator==(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) {
+    return atomic[idx] == idx;
+  }
+  friend bool operator!=(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) {
+    return atomic[idx] != idx;
+  }
 
  private:
   TypeAtomic fArrayOfAtoms;

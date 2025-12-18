@@ -37,8 +37,7 @@ BOOL IDiskSwap::Write(const Char* fork_name, SizeT fork_name_len, SwapDiskHdr* d
 /// @param data the data packet length.
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
-SwapDiskHdr* IDiskSwap::Read(const Char* fork_name, SizeT fork_name_len,
-                                          SizeT data_len) {
+SwapDiskHdr* IDiskSwap::Read(const Char* fork_name, SizeT fork_name_len, SizeT data_len) {
   if (!fork_name || !fork_name_len) return nullptr;
   if (*fork_name == 0) return nullptr;
 

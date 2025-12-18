@@ -5,5 +5,3 @@
 ======================================== */
 
 #include <libDDK/DriverKit/c++/driver_base.h>
-
-

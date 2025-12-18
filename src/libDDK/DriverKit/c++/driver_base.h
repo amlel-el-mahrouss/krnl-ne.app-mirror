@@ -31,9 +31,9 @@ class IDriverBase {
 
   using PtrType = void*;
 
-  virtual constexpr bool  IsCastable() { return false; }
-  virtual constexpr bool  IsActive() { return false; }
-  virtual PtrType         Leak() { return nullptr; }
+  virtual constexpr bool    IsCastable() { return false; }
+  virtual constexpr bool    IsActive() { return false; }
+  virtual PtrType           Leak() { return nullptr; }
   virtual constexpr int32_t Type() { return kInvalidType; }
 };
 
@@ -46,5 +46,7 @@ concept IsValidDriver = requires(Driver driver_base) {
 /// @brief Consteval helper to detect whether a template is truly based on IDriverBase.
 /// @note This helper is consteval only.
 template <class Driver>
-inline bool ce_ddk_is_valid(Driver drv) { return IsValidDriver<Driver>(drv); }
+inline bool ce_ddk_is_valid(Driver drv) {
+  return IsValidDriver<Driver>(drv);
+}
 }  // namespace Kernel::DDK

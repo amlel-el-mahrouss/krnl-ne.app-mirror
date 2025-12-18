@@ -28,7 +28,7 @@ EXTERN_C Int32 rt_jump_to_address(VoidPtr code, HEL::BootInfoHeader* handover, U
 
 BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
   // detect the image format (PEF, PE32, etc.)
-  const Char* blob_bytes = static_cast<Char*>(fBlob);
+  const Char*    blob_bytes = static_cast<Char*>(fBlob);
   BootTextWriter writer;
 
   if (!blob_bytes) {

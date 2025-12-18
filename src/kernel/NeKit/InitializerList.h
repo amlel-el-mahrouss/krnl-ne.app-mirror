@@ -11,12 +11,12 @@
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
-  // \brief Initalizer List object for containers.
+// \brief Initalizer List object for containers.
 template <class Type, SizeT N>
 class InitializerList final {
  public:
   InitializerList() = delete;
-  
+
   explicit InitializerList(const Type* list) {
     if constexpr (N > 0) {
       for (auto i = 0UL; i < N; ++i) {
@@ -30,9 +30,9 @@ class InitializerList final {
   InitializerList& operator=(const InitializerList&) = delete;
   InitializerList(const InitializerList&)            = delete;
 
-  Type*              begin() { return fList; }
-  Type*              end() { return fList + N; }
-  
+  Type* begin() { return fList; }
+  Type* end() { return fList + N; }
+
   constexpr SizeT size() const { return N; }
 
   Type* operator->() { return this->begin(); }

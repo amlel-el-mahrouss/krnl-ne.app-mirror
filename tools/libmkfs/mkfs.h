@@ -23,7 +23,8 @@ namespace detail {
     return static_cast<size_t>(gb) * 1024ULL * 1024ULL * 1024ULL;
   }
 
-  inline bool parse_decimal(const std::string& opt, unsigned long long& out) {
+  /// \brief Parse decimal parameter.
+  inline bool parse_decimal(const std::string& opt, long& out) {
     if (opt.empty()) return false;
     char*              endptr = nullptr;
     unsigned long long val    = std::strtoull(opt.c_str(), &endptr, 10);
@@ -32,7 +33,8 @@ namespace detail {
     return true;
   }
 
-  inline bool parse_signed(const std::string& opt, long& out, int base = 10) {
+  /// \brief Parse decimal with numerical base.
+  inline bool parse_signed(const std::string& opt, long& out, const int& base = 10) {
     out = 0L;
 
     if (opt.empty()) return true;
@@ -48,6 +50,7 @@ namespace detail {
     return true;
   }
 
+  /// \brief Helper to build arguments for filesystem tooling.
   inline std::string build_args(int argc, char** argv) {
     std::string combined;
     for (int i = 1; i < argc; ++i) {
@@ -59,7 +62,7 @@ namespace detail {
 }  // namespace detail
 
 /// @brief Helper function to get the option value from command line arguments.
-template <typename CharType>
+template <typename CharType = char>
 inline std::basic_string<CharType> get_option(const std::basic_string<CharType>& args,
                                               const std::basic_string<CharType>& option) {
   size_t pos = args.find(CharType('-') + option + CharType('='));
@@ -67,10 +70,15 @@ inline std::basic_string<CharType> get_option(const std::basic_string<CharType>&
   if (pos != std::string::npos) {
     size_t start = pos + option.length() + 2;
     size_t end   = args.find(' ', start);
+
+    if (end == std::string::npos) {
+      return {};
+    }
+
     return args.substr(start, end - start);
   }
 
-  return std::basic_string<CharType>{};
+  return {};
 }
 
 inline auto console_out() -> std::ostream& {

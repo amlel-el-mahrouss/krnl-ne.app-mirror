@@ -38,8 +38,8 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  auto opt_s    = mkfs::get_option<char>(args, "s");
-  long parsed_s = 0;
+  auto        opt_s    = mkfs::get_option<char>(args, "s");
+  std::size_t parsed_s = 0;
 
   if (!mkfs::detail::parse_signed(opt_s, parsed_s, kNumericalBase) || parsed_s == 0) {
     mkfs::console_out() << "hefs: error: Invalid sector size \"" << opt_s
@@ -67,15 +67,16 @@ int main(int argc, char** argv) {
     }
   }
 
-  auto               opt_S = mkfs::get_option<char>(args, "S");
-  unsigned long long gb    = 0;
+  auto        opt_S = mkfs::get_option<char>(args, "S");
+  std::size_t gb    = 0;
 
   if (!mkfs::detail::parse_decimal(opt_S, gb) || gb == 0ULL) {
     mkfs::console_out() << "hefs: error: Invalid disk size \"" << opt_S
                         << "\". Must be a positive integer.\n";
     return EXIT_FAILURE;
   }
-  unsigned long long max_gb = std::numeric_limits<uint64_t>::max() / (1024ULL * 1024ULL * 1024ULL);
+
+  std::size_t max_gb = std::numeric_limits<uint64_t>::max() / (1024ULL * 1024ULL * 1024ULL);
 
   if (gb > max_gb) {
     mkfs::console_out() << "hefs: error: Disk size \"" << gb << "GB\" is too large.\n";
@@ -91,9 +92,9 @@ int main(int argc, char** argv) {
   auto opt_is = mkfs::get_option<char>(args, "is");
   auto opt_ie = mkfs::get_option<char>(args, "ie");
 
-  long start_ind = 0, end_ind = 0;
-  long start_block = 0, end_block = 0;
-  long start_in = 0, end_in = 0;
+  std::size_t start_ind = 0, end_ind = 0;
+  std::size_t start_block = 0, end_block = 0;
+  std::size_t start_in = 0, end_in = 0;
 
   if (!mkfs::detail::parse_signed(opt_b, start_ind, kNumericalBase)) {
     mkfs::console_out() << "hefs: error: Invalid -b <dec> argument.\n";

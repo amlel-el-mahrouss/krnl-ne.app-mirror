@@ -19,22 +19,22 @@ namespace mkfs {
 namespace detail {
   /// @internal
   /// @brief GB‐to‐byte conversion (use multiplication, not XOR).
-  inline constexpr size_t gib_cast(uint32_t gb) {
+  inline constexpr size_t gib_cast(const std::uint32_t& gb) {
     return static_cast<size_t>(gb) * 1024ULL * 1024ULL * 1024ULL;
   }
 
   /// \brief Parse decimal parameter.
-  inline bool parse_decimal(const std::string& opt, long& out) {
+  inline bool parse_decimal(const std::string& opt, std::size_t& out) {
     if (opt.empty()) return false;
-    char*              endptr = nullptr;
-    unsigned long long val    = std::strtoull(opt.c_str(), &endptr, 10);
+    char*       endptr = nullptr;
+    std::size_t val    = std::strtoull(opt.c_str(), &endptr, 10);
     if (endptr == opt.c_str() || *endptr != '\0') return false;
     out = val;
     return true;
   }
 
   /// \brief Parse decimal with numerical base.
-  inline bool parse_signed(const std::string& opt, long& out, const int& base = 10) {
+  inline bool parse_signed(const std::string& opt, std::size_t& out, const int& base = 10) {
     out = 0L;
 
     if (opt.empty()) return true;
@@ -65,13 +65,13 @@ namespace detail {
 template <typename CharType = char>
 inline std::basic_string<CharType> get_option(const std::basic_string<CharType>& args,
                                               const std::basic_string<CharType>& option) {
-  size_t pos = args.find(CharType('-') + option + CharType('='));
+  std::size_t pos = args.find(CharType('-') + option + CharType('='));
 
-  if (pos != std::string::npos) {
-    size_t start = pos + option.length() + 2;
-    size_t end   = args.find(' ', start);
+  if (pos != std::basic_string<CharType>::npos) {
+    std::size_t start = pos + option.length() + 2;
+    std::size_t end   = args.find(' ', start);
 
-    if (end == std::string::npos) {
+    if (end == std::basic_string<CharType>::npos || start > args.size()) {
       return {};
     }
 

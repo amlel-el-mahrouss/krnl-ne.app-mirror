@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  auto out_origin = 0L;
+  auto out_origin = 0UL;
 
   if (!mkfs::detail::parse_signed(origin, out_origin, kNumericalBase)) {
     mkfs::console_out() << "hefs: error: Invalid -org=<dec> argument.\n";

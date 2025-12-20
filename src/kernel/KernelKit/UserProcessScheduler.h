@@ -158,8 +158,13 @@ class UserProcess NE_VETTABLE {
   friend UserProcessHelper;
 };
 
-typedef Array<UserProcess, kSchedProcessLimitPerTeam> UserProcessArray;
-typedef Ref<UserProcess>                              UserProcessRef;
+template <>
+struct Vettable<UserProcess> final {
+  static constexpr BOOL kValue = YES;
+};
+
+using UserProcessArray = Array<UserProcess, kSchedProcessLimitPerTeam>;
+using UserProcessRef   = Ref<UserProcess>;
 
 /// \brief Processs Team (contains multiple processes inside it.)
 /// Equivalent to a process batch

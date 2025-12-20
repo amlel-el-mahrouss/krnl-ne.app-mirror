@@ -16,11 +16,6 @@
   public            \
   ::Kernel::IVettable
 
-#define NE_NOT_VETTABLE \
-  final:                \
-  public                \
-  ::Kernel::INotVettable
-
 namespace Kernel {
 struct IVettable {
   explicit IVettable() = default;
@@ -31,12 +26,14 @@ struct IVettable {
 
 template <class Type>
 struct Vettable final {
-  static constexpr bool kValue = false;
+  using ResultType = Type;
+
+  static constexpr BOOL kValue = NO;
 };
 
 template <>
 struct Vettable<IVettable> final {
-  static constexpr bool kValue = true;
+  static constexpr BOOL kValue = YES;
 };
 
 template <class Type>

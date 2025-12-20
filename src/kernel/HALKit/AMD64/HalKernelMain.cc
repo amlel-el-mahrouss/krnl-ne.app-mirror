@@ -17,14 +17,13 @@
 #include <misc/BenchKit/HWChronometer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
-#include "NeKit/Config.h"
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
 
 /// @brief Kernel init function.
 /// @param handover_hdr Handover boot header.
-EXTERN_C Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
+EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
   using namespace Kernel;
 
   if (handover_hdr->f_Magic != kHandoverMagic && handover_hdr->f_Version != kHandoverVersion) {
@@ -146,12 +145,12 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
   // AMLALE: TODO: Prosan, Process sanitizer.
-  rtl_create_user_process([]() -> void { while (YES); }, "Prosan");
+  rtl_create_user_process([]() -> void { while (YES); }, "ProSan");
 
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 
   // AMLALE: TODO, Vet sanitizer.
-  rtl_create_user_process([]() -> void { while (YES); }, "Vetsan");
+  rtl_create_user_process([]() -> void { while (YES); }, "VetSan");
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 

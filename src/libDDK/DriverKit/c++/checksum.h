@@ -8,3 +8,5 @@
    ======================================== */
 
 #pragma once
+
+/// @todo Driver checksum

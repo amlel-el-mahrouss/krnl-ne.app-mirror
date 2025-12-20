@@ -16,18 +16,20 @@
   public                \
   ::Kernel::DDK::IDriverBase
 
+  
 /// @author Amlal El Mahrouss
+/// @brief The DDK C++ API.
 
 namespace Kernel::DDK {
 inline constexpr auto kInvalidType = 0;
 
+/// @brief Driver interface type.
 class IDriverBase {
  public:
-  explicit IDriverBase() = default;
+  IDriverBase() = default;
   virtual ~IDriverBase() = default;
 
   NE_COPY_DELETE(IDriverBase);
-  NE_MOVE_DEFAULT(IDriverBase);
 
   using PtrType = void*;
 
@@ -38,15 +40,9 @@ class IDriverBase {
 };
 
 /// @brief This concept requires the Driver to be IDriverBase compliant.
+/// @author @amlel-el-mahrouss
 template <typename Driver>
-concept IsValidDriver = requires(Driver driver_base) {
-  { driver_base.IsActive() && driver_base.Type() > kInvalidType };
+concept IsValidDriver = requires(Driver drv) {
+  { drv.IsActive() && drv.Type() > kInvalidType };
 };
-
-/// @brief Consteval helper to detect whether a template is truly based on IDriverBase.
-/// @note This helper is consteval only.
-template <class Driver>
-inline bool ce_ddk_is_valid(Driver drv) {
-  return IsValidDriver<Driver>(drv);
-}
 }  // namespace Kernel::DDK

@@ -27,7 +27,7 @@ STATIC void hal_int_send_eoi(UInt8 vector) {
 /// @brief Handle GPF fault.
 /// @param rsp
 EXTERN_C Kernel::Void int_handle_gpf(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_int_send_eoi(13);
@@ -40,7 +40,7 @@ EXTERN_C Kernel::Void int_handle_gpf(Kernel::UIntPtr rsp) {
 /// @brief Handle page fault.
 /// @param rsp
 EXTERN_C void int_handle_pf(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_int_send_eoi(14);
@@ -68,7 +68,7 @@ EXTERN_C void int_handle_scheduler(Kernel::UIntPtr rsp) {
 /// @brief Handle math fault.
 /// @param rsp
 EXTERN_C void int_handle_math(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_int_send_eoi(8);
@@ -81,7 +81,7 @@ EXTERN_C void int_handle_math(Kernel::UIntPtr rsp) {
 /// @brief Handle any generic fault.
 /// @param rsp
 EXTERN_C void int_handle_generic(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_int_send_eoi(30);
@@ -96,7 +96,7 @@ EXTERN_C void int_handle_generic(Kernel::UIntPtr rsp) {
 }
 
 EXTERN_C Kernel::Void int_handle_breakpoint(Kernel::UIntPtr rip) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
 
   hal_int_send_eoi(3);
 
@@ -111,7 +111,7 @@ EXTERN_C Kernel::Void int_handle_breakpoint(Kernel::UIntPtr rip) {
 /// @brief Handle #UD fault.
 /// @param rsp
 EXTERN_C void int_handle_ud(Kernel::UIntPtr rsp) {
-  auto& process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Leak().Crash();
 
   hal_int_send_eoi(6);

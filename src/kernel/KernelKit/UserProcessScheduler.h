@@ -34,10 +34,8 @@ class UserProcessHelper;
 /***********************************************************************************/
 class UserProcess NE_VETTABLE {
  public:
-  explicit UserProcess();
+  UserProcess();
   ~UserProcess();
-
-  auto DoVet() const { return *this; }
 
  public:
   NE_COPY_DEFAULT(UserProcess)

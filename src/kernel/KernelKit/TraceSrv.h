@@ -14,12 +14,11 @@ namespace Kernel {
 namespace Detail {
   inline constexpr auto kDebugCmdLen  = 256U;
   inline constexpr auto kDebugPort    = 51820;
+    /// \brief Debug Magic Value
   inline constexpr auto kDebugMagic   = "NE1.0.0;";
   inline constexpr auto kDebugVersion = 0x0100;
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
-
-  using dk_socket_type = UInt64;
 }  // namespace Detail
 }  // namespace Kernel
 

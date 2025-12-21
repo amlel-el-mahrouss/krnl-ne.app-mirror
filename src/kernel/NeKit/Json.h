@@ -24,12 +24,12 @@
 
 namespace Kernel {
 /// ================================================================================
-/// @brief JSON object representation.
+/// @brief JSON Object type.
 /// ================================================================================
 template <typename CharKind = Char>
 class JsonObject final {
  public:
-  explicit JsonObject() : fUndefined(NO) {
+  JsonObject() : fUndefined(YES) {
     KBasicString<CharKind> key = KString(kNeJsonMaxLen);
     key += kNeJsonNullValue;
 
@@ -37,7 +37,7 @@ class JsonObject final {
     this->AsValue() = key;
   }
 
-  explicit JsonObject(SizeT lhsLen, SizeT rhsLen) : fUndefined(NO), fKey(lhsLen), fValue(rhsLen) {
+  JsonObject(SizeT lhsLen, SizeT rhsLen) : fUndefined(NO), fKey(lhsLen), fValue(rhsLen) {
     KBasicString<CharKind> key = KString(lhsLen);
     this->AsKey()              = key;
 
@@ -53,7 +53,7 @@ class JsonObject final {
   Bool& IsUndefined() { return fUndefined; }
 
  private:
-  Bool                   fUndefined;  // is this instance undefined?
+  Bool                   fUndefined{YES};  // is this instance undefined?
   KBasicString<CharKind> fKey;
   KBasicString<CharKind> fValue;
 

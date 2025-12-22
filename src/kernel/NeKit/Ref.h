@@ -61,9 +61,9 @@ class Ref final {
 
   explicit operator bool() {
     if constexpr (IsVettable<Type>) {
-        return Type::kVettable;
+      return Type::kVettable;
     } else {
-        return false;
+      return false;
     }
   }
 

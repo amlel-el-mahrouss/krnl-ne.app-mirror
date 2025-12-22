@@ -191,9 +191,9 @@ template <class Type>
 struct FalseResult final {
   using ResultType    = Type;
   using ResultTypeRef = ResultType&;
-  using TypeRef   = ResultTypeRef;
-  using ConstType = const Type&;
-  using TypePtr   = Type*;
+  using TypeRef       = ResultTypeRef;
+  using ConstType     = const Type&;
+  using TypePtr       = Type*;
 
   static constexpr bool kValue = false;
 };
@@ -202,9 +202,9 @@ template <class Type>
 struct TrueResult final {
   using ResultType    = Type;
   using ResultTypeRef = ResultType&;
-  using TypeRef   = ResultTypeRef;
-  using ConstType = const Type&;
-  using TypePtr   = Type*;
+  using TypeRef       = ResultTypeRef;
+  using ConstType     = const Type&;
+  using TypePtr       = Type*;
 
   static constexpr bool kValue = true;
 };
@@ -213,9 +213,9 @@ template <class Type>
 struct PropertyResult final {
   using ResultType    = Type;
   using ResultTypeRef = ResultType&;
-  using TypeRef   = ResultTypeRef;
-  using ConstType = const Type&;
-  using TypePtr   = Type*;
+  using TypeRef       = ResultTypeRef;
+  using ConstType     = const Type&;
+  using TypePtr       = Type*;
 
   static constexpr bool kValue = Type::kValue;
 };

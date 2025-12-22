@@ -14,9 +14,9 @@ template <class Type>
 struct IsDefined final {
   using ResultType    = Type;
   using ResultTypeRef = Type&;
-  using TypeRef   = ResultTypeRef;
-  using ConstType = const Type&;
-  using TypePtr   = Type*;
+  using TypeRef       = ResultTypeRef;
+  using ConstType     = const Type&;
+  using TypePtr       = Type*;
 
   static constexpr bool kValue = true;
 };

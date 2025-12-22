@@ -120,7 +120,6 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
 
   FB::cg_clear_video();
 
-
   // Load memory descriptors.
   HAL::Register64 gdt_reg;
 

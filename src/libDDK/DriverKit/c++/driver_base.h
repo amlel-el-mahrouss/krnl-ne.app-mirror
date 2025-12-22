@@ -16,7 +16,6 @@
   public                \
   ::Kernel::DDK::IDriverBase
 
-  
 /// @author Amlal El Mahrouss
 /// @brief The DDK C++ API.
 
@@ -26,7 +25,7 @@ inline constexpr auto kInvalidType = 0;
 /// @brief Driver interface type.
 class IDriverBase {
  public:
-  IDriverBase() = default;
+  IDriverBase()          = default;
   virtual ~IDriverBase() = default;
 
   NE_COPY_DELETE(IDriverBase);

@@ -12,9 +12,9 @@ using namespace Kernel;
 /// @param Out Drive output
 /// @param In  Drive input
 /// @param Cleanup Drive cleanup.
-ATADeviceInterface::ATADeviceInterface(void (*Out)(DeviceInterface*, IMountpoint* outpacket),
-                                       void (*In)(DeviceInterface*, IMountpoint* inpacket))
-    : DeviceInterface(Out, In) {}
+ATADeviceInterface::ATADeviceInterface(void (*Out)(IDevice*, IMountpoint* outpacket),
+                                       void (*In)(IDevice*, IMountpoint* inpacket))
+    : IDevice(Out, In) {}
 
 /// @brief Class desctructor
 ATADeviceInterface::~ATADeviceInterface() = default;
@@ -43,7 +43,7 @@ ATADeviceInterface& ATADeviceInterface::operator<<(IMountpoint* Data) {
     }
   }
 
-  return (ATADeviceInterface&) DeviceInterface<IMountpoint*>::operator<<(Data);
+  return (ATADeviceInterface&) IDevice<IMountpoint*>::operator<<(Data);
 }
 
 /// @brief Input operator.
@@ -65,7 +65,7 @@ ATADeviceInterface& ATADeviceInterface::operator>>(IMountpoint* Data) {
     }
   }
 
-  return (ATADeviceInterface&) DeviceInterface<IMountpoint*>::operator>>(Data);
+  return (ATADeviceInterface&) IDevice<IMountpoint*>::operator>>(Data);
 }
 
 const UInt32& ATADeviceInterface::GetIndex() {

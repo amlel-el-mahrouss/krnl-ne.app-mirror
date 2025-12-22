@@ -66,7 +66,7 @@ class PE32Loader : public ILoader {
   ErrorOr<VoidPtr> GetBlob() override;
 
  public:
-  bool IsLoaded();
+  BOOL IsLoaded();
 
  private:
 #ifdef __FSKIT_INCLUDES_NEFS__
@@ -78,14 +78,15 @@ class PE32Loader : public ILoader {
 #endif  // __FSKIT_INCLUDES_NEFS__
 
   Ref<KString> fPath;
-  VoidPtr      fCachedBlob;
-  BOOL         fBad;
+  RefAny       fCachedBlob{};
+  BOOL         fBad{};
 };
 
 enum { kPEPlatformInvalid, kPEPlatformAMD64 = 100, kPEPlatformARM64 };
 enum { kPETypeInvalid, kPETypeText = 100, kPETypeData, kPETypeBSS };
 
-typedef LDR_SECTION_HEADER PE_SECTION_INFO;
+using PE_SECTION_INFO = LDR_SECTION_HEADER;
 
-ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind);
+ProcessID rtl_create_user_process(PE32Loader&                        exec,
+                                  const UserProcess::ExecutableKind& process_kind);
 }  // namespace Kernel

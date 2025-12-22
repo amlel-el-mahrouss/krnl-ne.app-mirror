@@ -13,12 +13,10 @@
 #endif  // __INC_NETWORK_DEVICE_H__
 
 namespace Kernel {
-inline NetworkDevice::NetworkDevice(void (*out)(DeviceInterface<NetworkDeviceCommand>*,
-                                                NetworkDeviceCommand),
-                                    void (*in)(DeviceInterface<NetworkDeviceCommand>*,
-                                               NetworkDeviceCommand),
-                                    void (*on_cleanup)(void))
-    : DeviceInterface<NetworkDeviceCommand>(out, in), fCleanup(on_cleanup) {
+inline NetworkDevice::NetworkDevice(
+    void (*out)(IDevice<NetworkDeviceCommand>*, NetworkDeviceCommand),
+    void (*in)(IDevice<NetworkDeviceCommand>*, NetworkDeviceCommand), void (*on_cleanup)(void))
+    : IDevice<NetworkDeviceCommand>(out, in), fCleanup(on_cleanup) {
   kout << "NetworkDevice initialized.\r";
 
   MUST_PASS(out && in && on_cleanup);

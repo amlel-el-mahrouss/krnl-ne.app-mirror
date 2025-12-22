@@ -301,7 +301,7 @@ Void UserProcess::Exit(const Int32& exit_code) {
   this->Image.fCode = nullptr;
   this->StackFrame  = nullptr;
 
-  if (this->Kind == kExecutableDylibKind) {
+  if (this->Kind == ExecutableKind::kExecutableDylibKind) {
     Bool success = false;
 
     rtl_fini_dylib_pef(*this, reinterpret_cast<IPEFDylibObject*>(this->DylibDelegate), &success);
@@ -320,13 +320,13 @@ Void UserProcess::Exit(const Int32& exit_code) {
 }
 
 /***********************************************************************************/
-/// @brief Add dylib to the process object.
+/// @brief Initializer dylib of User Process.
 /***********************************************************************************/
 
 Bool UserProcess::InitDylib() {
   // React according to the process's kind.
   switch (this->Kind) {
-    case UserProcess::kExecutableDylibKind: {
+    case ExecutableKind::kExecutableDylibKind: {
       this->DylibDelegate = rtl_init_dylib_pef(*this);
 
       if (!this->DylibDelegate) {
@@ -336,7 +336,7 @@ Bool UserProcess::InitDylib() {
 
       return YES;
     }
-    case UserProcess::kExecutableKind: {
+    case ExecutableKind::kExecutableKind: {
       return NO;
     }
     default: {
@@ -344,7 +344,7 @@ Bool UserProcess::InitDylib() {
     }
   }
 
-  (Void)(kout << "Unknown process kind: " << hex_number(this->Kind) << kendl);
+  (Void)(kout << "Unknown process kind: " << hex_number(static_cast<Int32>(this->Kind)) << kendl);
   this->Crash();
 
   return NO;

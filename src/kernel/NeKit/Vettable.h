@@ -11,29 +11,16 @@
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
 
-#define NE_VETTABLE \
-  final:            \
-  public            \
-  ::Kernel::IVettable
-
 namespace Kernel {
-struct IVettable {
-  explicit IVettable() = default;
-  virtual ~IVettable() = default;
-
-  NE_COPY_DEFAULT(IVettable)
-};
-
 template <class Type>
 struct Vettable final {
   using ResultType = Type;
+  using TypeRef   = Type&;
+  using ConstType = const Type&;
+  using TypePtr   = Type*;
+
 
   static constexpr BOOL kValue = NO;
-};
-
-template <>
-struct Vettable<IVettable> final {
-  static constexpr BOOL kValue = YES;
 };
 
 template <class Type>

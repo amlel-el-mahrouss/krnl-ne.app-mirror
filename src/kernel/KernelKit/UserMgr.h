@@ -88,8 +88,14 @@ class User final {
   UInt64       mUserFNV{0UL};
 };
 
+/// \brief Alias for user ptr.
+using UserPtr = User*;
+
+/// \brief Current running user.
 inline User* kCurrentUser = nullptr;
-inline User* kRootUser    = nullptr;
+
+/// \brief Super user.
+inline User* kRootUser = nullptr;
 }  // namespace Kernel
 
 #endif /* ifndef __KERNEL_KIT_USER_MGR_H__ */

@@ -50,9 +50,9 @@ class Variant final {
 
   /// ========================================================================
   /// @brief Returns the underlying pointer.
-  /// @return the underlying pointer.
+  /// @return the underlying pointer as a reference.
   /// ========================================================================
-  VoidPtr Leak();
+  RefAny Leak();
 
   template <typename T>
   T* As() {

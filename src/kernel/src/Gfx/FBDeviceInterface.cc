@@ -12,9 +12,9 @@ using namespace Kernel;
 /// @param Out Drive output
 /// @param In  Drive input
 /// @param Cleanup Drive cleanup.
-FBDeviceInterface::FBDeviceInterface(void (*out)(DeviceInterface* self, FBDevicePacket* outpacket),
-                                     void (*in)(DeviceInterface* self, FBDevicePacket* inpacket))
-    : DeviceInterface(out, in) {}
+FBDeviceInterface::FBDeviceInterface(void (*out)(IDevice* self, FBDevicePacket* outpacket),
+                                     void (*in)(IDevice* self, FBDevicePacket* inpacket))
+    : IDevice(out, in) {}
 
 /// @brief Class desctructor
 FBDeviceInterface::~FBDeviceInterface() = default;

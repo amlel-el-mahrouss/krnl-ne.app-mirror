@@ -37,7 +37,7 @@ namespace Detail {
 /***********************************************************************************/
 
 PE32Loader::PE32Loader(const VoidPtr blob) : fCachedBlob(blob) {
-  MUST_PASS(fCachedBlob);
+  (Void) fCachedBlob.TryLeak();
   fBad = false;
 }
 
@@ -46,7 +46,7 @@ PE32Loader::PE32Loader(const VoidPtr blob) : fCachedBlob(blob) {
 /// @param path the filesystem path.
 /***********************************************************************************/
 
-PE32Loader::PE32Loader(const Char* path) : fCachedBlob(nullptr), fBad(false) {
+PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(nullptr)), fBad(false) {
   fFile.New(const_cast<Char*>(path), kRestrictRB);
   fPath = KStringBuilder::Construct(path).Leak();
 
@@ -61,7 +61,7 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(nullptr), fBad(false) {
 /***********************************************************************************/
 
 PE32Loader::~PE32Loader() {
-  if (fCachedBlob) mm_free_ptr(fCachedBlob);
+  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak());
 
   fFile.Reset();
 }
@@ -74,8 +74,9 @@ PE32Loader::~PE32Loader() {
 ErrorOr<VoidPtr> PE32Loader::FindSectionByName(const Char* name) {
   if (!fCachedBlob || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  LDR_EXEC_HEADER_PTR     header_ptr     = CF::ldr_find_exec_header((const Char*) fCachedBlob);
-  LDR_OPTIONAL_HEADER_PTR opt_header_ptr = CF::ldr_find_opt_exec_header((const Char*) fCachedBlob);
+  LDR_EXEC_HEADER_PTR     header_ptr = CF::ldr_find_exec_header((const Char*) fCachedBlob.Leak());
+  LDR_OPTIONAL_HEADER_PTR opt_header_ptr =
+      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak());
 
   if (!header_ptr || !opt_header_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
@@ -138,7 +139,8 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
 
   if (!sec_ptr || !*sec_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  LDR_OPTIONAL_HEADER_PTR opt_header_ptr = CF::ldr_find_opt_exec_header((const Char*) fCachedBlob);
+  LDR_OPTIONAL_HEADER_PTR opt_header_ptr =
+      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak());
 
   if (opt_header_ptr) {
     LDR_DATA_DIRECTORY_PTR data_dirs =
@@ -150,20 +152,22 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
       return ErrorOr<VoidPtr>{kErrorInvalidData};
 
     LDR_EXPORT_DIRECTORY* export_dir =
-        (LDR_EXPORT_DIRECTORY*) ((UIntPtr) fCachedBlob + export_dir_entry->VirtualAddress);
+        (LDR_EXPORT_DIRECTORY*) ((UIntPtr) fCachedBlob.Leak() + export_dir_entry->VirtualAddress);
 
-    UInt32* name_table     = (UInt32*) ((UIntPtr) fCachedBlob + export_dir->AddressOfNames);
-    UInt16* ordinal_table  = (UInt16*) ((UIntPtr) fCachedBlob + export_dir->AddressOfNameOrdinal);
-    UInt32* function_table = (UInt32*) ((UIntPtr) fCachedBlob + export_dir->AddressOfFunctions);
+    UInt32* name_table = (UInt32*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfNames);
+    UInt16* ordinal_table =
+        (UInt16*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfNameOrdinal);
+    UInt32* function_table =
+        (UInt32*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfFunctions);
 
     for (UInt32 i = 0; i < export_dir->NumberOfNames; ++i) {
-      const char* exported_name = (const char*) ((UIntPtr) fCachedBlob + name_table[i]);
+      const char* exported_name = (const char*) ((UIntPtr) fCachedBlob.Leak() + name_table[i]);
 
       if (KStringBuilder::Equals(exported_name, name)) {
         UInt16 ordinal = ordinal_table[i];
         UInt32 rva     = function_table[ordinal];
 
-        VoidPtr symbol_addr = (VoidPtr) ((UIntPtr) fCachedBlob + rva);
+        VoidPtr symbol_addr = (VoidPtr) ((UIntPtr) fCachedBlob.Leak() + rva);
 
         return ErrorOr<VoidPtr>{symbol_addr};
       }
@@ -212,11 +216,12 @@ const Char* PE32Loader::MIME() {
 }
 
 ErrorOr<VoidPtr> PE32Loader::GetBlob() {
-  return ErrorOr<VoidPtr>{this->fCachedBlob};
+  return ErrorOr<VoidPtr>{this->fCachedBlob.TryLeak()};
 }
 
 namespace Utils {
-  ProcessID rtl_create_user_process(PE32Loader& exec, const Int32& process_kind) {
+  ProcessID rtl_create_user_process(PE32Loader&                        exec,
+                                    const UserProcess::ExecutableKind& process_kind) {
     auto errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;

@@ -32,7 +32,7 @@ class UserProcessHelper;
 /// @name UserProcess
 /// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class UserProcess NE_VETTABLE {
+class UserProcess {
  public:
   UserProcess();
   ~UserProcess();
@@ -55,20 +55,23 @@ class UserProcess NE_VETTABLE {
   SizeT              MemoryLimit{kSchedMaxMemoryLimit};
   SizeT              UsedMemory{0UL};
 
-  struct USER_PROCESS_SIGNAL final {
+  struct UserProcessSignal {
     UIntPtr           SignalArg{0};
     ProcessStatusKind Status{ProcessStatusKind::kKilled};
     UIntPtr           SignalID{0};
   };
 
-  USER_PROCESS_SIGNAL       Signal;
+  UserProcessSignal         Signal;
   ProcessFileTree<VoidPtr>* FileTree{nullptr};
   ProcessHeapTree<VoidPtr>* HeapTree{nullptr};
   UserProcessTeam*          ParentTeam;
 
+ public:
+  using VMReg = VoidPtr;
+
   VoidPtr VMRegister{0UL};
 
-  enum {
+  enum struct ExecutableKind {
     kInvalidExecutableKind,
     kExecutableKind,
     kExecutableDylibKind,
@@ -79,8 +82,8 @@ class UserProcess NE_VETTABLE {
   ProcessTime RTime{0};  //! @brief Process run time.
   ProcessTime UTime{0};  //! #brief Process used time.
 
-  ProcessID ProcessId{kSchedInvalidPID};
-  Int32     Kind{kExecutableKind};
+  ProcessID      ProcessId{kSchedInvalidPID};
+  ExecutableKind Kind{ExecutableKind::kExecutableKind};
 
  public:
   /***********************************************************************************/

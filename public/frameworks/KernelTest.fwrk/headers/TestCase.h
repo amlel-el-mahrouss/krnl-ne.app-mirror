@@ -36,7 +36,7 @@
     auto ret = FN() == YES;                            \
     if (!ret) {                                        \
       PrintOut(nullptr, "[KERNEL-TEST] TEST FAILED!"); \
-      MUST_PASS(ret);                                  \
+      KT_MUST_PASS(ret, ret, true);                    \
     }                                                  \
   }                                                    \
   inline const Char* KTTestCase##NAME::ToString() {    \

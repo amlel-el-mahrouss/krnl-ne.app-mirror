@@ -24,13 +24,13 @@
 
 #define kDeviceMgrRootDirPath "/devices/"
 
-#define NE_DEVICE : public ::Kernel::DeviceInterface
+#define NE_DEVICE : public ::Kernel::IDevice
 
 // Last Rev: Wed, May  27, 2025  6:22 PM
 
 namespace Kernel {
 template <typename T>
-class DeviceInterface;
+class IDevice;
 
 template <typename T>
 class IOBuf;
@@ -39,26 +39,30 @@ class IOBuf;
 /// @brief Device contract interface, represents an HW device.
 /***********************************************************************************/
 template <typename T>
-class DeviceInterface {
+class IDevice {
  public:
-  DeviceInterface() = default;
+  IDevice() = default;
 
-  explicit DeviceInterface(void (*Out)(DeviceInterface<T>*, T), void (*In)(DeviceInterface<T>*, T))
-      : fOut(Out), fIn(In) {}
+  explicit IDevice(void (*Out)(IDevice<T>*, T), void (*In)(IDevice<T>*, T)) : fOut(Out), fIn(In) {}
 
-  virtual ~DeviceInterface() = default;
-
- public:
-  DeviceInterface& operator=(const DeviceInterface<T>&) = default;
-  DeviceInterface(const DeviceInterface<T>&)            = default;
+  virtual ~IDevice() = default;
 
  public:
-  virtual DeviceInterface<T>& operator<<(T Data) {
+  using Type      = T;
+  using TypeRef   = T&;
+  using ConstType = const T&;
+  using TypePtr   = T*;
+
+  IDevice& operator=(const IDevice<T>&) = default;
+  IDevice(const IDevice<T>&)            = default;
+
+ public:
+  virtual IDevice<T>& operator<<(T Data) {
     fOut(this, Data);
     return *this;
   }
 
-  virtual DeviceInterface<T>& operator>>(T Data) {
+  virtual IDevice<T>& operator>>(T Data) {
     fIn(this, Data);
     return *this;
   }
@@ -70,8 +74,8 @@ class DeviceInterface {
   Bool operator!() { return !fOut || !fIn; }
 
  protected:
-  Void (*fOut)(DeviceInterface<T>*, T Data) = {nullptr};
-  Void (*fIn)(DeviceInterface<T>*, T Data)  = {nullptr};
+  Void (*fOut)(IDevice<T>*, T Data) = {nullptr};
+  Void (*fIn)(IDevice<T>*, T Data)  = {nullptr};
 };
 
 ///

@@ -294,7 +294,8 @@ ErrorOr<VoidPtr> PEFLoader::GetBlob() {
 }
 
 namespace Utils {
-  ProcessID rtl_create_user_process(PEFLoader& exec, const Int32& process_kind) {
+  ProcessID rtl_create_user_process(PEFLoader&                         exec,
+                                    const UserProcess::ExecutableKind& process_kind) {
     auto errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;

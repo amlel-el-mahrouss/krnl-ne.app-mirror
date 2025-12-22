@@ -7,10 +7,10 @@
 #include <StorageKit/SCSI.h>
 
 namespace Kernel {
-SCSIDeviceInterface::SCSIDeviceInterface(void (*out)(DeviceInterface*, IMountpoint* outpacket),
-                                         void (*in)(DeviceInterface*, IMountpoint* inpacket),
+SCSIDeviceInterface::SCSIDeviceInterface(void (*out)(IDevice*, IMountpoint* outpacket),
+                                         void (*in)(IDevice*, IMountpoint* inpacket),
                                          void (*cleanup)(void))
-    : DeviceInterface(out, in), fCleanup(cleanup) {}
+    : IDevice(out, in), fCleanup(cleanup) {}
 
 SCSIDeviceInterface::~SCSIDeviceInterface() {
   if (fCleanup) fCleanup();

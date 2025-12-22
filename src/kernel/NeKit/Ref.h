@@ -26,7 +26,9 @@ class Ref final {
   ~Ref()         = default;
 
  public:
-  using Type = T;
+  using Type      = T;
+  using ConstType = const T&;
+  using RefType   = T&;
 
   Ref(Type* cls) : fClass(*cls) {}
   Ref(Type cls) : fClass(cls) {}
@@ -50,7 +52,10 @@ class Ref final {
 
   Type& Leak() { return fClass; }
 
-  Type& TryLeak() { return fClass; }
+  Type& TryLeak() {
+    MUST_PASS(fClass);
+    return fClass;
+  }
 
   Type operator*() { return fClass; }
 

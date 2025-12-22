@@ -31,11 +31,11 @@ struct PACKED FBDevicePacket final {
 
 /// @brief Framebuffer device interface.
 /// @details This class is used to send and receive data from the framebuffer device.
-/// @note The class is derived from the DeviceInterface class.
+/// @note The class is derived from the IDevice class.
 class FBDeviceInterface NE_DEVICE<FBDevicePacket*> {
  public:
-  explicit FBDeviceInterface(void (*out)(DeviceInterface* self, FBDevicePacket* out),
-                             void (*in)(DeviceInterface* self, FBDevicePacket* in));
+  explicit FBDeviceInterface(void (*out)(IDevice* self, FBDevicePacket* out),
+                             void (*in)(IDevice* self, FBDevicePacket* in));
 
   virtual ~FBDeviceInterface() override;
 

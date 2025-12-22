@@ -32,7 +32,7 @@ Variant::VariantKind& Variant::Kind() {
 }
 
 /// @brief Leak variant's instance.
-VoidPtr Variant::Leak() {
-  return this->fPtr;
+RefAny Variant::Leak() {
+  return {this->fPtr};
 }
 }  // namespace Kernel

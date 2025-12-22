@@ -67,7 +67,7 @@ namespace HAL {
 }  // namespace HAL
 }  // namespace Kernel
 
-typedef Kernel::Void (*rt_syscall_proc)(Kernel::VoidPtr);
+using rt_syscall_proc = Kernel::Void (*)(Kernel::VoidPtr);
 
 /// @brief System Call Dispatch.
 struct HAL_DISPATCH_ENTRY final {
@@ -81,7 +81,7 @@ struct HAL_DISPATCH_ENTRY final {
   operator bool() { return fHooked; }
 };
 
-typedef Kernel::Void (*rt_kerncall_proc)(Kernel::SizeT, Kernel::VoidPtr, Kernel::SizeT);
+using rt_kerncall_proc = Kernel::Void (*)(Kernel::SizeT, Kernel::VoidPtr, Kernel::SizeT);
 
 /// @brief Kernel Call Dispatch.
 struct HAL_KERNEL_DISPATCH_ENTRY final {

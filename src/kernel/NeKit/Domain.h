@@ -14,6 +14,9 @@ template <class Type>
 struct IsDefined final {
   using ResultType    = Type;
   using ResultTypeRef = Type&;
+  using TypeRef   = ResultTypeRef;
+  using ConstType = const Type&;
+  using TypePtr   = Type*;
 
   static constexpr bool kValue = true;
 };
@@ -27,11 +30,6 @@ using NullDomain = IsDefined<nullPtr>;
 
 template <class Type>
 using Domain = IsDefined<Type>;
-
-template <class Type>
-concept IsAcceptable = requires() {
-  { IsDefined<Type>::kValue };
-};
 }  // namespace Kernel
 
 #endif  // !__NE_KIT_DOMAIN_H__

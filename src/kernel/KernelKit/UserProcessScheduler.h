@@ -32,13 +32,19 @@ class UserProcessHelper;
 /// @name UserProcess
 /// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class UserProcess {
+class UserProcess final {
  public:
   UserProcess();
   ~UserProcess();
 
  public:
   NE_COPY_DEFAULT(UserProcess)
+
+  using TypeRef   = UserProcess&;
+  using ConstType = const UserProcess&;
+  using TypePtr   = UserProcess*;
+
+  NE_VETTABLE;
 
  public:
   Char               Name[kSchedNameLen] = {"UserProcess"};
@@ -157,11 +163,6 @@ class UserProcess {
 
   friend UserProcessScheduler;
   friend UserProcessHelper;
-};
-
-template <>
-struct Vettable<UserProcess> final {
-  static constexpr BOOL kValue = YES;
 };
 
 using UserProcessArray = Array<UserProcess, kSchedProcessLimitPerTeam>;

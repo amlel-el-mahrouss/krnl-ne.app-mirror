@@ -59,8 +59,13 @@ class Ref final {
 
   Type operator*() { return fClass; }
 
-  explicit operator bool() { return Vettable<Type>::kValue; }
-  bool     operator!() { return !Vettable<Type>::kValue; }
+  explicit operator bool() {
+    if constexpr (IsVettable<Type>) {
+        return Type::kVettable;
+    } else {
+        return false;
+    }
+  }
 
  private:
   Type fClass;

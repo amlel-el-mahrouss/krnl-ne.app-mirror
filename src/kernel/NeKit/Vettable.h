@@ -11,24 +11,13 @@
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
 
+#define NE_VETTABLE static constexpr BOOL kVettable = YES
+#define NE_NON_VETTABLE static constexpr BOOL kVettable = NO
+
 namespace Kernel {
 template <class Type>
-struct Vettable final {
-  using ResultType = Type;
-  using TypeRef   = Type&;
-  using ConstType = const Type&;
-  using TypePtr   = Type*;
-
-
-  static constexpr BOOL kValue = NO;
-};
-
-template <class Type>
-using FallbackType = Void (*)(const PropertyResult<Type>& type_value);
-
-template <class Type, FallbackType<Type> OnFallback>
-concept IsVettable = requires() {
-  { Vettable<Type>::kValue ? TrueResult<Type>{} : OnFallback(PropertyResult<Type>{}) };
+concept IsVettable = requires(Type) {
+    (Type::kVettable);
 };
 }  // namespace Kernel
 

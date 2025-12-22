@@ -32,11 +32,8 @@ class KernelTask final {
   /// @brief a KID is a Kernel ID, it is used to find a task running within
   /// the kernel.
   KID Kid{0};
-};
 
-template <>
-struct Vettable<KernelTask> final {
-  static constexpr BOOL kValue = NO;
+  NE_NON_VETTABLE;
 };
 
 /// @brief Equivalent of UserProcessHelper, but for kernel tasks.

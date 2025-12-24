@@ -34,8 +34,8 @@ struct PACKED FBDevicePacket final {
 /// @note The class is derived from the IDevice class.
 class FBDeviceInterface NE_DEVICE<FBDevicePacket*> {
  public:
-  explicit FBDeviceInterface(void (*out)(IDevice* self, FBDevicePacket* out),
-                             void (*in)(IDevice* self, FBDevicePacket* in));
+  FBDeviceInterface(void (*out)(IDevice* self, FBDevicePacket* out),
+                    void (*in)(IDevice* self, FBDevicePacket* in));
 
   virtual ~FBDeviceInterface() override;
 

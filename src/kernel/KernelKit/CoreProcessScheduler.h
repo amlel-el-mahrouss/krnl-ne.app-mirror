@@ -88,8 +88,6 @@ struct ProcessFileTree {
   struct ProcessFileTree<T>* Next{nullptr};
 };
 
-using ProcessCtx = UInt32;
-
 template <typename T>
 struct ProcessSpecialTree {
   static constexpr auto kHeap    = false;
@@ -101,7 +99,10 @@ struct ProcessSpecialTree {
   SizeT EntryPad{0UL};
 
   /// @brief a context is where the resource comes from.
-  ProcessCtx EntryContext{0UL};  // could be a socket, printer, device...
+  using ProcessCtx = UInt32;
+
+  /// \note could be a socket, printer, device...
+  ProcessCtx EntryContext{0UL};
 
   TreeKind Color{TreeKind::kBlackTreeKind};
 

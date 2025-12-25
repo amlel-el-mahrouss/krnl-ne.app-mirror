@@ -141,7 +141,7 @@ class UserProcess final {
 
   /***********************************************************************************/
   ///! @brief Get the process's name
-  ///! @example 'C Runtime Library'
+  ///! @example process can be called 'C Runtime Library'.
   /***********************************************************************************/
   const Char* GetName();
 

@@ -4,7 +4,7 @@
 #include <KernelKit/MSDOS.h>
 #include <KernelKit/PE.h>
 
-/// @brief CFKit
+/// @brief CFKit namespace.
 namespace Kernel::CF {
 /// @brief Finds the PE header inside the blob.
 inline auto ldr_find_exec_header(DosHeaderPtr ptrDos) -> LDR_EXEC_HEADER_PTR {
@@ -14,7 +14,7 @@ inline auto ldr_find_exec_header(DosHeaderPtr ptrDos) -> LDR_EXEC_HEADER_PTR {
 
   if (ptrDos->eMagic[1] != kMagMz1) return nullptr;
 
-#ifdef __NE_AMD64__
+#if defined(__NE_AMD64__)
   return (LDR_EXEC_HEADER_PTR) (VoidPtr) (&ptrDos->eLfanew + 1);
 #else
   return (LDR_EXEC_HEADER_PTR) (VoidPtr) (&ptrDos->eLfanew);

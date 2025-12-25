@@ -10,7 +10,8 @@
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
 namespace Kernel {
-constexpr STATIC const auto kMinACPIVer = 1U;
+/// \note This has been incremented to version two, as NeKernel doesn't support 32-bit targets. See specs.
+constexpr STATIC const auto kMinACPIVer = 2U;
 
 /// @brief Finds a descriptor table inside ACPI XSDT.
 ErrorOr<voidPtr> ACPIFactoryInterface::Find(const Char* signature) {

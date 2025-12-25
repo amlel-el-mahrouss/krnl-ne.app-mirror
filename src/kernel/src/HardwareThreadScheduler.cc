@@ -41,14 +41,14 @@ HardwareThread::~HardwareThread() = default;
 /***********************************************************************************/
 //! @brief returns the id of the thread.
 /***********************************************************************************/
-ThreadID& HardwareThread::ID() {
+_Output const ThreadID& HardwareThread::ID() {
   return fID;
 }
 
 /***********************************************************************************/
 //! @brief returns the kind of thread we have.
 /***********************************************************************************/
-ThreadKind& HardwareThread::Kind() {
+_Output const ThreadKind& HardwareThread::Kind() {
   return fKind;
 }
 

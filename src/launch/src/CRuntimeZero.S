@@ -10,6 +10,9 @@
 .extern ThrExitMainThread
 .globl _NeMain
 
+/** 	This should not be touched unless there's a **really** valid reason to it.
+	\note This helps start the ne_launch program.
+*/
 _NeMain:
   push %rbp
   movq %rsp, %rbp

@@ -20,7 +20,7 @@ namespace Kernel::CF {
 using PropertyId = UIntPtr;
 
 /// @brief Kernel property class.
-/// @example /prop/smp_max or /prop/kern_ver
+/// @note /prop/smp_max or /prop/kern_ver are properties.
 class Property {
  public:
   Property();

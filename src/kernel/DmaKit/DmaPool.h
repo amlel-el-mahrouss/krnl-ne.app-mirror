@@ -26,8 +26,11 @@
 #define kNeDMABestAlign (8)
 
 namespace Kernel {
+
 /// @brief DMA pool base pointer, here we're sure that AHCI or whatever tricky standard sees it.
-inline UInt8*       kDmaPoolPtr = (UInt8*) kNeDMAPoolStart;
+inline UInt8* kDmaPoolPtr = (UInt8*) kNeDMAPoolStart;
+
+/// @brief DMA pool end pointer.
 inline const UInt8* kDmaPoolEnd = (UInt8*) (kNeDMAPoolStart + kNeDMAPoolSize);
 
 /***********************************************************************************/
@@ -98,4 +101,5 @@ inline Void rtl_dma_flush(VoidPtr ptr, SizeT size_buffer) {
     HAL::mm_memory_fence((VoidPtr) ((UInt8*) ptr + buf_idx));
   }
 }
+
 }  // namespace Kernel

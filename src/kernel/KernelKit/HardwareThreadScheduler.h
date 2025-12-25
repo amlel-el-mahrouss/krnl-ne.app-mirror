@@ -51,29 +51,29 @@ class HardwareThread final {
   NE_COPY_DEFAULT(HardwareThread)
 
  public:
-  operator bool();
+  explicit operator bool();
 
  public:
-  void Wake(const BOOL wakeup = false);
-  void Busy(const BOOL busy = false);
+  Void Wake(const BOOL wakeup = false);
+  Void Busy(const BOOL busy = false);
 
  public:
   BOOL Switch(HAL::StackFramePtr frame);
   BOOL IsWakeup();
 
  public:
-  HAL::StackFramePtr StackFrame();
-  ThreadKind&        Kind();
-  BOOL               IsBusy();
-  ThreadID&          ID();
+  HAL::StackFramePtr        StackFrame();
+  _Output const ThreadKind& Kind();
+  BOOL                      IsBusy();
+  _Output const ThreadID&   ID();
 
  private:
-  HAL::StackFramePtr fStack{nullptr};
+  HAL::StackFramePtr fStack{};
   ThreadKind         fKind{ThreadKind::kAPStandard};
-  ThreadID           fID{0};
+  ThreadID           fID{};
   Bool               fWakeup{NO};
   Bool               fBusy{NO};
-  UInt64             fPTime{0};
+  UInt64             fPTime{};
 
  private:
   friend class HardwareThreadScheduler;

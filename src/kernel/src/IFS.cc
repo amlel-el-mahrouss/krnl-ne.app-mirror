@@ -9,9 +9,9 @@
 
 /*************************************************************
  *
- * File: IFS.cc
- * Purpose: Filesystem to mountpoint interface.
- * Date: 05/26/2025
+ * File: \file IFS.cc
+ * Purpose: \brief Filesystem to mountpoint interface.
+ * Date: \date 05/26/2025
  *
  * Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
  *
@@ -27,7 +27,7 @@ namespace Kernel {
 /// @param Mnt mounted interface.
 /// @param DrvTrait drive info
 /// @param DrvIndex drive index.
-/// @return
+/// @return KPC status code from the IFS.
 Int32 fs_ifs_read(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
   if (!Mnt) return kErrorDisk;
 

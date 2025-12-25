@@ -26,11 +26,11 @@ using CFPropertyId = UIntPtr;
 
 /// ================================================================================
 /// @brief User property class.
-/// @example /prop/foo or /prop/bar
+/// @note /prop/foo or /prop/bar are properties.
 /// ================================================================================
 class CFProperty final CF_OBJECT {
  public:
-  CFProperty(CFRef<CFGUID> guid, CFString& name, CFPropertyId value);
+  CFProperty(CFRef<CFGuid> guid, CFString& name, CFPropertyId value);
   ~CFProperty() override = default;
 
  public:
@@ -44,7 +44,7 @@ class CFProperty final CF_OBJECT {
  private:
   CFString*     fName{nullptr};
   CFPropertyId  fValue{0UL};
-  CFRef<CFGUID> fGUID{};
+  CFRef<CFGuid> fGUID{};
 };
 
 template <SizeT N>

@@ -10,7 +10,7 @@
 /***********************************************************************************/
 /// @file UserProcessScheduler.cc
 /// @brief Unprivileged/Ring-3 process scheduler.
-/// @author Amlal El Mahrouss (amlal@nekernel.org)
+/// @author Amlal El Mahrouss (amlal at nekernel dot org)
 /***********************************************************************************/
 
 #include <ArchKit/ArchKit.h>

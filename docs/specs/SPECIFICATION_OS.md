@@ -7,6 +7,7 @@
 - ABI and Format: PEF/PE32+.
 - Kernel architecture: Portable hybrid Kernel.
 - Used Languages: C++, and Assembly Assembly (AMD64, X64000, X86S, ARM64, POWER, RISCV)
+- 32-bit is not supported as of 12/25/2025.
 
 ===================================
 
@@ -27,11 +28,11 @@
 - Dynamic Loader.
 - Cross Platform.
 - Permission Selectors.
-- Modular, and Security focused.
+- Modular and Security focused.
 
 ===================================
 
-# 2: The Filesystem (NeFS, OpenHeFS)
+# 2: The Filesystem (NeFS, or OpenHeFS)
 
 ===================================
 
@@ -65,3 +66,17 @@
 - Handover compliant.
 - Does check for a valid partition (useful in the case of recovering)
 - Modular, and Security focused.
+
+===================================
+
+# 5: The IFS
+
+==================================
+
+- Filesystem to mountpoint interface abstraction.
+- VFS-like subsystem inspired by NT/OS2 IFS.
+- Multi-drive support (A, B, C, D indices).
+- Ext2 support via IFS layer.
+- Packet-based I/O operations.
+- Separation of read/write operations per drive.
+

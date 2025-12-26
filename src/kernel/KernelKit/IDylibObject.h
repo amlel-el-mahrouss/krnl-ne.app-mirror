@@ -33,11 +33,11 @@ class IDylibObject {
 
   NE_COPY_DEFAULT(IDylibObject)
 
-  virtual DylibTraits** GetAddressOf() = 0;
-  virtual DylibTraits*  Get()          = 0;
+  virtual DylibTraits** GetAddressOf() { return nullptr; }
+  virtual DylibTraits*  Get()          { return nullptr; }
 
-  virtual Void Mount(DylibTraits* to_mount) = 0;
-  virtual Void Unmount()                    = 0;
+  virtual Void Mount(DylibTraits*) {}
+  virtual Void Unmount()                    {}
 };
 
 /// @brief Pure implementation, missing method/function handler.

@@ -13,7 +13,7 @@
 
 namespace Kernel {
 /// @brief This interface is used to make loader contracts (MSCOFF, PEF).
-/// @author @Amlal-El-Mahrouss
+/// @author Amlal El Mahrouss
 class ILoader {
  public:
   explicit ILoader() = default;
@@ -22,11 +22,11 @@ class ILoader {
   NE_COPY_DEFAULT(ILoader)
 
  public:
-  virtual _Output ErrorOr<VoidPtr> GetBlob()                                              = 0;
-  virtual _Output const Char*      AsString()                                             = 0;
-  virtual _Output const Char*      MIME()                                                 = 0;
-  virtual _Output const Char*      Path()                                                 = 0;
-  virtual _Output ErrorOr<VoidPtr> FindStart()                                            = 0;
-  virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char* name, _Input Int32 kind) = 0;
+  virtual _Output ErrorOr<VoidPtr> GetBlob()                                              { return ErrorOr<VoidPtr>{}; }
+  virtual _Output const Char*      AsString()                                             { return ""; }
+  virtual _Output const Char*      MIME()                                                 { return ""; }
+  virtual _Output const Char*      Path()                                                 { return ""; }
+  virtual _Output ErrorOr<VoidPtr> FindStart()                                            { return ErrorOr<VoidPtr>{}; }
+  virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char*, _Input Int32)           { return ErrorOr<VoidPtr>{}; }
 };
 }  // namespace Kernel

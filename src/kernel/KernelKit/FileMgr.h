@@ -23,7 +23,7 @@
 #define INC_FILEMGR_H
 
 /// @file FileMgr.h
-/// @brief File Manager System.
+/// @brief File Manager Subsystem.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 //! Include filesystems that NeKernel supports.

@@ -14,6 +14,10 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/OwnPtr.h>
 
+#define kPeStackSizeSymbol "__NESizeOfReserveStack"
+#define kPeHeapSizeSymbol "__NESizeOfReserveHeap"
+#define kPeNameSymbol "__NEProgramName"
+
 namespace Kernel {
 namespace Detail {
   /***********************************************************************************/
@@ -222,17 +226,17 @@ ErrorOr<VoidPtr> PE32Loader::GetBlob() {
 namespace Utils {
   ProcessID rtl_create_user_process(PE32Loader&                        exec,
                                     const UserProcess::ExecutableKind& process_kind) {
-    auto errOrStart = exec.FindStart();
+    ErrorOrAny errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
 
-    auto symname = exec.FindSymbol(kPeImageStart, 0);
+    ErrorOrAny symname = exec.FindSymbol(kPeImageStart, 0);
 
     if (!symname) {
       symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PE32+")};
     }
 
-    auto id =
+    ProcessID id =
         UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
                                           errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
 

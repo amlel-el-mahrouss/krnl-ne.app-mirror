@@ -17,11 +17,6 @@
 #define kMaxAPInsideSched (4U)
 
 namespace Kernel {
-class HardwareThread;
-class HardwareThreadScheduler;
-
-using ThreadID = UInt32;
-
 enum struct ThreadKind {
   kAPInvalid        = 0,
   kAPSystemReserved = 100,  // System reserved thread, well user can't use it
@@ -29,8 +24,11 @@ enum struct ThreadKind {
   kAPRealTime,              // fallback thread, cannot be used by user if not clear or
                             // used by Kernel.
   kAPBoot,                  // The core we booted from, the mama.
-  kAPCount,
+  kAPCount = kAPBoot - kAPSystemReserved + 1,
 };
+
+/// \brief Alias for thread ID.
+using ThreadID = UInt32;
 
 /***********************************************************************************/
 ///

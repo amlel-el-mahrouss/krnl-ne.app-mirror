@@ -29,10 +29,6 @@
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
-#define kPeStackSizeSymbol "__NESizeOfReserveStack"
-#define kPeHeapSizeSymbol "__NESizeOfReserveHeap"
-#define kPeNameSymbol "__NEProgramName"
-
 #define kPeApplicationMime "application/vnd-portable-executable"
 
 #define kPeImageStart "__ImageStart"

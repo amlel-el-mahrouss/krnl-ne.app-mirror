@@ -22,7 +22,7 @@ class NonNullRefPtr;
 template <typename T>
 class OwnPtr final {
  public:
-  OwnPtr() = default;
+  OwnPtr() : fCls(nullptr) {}
   ~OwnPtr() { this->Reset(); }
 
   OwnPtr& operator=(const OwnPtr&) = default;
@@ -51,8 +51,7 @@ class OwnPtr final {
   Ref<T> AsRef() { return Ref<T>(fCls); }
 
   explicit operator bool() { return fCls; }
-  bool     operator!() { return !fCls; }
-
+  
  private:
   T* fCls{nullptr};
 };

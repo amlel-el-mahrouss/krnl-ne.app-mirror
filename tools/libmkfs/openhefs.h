@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef LIBMKFS_OPENHEFS_H
+#define LIBMKFS_OPENHEFS_H
 
 #include <cstdint>
 #include <cstring>
@@ -114,3 +115,5 @@ struct __attribute__((packed)) BootNode {
   char          pad[272]{};
 };
 }  // namespace mkfs::hefs
+
+#endif

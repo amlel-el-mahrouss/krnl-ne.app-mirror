@@ -7,7 +7,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_DDK_H
+#define DRIVERKIT_DDK_H
 
 #include <DriverKit/macros.h>
 
@@ -74,3 +75,5 @@ DDK_EXTERN uint32_t kApiVersionLowest;
 
 /// @brief API version in BCD.
 DDK_EXTERN uint32_t kApiVersion;
+
+#endif

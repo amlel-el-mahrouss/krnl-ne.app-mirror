@@ -3,7 +3,8 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
-#pragma once
+#ifndef NEKIT_CXXABI_H
+#define NEKIT_CXXABI_H
 
 #include <NeKit/Config.h>
 
@@ -24,3 +25,5 @@ typedef Kernel::SizeT* __guard;
 }
 
 #endif  // !__NECTI__
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_CONFIG_H
+#define NEKIT_CONFIG_H
 
 #include <NeKit/Macros.h>
 
@@ -220,3 +221,5 @@ struct PropertyResult final {
   static constexpr bool kValue = Type::kValue;
 };
 }  // namespace Kernel
+
+#endif

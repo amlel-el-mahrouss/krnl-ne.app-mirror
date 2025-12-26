@@ -15,7 +15,8 @@
  *
  */
 
-#pragma once
+#ifndef FIRMWAREKIT_HANDOVER_H
+#define FIRMWAREKIT_HANDOVER_H
 
 #include <FirmwareKit/EFI/EFI.h>
 #include <NeKit/Config.h>
@@ -106,3 +107,5 @@ typedef Int32 (*HandoverProc)(BootInfoHeader* boot_info);
 
 /// @brief Bootloader information header global variable.
 inline Kernel::HEL::BootInfoHeader* kHandoverHeader = nullptr;
+
+#endif

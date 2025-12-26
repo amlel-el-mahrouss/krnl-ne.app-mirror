@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_KPC_H
+#define KERNELKIT_KPC_H
 
 #include <NeKit/Config.h>
 
@@ -77,3 +78,5 @@ inline constexpr KPCError kErrorUnimplemented = -1;
 /// @return if error-free: false, otherwise true.
 Boolean err_bug_check_raise(Void);
 }  // namespace Kernel
+
+#endif

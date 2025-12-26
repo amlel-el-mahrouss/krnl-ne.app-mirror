@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_PE32CODEMGR_H
+#define KERNELKIT_PE32CODEMGR_H
 
 ////////////////////////////////////////////////////
 
@@ -86,3 +87,5 @@ using PE_SECTION_INFO = LDR_SECTION_HEADER;
 ProcessID rtl_create_user_process(PE32Loader&                        exec,
                                   const UserProcess::ExecutableKind& process_kind);
 }  // namespace Kernel
+
+#endif

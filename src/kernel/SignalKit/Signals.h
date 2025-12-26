@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SIGNALKIT_SIGNALS_H
+#define SIGNALKIT_SIGNALS_H
 
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
@@ -51,3 +52,5 @@ inline BOOL sig_validate_unique(rt_signal_kind sig) {
   return sig > SIGBAD && sig > SIGDTCH;
 }
 }  // namespace Kernel
+
+#endif

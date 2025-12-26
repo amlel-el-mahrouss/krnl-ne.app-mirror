@@ -4,7 +4,8 @@ Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
 
-#pragma once
+#ifndef BENCHKIT_HWCHRONOMETER_H
+#define BENCHKIT_HWCHRONOMETER_H
 
 #include <misc/BenchKit/Chronometer.h>
 
@@ -64,3 +65,5 @@ class HWChrono BENCHKIT_INTERFACE {
   UInt64 fStop{};
 };
 }  // namespace Kernel
+
+#endif

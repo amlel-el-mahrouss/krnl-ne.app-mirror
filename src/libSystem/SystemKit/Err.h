@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SYSTEMKIT_ERR_H
+#define SYSTEMKIT_ERR_H
 
 #include <libSystem/SystemKit/Macros.h>
 
@@ -56,3 +57,5 @@ inline constexpr ErrRef kErrorUnimplemented      = -1;
 
 /// @brief The last error reported by the system to the process.
 IMPORT_C ErrRef kLastError;
+
+#endif

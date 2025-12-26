@@ -7,7 +7,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef DMAKIT_DMAPOOL_H
+#define DMAKIT_DMAPOOL_H
 
 #include <KernelKit/DebugOutput.h>
 
@@ -103,3 +104,5 @@ inline Void rtl_dma_flush(VoidPtr ptr, SizeT size_buffer) {
 }
 
 }  // namespace Kernel
+
+#endif

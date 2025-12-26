@@ -7,7 +7,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_DEV_H
+#define DRIVERKIT_DEV_H
 
 #include <DriverKit/ddk.h>
 
@@ -37,3 +38,5 @@ DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* path);
 /// @brief Close any device.
 /// @param device valid device.
 DDK_EXTERN BOOL kclose_dev(DDK_DEVICE_PTR device);
+
+#endif

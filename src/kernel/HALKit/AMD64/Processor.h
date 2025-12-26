@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_PROCESSOR_H
+#define HALKIT_PROCESSOR_H
 
 #ifdef __NE_AMD64__
 
@@ -281,3 +282,5 @@ inline Kernel::VoidPtr kKernelBitMpStart = nullptr;
 inline Kernel::UIntPtr kKernelBitMpSize  = 0UL;
 
 #endif  // __NE_AMD64__ */
+
+#endif

@@ -8,7 +8,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_FOUNDATION_H
+#define HEADERS_FOUNDATION_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -87,3 +88,5 @@ union CFGuid final {
   } fUuid;
 };
 }  // namespace CF
+
+#endif

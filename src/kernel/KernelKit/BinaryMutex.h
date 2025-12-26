@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_BINARYMUTEX_H
+#define KERNELKIT_BINARYMUTEX_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/Timer.h>
@@ -39,3 +40,5 @@ class BinaryMutex final {
   LockedPtr fLockingProcess{nullptr};
 };
 }  // namespace Kernel
+
+#endif

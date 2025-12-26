@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_ZXD_H
+#define KERNELKIT_ZXD_H
 
 #include <NeKit/Config.h>
 
@@ -57,3 +58,5 @@ inline constexpr auto kProsanName = ".pros";
 using ZxdExecPtr = ZxdExec*;
 using ZxdStubPtr = ZxdStub*;
 }  // namespace Kernel
+
+#endif

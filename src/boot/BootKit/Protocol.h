@@ -4,7 +4,10 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_PROTOCOL_H
+#define BOOTKIT_PROTOCOL_H
 
 #include <FirmwareKit/EFI.h>
 #include <FirmwareKit/Handover.h>
+
+#endif

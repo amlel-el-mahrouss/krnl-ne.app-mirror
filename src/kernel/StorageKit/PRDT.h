@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_PRDT_H
+#define STORAGEKIT_PRDT_H
 
 #include <KernelKit/PCI/DMA.h>
 #include <KernelKit/PCI/Iterator.h>
@@ -31,3 +32,5 @@ void construct_prdt(Ref<PRDT>& prd);
 
 EXTERN_C Int32 kPRDTTransferStatus;
 }  // namespace Kernel
+
+#endif

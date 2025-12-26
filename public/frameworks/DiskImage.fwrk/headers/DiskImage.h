@@ -7,7 +7,8 @@
 
    ======================================== */
 
-#pragma once
+#ifndef HEADERS_DISKIMAGE_H
+#define HEADERS_DISKIMAGE_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -58,3 +59,5 @@ SInt32 DIFormatFilesystemNeFS(struct DI_DISK_IMAGE& img);
 SInt32 DIFormatFilesystemOpenHeFS(struct DI_DISK_IMAGE& img);
 
 }  // namespace DI
+
+#endif

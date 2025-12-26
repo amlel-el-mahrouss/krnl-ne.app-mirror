@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef MSGKIT_SERVER_H
+#define MSGKIT_SERVER_H
 
 #ifdef __cplusplus
 #include <public/frameworks/CoreFoundation.fwrk/headers/String.h>
@@ -39,3 +40,5 @@ typedef Void (*libmsg_func_type)(struct LIBMSG_EXPR* self, VoidPtr arg, SizeT ar
 IMPORT_C Void   libmsg_init_library(libmsg_func_type* funcs, SizeT cnt);
 IMPORT_C UInt32 libmsg_close_library(Void);
 IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head);
+
+#endif

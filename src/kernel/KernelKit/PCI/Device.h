@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_DEVICE_H
+#define KERNELKIT_DEVICE_H
 
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
@@ -73,3 +74,5 @@ class Device final {
   UInt32 fBar;
 };
 }  // namespace Kernel::PCI
+
+#endif

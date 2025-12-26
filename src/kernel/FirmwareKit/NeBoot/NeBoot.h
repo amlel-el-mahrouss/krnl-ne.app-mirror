@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_NEBOOT_H
+#define FIRMWAREKIT_NEBOOT_H
 
 #include <NeKit/Config.h>
 
@@ -32,3 +33,5 @@ struct ATTRIBUTE(aligned(4)) NEBOOT_LINEAR_EXEC {
 #endif
 };
 }  // namespace Firmware::Detail::NeBoot
+
+#endif

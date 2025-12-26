@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_AHCI_H
+#define STORAGEKIT_AHCI_H
 
 #include <KernelKit/DeviceMgr.h>
 #include <KernelKit/DriveMgr.h>
@@ -45,3 +46,5 @@ class AHCIDeviceInterface NE_DEVICE<IMountpoint*> {
 UInt16                       sk_init_ahci_device(BOOL atapi);
 ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(UInt32 drv_index);
 }  // namespace Kernel
+
+#endif

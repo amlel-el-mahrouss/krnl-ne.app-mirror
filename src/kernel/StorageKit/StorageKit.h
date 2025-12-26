@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_STORAGEKIT_H
+#define STORAGEKIT_STORAGEKIT_H
 
 #define kDriveSectorSizeHDD (512U)
 #define kDriveSectorSizeSSD (512U)
@@ -19,3 +20,5 @@ class AHCIDeviceInterface;
 class ATADeviceInterface;
 class SCSIDeviceInterface;
 }  // namespace Kernel
+
+#endif

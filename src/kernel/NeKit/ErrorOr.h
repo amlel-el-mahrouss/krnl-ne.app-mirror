@@ -7,7 +7,8 @@
  * 	========================================================
  */
 
-#pragma once
+#ifndef NEKIT_ERROROR_H
+#define NEKIT_ERROROR_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
@@ -63,3 +64,5 @@ class ErrorOr final {
 using ErrorOrAny = ErrorOr<voidPtr>;
 
 }  // namespace Kernel
+
+#endif

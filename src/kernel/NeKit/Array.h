@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_ARRAY_H
+#define NEKIT_ARRAY_H
 
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Config.h>
@@ -42,3 +43,5 @@ inline auto make_array(ValueType& val) -> auto {
   return Array<ValueType, ARRAY_SIZE(val)>{val};
 }
 }  // namespace Kernel
+
+#endif

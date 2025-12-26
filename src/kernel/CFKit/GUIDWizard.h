@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef CFKIT_GUIDWIZARD_H
+#define CFKIT_GUIDWIZARD_H
 
 #include <CFKit/GUIDWrapper.h>
 #include <NeKit/Array.h>
@@ -19,3 +20,5 @@ namespace Kernel::CF::XRN::Version1 {
 Ref<GUIDSequence*>    cf_make_sequence(const Array<UInt32, 10>& seq);
 ErrorOr<Ref<KString>> cf_try_guid_to_string(Ref<GUIDSequence*>& guid);
 }  // namespace Kernel::CF::XRN::Version1
+
+#endif

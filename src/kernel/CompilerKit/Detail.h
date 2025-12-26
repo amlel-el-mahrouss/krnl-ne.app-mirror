@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef COMPILERKIT_DETAIL_H
+#define COMPILERKIT_DETAIL_H
 
 #ifdef __NEOSKRNL__
 #include <NeKit/Config.h>
@@ -25,3 +26,5 @@
 #define NE_MOVE_DEFAULT(KLASS)         \
   KLASS& operator=(KLASS&&) = default; \
   KLASS(KLASS&&)            = default;
+
+#endif

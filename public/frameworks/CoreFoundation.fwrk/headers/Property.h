@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_PROPERTY_H
+#define HEADERS_PROPERTY_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 #include <CoreFoundation.fwrk/headers/Ref.h>
@@ -50,3 +51,5 @@ class CFProperty final CF_OBJECT {
 template <SizeT N>
 using CFPropertyArray = CFArray<CFProperty, N>;
 }  // namespace CF
+
+#endif

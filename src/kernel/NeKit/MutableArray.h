@@ -3,7 +3,9 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
-#pragma once
+
+#ifndef NEKIT_MUTABLEARRAY_H
+#define NEKIT_MUTABLEARRAY_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Array.h>
@@ -201,3 +203,5 @@ class MutableArray : public NullableMutableArray<voidPtr, nullptr> {
   Kernel::SizeT fNodeCount{0};
 };
 }  // namespace Kernel
+
+#endif

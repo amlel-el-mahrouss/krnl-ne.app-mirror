@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_PCI_H
+#define KERNELKIT_PCI_H
 
 #include <NeKit/Config.h>
 
@@ -52,3 +53,5 @@ class BAR {
   Detail::BAR BAR5;
 };
 }  // namespace Kernel::PCI
+
+#endif

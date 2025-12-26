@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_APPLICATIONPROCESSOR_H
+#define HALKIT_APPLICATIONPROCESSOR_H
 
 #include <HALKit/ARM64/Processor.h>
 #include <NeKit/Config.h>
@@ -17,3 +18,5 @@
 namespace Kernel {
 Void mp_init_cores(Void);
 }
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_UTILS_H
+#define NEKIT_UTILS_H
 
 #include <NeKit/Config.h>
 
@@ -70,3 +71,5 @@ inline constexpr SizeT oe_string_len(const CharType* str) {
 #endif
 }
 }  // namespace Kernel
+
+#endif

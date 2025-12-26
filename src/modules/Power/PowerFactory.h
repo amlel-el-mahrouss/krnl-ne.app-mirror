@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef POWER_POWERFACTORY_H
+#define POWER_POWERFACTORY_H
 
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Config.h>
@@ -28,3 +29,5 @@ class PowerFactory {
   virtual Void Reboot() {}                // soft-reboot
 };
 }  // namespace Kernel
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_KERNELTASKSCHEDULER_H
+#define KERNELKIT_KERNELTASKSCHEDULER_H
 
 /// @file KernelTaskScheduler.h
 /// @brief Kernel Task Scheduler backend file.
@@ -47,3 +48,5 @@ class KernelTaskHelper final {
   STATIC SizeT        StartScheduling();
 };
 }  // namespace Kernel
+
+#endif

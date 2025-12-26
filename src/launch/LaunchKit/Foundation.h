@@ -4,7 +4,8 @@
 
    ======================================== */
 
-#pragma once
+#ifndef LAUNCHKIT_FOUNDATION_H
+#define LAUNCHKIT_FOUNDATION_H
 
 #include <CoreFoundation.fwrk/headers/Ref.h>
 #include <libSystem/SystemKit/System.h>
@@ -19,3 +20,5 @@ namespace LaunchKit {
 using AnyRef    = CF::CFRef<VoidPtr>;
 using StatusRef = CF::CFRef<SInt32>;
 }  // namespace LaunchKit
+
+#endif

@@ -7,7 +7,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_PAGEMGR_H
+#define NEKIT_PAGEMGR_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
@@ -74,3 +75,5 @@ struct PageMgr final {
   friend class Pmm;
 };
 }  // namespace Kernel
+
+#endif

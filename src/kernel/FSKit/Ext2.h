@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_EXT2_H
+#define FSKIT_EXT2_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DriveMgr.h>
@@ -146,3 +147,5 @@ struct Ext2Node {
   EXT2_INODE     inode;
   Kernel::UInt32 cursor{0};
 };
+
+#endif

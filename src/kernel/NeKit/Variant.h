@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_VARIANT_H
+#define NEKIT_VARIANT_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Json.h>
@@ -66,3 +67,5 @@ class Variant final {
   VariantKind fKind{VariantKind::kNull};
 };
 }  // namespace Kernel
+
+#endif

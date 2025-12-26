@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_PLATFORM_H
+#define BOOTKIT_PLATFORM_H
 
 /**
   @file Platform.h
@@ -30,3 +31,5 @@ EXTERN_C void rt_cld();
 EXTERN_C void rt_std();
 
 #endif /* ifdef __x86_64__ */
+
+#endif

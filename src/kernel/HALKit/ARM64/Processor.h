@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_PROCESSOR_H
+#define HALKIT_PROCESSOR_H
 
 #ifdef __NE_ARM64__
 
@@ -76,3 +77,5 @@ inline Kernel::UIntPtr kKernelBitMpSize  = 0UL;
 #include <HALKit/ARM64/Paging.h>
 
 #endif  // __NE_ARM64__
+
+#endif

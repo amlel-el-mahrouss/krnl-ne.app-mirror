@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_NVME_H
+#define STORAGEKIT_NVME_H
 
 #include <KernelKit/DeviceMgr.h>
 #include <KernelKit/DriveMgr.h>
@@ -29,3 +30,5 @@ class NVMEDeviceInterface final NE_DEVICE<IMountpoint*> {
   Void (*fCleanup)(Void) = {nullptr};
 };
 }  // namespace Kernel
+
+#endif

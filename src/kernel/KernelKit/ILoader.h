@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_ILOADER_H
+#define KERNELKIT_ILOADER_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -30,3 +31,5 @@ class ILoader {
   virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char*, _Input Int32)           { return ErrorOr<VoidPtr>{}; }
 };
 }  // namespace Kernel
+
+#endif

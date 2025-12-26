@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_DICTIONARY_H
+#define HEADERS_DICTIONARY_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -38,3 +39,5 @@ inline auto make_dict() {
   return CFDictionary<KeyType, ValueType>{};
 }
 }  // namespace CF
+
+#endif

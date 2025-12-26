@@ -14,7 +14,8 @@ default.
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_NEFS_H
+#define FSKIT_NEFS_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DriveMgr.h>
@@ -411,3 +412,5 @@ namespace NeFS {
   Boolean fs_init_nefs(Void);
 }  // namespace NeFS
 }  // namespace Kernel
+
+#endif

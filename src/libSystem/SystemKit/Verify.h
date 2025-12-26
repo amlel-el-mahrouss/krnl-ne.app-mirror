@@ -7,7 +7,8 @@
 
    ======================================== */
 
-#pragma once
+#ifndef SYSTEMKIT_VERIFY_H
+#define SYSTEMKIT_VERIFY_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -15,13 +16,10 @@ namespace LibSystem::Verify {
 /// @author 0xf00sec, and Amlal El Mahrouss
 /// @brief safe cast operator.
 template <class T, class R>
-inline R sys_safe_cast(const T* ptr) {
+inline R* sys_safe_cast(const T* ptr) {
   ::_rtl_assert(ptr, "safe cast failed!");
   return static_cast<R*>(const_cast<T*>(ptr));
 }
-
-template <class T, class R = Void>
-inline Void sys_safe_cast(const T* ptr) = delete;
 
 template <class T, class U>
 struct is_castable {
@@ -45,3 +43,5 @@ constexpr R* sys_constexpr_cast(T* ptr) {
   return static_cast<R*>(ptr);
 }
 }  // namespace LibSystem::Verify
+
+#endif

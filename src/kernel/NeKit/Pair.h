@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_PAIR_H
+#define NEKIT_PAIR_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -49,3 +50,5 @@ class PairBuilder final {
 template <typename T1, typename T2>
 using PairOr = ErrorOr<Pair<T1, T2>>;
 }  // namespace Kernel
+
+#endif

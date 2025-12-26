@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_FUNCTION_H
+#define NEKIT_FUNCTION_H
 
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
@@ -37,3 +38,5 @@ class Function final {
 template <typename T, typename... Args>
 using FunctionOr = ErrorOr<Function<T, Args...>>;
 }  // namespace Kernel
+
+#endif

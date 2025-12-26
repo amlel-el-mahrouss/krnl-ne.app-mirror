@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SWAPKIT_DISKSWAP_H
+#define SWAPKIT_DISKSWAP_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -70,3 +71,5 @@ typedef struct SwapDiskHdr {
   UInt8  fBlob[1];
 } PACKED ALIGN(8) SwapDiskHdr;
 }  // namespace Kernel
+
+#endif

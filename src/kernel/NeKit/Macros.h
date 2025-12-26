@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_MACROS_H
+#define NEKIT_MACROS_H
 
 /***********************************************************************************/
 /// @file NeKit/Macros.h
@@ -149,3 +150,5 @@
 #endif  // ifdef RTL_INIT_OBJECT
 
 #define RTL_INIT_OBJECT(OBJ, TYPE, ...) TYPE OBJ = TYPE(__VA_ARGS__)
+
+#endif

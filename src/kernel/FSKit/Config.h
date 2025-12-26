@@ -4,9 +4,12 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_CONFIG_H
+#define FSKIT_CONFIG_H
 
 #include <NeKit/Config.h>
 
 #define FSKIT_VERSION "0.0.2"
 #define FSKIT_VERSION_BCD 0x0002
+
+#endif

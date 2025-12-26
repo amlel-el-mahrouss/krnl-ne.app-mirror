@@ -4,9 +4,12 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_EFI_H
+#define FIRMWAREKIT_EFI_H
 
 #include <FirmwareKit/EFI/EFI.h>
 #include <FirmwareKit/GPT.h>
 
 /// @note this header is used to reference the EFI/EFI.h
+
+#endif

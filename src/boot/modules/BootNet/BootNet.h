@@ -7,6 +7,9 @@
  * 	========================================================
  */
 
-#pragma once
+#ifndef BOOTNET_BOOTNET_H
+#define BOOTNET_BOOTNET_H
 
 #include <FirmwareKit/NeBoot/BootNet.h>
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_ATA_H
+#define STORAGEKIT_ATA_H
 
 #include <KernelKit/DeviceMgr.h>
 #include <KernelKit/DriveMgr.h>
@@ -54,3 +55,5 @@ BOOL sk_init_ata_device(BOOL is_master, UInt16& io, UInt8& master);
 /// @return A wrapped device interface if successful, or error code.
 ErrorOr<ATADeviceInterface> sk_acquire_ata_device(Int32 drv_index);
 }  // namespace Kernel
+
+#endif

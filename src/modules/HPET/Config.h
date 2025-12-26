@@ -9,7 +9,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HPET_CONFIG_H
+#define HPET_CONFIG_H
 
 #include <NeKit/Config.h>
 #include <modules/ACPI/ACPI.h>
@@ -37,3 +38,5 @@ struct PACKED HPETHeader final : public SDT {
 };
 
 }  // namespace Kernel
+
+#endif

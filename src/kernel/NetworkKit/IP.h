@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NETWORKKIT_IP_H
+#define NETWORKKIT_IP_H
 
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Config.h>
@@ -74,3 +75,5 @@ class IPFactory final {
   static bool             IpCheckVersion4(const Char* ip);
 };
 }  // namespace Kernel
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SYSTEMKIT_JAIL_H
+#define SYSTEMKIT_JAIL_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -34,3 +35,5 @@ struct JAIL {
 /// @brief Get the current jail
 /// @return Pointer to the current jail structure, or NULL if not in a jail
 IMPORT_C struct JAIL* JailGetCurrent(Void);
+
+#endif

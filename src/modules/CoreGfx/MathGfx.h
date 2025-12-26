@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef COREGFX_MATHGFX_H
+#define COREGFX_MATHGFX_H
 
 /// @file MathMgr.h
 /// @brief Linear interpolation implementation.
@@ -25,3 +26,5 @@ inline cg_real_t cg_math_lerp(cg_real_t to, cg_real_t from, cg_real_t stat) {
   return (from) + (to - from) * stat;
 }
 }  // namespace UI
+
+#endif

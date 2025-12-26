@@ -7,6 +7,9 @@
 
    ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_CHECKSUM_H
+#define DRIVERKIT_CHECKSUM_H
 
 /// @todo Driver checksum
+
+#endif

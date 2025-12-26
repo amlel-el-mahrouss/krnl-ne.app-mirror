@@ -3,7 +3,8 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
-#pragma once
+#ifndef HEADERS_ATOM_H
+#define HEADERS_ATOM_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 
@@ -31,3 +32,5 @@ class CFAtom final {
   T fArrayOfAtoms;
 };
 }  // namespace CF
+
+#endif

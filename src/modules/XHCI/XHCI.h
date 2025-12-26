@@ -12,7 +12,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef XHCI_XHCI_H
+#define XHCI_XHCI_H
 
 #include <NeKit/Config.h>
 
@@ -64,3 +65,5 @@ typedef struct USBInterruptEnableRegister final {
    always 0. The Frame List must contain 1024 entries.
 */
 }  // namespace Kernel
+
+#endif

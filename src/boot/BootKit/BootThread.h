@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_BOOTTHREAD_H
+#define BOOTKIT_BOOTTHREAD_H
 
 #include <FirmwareKit/Handover.h>
 #include <KernelKit/MSDOS.h>
@@ -39,3 +40,5 @@ class BootThread final {
   HEL::BootInfoHeader* fHandover{nullptr};
 };
 }  // namespace Boot
+
+#endif

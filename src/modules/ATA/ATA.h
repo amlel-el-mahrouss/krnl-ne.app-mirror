@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef ATA_ATA_H
+#define ATA_ATA_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -155,3 +156,5 @@ Kernel::SizeT drv_std_get_sector_count();
 Kernel::SizeT drv_std_get_size();
 
 #endif  // ifdef __NEOSKRNL__
+
+#endif

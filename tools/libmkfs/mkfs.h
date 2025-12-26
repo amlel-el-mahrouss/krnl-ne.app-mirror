@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef LIBMKFS_MKFS_H
+#define LIBMKFS_MKFS_H
 
 #include <tools/rang.h>
 #include <iostream>
@@ -88,3 +89,5 @@ inline auto console_out() -> std::ostream& {
   return conout;
 }
 }  // namespace mkfs
+
+#endif

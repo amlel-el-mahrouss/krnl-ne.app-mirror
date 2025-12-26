@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SCSI_SCSI_H
+#define SCSI_SCSI_H
 
 #include <NeKit/Config.h>
 
@@ -19,3 +20,5 @@ using scsi_packet_type_12 = scsi_packet_type<12>;
 
 extern const scsi_packet_type_12 kCDRomPacketTemplate;
 }  // namespace Kernel
+
+#endif

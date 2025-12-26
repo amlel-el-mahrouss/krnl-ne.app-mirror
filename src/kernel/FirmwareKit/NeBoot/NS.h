@@ -4,7 +4,10 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_NS_H
+#define FIRMWAREKIT_NS_H
 
 #include <FirmwareKit/NeBoot/BootNet.h>
 #include <FirmwareKit/NeBoot/NeBoot.h>
+
+#endif

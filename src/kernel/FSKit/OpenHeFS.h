@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_OPENHEFS_H
+#define FSKIT_OPENHEFS_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DriveMgr.h>
@@ -432,3 +433,5 @@ namespace OpenHeFS {
   Boolean fs_init_openhefs(Void);
 }  // namespace OpenHeFS
 }  // namespace Kernel
+
+#endif

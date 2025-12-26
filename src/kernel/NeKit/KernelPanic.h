@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_KERNELPANIC_H
+#define NEKIT_KERNELPANIC_H
 
 #include <NeKit/Config.h>
 
@@ -65,3 +66,5 @@ namespace Kernel {
 void ke_runtime_check(bool expr, const Char* file, const Char* line);
 void ke_panic(const Int32& id, const Char* message = nullptr);
 }  // namespace Kernel
+
+#endif

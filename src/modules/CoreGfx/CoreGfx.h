@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef COREGFX_COREGFX_H
+#define COREGFX_COREGFX_H
 
 #include <NeKit/Config.h>
 
@@ -116,3 +117,5 @@ inline Void cg_clear_video() {
                  0);
 }
 }  // namespace FB
+
+#endif

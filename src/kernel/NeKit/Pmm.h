@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_PMM_H
+#define NEKIT_PMM_H
 
 #include <NeKit/Config.h>
 #include <NeKit/PageMgr.h>
@@ -39,3 +40,5 @@ class Pmm final {
   Ref<PageMgr> fPageMgr;
 };
 }  // namespace Kernel
+
+#endif

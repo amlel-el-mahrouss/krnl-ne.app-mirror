@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_IFS_H
+#define KERNELKIT_IFS_H
 
 #include <KernelKit/DriveMgr.h>
 
@@ -23,3 +24,5 @@ Int32 fs_ifs_read(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 /// @return Status code
 Int32 fs_ifs_write(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 }  // namespace Kernel
+
+#endif

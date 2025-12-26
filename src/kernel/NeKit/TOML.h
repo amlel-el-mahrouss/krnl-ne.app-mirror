@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_TOML_H
+#define NEKIT_TOML_H
 
 #include <NeKit/Config.h>
 #include <NeKit/KString.h>
@@ -24,3 +25,5 @@ class TOMLObject final {
   KString fValue;
 };
 }  // namespace Kernel
+
+#endif

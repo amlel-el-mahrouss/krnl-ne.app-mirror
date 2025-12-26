@@ -7,7 +7,10 @@
 
    ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_DDK_H
+#define DRIVERKIT_DDK_H
 
 #include <DriverKit/c++/checksum.h>
 #include <DriverKit/c++/driver_base.h>
+
+#endif

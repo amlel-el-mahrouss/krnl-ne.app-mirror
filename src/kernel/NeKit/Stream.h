@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_STREAM_H
+#define NEKIT_STREAM_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
@@ -43,3 +44,5 @@ class Stream final {
   Ref<Kind>        fKind;
 };
 }  // namespace Kernel
+
+#endif

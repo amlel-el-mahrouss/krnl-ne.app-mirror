@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_AP_H
+#define HALKIT_AP_H
 
 #include <NeKit/Config.h>
 
@@ -37,3 +38,5 @@ typedef struct HAL_HARDWARE_THREAD {
 /// @return
 EXTERN_C Kernel::Void hal_set_pc_to_hart(HAL_HARDWARE_THREAD* hart, Kernel::VoidPtr epc);
 }  // namespace Kernel
+
+#endif

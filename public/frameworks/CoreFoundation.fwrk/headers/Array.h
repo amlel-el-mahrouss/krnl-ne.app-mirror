@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_ARRAY_H
+#define HEADERS_ARRAY_H
 
 #include <libSystem/SystemKit/System.h>
 
@@ -50,3 +51,5 @@ inline auto make_array(ValueType val) {
   return CFArray<ValueType, ARRAY_SIZE(val)>{val};
 }
 }  // namespace CF
+
+#endif

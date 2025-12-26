@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_PAGING_H
+#define HALKIT_PAGING_H
 
 /** ---------------------------------------------------
 
@@ -103,3 +104,5 @@ typedef HAL::PDE_4KB PDE;
 EXTERN_C void hal_flush_tlb();
 
 #endif  // __NE_ARM64__
+
+#endif

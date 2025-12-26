@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_SUPPORT_H
+#define BOOTKIT_SUPPORT_H
 
 /// @file Support.h
 /// @brief Purpose of this file is to help port libs into the bootloader.
@@ -143,3 +144,5 @@ inline long StringToLong(const char* nptr, char** endptr, int base) {
 
   return (long) ((is_neg) ? -n : n);
 }
+
+#endif

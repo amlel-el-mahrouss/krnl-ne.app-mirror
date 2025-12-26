@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_IO_H
+#define KERNELKIT_IO_H
 
 #include <ArchKit/ArchKit.h>
 #include <NeKit/Array.h>
@@ -61,3 +62,5 @@ inline Array<UShort, Sz> make_ports(UShort base) {
 #else
 #error Please provide platform specific code for the I/O
 #endif  // ifdef __NE_AMD64__
+
+#endif

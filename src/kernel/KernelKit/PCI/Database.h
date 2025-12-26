@@ -3,7 +3,8 @@
   Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 
 ======================================== */
-#pragma once
+#ifndef KERNELKIT_DATABASE_H
+#define KERNELKIT_DATABASE_H
 
 #include <KernelKit/PCI/Device.h>
 #include <NeKit/Config.h>
@@ -49,3 +50,5 @@ inline BOOL operator!=(Kernel::UChar lhs, const Kernel::Types::PciDeviceKind& rh
 inline BOOL operator==(Kernel::UChar lhs, const Kernel::Types::PciDeviceKind& rhs) {
   return lhs == (Kernel::UChar) rhs;
 }
+
+#endif

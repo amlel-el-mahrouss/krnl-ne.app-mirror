@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef APM_APM_H
+#define APM_APM_H
 
 #include <NeKit/Config.h>
 
@@ -27,3 +28,5 @@ enum {
 /// @return status code of the APM command.
 EXTERN_C Int32 apm_send_io_command(UInt16 cmd);
 }  // namespace Kernel
+
+#endif

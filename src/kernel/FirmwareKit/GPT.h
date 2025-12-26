@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_GPT_H
+#define FIRMWAREKIT_GPT_H
 
 #include <FirmwareKit/EFI/EFI.h>
 #include <NeKit/Config.h>
@@ -46,3 +47,5 @@ struct PACKED GPT_PARTITION_ENTRY {
   UInt8    Name[kSectorAlignGPT_PartEntry];
 };
 }  // namespace Kernel
+
+#endif

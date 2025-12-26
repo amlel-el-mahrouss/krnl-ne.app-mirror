@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_INDEXABLEPROPERTY_H
+#define FSKIT_INDEXABLEPROPERTY_H
 
 #include <CFKit/Property.h>
 #include <CompilerKit/CompilerKit.h>
@@ -56,3 +57,5 @@ namespace Indexer {
   Void fs_index_file(const Char* filename, SizeT filenameLen, IndexableProperty& indexer);
 }  // namespace Indexer
 }  // namespace Kernel
+
+#endif

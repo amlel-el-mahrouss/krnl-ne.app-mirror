@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_DEBUGOUTPUT_H
+#define KERNELKIT_DEBUGOUTPUT_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DeviceMgr.h>
@@ -204,3 +205,5 @@ inline TerminalDevice& operator<<(TerminalDevice& src, const Long& num) {
 #endif  // ifdef kendl8
 
 #define kendl8 utf_end_line()
+
+#endif

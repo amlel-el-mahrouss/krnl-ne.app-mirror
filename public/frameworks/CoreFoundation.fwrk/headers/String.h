@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_STRING_H
+#define HEADERS_STRING_H
 
 #include <CoreFoundation.fwrk/headers/Object.h>
 #include <CoreFoundation.fwrk/headers/Ref.h>
@@ -46,3 +47,5 @@ class CFStringBuilder final {
   static BOOL Equals(const Char*, const Char*);
 };
 }  // namespace CF
+
+#endif

@@ -123,7 +123,7 @@ IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input UInt64 len, _Input UIn
 
 IMPORT_C Ref IoOpenFile(_Input const Char* path, _Input const Char* drv_letter) {
   return static_cast<Ref>(libsys_syscall_arg_3(
-      SYSCALL_HASH("IoOpenFile"), Verify::sys_safe_cast(path), Verify::sys_safe_cast(drv_letter)));
+      SYSCALL_HASH("IoOpenFile"), Verify::sys_safe_cast<Char, Void>(path), Verify::sys_safe_cast<Char, Void>(drv_letter)));
 }
 
 IMPORT_C Void IoCloseFile(_Input Ref desc) {
@@ -159,7 +159,7 @@ IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {
 
   // if truncated, `needed` >= kBufferSz; we still send truncated buffer
   auto ret_ptr = libsys_syscall_arg_3(SYSCALL_HASH("PrintOut"), static_cast<VoidPtr>(desc),
-                                      Verify::sys_safe_cast(buf));
+                                      Verify::sys_safe_cast<Char, Void>(buf));
 
   if (!ret_ptr) return -kErrorInvalidData;
 

@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_JSON_H
+#define NEKIT_JSON_H
 
 /// @brief Kernel JSON API.
 
@@ -143,3 +144,5 @@ struct AsciiJsonStreamReader final {
 /// ================================================================================
 using AsciiJsonStream = Stream<AsciiJsonStreamReader, JsonObject<Char>>;
 }  // namespace Kernel
+
+#endif

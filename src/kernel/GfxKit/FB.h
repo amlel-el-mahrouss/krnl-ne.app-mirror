@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef GFXKIT_FB_H
+#define GFXKIT_FB_H
 
 #include <KernelKit/DeviceMgr.h>
 
@@ -50,3 +51,5 @@ class FBDeviceInterface NE_DEVICE<FBDevicePacket*> {
   FBDeviceInterface& operator>>(FBDevicePacket* dat) override;
 };
 }  // namespace Kernel
+
+#endif

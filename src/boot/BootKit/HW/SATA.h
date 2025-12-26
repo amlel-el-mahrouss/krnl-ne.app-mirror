@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_SATA_H
+#define BOOTKIT_SATA_H
 
 #include <BootKit/BootKit.h>
 #include <CompilerKit/CompilerKit.h>
@@ -42,3 +43,5 @@ class BootDeviceSATA final {
   SATATrait mTrait;
 };
 }  // namespace Boot
+
+#endif

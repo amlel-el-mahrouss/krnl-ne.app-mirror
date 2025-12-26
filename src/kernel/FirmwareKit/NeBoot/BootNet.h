@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_BOOTNET_H
+#define FIRMWAREKIT_BOOTNET_H
 
 #include <NeKit/Config.h>
 
@@ -39,3 +40,5 @@ typedef struct _BOOTNET_INTERNET_HEADER {
 } PACKED BOOTNET_INTERNET_HEADER;
 
 using BOOTNET_INTERNET_HEADER_PTR = BOOTNET_INTERNET_HEADER*;
+
+#endif

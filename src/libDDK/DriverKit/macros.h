@@ -7,7 +7,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_MACROS_H
+#define DRIVERKIT_MACROS_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -46,3 +47,5 @@
 #ifndef __NEOSKRNL__
 #error !!! Do not include header in EL0/Ring 3 mode !!!
 #endif  // __NEOSKRNL__
+
+#endif

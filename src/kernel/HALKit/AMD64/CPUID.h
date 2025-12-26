@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_CPUID_H
+#define HALKIT_CPUID_H
 
 #include <NeKit/Config.h>
 
@@ -87,3 +88,5 @@ enum {
 
 typedef Int64 CPUID;
 }  // namespace Kernel
+
+#endif

@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_REF_H
+#define HEADERS_REF_H
 
 #include <CoreFoundation.fwrk/headers/Object.h>
 #include <libSystem/SystemKit/System.h>
@@ -83,3 +84,5 @@ class CFNonNullRef final {
   CFRef<T> fRef{nullptr};
 };
 }  // namespace CF
+
+#endif

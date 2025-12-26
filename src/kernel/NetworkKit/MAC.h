@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NETWORKKIT_MAC_H
+#define NETWORKKIT_MAC_H
 
 #include <NeKit/Array.h>
 #include <NeKit/Config.h>
@@ -32,3 +33,5 @@ class MacAddressGetter final {
 };
 
 }  // namespace Kernel
+
+#endif

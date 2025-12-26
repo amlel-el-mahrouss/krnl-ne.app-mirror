@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef COREGFX_TEXTGFX_H
+#define COREGFX_TEXTGFX_H
 
 #include <NeKit/Config.h>
 #include <modules/CoreGfx/CoreGfx.h>
@@ -181,3 +182,5 @@ inline Kernel::Void cg_render_string(const Kernel::Char* text, Kernel::Int32 x_d
     y_dst += kFontSizeY;
   }
 }
+
+#endif

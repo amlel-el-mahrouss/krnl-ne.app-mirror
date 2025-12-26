@@ -7,7 +7,8 @@
 
    ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_DRIVER_BASE_H
+#define DRIVERKIT_DRIVER_BASE_H
 
 #include <libDDK/DriverKit/macros.h>
 
@@ -45,3 +46,5 @@ concept IsValidDriver = requires(Driver drv) {
   { drv.IsActive() && drv.Type() > kInvalidType };
 };
 }  // namespace Kernel::DDK
+
+#endif

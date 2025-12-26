@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_FOUNDATION_H
+#define HEADERS_FOUNDATION_H
 
 #include <libSystem/SystemKit/Err.h>
 #include <libSystem/SystemKit/System.h>
@@ -17,3 +18,5 @@
 
 #define KT_TEST_SUCCESS (kErrorSuccess)
 #define KT_TEST_FAILURE (kErrorSuccess + 1)
+
+#endif

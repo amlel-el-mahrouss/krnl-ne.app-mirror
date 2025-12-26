@@ -4,6 +4,9 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_QRPRELUDE_H
+#define BOOTKIT_QRPRELUDE_H
 
 #include <BootKit/BitManip.h>
+
+#endif

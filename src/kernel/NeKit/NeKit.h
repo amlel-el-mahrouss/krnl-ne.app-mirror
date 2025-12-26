@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_NEKIT_H
+#define NEKIT_NEKIT_H
 
 #include <NeKit/Array.h>
 #include <NeKit/ErrorOr.h>
@@ -18,3 +19,5 @@
 #include <NeKit/Ref.h>
 #include <NeKit/Stream.h>
 #include <NeKit/Utils.h>
+
+#endif

@@ -11,7 +11,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef AHCI_AHCI_H
+#define AHCI_AHCI_H
 
 #include <NeKit/Config.h>
 #include <modules/ACPI/ACPI.h>
@@ -358,3 +359,5 @@ Kernel::SizeT drv_std_get_size();
 Kernel::Bool drv_is_ready(void);
 
 /* EOF */
+
+#endif

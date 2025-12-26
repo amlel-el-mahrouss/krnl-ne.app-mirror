@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_SOURCELOCATION_H
+#define HEADERS_SOURCELOCATION_H
 
 #include <KernelTest.fwrk/headers/Foundation.h>
 
@@ -32,3 +33,5 @@ class KTSourceLocation final CF_OBJECT {
   CF::CFString mFile{4096};
   SInt32       mLine{0U};
 };
+
+#endif

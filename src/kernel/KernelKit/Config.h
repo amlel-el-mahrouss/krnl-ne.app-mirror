@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_CONFIG_H
+#define KERNELKIT_CONFIG_H
 
 #include <NeKit/Config.h>
 
@@ -17,3 +18,5 @@ class IDylibObject;
 class UserProcess;
 class KernelTask;
 }  // namespace Kernel
+
+#endif

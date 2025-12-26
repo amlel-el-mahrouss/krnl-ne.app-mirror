@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_HYPERVISOR_H
+#define HALKIT_HYPERVISOR_H
 
 #include <NeKit/Config.h>
 
@@ -22,3 +23,5 @@ ENUM_STRING(Bhyve, "bhyve bhyve ");
 ENUM_STRING(Qnx, " QNXQVMBSQG ");
 END_STRING_ENUM()
 }  // namespace Kernel
+
+#endif

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FSKIT_EXT2_IFS_H
+#define FSKIT_EXT2_IFS_H
 
 #include <FSKit/Ext2.h>
 #include <KernelKit/DriveMgr.h>
@@ -271,3 +272,5 @@ class Ext2FileSystemParser final {
   BOOL GetInfo(VoidPtr node, VoidPtr info);
 };
 }  // namespace Kernel
+
+#endif

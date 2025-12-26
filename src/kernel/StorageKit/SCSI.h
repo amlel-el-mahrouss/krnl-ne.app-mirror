@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef STORAGEKIT_SCSI_H
+#define STORAGEKIT_SCSI_H
 
 #include <KernelKit/DriveMgr.h>
 #include <NeKit/OwnPtr.h>
@@ -27,3 +28,5 @@ class SCSIDeviceInterface final NE_DEVICE<IMountpoint*> {
   Void (*fCleanup)(Void) = {nullptr};
 };
 }  // namespace Kernel
+
+#endif

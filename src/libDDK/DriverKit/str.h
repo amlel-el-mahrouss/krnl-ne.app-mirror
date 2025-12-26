@@ -6,7 +6,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef DRIVERKIT_STR_H
+#define DRIVERKIT_STR_H
 
 #include <DriverKit/ddk.h>
 
@@ -15,3 +16,5 @@
 
 DDK_EXTERN size_t kstrlen(const char* in);
 DDK_EXTERN int    kstrncpy(char* dst, const char* src, size_t len);
+
+#endif

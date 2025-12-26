@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_LOCKDELEGATE_H
+#define KERNELKIT_LOCKDELEGATE_H
 
 #include <NeKit/Atom.h>
 #include <NeKit/Config.h>
@@ -56,3 +57,5 @@ class LockDelegate final {
   Atom<UInt> fLockStatus;
 };
 }  // namespace Kernel
+
+#endif

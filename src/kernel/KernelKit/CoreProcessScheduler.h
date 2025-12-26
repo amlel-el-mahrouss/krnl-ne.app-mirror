@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_COREPROCESSSCHEDULER_H
+#define KERNELKIT_COREPROCESSSCHEDULER_H
 
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
@@ -248,3 +249,5 @@ struct ProcessImage final {
   }
 };
 }  // namespace Kernel
+
+#endif

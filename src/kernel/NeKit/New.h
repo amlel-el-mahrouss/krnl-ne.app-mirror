@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_NEW_H
+#define NEKIT_NEW_H
 
 #include <KernelKit/HeapMgr.h>
 
@@ -18,3 +19,5 @@ void* operator new[](size_t);
 void operator delete(void*);
 void operator delete(void*, unsigned long);
 void operator delete[](void*);
+
+#endif

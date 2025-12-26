@@ -1,3 +1,9 @@
+/* ========================================
+
+  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
+
+======================================== */
+
 #ifndef CFKIT_UTILS_H
 #define CFKIT_UTILS_H
 

@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_TESTCASE_H
+#define HEADERS_TESTCASE_H
 
 #include <KernelTest.fwrk/headers/SourceLocation.h>
 
@@ -52,3 +53,5 @@ KT_DECL_TEST(AlwaysPass, []() -> bool {
   KT_MUST_PASS("AlwaysPass", YES, YES);
   return YES;
 });
+
+#endif

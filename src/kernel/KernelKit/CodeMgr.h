@@ -12,7 +12,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_CODEMGR_H
+#define KERNELKIT_CODEMGR_H
 
 #include <KernelKit/CoreProcessScheduler.h>
 #include <KernelKit/IPEFDylibObject.h>
@@ -47,3 +48,5 @@ BOOL rtl_create_kernel_task(HAL::StackFramePtr main, const KID kid);
 /// @return The team's process id.
 ProcessID rtl_create_user_process(rtl_start_kind main, const Char* process_name);
 }  // namespace Kernel
+
+#endif

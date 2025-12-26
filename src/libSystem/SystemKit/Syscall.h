@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef SYSTEMKIT_SYSCALL_H
+#define SYSTEMKIT_SYSCALL_H
 
 #include <libSystem/SystemKit/System.h>
 #include <cstdarg>
@@ -19,3 +20,5 @@ IMPORT_C UInt64 libsys_hash_64(const Char* path);
 #ifndef SYSCALL_HASH
 #define SYSCALL_HASH(str) libsys_hash_64(str)
 #endif  // !SYSCALL_HASH
+
+#endif

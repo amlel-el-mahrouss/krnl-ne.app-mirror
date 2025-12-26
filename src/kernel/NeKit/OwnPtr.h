@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_OWNPTR_H
+#define NEKIT_OWNPTR_H
 
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
@@ -51,7 +52,7 @@ class OwnPtr final {
   Ref<T> AsRef() { return Ref<T>(fCls); }
 
   explicit operator bool() { return fCls; }
-  
+
  private:
   T* fCls{nullptr};
 };
@@ -67,3 +68,5 @@ inline OwnPtr<T> make_ptr(Args&&... args) {
   return ret;
 }
 }  // namespace Kernel
+
+#endif

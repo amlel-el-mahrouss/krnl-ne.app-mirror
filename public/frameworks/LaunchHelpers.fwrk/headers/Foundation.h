@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_FOUNDATION_H
+#define HEADERS_FOUNDATION_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 #include <CoreFoundation.fwrk/headers/String.h>
@@ -44,3 +45,5 @@ using LHLaunchInfoPtr = LHLaunchInfo*;
 /// @return the launch information structure.
 CF::CFRef<LHLaunchInfo> LHGetLaunchInfo(Void);
 }  // namespace LaunchHelpers
+
+#endif

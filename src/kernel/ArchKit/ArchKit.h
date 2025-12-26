@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef ARCHKIT_ARCHKIT_H
+#define ARCHKIT_ARCHKIT_H
 
 #include <NeKit/Array.h>
 #include <NeKit/Config.h>
@@ -106,3 +107,5 @@ inline Kernel::VoidPtr kKernelVM = nullptr;
 #endif  // __NE_VIRTUAL_MEMORY_SUPPORT__
 
 inline Kernel::SizeT kBitMapCursor = 0UL;
+
+#endif

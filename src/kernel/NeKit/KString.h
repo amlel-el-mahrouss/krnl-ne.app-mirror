@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef NEKIT_KSTRING_H
+#define NEKIT_KSTRING_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -90,3 +91,5 @@ class KStringBuilder final {
 }  // namespace Kernel
 
 #include <NeKit/KString.inl>
+
+#endif

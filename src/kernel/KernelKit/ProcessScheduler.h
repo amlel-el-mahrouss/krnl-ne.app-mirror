@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_PROCESSSCHEDULER_H
+#define KERNELKIT_PROCESSSCHEDULER_H
 
 #include <KernelKit/KernelTaskScheduler.h>
 #include <KernelKit/UserProcessScheduler.h>
@@ -16,4 +17,6 @@ inline UserProcessTeam kHighUserTeam;
 inline UserProcessTeam kMidUserTeam;
 inline UserProcessTeam kRTUserTeam;
 }  // namespace Kernel
+#endif
+
 #endif

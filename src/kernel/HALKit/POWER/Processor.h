@@ -6,7 +6,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_PROCESSOR_H
+#define HALKIT_PROCESSOR_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Utils.h>
@@ -58,3 +59,5 @@ Kernel::Void hal_write_tlb(Kernel::UInt32 mas0, Kernel::UInt32 mas1, Kernel::UIn
 
 /// @brief Flush TLB.
 EXTERN_C Kernel::Void hal_flush_tlb();
+
+#endif

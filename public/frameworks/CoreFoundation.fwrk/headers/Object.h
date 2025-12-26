@@ -5,7 +5,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HEADERS_OBJECT_H
+#define HEADERS_OBJECT_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 
@@ -24,3 +25,5 @@ class CFObject {
   virtual const Char* Name() { return "[\"CFObject\"];"; }
 };
 }  // namespace CF
+
+#endif

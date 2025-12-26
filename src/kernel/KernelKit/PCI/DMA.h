@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_DMA_H
+#define KERNELKIT_DMA_H
 
 #include <KernelKit/DeviceMgr.h>
 #include <KernelKit/PCI/Device.h>
@@ -73,3 +74,5 @@ class DMAFactory final {
 }  // namespace Kernel
 
 #include <KernelKit/PCI/DMA.inl>
+
+#endif

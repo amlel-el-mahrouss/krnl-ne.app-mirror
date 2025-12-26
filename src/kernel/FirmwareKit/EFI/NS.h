@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef FIRMWAREKIT_NS_H
+#define FIRMWAREKIT_NS_H
 
 #include <NeKit/Config.h>
 
@@ -16,3 +17,5 @@ EXTERN_C {
 }
 
 }  // namespace Firmware::Detail::EFI
+
+#endif

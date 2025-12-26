@@ -7,7 +7,8 @@ Purpose: libsci Macros header.
 
 ======================================== */
 
-#pragma once
+#ifndef SYSTEMKIT_MACROS_H
+#define SYSTEMKIT_MACROS_H
 
 /***********************************************************************************/
 /// @file libSystem/Macros.h
@@ -124,3 +125,5 @@ typedef nullPtr           NullPtr;
 #define LIBSYS_UNUSED(X) ((void) X)
 
 IMPORT_C void _rtl_assert(Bool expr, const Char* origin);
+
+#endif

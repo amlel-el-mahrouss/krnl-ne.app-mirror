@@ -13,7 +13,8 @@
 
  ======================================== */
 
-#pragma once
+#ifndef KERNELKIT_DEVICEMGR_H
+#define KERNELKIT_DEVICEMGR_H
 
 /* @note Device Mgr. */
 /* @file KernelKit/DeviceMgr.h */
@@ -131,3 +132,5 @@ enum {
   kDeviceTypeCount,
 };
 }  // namespace Kernel
+
+#endif

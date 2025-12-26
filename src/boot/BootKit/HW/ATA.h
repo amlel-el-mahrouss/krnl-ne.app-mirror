@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef BOOTKIT_ATA_H
+#define BOOTKIT_ATA_H
 
 #include <BootKit/Device.h>
 #include <modules/ATA/ATA.h>
@@ -45,3 +46,5 @@ class BootDeviceATA final : public Device {
   ATATrait mTrait;
 };
 }  // namespace Boot
+
+#endif

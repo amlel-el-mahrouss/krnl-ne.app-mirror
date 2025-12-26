@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef CFKIT_GUIDWRAPPER_H
+#define CFKIT_GUIDWRAPPER_H
 
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
@@ -46,3 +47,5 @@ class GUID final {
   GUIDSequence fUUID;
 };
 }  // namespace Kernel::CF::XRN
+
+#endif

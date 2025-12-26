@@ -7,7 +7,8 @@
  *      ========================================================
  */
 
-#pragma once
+#ifndef KERNELKIT_IDYLIBOBJECT_H
+#define KERNELKIT_IDYLIBOBJECT_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -43,3 +44,5 @@ class IDylibObject {
 /// @brief Pure implementation, missing method/function handler.
 EXTERN_C void __ne_pure_call(void);
 }  // namespace Kernel
+
+#endif

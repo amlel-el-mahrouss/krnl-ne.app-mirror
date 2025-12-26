@@ -4,7 +4,8 @@
 
 ======================================== */
 
-#pragma once
+#ifndef HALKIT_PAGING_H
+#define HALKIT_PAGING_H
 
 #ifdef __NE_AMD64__
 
@@ -91,3 +92,5 @@ struct PDE {
 }  // namespace Kernel
 
 #endif  // __NE_AMD64__
+
+#endif

@@ -616,8 +616,8 @@ Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) 
   for (SizeT index = 0UL; index < HardwareThreadScheduler::The().Capacity(); ++index) {
     if (!HardwareThreadScheduler::The()[index].Leak()) continue;
 
-    if (HardwareThreadScheduler::The()[index].Leak()->Kind() == kAPInvalid ||
-        HardwareThreadScheduler::The()[index].Leak()->Kind() == kAPBoot)
+    if (HardwareThreadScheduler::The()[index].Leak()->Kind() == ThreadKind::kAPInvalid ||
+        HardwareThreadScheduler::The()[index].Leak()->Kind() == ThreadKind::kAPBoot)
       continue;
 
     (Void)(kout << "AP_" << hex_number(index) << kendl);

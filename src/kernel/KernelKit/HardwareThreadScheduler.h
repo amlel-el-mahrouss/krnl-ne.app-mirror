@@ -22,7 +22,7 @@ class HardwareThreadScheduler;
 
 using ThreadID = UInt32;
 
-enum ThreadKind {
+enum struct ThreadKind {
   kAPInvalid        = 0,
   kAPSystemReserved = 100,  // System reserved thread, well user can't use it
   kAPStandard,              // user thread, cannot be used by Kernel
@@ -31,9 +31,6 @@ enum ThreadKind {
   kAPBoot,                  // The core we booted from, the mama.
   kAPCount,
 };
-
-typedef enum ThreadKind ThreadKind;
-typedef ThreadID        ThreadID;
 
 /***********************************************************************************/
 ///

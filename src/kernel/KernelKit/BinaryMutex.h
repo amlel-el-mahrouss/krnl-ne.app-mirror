@@ -28,7 +28,7 @@ class BinaryMutex final {
   BOOL WaitForProcess(const UInt32& sec);
 
  public:
-  bool Lock(const Ref<LockedPtr>& process);
+  bool Lock(LockedPtr process);
   bool LockAndWait(LockedPtr process, ITimer* timer);
 
  public:

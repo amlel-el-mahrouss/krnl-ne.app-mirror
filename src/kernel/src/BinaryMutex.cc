@@ -24,7 +24,7 @@ Bool BinaryMutex::Unlock() {
 /// @brief Locks process in the binary mutex.
 /***********************************************************************************/
 
-Bool BinaryMutex::Lock(const Ref<BinaryMutex::LockedPtr>& process) {
+Bool BinaryMutex::Lock(BinaryMutex::LockedPtr process) {
   if (!process || this->IsLocked()) return No;
 
   this->fLockingProcess = process;

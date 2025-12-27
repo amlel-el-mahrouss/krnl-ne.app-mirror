@@ -36,6 +36,7 @@ STATIC Bool boot_init_fb() {
 
   if (BS->LocateProtocol(&kGopGuid, nullptr, (VoidPtr*) &kGop) != kEfiOk) return No;
 
+  // AMLALE: Ok that ain't great, open to fixes.
   kGopStride = 4;
 
   return Yes;
@@ -129,6 +130,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   kHandoverHeader->f_BitMapStart = nullptr;           /* Start of bitmap. */
   kHandoverHeader->f_BitMapSize  = kHandoverBitMapSz; /* Size of bitmap in bytes. */
 
+  // open to patches.
   UInt16 trials = 15;
 
   while (BS->AllocatePool(EfiLoaderData, kHandoverHeader->f_BitMapSize,

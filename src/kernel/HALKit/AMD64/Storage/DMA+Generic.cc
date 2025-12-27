@@ -1,19 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-======================================== */
-
-/**
- * @file DMA+Generic.cc
- * @author Amlal El Mahrouss (amlal@nekernel.org)
- * @brief ATA driver (DMA mode).
- * @version 0.1
- * @date 2024-02-02
- *
- * @copyright Copyright (c) Amlal El Mahrouss
- *
- */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/PCI/Iterator.h>

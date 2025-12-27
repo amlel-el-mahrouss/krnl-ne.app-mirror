@@ -1,8 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #include <libSystem/SystemKit/Err.h>
 #include <libSystem/SystemKit/Syscall.h>
@@ -122,8 +120,9 @@ IMPORT_C VoidPtr MmFillMemory(_Input VoidPtr dest, _Input UInt64 len, _Input UIn
 }
 
 IMPORT_C Ref IoOpenFile(_Input const Char* path, _Input const Char* drv_letter) {
-  return static_cast<Ref>(libsys_syscall_arg_3(
-      SYSCALL_HASH("IoOpenFile"), Verify::sys_safe_cast<Char, Void>(path), Verify::sys_safe_cast<Char, Void>(drv_letter)));
+  return static_cast<Ref>(libsys_syscall_arg_3(SYSCALL_HASH("IoOpenFile"),
+                                               Verify::sys_safe_cast<Char, Void>(path),
+                                               Verify::sys_safe_cast<Char, Void>(drv_letter)));
 }
 
 IMPORT_C Void IoCloseFile(_Input Ref desc) {

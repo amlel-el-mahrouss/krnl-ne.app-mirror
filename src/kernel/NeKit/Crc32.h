@@ -1,12 +1,6 @@
-/*
- *	========================================================
- *
- *  NeKernel
- *  Date Added: 13/02/2023
- * 	Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
- *
- * 	========================================================
- */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef NEKIT_CRC32_H
 #define NEKIT_CRC32_H

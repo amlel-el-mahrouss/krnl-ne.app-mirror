@@ -1,11 +1,6 @@
-/* ========================================
-
-  Copyright 2025 Amlal El Mahrouss.
-
-  FILE: ddk.h
-  PURPOSE: DDK Driver model base header.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef DRIVERKIT_MACROS_H
 #define DRIVERKIT_MACROS_H

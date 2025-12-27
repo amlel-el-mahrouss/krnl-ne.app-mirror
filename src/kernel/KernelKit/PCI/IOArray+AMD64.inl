@@ -1,16 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-  File: IO-Impl-AMD64.h
-  Purpose: I/O for AMD64.
-
-  Revision History:
-
-  30/01/24: Add file. (amlel)
-  02/02/24: Update I/O routines. (amlel)
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 namespace Kernel {
 template <SizeT Sz>

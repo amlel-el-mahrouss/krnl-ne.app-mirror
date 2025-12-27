@@ -1,8 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/HeapMgr.h>
@@ -10,7 +8,8 @@
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
 namespace Kernel {
-/// \note This has been incremented to version two, as NeKernel doesn't support 32-bit targets. See specs.
+/// \note This has been incremented to version two, as NeKernel doesn't support 32-bit targets. See
+/// specs.
 constexpr STATIC const auto kMinACPIVer = 2U;
 
 /// @brief Finds a descriptor table inside ACPI XSDT.

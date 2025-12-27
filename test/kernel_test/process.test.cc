@@ -12,7 +12,8 @@ KT_DECL_TEST(ProcessHasFailed, []() -> bool {
 });
 
 KT_DECL_TEST(ProcessHasSucceeded, []() -> bool {
-  /// \note Any process greater than zero, exists within a specific team domain (real-time, high, or low domains).
+  /// \note Any process greater than zero, exists within a specific team domain (real-time, high, or
+  /// low domains).
   return RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0) > 0;
 });
 

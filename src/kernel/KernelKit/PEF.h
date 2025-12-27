@@ -1,15 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-  File: PEF.h
-  Purpose: Preferred Executable Format for Kernel.
-
-  Revision History:
-
-  ?/?/23: Added file (amlel)
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef __KERNELKIT_PEF_H__
 #define __KERNELKIT_PEF_H__

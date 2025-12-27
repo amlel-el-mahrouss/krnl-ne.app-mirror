@@ -1,10 +1,6 @@
-/* ========================================
-
-  Copyright Amlal El Mahrouss.
-
-  Purpose: DDK Text I/O.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef DRIVERKIT_IO_H
 #define DRIVERKIT_IO_H

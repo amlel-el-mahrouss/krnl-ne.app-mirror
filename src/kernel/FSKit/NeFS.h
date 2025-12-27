@@ -1,18 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-  FILE: NeFS.h
-  PURPOSE: NeFS (New extended File System) support.
-
-  Revision History:
-
-  ?/?/?: Added file (amlel)
-  12/02/24: Add UUID macro for EPM and GPT partition schemes.
-  3/16/24: Add mandatory sector size, kNeFSSectorSz is set to 2048 by
-default.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef FSKIT_NEFS_H
 #define FSKIT_NEFS_H

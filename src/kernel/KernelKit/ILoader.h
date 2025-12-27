@@ -1,8 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-======================================== */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef KERNELKIT_ILOADER_H
 #define KERNELKIT_ILOADER_H
@@ -23,12 +21,14 @@ class ILoader {
   NE_COPY_DEFAULT(ILoader)
 
  public:
-  virtual _Output ErrorOr<VoidPtr> GetBlob()                                              { return ErrorOr<VoidPtr>{}; }
-  virtual _Output const Char*      AsString()                                             { return ""; }
-  virtual _Output const Char*      MIME()                                                 { return ""; }
-  virtual _Output const Char*      Path()                                                 { return ""; }
-  virtual _Output ErrorOr<VoidPtr> FindStart()                                            { return ErrorOr<VoidPtr>{}; }
-  virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char*, _Input Int32)           { return ErrorOr<VoidPtr>{}; }
+  virtual _Output ErrorOr<VoidPtr> GetBlob() { return ErrorOr<VoidPtr>{}; }
+  virtual _Output const Char*      AsString() { return ""; }
+  virtual _Output const Char*      MIME() { return ""; }
+  virtual _Output const Char*      Path() { return ""; }
+  virtual _Output ErrorOr<VoidPtr> FindStart() { return ErrorOr<VoidPtr>{}; }
+  virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char*, _Input Int32) {
+    return ErrorOr<VoidPtr>{};
+  }
 };
 }  // namespace Kernel
 

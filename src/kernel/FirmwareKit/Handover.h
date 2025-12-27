@@ -1,19 +1,6 @@
-/* ========================================
-
-  Copyright (C) 2024-2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
-
-======================================== */
-
-/**
- * @file Handover.h
- * @author Amlal El Mahrouss (amlal@nekernel.org)
- * @brief The handover boot protocol.
- * @version 1.15
- * @date 2024-02-23
- *
- * @copyright Copyright (c) 2024, Amlal El Mahrouss
- *
- */
+// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef FIRMWAREKIT_HANDOVER_H
 #define FIRMWAREKIT_HANDOVER_H

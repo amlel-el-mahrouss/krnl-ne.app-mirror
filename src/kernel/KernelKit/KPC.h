@@ -11,13 +11,13 @@
 /// @brief Kernel Procedure Code.
 
 #define err_local_ok()                                                              \
-  (Kernel::UserProcessScheduler::The().TheCurrentProcess().Leak().GetLocalCode() == \
+  (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() == \
    Kernel::kErrorSuccess)
 #define err_local_fail()                                                            \
-  (Kernel::UserProcessScheduler::The().TheCurrentProcess().Leak().GetLocalCode() != \
+  (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() != \
    Kernel::kErrorSuccess)
 #define err_local_get() \
-  (Kernel::UserProcessScheduler::The().TheCurrentProcess().Leak().GetLocalCode())
+  (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode())
 
 #define err_global_ok() (Kernel::kErrorLocalNumber == Kernel::kErrorSuccess)
 #define err_global_fail() (Kernel::kErrorLocalNumber != Kernel::kErrorSuccess)

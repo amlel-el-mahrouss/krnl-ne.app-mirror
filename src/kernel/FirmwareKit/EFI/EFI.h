@@ -351,7 +351,7 @@ typedef struct EFI_SIMPLE_NETWORK_PROTOCOL {
   VoidPtr                       Statistics;
   VoidPtr                       MCastIpToMac;
   VoidPtr                       NvData;
-  VoidPtr                       GetStatus;
+  VoidPtr                       Status;
   EFI_SIMPLE_NETWORK_TRANSMIT   Transmit;
   EFI_SIMPLE_NETWORK_RECEIVE    Receive;
   VoidPtr                       WaitForPacket;

@@ -12,7 +12,7 @@ UserProcessTeam::UserProcessTeam() {
     this->mProcessList[i].RTime      = 0;
     this->mProcessList[i].UTime      = 0;
     this->mProcessList[i].Status     = ProcessStatusKind::kKilled;
-    this->mProcessList[i].ParentTeam = this;
+    *this->mProcessList[i].GetParentTeam() = *this;
   }
 
   this->mProcessCur = 0UL;

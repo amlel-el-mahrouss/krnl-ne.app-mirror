@@ -15,7 +15,7 @@ inline T* tls_new_ptr(void) {
 
   auto ref_process = UserProcessScheduler::The().TheCurrentProcess();
 
-  auto pointer = ref_process.Leak().New(sizeof(T));
+  auto pointer = ref_process.New(sizeof(T));
 
   if (pointer.Error()) return nullptr;
 
@@ -34,7 +34,7 @@ inline Kernel::Bool tls_delete_ptr(T* obj) {
 
   ErrorOr<T*> obj_wrapped{obj};
 
-  return ref_process.Leak().Delete(obj_wrapped);
+  return ref_process.Delete(obj_wrapped);
 }
 
 //! @brief Delete process pointer.

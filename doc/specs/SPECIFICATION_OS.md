@@ -74,9 +74,6 @@
 ==================================
 
 - Filesystem to mountpoint interface abstraction.
-- VFS-like subsystem inspired by NT/OS2 IFS.
 - Multi-drive support (A, B, C, D indices).
-- Ext2 support via IFS layer.
 - Packet-based I/O operations.
 - Separation of read/write operations per drive.
-

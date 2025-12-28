@@ -30,7 +30,7 @@ class UserProcessHelper;
 /// @name UserProcess
 /// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class UserProcess final {
+class UserProcess {
  public:
   UserProcess();
   ~UserProcess();
@@ -44,7 +44,12 @@ class UserProcess final {
 
   NE_VETTABLE;
 
- public:
+  struct UserProcessSignal {
+    UIntPtr           SignalArg{0};
+    ProcessStatusKind Status{ProcessStatusKind::kKilled};
+    UIntPtr           SignalID{0};
+  };
+
   Char               Name[kSchedNameLen] = {"UserProcess"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemUser};
   User*              Owner{nullptr};
@@ -52,28 +57,21 @@ class UserProcess final {
   AffinityKind       Affinity{AffinityKind::kStandard};
   ProcessStatusKind  Status{ProcessStatusKind::kKilled};
   UInt8              StackReserve[kSchedMaxStackSz];
-  ProcessImage       Image{};
   SizeT              StackSize{kSchedMaxStackSz};
   IDylibObject*      DylibDelegate{nullptr};
   SizeT              MemoryCursor{0UL};
   SizeT              MemoryLimit{kSchedMaxMemoryLimit};
   SizeT              UsedMemory{0UL};
+  UserProcessSignal  Signal;
+  ProcessImage       Image;
 
-  struct UserProcessSignal {
-    UIntPtr           SignalArg{0};
-    ProcessStatusKind Status{ProcessStatusKind::kKilled};
-    UIntPtr           SignalID{0};
-  };
-
-  UserProcessSignal         Signal;
-  ProcessFileTree<VoidPtr>* FileTree{nullptr};
-  ProcessHeapTree<VoidPtr>* HeapTree{nullptr};
-  UserProcessTeam*          ParentTeam;
+ private:
+  ProcessFileTree<Any>* FileTree{nullptr};
+  ProcessHeapTree<Any>* HeapTree{nullptr};
+  UserProcessTeam*      Parent;
 
  public:
-  using VMReg = VoidPtr;
-
-  VoidPtr VMRegister{0UL};
+  Any VMRegister{0UL};
 
   enum struct ExecutableKind {
     kInvalidExecutableKind,
@@ -99,6 +97,12 @@ class UserProcess final {
   ///! @brief Crashes the app, exits with code ~0.
   /***********************************************************************************/
   Void Crash();
+
+  /***********************************************************************************/
+  ///! @brief Gets the parent team of the process.
+  ///! @return The parent team.
+  /***********************************************************************************/
+  UserProcessTeam* GetParentTeam();
 
   /***********************************************************************************/
   ///! @brief Spawns a dynamic library handle if dylib.
@@ -149,11 +153,7 @@ class UserProcess final {
   /***********************************************************************************/
   KPCError& GetLocalCode();
 
-  const User* GetOwner();
-
-  const ProcessStatusKind& GetStatus();
-
-  const AffinityKind& GetAffinity();
+  const Ref<User*> GetOwner();
 
  private:
   KPCError LastExitCode{0};
@@ -162,6 +162,34 @@ class UserProcess final {
   friend UserProcessScheduler;
   friend UserProcessHelper;
 };
+
+inline bool operator<(UserProcess::ExecutableKind lhs, UserProcess::ExecutableKind rhs) {
+  Int32 lhs_int = static_cast<Int32>(lhs);
+  Int32 rhs_int = static_cast<Int32>(rhs);
+
+  return lhs_int < rhs_int;
+}
+
+inline bool operator>(UserProcess::ExecutableKind lhs, UserProcess::ExecutableKind rhs) {
+  Int32 lhs_int = static_cast<Int32>(lhs);
+  Int32 rhs_int = static_cast<Int32>(rhs);
+
+  return lhs_int > rhs_int;
+}
+
+inline bool operator<=(UserProcess::ExecutableKind lhs, UserProcess::ExecutableKind rhs) {
+  Int32 lhs_int = static_cast<Int>(lhs);
+  Int32 rhs_int = static_cast<Int32>(rhs);
+
+  return lhs_int <= rhs_int;
+}
+
+inline bool operator>=(UserProcess::ExecutableKind lhs, UserProcess::ExecutableKind rhs) {
+  Int32 lhs_int = static_cast<Int32>(lhs);
+  Int32 rhs_int = static_cast<Int32>(rhs);
+
+  return lhs_int >= rhs_int;
+}
 
 using UserProcessArray = Array<UserProcess, kSchedProcessLimitPerTeam>;
 using UserProcessRef   = Ref<UserProcess>;
@@ -217,8 +245,8 @@ class UserProcessScheduler final : public ISchedulable {
   Bool HasMP() override;
 
  public:
-  Ref<UserProcess> TheCurrentProcess();
-  SizeT            Run();
+  UserProcess& TheCurrentProcess();
+  SizeT        Run();
 
  public:
   STATIC UserProcessScheduler& The();

@@ -20,16 +20,19 @@ namespace Kernel {
 /** @brief Free pointer/file from usage. */
 /***********************************************************************************/
 
-template <typename T>
+template <class T>
 BOOL UserProcess::Delete(ErrorOr<T*> ptr) {
-  if (!ptr) return No;
+  if (!ptr) {
+    kout << "UserProcess: Ptr is nils.\r";
+    return No;
+  }
 
   if (!this->HeapTree) {
     kout << "UserProcess: Heap is empty.\r";
     return No;
   }
 
-  ProcessHeapTree<VoidPtr>* entry = this->HeapTree;
+  ProcessHeapTree<Any>* entry = this->HeapTree;
 
   while (entry != nullptr) {
     if (entry->Entry == ptr.Leak().Leak()) {
@@ -51,8 +54,9 @@ BOOL UserProcess::Delete(ErrorOr<T*> ptr) {
     entry = entry->Next;
   }
 
-  kout << "UserProcess: Trying to free a pointer which doesn't exist.\r";
+  (Void)(kout << "UserProcess: Pointer not found in heap." << kendl);
 
+  // crash.
   this->Crash();
 
   return No;

@@ -9,7 +9,7 @@
 
  Revision History:
 
- 04/03/25: Set users directory as /libSystem/ instead of /usr/
+ 04/03/25: Set users directory as /users/ instead of /usr/
 
  ======================================== */
 
@@ -40,8 +40,8 @@ enum struct UserRingKind : Int32 {
   kRingCount     = 3,
 };
 
-typedef Char* UserPublicKey;
-typedef Char  UserPublicKeyType;
+using UserPublicKey = Char*;
+using UserPublicKeyType = Char;
 
 /// @brief System User class.
 class User final {

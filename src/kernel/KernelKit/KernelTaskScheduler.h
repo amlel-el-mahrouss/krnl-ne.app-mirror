@@ -14,13 +14,14 @@
 #include <KernelKit/LockDelegate.h>
 
 namespace Kernel {
+
 class KernelTaskHelper;
 
 using KID = ProcessID;
 
 /// @brief Equivalent of UserProcess, but for kernel tasks.
 /// @author Amlal
-class KernelTask final {
+class KernelTask {
  public:
   Char               Name[kSchedNameLen] = {"KernelTask"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemKernel};
@@ -28,9 +29,9 @@ class KernelTask final {
   UInt8*             StackReserve{nullptr};
   SizeT              StackSize{kSchedMaxStackSz};
   ProcessImage       Image{};
-  /// @brief a KID is a Kernel ID, it is used to find a task running within
-  /// the kernel.
-  KID Kid{0};
+
+  /// @brief a KID is a Kernel ID, it is used to find a task running within the kernel.
+  KID Kid{};
 
   NE_NON_VETTABLE;
 };
@@ -45,6 +46,7 @@ class KernelTaskHelper final {
   STATIC ErrorOr<KID> TheCurrentKID();
   STATIC SizeT        StartScheduling();
 };
+
 }  // namespace Kernel
 
 #endif

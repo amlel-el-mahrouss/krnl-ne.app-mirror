@@ -31,26 +31,26 @@ static void hal_idt_send_eoi(UInt8 vector) {
 /// @param rsp
 EXTERN_C Kernel::Void idt_handle_gpf(Kernel::UIntPtr rsp) {
   auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
-  process.Leak().Crash();
+  process.Crash();
 
   hal_idt_send_eoi(13);
 
-  process.Leak().Signal.SignalArg = rsp;
-  process.Leak().Signal.SignalID  = SIGKILL;
-  process.Leak().Signal.Status    = process.Leak().Status;
+  process.Signal.SignalArg = rsp;
+  process.Signal.SignalID  = SIGKILL;
+  process.Signal.Status    = process.Status;
 }
 
 /// @brief Handle page fault.
 /// @param rsp
 EXTERN_C void idt_handle_pf(Kernel::UIntPtr rsp) {
   auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
-  process.Leak().Crash();
+  process.Crash();
 
   hal_idt_send_eoi(14);
 
-  process.Leak().Signal.SignalArg = rsp;
-  process.Leak().Signal.SignalID  = SIGKILL;
-  process.Leak().Signal.Status    = process.Leak().Status;
+  process.Signal.SignalArg = rsp;
+  process.Signal.SignalID  = SIGKILL;
+  process.Signal.Status    = process.Status;
 }
 
 /// @brief Handle scheduler interrupt.
@@ -72,30 +72,30 @@ EXTERN_C void idt_handle_scheduler(Kernel::UIntPtr rsp) {
 /// @param rsp
 EXTERN_C void idt_handle_math(Kernel::UIntPtr rsp) {
   auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
-  process.Leak().Crash();
+  process.Crash();
 
   hal_idt_send_eoi(8);
 
-  process.Leak().Signal.SignalArg = rsp;
-  process.Leak().Signal.SignalID  = sig_generate_unique<SIGKILL>();
+  process.Signal.SignalArg = rsp;
+  process.Signal.SignalID  = sig_generate_unique<SIGKILL>();
   ;
-  process.Leak().Signal.Status = process.Leak().Status;
+  process.Signal.Status = process.Status;
 }
 
 /// @brief Handle any generic fault.
 /// @param rsp
 EXTERN_C void idt_handle_generic(Kernel::UIntPtr rsp) {
   auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
-  process.Leak().Crash();
+  process.Crash();
 
   hal_idt_send_eoi(30);
 
   Kernel::kout << "Kernel: Generic Process Fault.\r";
 
-  process.Leak().Signal.SignalArg = rsp;
-  process.Leak().Signal.SignalID  = sig_generate_unique<SIGSEG>();
+  process.Signal.SignalArg = rsp;
+  process.Signal.SignalID  = sig_generate_unique<SIGSEG>();
   ;
-  process.Leak().Signal.Status = process.Leak().Status;
+  process.Signal.Status = process.Status;
 
   Kernel::kout << "Kernel: SIGKILL status.\r";
 }
@@ -105,25 +105,25 @@ EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip) {
 
   hal_idt_send_eoi(3);
 
-  process.Leak().Signal.SignalArg = rip;
-  process.Leak().Signal.SignalID  = sig_generate_unique<SIGTRAP>();
+  process.Signal.SignalArg = rip;
+  process.Signal.SignalID  = sig_generate_unique<SIGTRAP>();
 
-  process.Leak().Signal.Status = process.Leak().Status;
+  process.Signal.Status = process.Status;
 
-  process.Leak().Status = Kernel::ProcessStatusKind::kFrozen;
+  process.Status = Kernel::ProcessStatusKind::kFrozen;
 }
 
 /// @brief Handle #UD fault.
 /// @param rsp
 EXTERN_C void idt_handle_ud(Kernel::UIntPtr rsp) {
   auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
-  process.Leak().Crash();
+  process.Crash();
 
   hal_idt_send_eoi(6);
 
-  process.Leak().Signal.SignalArg = rsp;
-  process.Leak().Signal.SignalID  = sig_generate_unique<SIGKILL>();
-  process.Leak().Signal.Status    = process.Leak().Status;
+  process.Signal.SignalArg = rsp;
+  process.Signal.SignalID  = sig_generate_unique<SIGKILL>();
+  process.Signal.Status    = process.Status;
 }
 
 /// @brief Enter syscall from assembly (libSystem only)

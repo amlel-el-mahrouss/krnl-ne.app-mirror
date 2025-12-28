@@ -200,23 +200,13 @@ const Char* UserProcess::GetName() {
 /// @brief Gets the owner of the process.
 /***********************************************************************************/
 
-const User* UserProcess::GetOwner() {
-  return this->Owner;
+const Ref<User*> UserProcess::GetOwner() {
+  return {this->Owner};
 }
 
-/// @brief UserProcess status getter.
-const ProcessStatusKind& UserProcess::GetStatus() {
-  return this->Status;
-}
-
-/***********************************************************************************/
-/**
-@brief Affinity is the time slot allowed for the process.
-*/
-/***********************************************************************************/
-
-const AffinityKind& UserProcess::GetAffinity() {
-  return this->Affinity;
+/// @brief Parent team getter.
+UserProcessTeam* UserProcess::GetParentTeam() {
+  return this->Parent;
 }
 
 /***********************************************************************************/
@@ -277,13 +267,11 @@ Void UserProcess::Exit(const Int32& exit_code) {
 
   //! Delete image if not done already.
   if (this->Image.fCode && mm_is_valid_ptr(this->Image.fCode)) mm_free_ptr(this->Image.fCode);
-
   //! Delete blob too.
   if (this->Image.fBlob && mm_is_valid_ptr(this->Image.fBlob)) mm_free_ptr(this->Image.fBlob);
 
   //! Delete stack frame.
-  if (this->StackFrame && mm_is_valid_ptr(this->StackFrame))
-    mm_free_ptr((VoidPtr) this->StackFrame);
+  if (this->StackFrame && mm_is_valid_ptr(this->StackFrame)) mm_free_ptr((VoidPtr) this->StackFrame);
 
   //! Avoid use after free.
   this->Image.fBlob = nullptr;
@@ -305,7 +293,7 @@ Void UserProcess::Exit(const Int32& exit_code) {
   this->ProcessId = 0UL;
   this->Status    = ProcessStatusKind::kFinished;
 
-  --this->ParentTeam->mProcessCur;
+  --this->Parent->mProcessCur;
 }
 
 /***********************************************************************************/
@@ -394,7 +382,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
   process.StackFrame->IP = reinterpret_cast<UIntPtr>(code);
   process.StackFrame->SP = reinterpret_cast<UIntPtr>(&process.StackReserve[0] + process.StackSize);
 
-#ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
+#if defined(__NE_VIRTUAL_MEMORY_SUPPORT__)
   HAL::mm_map_page((VoidPtr) process.StackFrame->IP,
                    (VoidPtr) HAL::mm_get_page_addr((VoidPtr) process.StackFrame->IP),
                    HAL::kMMFlagsUser | HAL::kMMFlagsPresent);
@@ -407,7 +395,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
   rt_set_memory(process.StackReserve, 0, process.StackSize);
 
-  process.ParentTeam = &mTeam;
+  process.Parent = &mTeam;
 
   process.ProcessId = pid;
   process.Status    = ProcessStatusKind::kRunning;
@@ -426,7 +414,8 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
     /// @todo File Tree allocation and dispose methods (amlal)
   }
 
-  (Void)(kout << "ProcessID: " << number(process.ProcessId) << kendl);
+  (Void)(kout << "ProcessCur: " << number(this->mTeam.mProcessCur) << kendl);
+  (Void)(kout << "ProcessID: " << number(pid) << kendl);
   (Void)(kout << "ProcesName: " << process.Name << kendl);
 
   return pid;
@@ -551,8 +540,8 @@ BOOL UserProcessScheduler::SwitchTeam(UserProcessTeam& team) {
 
 /// @brief Gets current running process.
 /// @return
-Ref<UserProcess> UserProcessScheduler::TheCurrentProcess() {
-  return mTeam.AsRef();
+UserProcess& UserProcessScheduler::TheCurrentProcess() {
+  return mTeam.mCurrentProcess.Leak();
 }
 
 /// @brief Current proccess id getter.
@@ -562,7 +551,7 @@ ErrorOr<ProcessID> UserProcessHelper::TheCurrentPID() {
     return ErrorOr<ProcessID>{-kErrorProcessFault};
 
   kout << "UserProcessHelper::TheCurrentPID: Leaking ProcessId...\r";
-  return ErrorOr<ProcessID>{UserProcessScheduler::The().TheCurrentProcess().Leak().ProcessId};
+  return ErrorOr<ProcessID>{UserProcessScheduler::The().TheCurrentProcess().ProcessId};
 }
 
 /// @brief Check if process can be schedulded.

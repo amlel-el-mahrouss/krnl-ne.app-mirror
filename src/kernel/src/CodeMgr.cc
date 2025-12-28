@@ -12,7 +12,8 @@ namespace Kernel {
 /// @note This sets up a new stack, anything on the main function that calls the Kernel will not be
 /// accessible.
 /// @param main the start of the process.
-/// @return The team's process id.
+/// @param kid the Kernel ID of the new task.
+/// @return The process started or not.
 BOOL rtl_create_kernel_task(HAL::StackFramePtr task, const KID kid) {
   if (!kid || task == nullptr) return FALSE;
   return KernelTaskHelper::Add(task, kid);

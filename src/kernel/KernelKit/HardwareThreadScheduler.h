@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef KERNEL_HARDWARETHREADSCHEDULER_H
+#ifndef KERNELKIT_HARDWARETHREADSCHEDULER_H
 #define KERNELKIT_HARDWARETHREADSCHEDULER_H
 
 #include <ArchKit/ArchKit.h>
@@ -134,4 +134,4 @@ Void mp_hang_thread(HAL::StackFramePtr stack);
 
 }  // namespace Kernel
 
-#endif  // !__INC_MP_MANAGER_H__
+#endif

@@ -1,11 +1,11 @@
 # --pragma-test
 
-# --test-list-apps
+# --pragma-test-list-apps
 for it: (apps.begin, apps.end) {
-   it.print();
+   it.must_pass();
 }
 
-# --test-start
+# --pragma-test-start
 when start: (apps) {
      it (apps);
 }

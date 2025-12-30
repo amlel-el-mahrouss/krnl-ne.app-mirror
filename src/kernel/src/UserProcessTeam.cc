@@ -7,11 +7,11 @@
 namespace Kernel {
 UserProcessTeam::UserProcessTeam() {
   for (SizeT i = 0U; i < this->mProcessList.Count(); ++i) {
-    this->mProcessList[i]            = UserProcess{};
-    this->mProcessList[i].PTime      = 0;
-    this->mProcessList[i].RTime      = 0;
-    this->mProcessList[i].UTime      = 0;
-    this->mProcessList[i].Status     = ProcessStatusKind::kKilled;
+    this->mProcessList[i]                  = UserProcess{};
+    this->mProcessList[i].PTime            = 0;
+    this->mProcessList[i].RTime            = 0;
+    this->mProcessList[i].UTime            = 0;
+    this->mProcessList[i].Status           = ProcessStatusKind::kKilled;
     *this->mProcessList[i].GetParentTeam() = *this;
   }
 

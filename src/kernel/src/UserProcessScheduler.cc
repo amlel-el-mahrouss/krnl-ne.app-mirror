@@ -271,7 +271,8 @@ Void UserProcess::Exit(const Int32& exit_code) {
   if (this->Image.fBlob && mm_is_valid_ptr(this->Image.fBlob)) mm_free_ptr(this->Image.fBlob);
 
   //! Delete stack frame.
-  if (this->StackFrame && mm_is_valid_ptr(this->StackFrame)) mm_free_ptr((VoidPtr) this->StackFrame);
+  if (this->StackFrame && mm_is_valid_ptr(this->StackFrame))
+    mm_free_ptr((VoidPtr) this->StackFrame);
 
   //! Avoid use after free.
   this->Image.fBlob = nullptr;

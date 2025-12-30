@@ -40,7 +40,7 @@ enum struct UserRingKind : Int32 {
   kRingCount     = 3,
 };
 
-using UserPublicKey = Char*;
+using UserPublicKey     = Char*;
 using UserPublicKeyType = Char;
 
 /// @brief System User class.

@@ -120,9 +120,6 @@ sched_idle_task:
     ret
 
 sched_recover_registers:
-    push rbp
-    mov  rbp, rsp
-
     mov  r8, [rcx + 0x10]
     mov  r9, [rcx + 0x18]
     mov r10, [rcx + 0x20]
@@ -132,6 +129,5 @@ sched_recover_registers:
     mov r14, [rcx + 0x40]
     mov r15, [rcx + 0x48]
 
-    pop rbp
-
     ret
+

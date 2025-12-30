@@ -105,7 +105,7 @@ Located in `src/kernel/`:
 - **NeKit**: Foundation (ErrorOr<T>, Ref, Array, Stream, JSON/TOML, Vettable concept)
 - **KernelKit**: Schedulers (ProcessScheduler, UserProcessScheduler, KernelTaskScheduler), process trees (Red-Black tree), PCI/DMA
 - **HALKit**: Hardware abstraction (AMD64, ARM64, PowerPC, RISC-V)
-- **FSKit**: Filesystems (NeFS, Ext2+IFS, OpenHeFS/HFS+)
+- **FSKit**: Filesystems (NeFS, Ext2+IFS, OpenHeFS)
 - **StorageKit**: Device drivers (AHCI, ATA, SCSI, NVME)
 - **DeviceMgr**: Template-based device interface `IDevice<T>` with `IOBuf<T>` for DMA
 - **DriveMgr**: Drive abstraction with `DriveTrait` structs
@@ -115,7 +115,7 @@ Located in `src/kernel/`:
 - **SignalKit**: Signal generation (SIGKILL, SIGPAUSE, SIGSEGV, etc.)
 - **CodeMgr**: Executable formats (PE, PEF, PE32, XCOFF, ZXD)
 - **HeapMgr, SwapKit, DmaKit**: Memory management
-- **UserMgr**: User/privilege management (Ring 1, 2, 5)
+- **UserMgr**: User/privilege management (Ring 1, 2, 3)
 - **TraceSrv**: Tracing and debugging
 
 ### System Calls (libSystem API)

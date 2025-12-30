@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __INC_MP_MANAGER_H__
-#define __INC_MP_MANAGER_H__
+#ifndef KERNEL_HARDWARETHREADSCHEDULER_H
+#define KERNELKIT_HARDWARETHREADSCHEDULER_H
 
 #include <ArchKit/ArchKit.h>
 #include <CompilerKit/CompilerKit.h>
@@ -12,9 +12,17 @@
 /// @note Last Rev Sun 28 Jul CET 2024
 /// @note Last Rev Thu, Aug  1, 2024  9:07:38 AM
 
-#define kMaxAPInsideSched (4U)
+#if defined(__nekernel_max_cores)
+/// \note This can be edited at compile-time to specify how many cores can be used by NeKernel.
+#define kMaxAPInsideSched (__nekernel_max_cores)
+#endif
+
+#if defined(__nekernel_boot_core_index)
+#define kBootAPIndex (__nekernel_boot_core_index)
+#endif
 
 namespace Kernel {
+
 enum struct ThreadKind {
   kAPInvalid        = 0,
   kAPSystemReserved = 100,  // System reserved thread, well user can't use it
@@ -123,6 +131,7 @@ Void mp_wakeup_thread(HAL::StackFramePtr stack);
 /// @brief makes thread sleep.
 /// hooks and hangs thread to prevent code from executing.
 Void mp_hang_thread(HAL::StackFramePtr stack);
+
 }  // namespace Kernel
 
 #endif  // !__INC_MP_MANAGER_H__

@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
-#define __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
+#ifndef KERNELKIT_USERPROCESSSCHEDULER_H
+#define KERNELKIT_USERPROCESSSCHEDULER_H
 
 /// @file UserProcessScheduler.h
 /// @brief User Process Scheduler backend file.

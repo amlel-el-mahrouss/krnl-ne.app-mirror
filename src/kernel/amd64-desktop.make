@@ -1,11 +1,11 @@
-##################################################
+#################################################
 # (c) Amlal El Mahrouss, licensed under the Apache 2.0 license.
 # This is the NeKernel's makefile.
 ##################################################
 
 CXX			= x86_64-w64-mingw32-g++
 LD			= x86_64-w64-mingw32-ld
-CCFLAGS		= -fshort-wchar -c -D__NE_AMD64__ -D__NEOSKRNL__ -D__NE_VEPM__ -Wall -Wpedantic -Wextra -mno-red-zone -fno-rtti -fno-exceptions -std=c++20 -D__FSKIT_INCLUDES_OPENHEFS__ -D__FSKIT_INCLUDES_EXT2__ -D__NE_SUPPORT_NX__ -O0 -I../vendor -D__NEKERNEL__ -D__HAVE_NE_APIS__ -D__FREESTANDING__ -D__NE_VIRTUAL_MEMORY_SUPPORT__ -D__NE_AUTO_FORMAT__ -D__NE__ -I./ -I../ -I../boot
+CCFLAGS		= -fshort-wchar -D__nekernel_max_cores=8 -c -D__NE_AMD64__ -D__NEOSKRNL__ -D__NE_VEPM__ -Wall -Wpedantic -Wextra -mno-red-zone -fno-rtti -fno-exceptions -std=c++20 -D__FSKIT_INCLUDES_OPENHEFS__ -D__FSKIT_INCLUDES_EXT2__ -D__NE_SUPPORT_NX__ -O0 -I../vendor -D__NEKERNEL__ -D__HAVE_NE_APIS__ -D__FREESTANDING__ -D__NE_VIRTUAL_MEMORY_SUPPORT__ -D__NE_AUTO_FORMAT__ -D__NE__ -I./ -I../ -I../boot
 
 ASM 		= nasm
 

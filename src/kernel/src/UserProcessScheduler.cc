@@ -617,21 +617,21 @@ Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) 
 
     HardwareThreadScheduler::The()[index].Leak()->Busy(YES);
 
-    Bool ret = HardwareThreadScheduler::The()[index].Leak()->Switch(frame_ptr);
+    Bool ret{HardwareThreadScheduler::The()[index].Leak()->Switch(frame_ptr)};
 
     ////////////////////////////////////////////////////////////
-    ///	Rollback on fail.    								 ///
+    ///	Rollback on fail.    							    ///
     ////////////////////////////////////////////////////////////
 
     if (!ret) continue;
+
+    (Void)(kout << "AP_" << hex_number(index));
+    kout << " is now running a new task!\r";
 
     UserProcessHelper::TheCurrentPID().Leak().Leak() = new_pid;
 
     HardwareThreadScheduler::The()[index].Leak()->fPTime =
         UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[new_pid].PTime;
-
-    (Void)(kout << "AP_" << hex_number(index));
-    kout << " is now running a new task!\r";
 
     return YES;
   }

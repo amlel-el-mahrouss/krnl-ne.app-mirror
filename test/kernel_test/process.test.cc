@@ -1,11 +1,11 @@
 /// \file process.test.cc
-/// \brief Process Out tests.
+/// \brief Process management tests.
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
 #include <libSystem/SystemKit/System.h>
 #include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
 
-/// \note Declare tests
+/// \note RtlSpawnProcess tests
 KT_DECL_TEST(ProcessHasFailed, []() -> bool {
   /// \todo we return -1 here, should we document that or classify as common knowledge?
   return RtlSpawnProcess("/", 0, nullptr, nullptr, 0) == -1;
@@ -17,10 +17,72 @@ KT_DECL_TEST(ProcessHasSucceeded, []() -> bool {
   return RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0) > 0;
 });
 
+KT_DECL_TEST(ProcessSpawnWithArgs, []() -> bool {
+  Char* argv[] = {(Char*) "arg1", (Char*) "arg2"};
+  Char* envp[] = {(Char*) "VAR=value"};
+
+  UIntPtr pid = RtlSpawnProcess("/system/list", 2, argv, envp, 1);
+  return pid > 0;
+});
+
+KT_DECL_TEST(ProcessSpawnNullPath, []() -> bool {
+  return RtlSpawnProcess(nullptr, 0, nullptr, nullptr, 0) == -1;
+});
+
+KT_DECL_TEST(ProcessSpawnInvalidPath, []() -> bool {
+  return RtlSpawnProcess("/invalid/nonexistent", 0, nullptr, nullptr, 0) == -1;
+});
+
+/// \note RtlSpawnIB tests
+KT_DECL_TEST(ProcessSpawnIBValid, []() -> bool {
+  UIntPtr pid = RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0);
+  if (pid <= 0) return NO;
+
+  UInt32 result = RtlSpawnIB(pid);
+  return result == 0;
+});
+
+KT_DECL_TEST(ProcessSpawnIBInvalid, []() -> bool {
+  UInt32 result = RtlSpawnIB(0);
+  return result > 0;
+});
+
+/// \note RtlExitProcess tests
+KT_DECL_TEST(ProcessExitValid, []() -> bool {
+  UIntPtr pid = RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0);
+  if (pid <= 0) return NO;
+
+  Bool result = RtlExitProcess(pid, 0);
+  return result == YES;
+});
+
+KT_DECL_TEST(ProcessExitWithCode, []() -> bool {
+  UIntPtr pid = RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0);
+  if (pid <= 0) return NO;
+
+  Bool result = RtlExitProcess(pid, 42);
+  return result == YES;
+});
+
+KT_DECL_TEST(ProcessExitInvalid, []() -> bool {
+  Bool result = RtlExitProcess(0, 0);
+  return result == NO;
+});
+
 /// \brief Run 'process' test.
 SInt32 KT_TEST_MAIN() {
   KT_RUN_TEST(ProcessHasFailed);
   KT_RUN_TEST(ProcessHasSucceeded);
+  KT_RUN_TEST(ProcessSpawnWithArgs);
+  KT_RUN_TEST(ProcessSpawnNullPath);
+  KT_RUN_TEST(ProcessSpawnInvalidPath);
+
+  KT_RUN_TEST(ProcessSpawnIBValid);
+  KT_RUN_TEST(ProcessSpawnIBInvalid);
+
+  KT_RUN_TEST(ProcessExitValid);
+  KT_RUN_TEST(ProcessExitWithCode);
+  KT_RUN_TEST(ProcessExitInvalid);
 
   return KT_TEST_SUCCESS;
 }

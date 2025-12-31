@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef INC_IPC_H
-#define INC_IPC_H
+#ifndef NETWORKKIT_IPC_H
+#define NETWORKKIT_IPC_H
 
 #include <NeKit/Config.h>
 #include <NeKit/KString.h>
@@ -47,8 +47,6 @@ enum {
   kIPCMixedEndian  = 2,
 };
 
-constexpr inline auto kIPCMsgSize = 6094U;
-
 enum {
   kIPCLockInvalid = 0,
   kIPCLockFree    = 1,
@@ -65,8 +63,8 @@ typedef struct IPC_MSG final {
   UInt32   IpcCRC32;
   UInt32   IpcMsg;
   UInt32   IpcMsgSz;
-  UInt8    IpcData[kIPCMsgSize];
   UInt32   IpcLock;
+  UInt8*   IpcData;
   /// @brief Passes the message to target, could be anything, HTTP packet, JSON or whatever.
   static Bool Pass(IPC_MSG* self, IPC_MSG* target);
 } PACKED ALIGN(8) IPC_MSG;
@@ -82,4 +80,4 @@ BOOL ipc_sanitize_packet(_Input IPC_MSG* pckt_in);
 BOOL ipc_construct_packet(_Output _Input IPC_MSG** pckt_in);
 }  // namespace Kernel
 
-#endif  // INC_IPC_H
+#endif  // NETWORKKIT_IPC_H

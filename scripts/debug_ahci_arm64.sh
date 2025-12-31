@@ -11,6 +11,6 @@ cd ../boot
 make -f arm64-desktop.make  all
 make -f arm64-desktop.make disk
 cd ../../
-./tools/mk_img.py ./src/boot/src/nekernel-esp.img ./src/boot/src/root
+./tools/kimg.py ./src/boot/src/nekernel-esp.img ./src/boot/src/root
 cd src/boot
 make -f arm64-desktop.make -j 8 run-efi-arm64

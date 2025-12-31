@@ -33,6 +33,7 @@
     "__AHCI__",
     "__SYSCHK__",
     "BOOTZ_EPM_SUPPORT",
+    "__nekernel_max_cores=8 ",
     "__NE_VEPM__",
     "__NE_MODULAR_KERNEL_COMPONENTS__",
     "kChkVersionHighest=0x0100",

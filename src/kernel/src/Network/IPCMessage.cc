@@ -34,7 +34,7 @@ Bool ipc_int_sanitize_packet(IPC_MSG* pckt) {
       goto ipc_check_failed;
   }
 
-  if (pckt->IpcFrom == pckt->IpcTo || pckt->IpcPacketSize > kIPCMsgSize) {
+  if (pckt->IpcFrom == pckt->IpcTo || pckt->IpcPacketSize < 1) {
     goto ipc_check_failed;
   }
 
@@ -115,7 +115,7 @@ Bool IPC_MSG::Pass(IPC_MSG* src, IPC_MSG* target) {
 
     ++target->IpcLock;
 
-    rt_copy_memory_safe(src->IpcData, target->IpcData, src->IpcMsgSz, kIPCMsgSize);
+    rt_copy_memory_safe(src->IpcData, target->IpcData, src->IpcMsgSz, target->IpcMsgSz);
 
     --target->IpcLock;
 

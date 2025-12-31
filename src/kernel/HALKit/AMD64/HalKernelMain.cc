@@ -142,10 +142,10 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  // AMLALE: TODO: Prosan, Process sanitizer.
+  // TODO: Prosan, Process sanitizer.
   rtl_create_user_process([]() -> void { while (YES); }, "ProSan");
 
-  // AMLALE: TODO, Vet sanitizer.
+  //TODO: Vet sanitizer.
   rtl_create_user_process([]() -> void { while (YES); }, "VetSan");
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);

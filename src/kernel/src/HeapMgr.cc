@@ -244,9 +244,9 @@ _Output Boolean mm_protect_ptr(VoidPtr heap_ptr) {
         reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>((UIntPtr) heap_ptr -
                                                            sizeof(Detail::MM_INFORMATION_BLOCK));
 
-    /// AMLALE: if valid, present and is heap header, then compute crc32
+    /// TODO: if valid, present and is heap header, then compute crc32
     if (heap_info_ptr && heap_info_ptr->fPresent && kHeapMgrMagic == heap_info_ptr->fMagic) {
-      /// AMLALE: Protect only the header, information in it may change.
+      /// TODO: Protect only the header, information in it may change.
       heap_info_ptr->fCRC32 =
           ke_calculate_crc32((Char*) heap_info_ptr, sizeof(Detail::MM_INFORMATION_BLOCK));
 

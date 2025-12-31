@@ -81,7 +81,7 @@ def create_directory_structure(base_path_fwrk, project_file_name, project_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("HELP: mk_fwrk.py <project_name>")
+        print("HELP: mkfwrk.py <project_name>")
         sys.exit(os.EX_CONFIG)
 
     base_path = os.getcwd()  # Use the current working directory as the base path

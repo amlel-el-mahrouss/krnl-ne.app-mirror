@@ -258,9 +258,9 @@ Located in `tools/` and `public/tools/`:
 
 - **mkfs.hefs.cc** - Create HeFS filesystems
 - **chk.hefs.cc** - Check/repair HeFS filesystems
-- **mk_img.py** - Create disk images
-- **mk_fwrk.py** - Package frameworks (.fwrk)
-- **mk_app.py** - Package applications (.app)
+- **kimg.py** - Create disk images
+- **mkfwrk.py** - Package frameworks (.fwrk)
+- **mkapp.py** - Package applications (.app)
 
 ## Debugging
 

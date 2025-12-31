@@ -25,9 +25,9 @@ EXTERN_C Int32 SysChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
   fw_init_efi((EfiSystemTable*) handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]);
 
 #if defined(__ATA_PIO__)
-  Boot::BDiskFormatFactory<BootDeviceATA> partition_factory;
+  Boot::BDiskFormatFactory<Boot::BootDeviceATA> partition_factory;
 #elif defined(__AHCI__)
-  Boot::BDiskFormatFactory<BootDeviceSATA> partition_factory;
+  Boot::BDiskFormatFactory<Boot::BootDeviceSATA> partition_factory;
 #endif
 
   if (partition_factory.IsPartitionValid()) return kEfiOk;

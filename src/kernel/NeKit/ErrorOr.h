@@ -24,7 +24,7 @@ class ErrorOr final {
   using TypePtr = T*;
 
   explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {
-    // AMLALE: Invalidate the value of mRef to make computational evaluations false.
+    // TODO: Invalidate the value of mRef to make computational evaluations false.
     mRef = nullptr;
   }
 

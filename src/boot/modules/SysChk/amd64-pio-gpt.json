@@ -33,6 +33,7 @@
     "__NE_AMD64__",
     "__ATA_PIO__",
     "__NE_VEPM__",
+    "__nekernel_max_cores=8 ",
     "BOOTZ_GPT_SUPPORT",
     "kChkVersionHighest=0x0100",
     "kChkVersionLowest=0x0100",

@@ -31,6 +31,7 @@
     "__BOOTZ__",
     "__BOOTZ_STANDALONE__",
     "__NE_AMD64__",
+    "__nekernel_max_cores=8 ",
     "__ATA_PIO__",
     "BOOTZ_EPM_SUPPORT",
     "__NE_VEPM__",

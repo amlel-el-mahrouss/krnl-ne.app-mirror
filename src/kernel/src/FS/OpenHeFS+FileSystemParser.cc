@@ -876,7 +876,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
     return NO;
   }
 
-  /// AMLALE: Better way to create default directories than before.
+  /// TODO: Better way to create default directories than before.
   const Utf8Char* kFileMap[] = {u8"/",        u8"/boot",  u8"/system", u8"/network",
                                 u8"/devices", u8"/media", u8"/dev",    (Utf8Char*) nullptr};
 

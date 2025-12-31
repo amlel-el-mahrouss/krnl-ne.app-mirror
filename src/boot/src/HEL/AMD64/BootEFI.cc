@@ -36,7 +36,7 @@ STATIC Bool boot_init_fb() {
 
   if (BS->LocateProtocol(&kGopGuid, nullptr, (VoidPtr*) &kGop) != kEfiOk) return No;
 
-  // AMLALE: Ok that ain't great, open to fixes.
+  // TODO: Ok that ain't great, open to fixes.
   kGopStride = 4;
 
   return Yes;
@@ -124,37 +124,40 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   // Fill handover header now.
 
-  handover_hdr->f_BitMapStart = nullptr;           /* Start of bitmap. */
-  handover_hdr->f_BitMapSize  = kHandoverBitMapSz; /* Size of bitmap in bytes. */
+  handover_hdr->f_BitMapStart = nullptr; /* Start of bitmap. */
+  handover_hdr->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
 
-  kHandoverHeader->f_BitMapStart = nullptr;           /* Start of bitmap. */
-  kHandoverHeader->f_BitMapSize  = kHandoverBitMapSz; /* Size of bitmap in bytes. */
+  kHandoverHeader->f_BitMapStart = nullptr; /* Start of bitmap. */
+  kHandoverHeader->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
 
-  // open to patches.
-  UInt16 trials = 15;
+  // Get memory map to determine available memory for bitmap allocation.
+  BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
 
-  while (BS->AllocatePool(EfiLoaderData, kHandoverHeader->f_BitMapSize,
-                          &kHandoverHeader->f_BitMapStart) != kEfiOk) {
-    --trials;
+  // Allocate space for the memory descriptors.
+  BS->AllocatePool(EfiLoaderData, size_struct_ptr, (VoidPtr*) &struct_ptr);
+  BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
 
-    if (trials) {
-      writer.Write("BootZ: Unable to allocate sufficient memory, trying again...\r");
+  // Calculate initial bitmap size by summing all free memory pages.
+  UInt64  free_pages      = 0;
+  VoidPtr first_free_page = nullptr;
 
-      if (kHandoverHeader->f_BitMapSize > 0)
-        kHandoverHeader->f_BitMapSize =
-            kHandoverHeader->f_BitMapSize / 2; /* Size of bitmap in bytes. */
-
-      while (BS->AllocatePool(EfiLoaderData, kHandoverHeader->f_BitMapSize,
-                              &kHandoverHeader->f_BitMapStart) != kEfiOk) {
-        --trials;
-
-        if (!trials) {
-          writer.Write("BootZ: Unable to allocate sufficient memory, aborting...\r");
-          Boot::Stop();
-        }
+  for (UInt32 i = 0; i < size_struct_ptr / sz_desc; ++i) {
+    EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
+    if (desc->Kind == EfiConventionalMemory) {
+      if (first_free_page == nullptr) {
+        first_free_page = (VoidPtr) desc->PhysicalStart;
       }
+      free_pages += desc->NumberOfPages;
     }
   }
+
+  // Set bitmap to use the first free page region found.
+  kHandoverHeader->f_BitMapStart = first_free_page;
+  handover_hdr->f_BitMapStart    = first_free_page;
+
+  // Convert pages to bytes (assuming 4K pages) for bitmap size.
+  kHandoverHeader->f_BitMapSize = free_pages * 4096;
+  handover_hdr->f_BitMapSize    = free_pages * 4096;
 
   handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
   handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;
@@ -174,8 +177,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
     syschk_thread->Start(handover_hdr, NO);
   }
-
-  BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
 
   handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
 

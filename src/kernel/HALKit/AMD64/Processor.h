@@ -270,7 +270,7 @@ EXTERN_C ATTRIBUTE(naked) Kernel::Void hal_load_idt(Kernel::HAL::Register64 ptr)
 EXTERN_C ATTRIBUTE(naked) Kernel::Void hal_load_gdt(Kernel::HAL::Register64 ptr);
 
 inline Kernel::VoidPtr kKernelBitMpStart = nullptr;
-inline Kernel::UIntPtr kKernelBitMpSize  = 0UL;
+inline Kernel::SizeT kKernelBitMpSize  = 0UL;
 
 #endif  // __NE_AMD64__ */
 

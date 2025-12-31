@@ -78,17 +78,7 @@ namespace HAL {
       auto FindBitMap(VoidPtr base_ptr, SizeT size, Bool wr, Bool user, SizeT pad) -> VoidPtr {
         if (!size) return nullptr;
 
-        if (kBitMapCursor > kKernelBitMpSize) {
-          err_global_get() = kErrorOutOfBitMapMemory;
-
-          (Void)(kout << "Bitmap limit reached, can't allocate more bitmaps." << kendl);
-          return nullptr;
-        }
-
         VoidPtr base = reinterpret_cast<VoidPtr>(base_ptr);
-        MUST_PASS(base);
-
-        if (!base) return nullptr;
 
         STATIC SizeT biggest = 0UL;
 

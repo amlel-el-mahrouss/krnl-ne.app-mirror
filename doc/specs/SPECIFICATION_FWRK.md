@@ -166,7 +166,7 @@ Contains XML-based property list files for framework metadata.
 Auto-generated directory containing compiled framework binaries.
 
 - **Output file**: `lib<FrameworkName>.fwrk.dylib`
-- Created during build process via `mk_fwrk.py`
+- Created during build process via `mkfwrk.py`
 - Not committed to version control
 
 ## Built-in Frameworks
@@ -193,12 +193,12 @@ The NeKernel project includes the following standard frameworks:
 
 ## Framework Creation
 
-### Using mk_fwrk.py
+### Using mkfwrk.py
 
-The `mk_fwrk.py` tool automates framework creation:
+The `mkfwrk.py` tool automates framework creation:
 
 ```bash
-python3 tools/mk_fwrk.py <framework_name>
+python3 tools/mkfwrk.py <framework_name>
 ```
 
 This generates:

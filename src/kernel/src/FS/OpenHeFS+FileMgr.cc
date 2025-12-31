@@ -49,7 +49,7 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
     return nullptr;
   }
 
-  // AMLALE: TODO, its own helper!
+  //TODO: its own helper!
   SizeT len = oe_string_len<Char>(path);
 
 #if defined(__clang__)

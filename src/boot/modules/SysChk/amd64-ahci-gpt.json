@@ -30,6 +30,7 @@
     "__NEOSKRNL__",
     "__NE_AMD64__",
     "__AHCI__",
+    "__nekernel_max_cores=8 ",
     "__SYSCHK__",
     "BOOTZ_GPT_SUPPORT",
     "__NE_MODULAR_KERNEL_COMPONENTS__",

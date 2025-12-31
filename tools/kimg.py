@@ -27,7 +27,7 @@ def copy_to_fat(image_path, source_dir):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("HELP: mk_img.py <fat32_image> <source_directory>")
+        print("HELP: kimg.py <fat32_image> <source_directory>")
         sys.exit(1)
 
     image_path = sys.argv[1]

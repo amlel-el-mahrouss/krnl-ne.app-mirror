@@ -5,8 +5,8 @@
 #include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
 
 /// \note PrintGet tests
-KT_DECL_TEST(KOutIsNull, []() -> bool { return PrintGet("/null/") == nullptr; });
-KT_DECL_TEST(KOutIsNotNull, []() -> bool { return PrintGet(nullptr) != nullptr; });
+KT_DECL_TEST(PrintIsNull, []() -> bool { return PrintGet("/null/") == nullptr; });
+KT_DECL_TEST(PrintIsNotNull, []() -> bool { return PrintGet(nullptr) != nullptr; });
 
 /// \note PrintCreate/PrintRelease tests
 KT_DECL_TEST(PrintCreateValid, []() -> bool {
@@ -55,8 +55,8 @@ KT_DECL_TEST(PrintInValid, []() -> bool {
 
 /// \brief Run 'kout' test.
 SInt32 KT_TEST_MAIN() {
-  KT_RUN_TEST(KOutIsNull);
-  KT_RUN_TEST(KOutIsNotNull);
+  KT_RUN_TEST(PrintIsNull);
+  KT_RUN_TEST(PrintIsNotNull);
 
   KT_RUN_TEST(PrintCreateValid);
   KT_RUN_TEST(PrintReleaseValid);

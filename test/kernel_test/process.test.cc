@@ -25,9 +25,8 @@ KT_DECL_TEST(ProcessSpawnWithArgs, []() -> bool {
   return pid > 0;
 });
 
-KT_DECL_TEST(ProcessSpawnNullPath, []() -> bool {
-  return RtlSpawnProcess(nullptr, 0, nullptr, nullptr, 0) == -1;
-});
+KT_DECL_TEST(ProcessSpawnNullPath,
+             []() -> bool { return RtlSpawnProcess(nullptr, 0, nullptr, nullptr, 0) == -1; });
 
 KT_DECL_TEST(ProcessSpawnInvalidPath, []() -> bool {
   return RtlSpawnProcess("/invalid/nonexistent", 0, nullptr, nullptr, 0) == -1;

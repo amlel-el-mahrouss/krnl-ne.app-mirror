@@ -145,7 +145,7 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   // TODO: Prosan, Process sanitizer.
   rtl_create_user_process([]() -> void { while (YES); }, "ProSan");
 
-  //TODO: Vet sanitizer.
+  // TODO: Vet sanitizer.
   rtl_create_user_process([]() -> void { while (YES); }, "VetSan");
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);

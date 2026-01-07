@@ -6,6 +6,7 @@
 #include <NetworkKit/IP.h>
 
 namespace Kernel {
+
 UInt8* RawIPAddress::Address() {
   return fAddr;
 }
@@ -15,7 +16,7 @@ RawIPAddress::RawIPAddress(UInt8 bytes[4]) {
 }
 
 BOOL RawIPAddress::operator==(const RawIPAddress& ipv4) {
-  for (Size index = 0; index < 4; ++index) {
+  for (SizeT index{}; index < 4; ++index) {
     if (ipv4.fAddr[index] != fAddr[index]) return false;
   }
 
@@ -23,7 +24,7 @@ BOOL RawIPAddress::operator==(const RawIPAddress& ipv4) {
 }
 
 BOOL RawIPAddress::operator!=(const RawIPAddress& ipv4) {
-  for (Size index = 0; index < 4; ++index) {
+  for (SizeT index{}; index < 4; ++index) {
     if (ipv4.fAddr[index] == fAddr[index]) return false;
   }
 
@@ -33,8 +34,8 @@ BOOL RawIPAddress::operator!=(const RawIPAddress& ipv4) {
 UInt8& RawIPAddress::operator[](const Size& index) {
   kout << "[RawIPAddress::operator[]] Fetching Index...\r";
 
-  static UInt8 IP_PLACEHOLDER = '0';
-  if (index >= 4) return IP_PLACEHOLDER;
+  static UInt8 kIPPlaceholder = '0';
+  if (index >= 4) return kIPPlaceholder;
 
   return fAddr[index];
 }
@@ -43,17 +44,21 @@ RawIPAddress6::RawIPAddress6(UInt8 bytes[16]) {
   rt_copy_memory(bytes, fAddr, 16);
 }
 
+UInt8* RawIPAddress6::Address() {
+  return fAddr;
+}
+
 UInt8& RawIPAddress6::operator[](const Size& index) {
   kout << "[RawIPAddress6::operator[]] Fetching Index...\r";
 
-  static UInt8 IP_PLACEHOLDER = '0';
-  if (index >= 16) return IP_PLACEHOLDER;
+  static UInt8 kIPPlaceholder = '0';
+  if (index >= 16) return kIPPlaceholder;
 
   return fAddr[index];
 }
 
 bool RawIPAddress6::operator==(const RawIPAddress6& ipv6) {
-  for (SizeT index = 0; index < 16; ++index) {
+  for (SizeT index{}; index < 16; ++index) {
     if (ipv6.fAddr[index] != fAddr[index]) return false;
   }
 
@@ -61,28 +66,25 @@ bool RawIPAddress6::operator==(const RawIPAddress6& ipv6) {
 }
 
 bool RawIPAddress6::operator!=(const RawIPAddress6& ipv6) {
-  for (SizeT index = 0; index < 16; ++index) {
+  for (SizeT index{}; index < 16; ++index) {
     if (ipv6.fAddr[index] == fAddr[index]) return false;
   }
 
   return true;
 }
 
-/// @todo
-ErrorOr<KString> IPFactory::ToKString(Ref<RawIPAddress6>& ipv6) {
+ErrorOr<KBasicString<UInt8>> IPFactory::ToKString(Ref<RawIPAddress6>& ipv6) {
   NE_UNUSED(ipv6);
-  auto str = KStringBuilder::Construct("");
-  return str;
+  auto kipv6 = KStringBuilder::Construct(ipv6.Leak().Address());
+  return kipv6;
 }
 
-/// @todo
-ErrorOr<KString> IPFactory::ToKString(Ref<RawIPAddress>& ipv4) {
+ErrorOr<KBasicString<UInt8>> IPFactory::ToKString(Ref<RawIPAddress>& ipv4) {
   NE_UNUSED(ipv4);
-  auto str = KStringBuilder::Construct("");
-  return str;
+  auto kipv4 = KStringBuilder::Construct(ipv4.Leak().Address());
+  return kipv4;
 }
 
-/// @note Doesn't catch IPs such as 256.999.0.1, UNSAFE!
 bool IPFactory::IpCheckVersion4(const Char* ip) {
   if (!ip) return NO;
 
@@ -98,7 +100,7 @@ bool IPFactory::IpCheckVersion4(const Char* ip) {
     } else {
       if (ip[base] > '5' || ip[base] < '0') return NO;
       if (!rt_is_alnum(ip[base])) return NO;
-      if (cnter == 3) return NO;
+      if (cnter > 3) return NO;
 
       ++cnter;
     }
@@ -108,4 +110,5 @@ bool IPFactory::IpCheckVersion4(const Char* ip) {
 
   return YES;
 }
+
 }  // namespace Kernel

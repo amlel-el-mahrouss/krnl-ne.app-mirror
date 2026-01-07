@@ -11,7 +11,6 @@
 /***********************************************************************************/
 
 namespace Kernel {
-EXTERN_C Void hal_switch_kernel_task(HAL::StackFramePtr frame, KID kid);
 
 Bool KernelTaskHelper::Add(HAL::StackFramePtr frame_ptr, KID new_kid) {
   NE_UNUSED(frame_ptr);
@@ -29,4 +28,5 @@ Bool KernelTaskHelper::Remove(const KID kid) {
 Bool KernelTaskHelper::CanBeScheduled(const KernelTask& task) {
   return task.Kid > 0 && task.Image.HasCode();
 }
+
 }  // namespace Kernel

@@ -107,7 +107,7 @@ class IFilesystemMgr {
                                _Input SizeT sz) = 0;
 
  public:
-  virtual bool Seek(_Input NodePtr node, _Input SizeT off) = 0;
+  virtual bool Seek(_Input NodePtr node, _Input UIntPtr off) = 0;
 
  public:
   virtual SizeT Tell(_Input NodePtr node)   = 0;
@@ -269,7 +269,7 @@ class FileStream final {
   FileStream(const FileStream&);
 
  public:
-  ErrorOr<Int64> Write(SizeT offset, const VoidPtr data, SizeT len) {
+  ErrorOr<Int64> Write(UIntPtr offset, const VoidPtr data, SizeT len) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictWrite &&
@@ -281,7 +281,8 @@ class FileStream final {
     auto man = FSClass::GetMounted();
 
     if (man) {
-      man->Write(offset, fFile, data, len);
+      man->Seek(fFile, offset);
+      man->Write(fFile, data, 0, len);
       return ErrorOr<Int64>(kErrorSuccess);
     }
 
@@ -324,7 +325,7 @@ class FileStream final {
     return nullptr;
   }
 
-  VoidPtr Read(SizeT offset, SizeT sz) {
+  VoidPtr Read(UIntPtr offset, SizeT sz) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictRead &&

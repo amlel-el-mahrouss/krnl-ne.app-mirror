@@ -18,12 +18,13 @@ class IPFactory;
 class RawIPAddress final {
  private:
   explicit RawIPAddress(UInt8 bytes[4]);
-  ~RawIPAddress() = default;
-
-  RawIPAddress& operator=(const RawIPAddress&) = delete;
-  RawIPAddress(const RawIPAddress&)            = default;
 
  public:
+  ~RawIPAddress() = default;
+
+  RawIPAddress& operator=(const RawIPAddress&) = default;
+  RawIPAddress(const RawIPAddress&)            = default;
+
   UInt8* Address();
 
   UInt8& operator[](const Size& index);
@@ -32,7 +33,7 @@ class RawIPAddress final {
   BOOL operator!=(const RawIPAddress& ipv6);
 
  private:
-  UInt8 fAddr[4];
+  UInt8 fAddr[4] = {};
 
   friend IPFactory;  // it is the one creating these addresses, thus this
                      // is why the constructors are private.
@@ -44,13 +45,14 @@ class RawIPAddress final {
 class RawIPAddress6 final {
  private:
   explicit RawIPAddress6(UInt8 Bytes[16]);
-  ~RawIPAddress6() = default;
-
-  RawIPAddress6& operator=(const RawIPAddress6&) = delete;
-  RawIPAddress6(const RawIPAddress6&)            = default;
 
  public:
-  UInt8* Address() { return fAddr; }
+  ~RawIPAddress6() = default;
+
+  RawIPAddress6& operator=(const RawIPAddress6&) = default;
+  RawIPAddress6(const RawIPAddress6&)            = default;
+
+  UInt8* Address();
 
   UInt8& operator[](const Size& index);
 
@@ -58,7 +60,7 @@ class RawIPAddress6 final {
   bool operator!=(const RawIPAddress6& ipv6);
 
  private:
-  UInt8 fAddr[16];
+  UInt8 fAddr[16] = {};
 
   friend IPFactory;
 };
@@ -68,9 +70,9 @@ class RawIPAddress6 final {
  */
 class IPFactory final {
  public:
-  static ErrorOr<KString> ToKString(Ref<RawIPAddress6>& ipv6);
-  static ErrorOr<KString> ToKString(Ref<RawIPAddress>& ipv4);
-  static bool             IpCheckVersion4(const Char* ip);
+  static ErrorOr<KBasicString<UInt8>> ToKString(Ref<RawIPAddress6>& ipv6);
+  static ErrorOr<KBasicString<UInt8>> ToKString(Ref<RawIPAddress>& ipv4);
+  static bool                         IpCheckVersion4(const Char* ip);
 };
 }  // namespace Kernel
 

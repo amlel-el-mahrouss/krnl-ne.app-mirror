@@ -10,41 +10,31 @@ static constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
 
 /***********************************************************************************/
 /// @brief Write memory chunk onto disk.
-/// @param fork_name The swap name to recognize this memory region.
-/// @param fork_name_len length of fork name.
 /// @param data the data packet.
 /// @return Whether the swap was written to disk, or not.
 /***********************************************************************************/
-BOOL IDiskSwap::Write(const Char* fork_name, SizeT fork_name_len, SwapDiskHdr* data) {
-  if (!fork_name || !fork_name_len) return NO;
-  if (*fork_name == 0) return NO;
-
+BOOL IDiskSwap::Write(SwapDiskHdr* data) {
   if (!data || data->fMagic != kSwapDiskHeaderMagic) return NO;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
 
-  ErrorOr<Int64> ret = file.Write(fork_name, data, sizeof(SwapDiskHdr) + data->fBlobSz);
+  ErrorOr<Int64> ret = file.Write(data->fOffset, data, sizeof(SwapDiskHdr) + data->fBlobSz);
 
   return ret.Value() < kErrorSuccess;
 }
 
 /***********************************************************************************/
 /// @brief Read memory chunk from disk.
-/// @param fork_name The swap name to recognize this memory region.
-/// @param fork_name_len length of fork name.
 /// @param data the data packet length.
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
-SwapDiskHdr* IDiskSwap::Read(const Char* fork_name, SizeT fork_name_len, SizeT data_len) {
-  if (!fork_name || !fork_name_len) return nullptr;
-  if (*fork_name == 0) return nullptr;
-
+SwapDiskHdr* IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
   if (data_len > kSwapBlockMaxSize) return nullptr;
   if (data_len == 0) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
 
-  VoidPtr blob = file.Read(fork_name, sizeof(SwapDiskHdr) + data_len);
+  VoidPtr blob = file.Read(offset, sizeof(SwapDiskHdr) + data_len);
 
   if (!blob || (static_cast<SwapDiskHdr*>(blob))->fMagic != kSwapDiskHeaderMagic) {
     if (blob) mm_free_ptr(blob);

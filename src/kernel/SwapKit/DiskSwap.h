@@ -11,6 +11,7 @@
 
 #define kSwapBlockMaxSize (mib_cast(16))
 #define kSwapPageFilePath "/boot/pagefile.sys"
+#define kSwapPageFilePathU8 u8"/boot/pagefile.sys"
 
 /// @file SwapDisk.h
 /// @brief Virtual memory swap disk.
@@ -24,30 +25,25 @@ class IDiskSwap;
 /// disk.
 class IDiskSwap final {
  public:
-  explicit IDiskSwap() = default;
-  ~IDiskSwap()         = default;
+  IDiskSwap()  = default;
+  ~IDiskSwap() = default;
 
-  NE_COPY_DELETE(IDiskSwap)
-  NE_MOVE_DELETE(IDiskSwap)
+  NE_COPY_DEFAULT(IDiskSwap)
 
  public:
   /***********************************************************************************/
   /// @brief Write memory chunk onto disk.
-  /// @param name The swap name to recognize this memory region.
-  /// @param name_len length of fork name.
   /// @param data the data packet.
   /// @return Whether the swap was written to disk, or not.
   /***********************************************************************************/
-  BOOL Write(const Char* name, SizeT name_len, SwapDiskHdr* data);
+  BOOL Write(SwapDiskHdr* data);
 
   /***********************************************************************************/
   /// @brief Read memory chunk from disk.
-  /// @param name The swap name to recognize this memory region.
-  /// @param name_len length of fork name.
   /// @param data the data packet length.
   /// @return Whether the swap was fetched to disk, or not.
   /***********************************************************************************/
-  _Output SwapDiskHdr* Read(const Char* name, SizeT name_len, SizeT data_len);
+  _Output SwapDiskHdr* Read(const UIntPtr offset, SizeT data_len);
 };
 
 /// @brief Swap disk header, containing information about the held virtual memory.
@@ -59,13 +55,14 @@ class IDiskSwap final {
 /// @param fBlobSz Blob's size.
 /// @param fBlob Data blob.
 typedef struct SwapDiskHdr {
-  UInt32 fMagic;
-  SizeT  fHeaderSz;
-  UInt64 fTeamID;
-  UInt64 fProcessID;
-  UInt64 fVirtualAddress;
-  SizeT  fBlobSz;
-  UInt8  fBlob[1];
+  UInt32  fMagic;
+  SizeT   fHeaderSz;
+  UInt64  fTeamID;
+  UInt64  fProcessID;
+  UIntPtr fOffset;
+  UInt64  fVirtualAddress;
+  SizeT   fBlobSz;
+  UInt8   fBlob[1];
 } PACKED ALIGN(8) SwapDiskHdr;
 }  // namespace Kernel
 

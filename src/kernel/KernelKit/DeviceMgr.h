@@ -19,6 +19,7 @@
 // Last Rev: Wed, May  27, 2025  6:22 PM
 
 namespace Kernel {
+
 template <typename T>
 class IDevice;
 
@@ -33,8 +34,7 @@ class IDevice {
  public:
   IDevice() = default;
 
-  explicit IDevice(void (*Out)(IDevice<T>*, T), void (*In)(IDevice<T>*, T)) : fOut(Out), fIn(In) {}
-
+  IDevice(void (*Out)(IDevice<T>*, T), void (*In)(IDevice<T>*, T)) : fOut(Out), fIn(In) {}
   virtual ~IDevice() = default;
 
  public:
@@ -43,8 +43,7 @@ class IDevice {
   using ConstType = const T&;
   using TypePtr   = T*;
 
-  IDevice& operator=(const IDevice<T>&) = default;
-  IDevice(const IDevice<T>&)            = default;
+  NE_COPY_DEFAULT(IDevice)
 
  public:
   virtual IDevice<T>& operator<<(T Data) {
@@ -118,8 +117,11 @@ enum {
   kDeviceTypePCI,
   kDeviceTypeVGA,
   kDeviceTypeGPU,
-  kDeviceTypeCount,
+  kDeviceTypeRandom,
+  kDeviceTypeIPC,
+  kDeviceTypeCount = kDeviceTypeIPC - kDeviceTypeIDE + 1,
 };
+
 }  // namespace Kernel
 
 #endif

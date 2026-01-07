@@ -31,4 +31,5 @@ ProcessID rtl_create_user_process(rtl_start_kind main, const Char* process_name)
   if (!process_name || *process_name == 0) return kSchedInvalidPID;
   return UserProcessScheduler::The().Spawn(process_name, reinterpret_cast<VoidPtr>(main), nullptr);
 }
+
 }  // namespace Kernel

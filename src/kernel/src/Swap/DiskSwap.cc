@@ -11,16 +11,15 @@ static constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
 /***********************************************************************************/
 /// @brief Write memory chunk onto disk.
 /// @param data the data packet.
-/// @return Whether the swap was written to disk, or not.
 /***********************************************************************************/
-BOOL IDiskSwap::Write(SwapDiskHdr* data) {
-  if (!data || data->fMagic != kSwapDiskHeaderMagic) return NO;
+Int64 IDiskSwap::Write(SwapDiskHdr* data) {
+  if (!data || data->fMagic != kSwapDiskHeaderMagic) return 0UL;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
 
-  ErrorOr<Int64> ret = file.Write(data->fOffset, data, sizeof(SwapDiskHdr) + data->fBlobSz);
+  Ref<Int64> ret = file.Write(data->fOffset, data, sizeof(SwapDiskHdr) + data->fBlobSz);
 
-  return ret.Value() < kErrorSuccess;
+  return ret.Leak();
 }
 
 /***********************************************************************************/
@@ -29,18 +28,18 @@ BOOL IDiskSwap::Write(SwapDiskHdr* data) {
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
 SwapDiskHdr* IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
-  if (data_len > kSwapBlockMaxSize) return nullptr;
   if (data_len == 0) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
 
-  VoidPtr blob = file.Read(offset, sizeof(SwapDiskHdr) + data_len);
+  ErrorOrAny blob = file.Read(offset, sizeof(SwapDiskHdr) + data_len);
 
-  if (!blob || (static_cast<SwapDiskHdr*>(blob))->fMagic != kSwapDiskHeaderMagic) {
-    if (blob) mm_free_ptr(blob);
+  if (blob.HasError() ||
+      (static_cast<SwapDiskHdr*>(blob.Leak().Leak()))->fMagic != kSwapDiskHeaderMagic) {
+    if (!blob.HasError()) mm_free_ptr(blob.Leak().Leak());
     return nullptr;
   }
 
-  return reinterpret_cast<SwapDiskHdr*>(blob);
+  return reinterpret_cast<SwapDiskHdr*>(blob.Leak().Leak());
 }
 }  // namespace Kernel

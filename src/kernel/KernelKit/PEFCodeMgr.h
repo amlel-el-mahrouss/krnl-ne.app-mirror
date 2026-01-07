@@ -60,7 +60,7 @@ class PEFLoader : public ILoader {
 #endif  // __FSKIT_INCLUDES_NEFS__
 
   Ref<KString> fPath;
-  VoidPtr      fCachedBlob;
+  ErrorOrAny   fCachedBlob;
   BOOL         fFatBinary{};
   BOOL         fBad{};
 };

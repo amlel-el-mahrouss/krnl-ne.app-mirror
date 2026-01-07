@@ -12,8 +12,8 @@
 namespace Kernel {
 class SCSIDeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
-  explicit SCSIDeviceInterface(Void (*out)(IDevice*, IMountpoint* out_packet),
-                               Void (*in)(IDevice*, IMountpoint* in_packet), Void (*cleanup)(Void));
+  SCSIDeviceInterface(Void (*out)(IDevice*, IMountpoint* out_packet),
+                      Void (*in)(IDevice*, IMountpoint* in_packet), Void (*cleanup)(Void));
 
   ~SCSIDeviceInterface() override;
 

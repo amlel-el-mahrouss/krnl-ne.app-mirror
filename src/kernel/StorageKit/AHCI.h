@@ -15,8 +15,9 @@ namespace Kernel {
 /// @note The class is derived from the IDevice class.
 class AHCIDeviceInterface NE_DEVICE<IMountpoint*> {
  public:
-  explicit AHCIDeviceInterface(void (*out)(IDevice* self, IMountpoint* out),
-                               void (*in)(IDevice* self, IMountpoint* in));
+  AHCIDeviceInterface() = default;
+  AHCIDeviceInterface(void (*out)(IDevice* self, IMountpoint* out),
+                      void (*in)(IDevice* self, IMountpoint* in));
 
   virtual ~AHCIDeviceInterface() override;
 

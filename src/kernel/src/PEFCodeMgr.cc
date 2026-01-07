@@ -49,14 +49,12 @@ namespace Detail {
 /// @param blob file blob.
 /***********************************************************************************/
 PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
-  MUST_PASS(fCachedBlob);
-
-  if (!fCachedBlob) {
+  if (fCachedBlob.HasError()) {
     this->fBad = YES;
     return;
   }
 
-  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob);
+  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob.Leak().Leak());
 
   if (container->Abi == kPefAbi &&
       container->Count >=
@@ -79,8 +77,8 @@ PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
   this->fFatBinary = NO;
   this->fBad       = YES;
 
-  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob);
-  this->fCachedBlob = nullptr;
+  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob.Leak().Leak());
+  this->fCachedBlob.Leak().Leak() = nullptr;
 }
 
 /***********************************************************************************/
@@ -101,7 +99,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
     return;
   }
 
-  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob);
+  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob.Leak().Leak());
 
   if (container->Abi == kPefAbi &&
       container->Count >=
@@ -124,16 +122,15 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
   this->fFatBinary = NO;
   this->fBad       = YES;
 
-  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob);
-  this->fCachedBlob = nullptr;
+  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob.Leak().Leak());
+  this->fCachedBlob.Leak().Leak() = nullptr;
 }
 
 /***********************************************************************************/
 /// @brief PEF destructor.
 /***********************************************************************************/
 PEFLoader::~PEFLoader() {
-  if (fCachedBlob) mm_free_ptr(fCachedBlob);
-
+  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak().Leak());
   fFile.Reset();
 }
 
@@ -149,11 +146,11 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
 
   if (!blob) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob);
+  PEFContainer* container = reinterpret_cast<PEFContainer*>(fCachedBlob.Leak().Leak());
 
   if (!container) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  PEFCommandHeader* command_header = reinterpret_cast<PEFCommandHeader*>(blob);
+  PEFCommandHeader* command_header = reinterpret_cast<PEFCommandHeader*>(blob.Leak().Leak());
 
   if (command_header->VMSize < 1 || command_header->VMAddress == 0)
     return ErrorOr<VoidPtr>{kErrorInvalidData};
@@ -200,8 +197,8 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
     if (command_header->Kind == kind) {
       if (command_header->Cpu != Detail::ldr_get_platform()) {
         if (!this->fFatBinary) {
-          mm_free_ptr(blob);
-          blob = nullptr;
+          mm_free_ptr(blob.Leak().Leak());
+          blob.Leak().Leak() = nullptr;
 
           return ErrorOr<VoidPtr>{kErrorInvalidData};
         }
@@ -209,10 +206,10 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
 
       Char* container_blob_value = new Char[command_header->VMSize];
 
-      rt_copy_memory_safe((VoidPtr) ((Char*) blob + sizeof(PEFCommandHeader)), container_blob_value,
-                          command_header->VMSize, command_header->VMSize);
+      rt_copy_memory_safe((VoidPtr) ((Char*) blob.Leak().Leak() + sizeof(PEFCommandHeader)),
+                          container_blob_value, command_header->VMSize, command_header->VMSize);
 
-      mm_free_ptr(blob);
+      mm_free_ptr(blob.Leak().Leak());
 
       kout << "PEFLoader: info: Load stub: " << command_header->Name << "!\r";
 
@@ -243,7 +240,7 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
     }
   }
 
-  mm_free_ptr(blob);
+  mm_free_ptr(blob.Leak().Leak());
   return ErrorOr<VoidPtr>{kErrorInvalidData};
 }
 

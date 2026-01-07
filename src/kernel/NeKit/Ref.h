@@ -27,7 +27,6 @@ class Ref final {
   using ConstType = const T&;
   using RefType   = T&;
 
-  Ref(Type* cls) : fClass(*cls) {}
   Ref(Type cls) : fClass(cls) {}
 
   Ref& operator=(nullPtr) { return *this; }

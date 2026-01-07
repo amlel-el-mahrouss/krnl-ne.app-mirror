@@ -261,7 +261,7 @@ class HeFileSystemMgr final : public IFilesystemMgr {
 template <typename Encoding = Char, typename FSClass = IFilesystemMgr>
 class FileStream final {
  public:
-  explicit FileStream(const Encoding* path, const Encoding* restrict_type);
+  FileStream(const Encoding* path, const Encoding* restrict_type);
   ~FileStream();
 
  public:
@@ -269,68 +269,68 @@ class FileStream final {
   FileStream(const FileStream&);
 
  public:
-  ErrorOr<Int64> Write(UIntPtr offset, const VoidPtr data, SizeT len) {
+  Ref<Int64> Write(UIntPtr offset, const VoidPtr data, SizeT len) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictWrite &&
         this->fFileRestrict != kFileMgrRestrictWriteBinary)
-      return ErrorOr<Int64>(kErrorInvalidData);
+      return Ref<Int64>(0L);
 
-    if (data == nullptr) return ErrorOr<Int64>(kErrorInvalidData);
+    if (data == nullptr) return Ref<Int64>(0L);
 
     auto man = FSClass::GetMounted();
 
     if (man) {
       man->Seek(fFile, offset);
       man->Write(fFile, data, 0, len);
-      return ErrorOr<Int64>(kErrorSuccess);
+      return Ref<Int64>(len);
     }
 
-    return ErrorOr<Int64>(kErrorInvalidData);
+    return Ref<Int64>(0L);
   }
 
-  ErrorOr<Int64> Write(const Char* name, const VoidPtr data, SizeT len) {
+  Ref<Int64> Write(const Char* name, const VoidPtr data, SizeT len) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictWrite &&
         this->fFileRestrict != kFileMgrRestrictWriteBinary)
-      return ErrorOr<Int64>(kErrorInvalidData);
+      return Ref<Int64>(0L);
 
-    if (data == nullptr) return ErrorOr<Int64>(kErrorInvalidData);
+    if (data == nullptr) return Ref<Int64>(0L);
 
     auto man = FSClass::GetMounted();
 
     if (man) {
       man->Write(name, fFile, data, 0, len);
-      return ErrorOr<Int64>(kErrorSuccess);
+      return Ref<Int64>(len);
     }
 
-    return ErrorOr<Int64>(kErrorInvalidData);
+    return Ref<Int64>(0L);
   }
 
-  VoidPtr Read(const Char* name, SizeT sz) {
+  ErrorOrAny Read(const Char* name, SizeT sz) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictRead &&
         this->fFileRestrict != kFileMgrRestrictReadBinary)
-      return nullptr;
+      return ErrorOrAny(kErrorInvalidData);
 
     auto man = FSClass::GetMounted();
 
     if (man) {
       VoidPtr ret = man->Read(name, fFile, kFileReadAll, sz);
-      return ret;
+      return ErrorOrAny(ret);
     }
 
-    return nullptr;
+    return ErrorOrAny(kErrorInvalidData);
   }
 
-  VoidPtr Read(UIntPtr offset, SizeT sz) {
+  ErrorOrAny Read(UIntPtr offset, SizeT sz) {
     if (this->fFileRestrict != kFileMgrRestrictReadWrite &&
         this->fFileRestrict != kFileMgrRestrictReadWriteBinary &&
         this->fFileRestrict != kFileMgrRestrictRead &&
         this->fFileRestrict != kFileMgrRestrictReadBinary)
-      return nullptr;
+      return ErrorOrAny(kErrorInvalidData);
 
     auto man = FSClass::GetMounted();
 
@@ -338,10 +338,10 @@ class FileStream final {
       man->Seek(fFile, offset);
       auto ret = man->Read(fFile, kFileReadChunk, sz);
 
-      return ret;
+      return ErrorOrAny(ret);
     }
 
-    return nullptr;
+    return ErrorOrAny(kErrorInvalidData);
   }
 
  public:
@@ -408,7 +408,7 @@ inline FileStream<Encoding, Class>::FileStream(const Encoding* path, const Encod
                                                 .fMappedTo = kFileMgrRestrictReadWrite,
                                             }};
 
-  for (SizeT index = 0; index < kRestrictCount; ++index) {
+  for (SizeT index{}; index < kRestrictCount; ++index) {
     if (rt_string_cmp(restrict_type, kRestrictList[index].fRestrict,
                       rt_string_len(kRestrictList[index].fRestrict)) == 0) {
       fFileRestrict = kRestrictList[index].fMappedTo;

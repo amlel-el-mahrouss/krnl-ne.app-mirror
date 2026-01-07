@@ -8,6 +8,7 @@
 #include <CompilerKit/CompilerKit.h>
 
 namespace Kernel {
+
 namespace Detail {
   inline constexpr auto kDebugCmdLen = 256U;
   inline constexpr auto kDebugPort   = 51820;
@@ -17,6 +18,7 @@ namespace Detail {
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
 }  // namespace Detail
+
 }  // namespace Kernel
 
 #endif  // !__KERNELKIT_TRACESRV_H__

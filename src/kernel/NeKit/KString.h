@@ -18,7 +18,7 @@ inline constexpr Int kMinimumStringSize = 8196;
 template <typename CharKind = Char, Int MinSz = kMinimumStringSize>
 class KBasicString final {
  public:
-  explicit KBasicString() {
+  KBasicString() {
     fDataSz = MinSz;
 
     fData = new CharKind[fDataSz];
@@ -27,7 +27,7 @@ class KBasicString final {
     rt_set_memory(fData, 0, fDataSz);
   }
 
-  explicit KBasicString(SizeT Sz) : fDataSz(Sz) {
+  KBasicString(SizeT Sz) : fDataSz(Sz) {
     MUST_PASS(Sz > 1);
 
     fData = new CharKind[Sz];

@@ -66,7 +66,7 @@ class PE32Loader : public ILoader {
 #endif  // __FSKIT_INCLUDES_NEFS__
 
   Ref<KString> fPath;
-  RefAny       fCachedBlob{};
+  ErrorOrAny   fCachedBlob{};
   BOOL         fBad{};
 };
 

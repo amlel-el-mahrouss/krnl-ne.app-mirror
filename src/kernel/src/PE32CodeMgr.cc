@@ -39,7 +39,6 @@ namespace Detail {
 /***********************************************************************************/
 
 PE32Loader::PE32Loader(const VoidPtr blob) : fCachedBlob(blob) {
-  (Void) fCachedBlob.TryLeak();
   fBad = false;
 }
 
@@ -55,7 +54,7 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(null
   auto kPefHeader = "PE32_BLOB";
   fCachedBlob     = fFile->Read(kPefHeader, 0);
 
-  if (!fCachedBlob) fBad = YES;
+  if (fCachedBlob.HasError()) fBad = YES;
 }
 
 /***********************************************************************************/
@@ -63,7 +62,7 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(null
 /***********************************************************************************/
 
 PE32Loader::~PE32Loader() {
-  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak());
+  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak().Leak());
 
   fFile.Reset();
 }
@@ -76,9 +75,10 @@ PE32Loader::~PE32Loader() {
 ErrorOr<VoidPtr> PE32Loader::FindSectionByName(const Char* name) {
   if (!fCachedBlob || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  LDR_EXEC_HEADER_PTR     header_ptr = CF::ldr_find_exec_header((const Char*) fCachedBlob.Leak());
+  LDR_EXEC_HEADER_PTR header_ptr =
+      CF::ldr_find_exec_header((const Char*) fCachedBlob.Leak().Leak());
   LDR_OPTIONAL_HEADER_PTR opt_header_ptr =
-      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak());
+      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak().Leak());
 
   if (!header_ptr || !opt_header_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
@@ -142,7 +142,7 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
   if (!sec_ptr || !*sec_ptr) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
   LDR_OPTIONAL_HEADER_PTR opt_header_ptr =
-      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak());
+      CF::ldr_find_opt_exec_header((const Char*) fCachedBlob.Leak().Leak());
 
   if (opt_header_ptr) {
     LDR_DATA_DIRECTORY_PTR data_dirs =
@@ -154,22 +154,25 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
       return ErrorOr<VoidPtr>{kErrorInvalidData};
 
     LDR_EXPORT_DIRECTORY* export_dir =
-        (LDR_EXPORT_DIRECTORY*) ((UIntPtr) fCachedBlob.Leak() + export_dir_entry->VirtualAddress);
+        (LDR_EXPORT_DIRECTORY*) ((UIntPtr) fCachedBlob.Leak().Leak() +
+                                 export_dir_entry->VirtualAddress);
 
-    UInt32* name_table = (UInt32*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfNames);
+    UInt32* name_table =
+        (UInt32*) ((UIntPtr) fCachedBlob.Leak().Leak() + export_dir->AddressOfNames);
     UInt16* ordinal_table =
-        (UInt16*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfNameOrdinal);
+        (UInt16*) ((UIntPtr) fCachedBlob.Leak().Leak() + export_dir->AddressOfNameOrdinal);
     UInt32* function_table =
-        (UInt32*) ((UIntPtr) fCachedBlob.Leak() + export_dir->AddressOfFunctions);
+        (UInt32*) ((UIntPtr) fCachedBlob.Leak().Leak() + export_dir->AddressOfFunctions);
 
     for (UInt32 i = 0; i < export_dir->NumberOfNames; ++i) {
-      const char* exported_name = (const char*) ((UIntPtr) fCachedBlob.Leak() + name_table[i]);
+      const char* exported_name =
+          (const char*) ((UIntPtr) fCachedBlob.Leak().Leak() + name_table[i]);
 
       if (KStringBuilder::Equals(exported_name, name)) {
         UInt16 ordinal = ordinal_table[i];
         UInt32 rva     = function_table[ordinal];
 
-        VoidPtr symbol_addr = (VoidPtr) ((UIntPtr) fCachedBlob.Leak() + rva);
+        VoidPtr symbol_addr = (VoidPtr) ((UIntPtr) fCachedBlob.Leak().Leak() + rva);
 
         return ErrorOr<VoidPtr>{symbol_addr};
       }
@@ -218,7 +221,7 @@ const Char* PE32Loader::MIME() {
 }
 
 ErrorOr<VoidPtr> PE32Loader::GetBlob() {
-  return ErrorOr<VoidPtr>{this->fCachedBlob.TryLeak()};
+  return ErrorOr<VoidPtr>{this->fCachedBlob.Leak().Leak()};
 }
 
 namespace Utils {

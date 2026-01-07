@@ -23,7 +23,7 @@ class ErrorOr final {
   using Type    = T;
   using TypePtr = T*;
 
-  explicit ErrorOr(ErrorT err) : mRef((T*) RTL_ALLOCA(sizeof(T))), mId(err) {
+  explicit ErrorOr(ErrorT err) : mRef(Type()), mId(err) {
     // TODO: Invalidate the value of mRef to make computational evaluations false.
     mRef = nullptr;
   }

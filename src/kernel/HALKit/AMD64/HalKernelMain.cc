@@ -15,6 +15,7 @@
 #include <misc/BenchKit/HWChronometer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
+#include "KernelKit/FileMgr.h"
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
@@ -134,10 +135,12 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
 EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 #ifdef __FSKIT_INCLUDES_OPENHEFS__
   OpenHeFS::fs_init_openhefs();
+  HeFileSystemMgr::Mount(new HeFileSystemMgr());
 #endif
 
 #ifdef __FSKIT_INCLUDES_NEFS__
   NeFS::fs_init_nefs();
+  NeFileSystemMgr::Mount(new NeFileSystemMgr());
 #endif
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);

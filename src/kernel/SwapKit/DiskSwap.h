@@ -9,7 +9,6 @@
 #include <NeKit/Config.h>
 #include <hint/CompilerHint.h>
 
-#define kSwapBlockMaxSize (mib_cast(16))
 #define kSwapPageFilePath "/boot/pagefile.sys"
 #define kSwapPageFilePathU8 u8"/boot/pagefile.sys"
 
@@ -17,6 +16,7 @@
 /// @brief Virtual memory swap disk.
 
 namespace Kernel {
+
 struct SwapDiskHdr;
 class IDiskSwap;
 
@@ -34,9 +34,9 @@ class IDiskSwap final {
   /***********************************************************************************/
   /// @brief Write memory chunk onto disk.
   /// @param data the data packet.
-  /// @return Whether the swap was written to disk, or not.
+  /// @return Number of bytes written to swap.
   /***********************************************************************************/
-  BOOL Write(SwapDiskHdr* data);
+  _Output Int64 Write(SwapDiskHdr* data);
 
   /***********************************************************************************/
   /// @brief Read memory chunk from disk.
@@ -64,6 +64,7 @@ typedef struct SwapDiskHdr {
   SizeT   fBlobSz;
   UInt8   fBlob[1];
 } PACKED ALIGN(8) SwapDiskHdr;
+
 }  // namespace Kernel
 
 #endif

@@ -139,7 +139,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   // Calculate initial bitmap size by summing all free memory pages.
   UInt64  free_pages      = 0;
-  VoidPtr first_free_page = nullptr;
+  VoidPtr first_free_page = (VoidPtr) 1024;
 
   for (UInt32 i = 0; i < size_struct_ptr / sz_desc; ++i) {
     EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
@@ -150,6 +150,8 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
       free_pages += desc->NumberOfPages;
     }
   }
+
+  free_pages -= 1024;
 
   // Set bitmap to use the first free page region found.
   kHandoverHeader->f_BitMapStart = first_free_page;

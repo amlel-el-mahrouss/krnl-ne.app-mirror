@@ -53,7 +53,6 @@ enum {
   kIPCLockUsed    = 2,
 };
 
-/// @brief IPC connection header, message cannot be greater than 6K.
 typedef struct IPC_MSG final {
   UInt32   IpcHeaderMagic;  // cRemoteHeaderMagic
   UInt8    IpcEndianess;    // 0 : LE, 1 : BE
@@ -64,6 +63,7 @@ typedef struct IPC_MSG final {
   UInt32   IpcMsg;
   UInt32   IpcMsgSz;
   UInt32   IpcLock;
+  SizeT    IpcSize;
   UInt8*   IpcData;
   /// @brief Passes the message to target, could be anything, HTTP packet, JSON or whatever.
   static Bool Pass(IPC_MSG* self, IPC_MSG* target);

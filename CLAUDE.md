@@ -111,7 +111,7 @@ Located in `src/kernel/`:
 - **DriveMgr**: Drive abstraction with `DriveTrait` structs
 - **FileMgr**: VFS abstraction `IFilesystemMgr`, `FileStream<Encoding>` template
 - **FirmwareKit**: EFI/UEFI, GPT/EPM partition schemes
-- **NetworkKit**: IPC protocol (128-bit addressing: ProcessID:Team, 6KB messages, CRC32 validation)
+- **NetworkKit**: IPC protocol (128-bit addressing: ProcessID:Team, CRC32 validation)
 - **SignalKit**: Signal generation (SIGKILL, SIGPAUSE, SIGSEGV, etc.)
 - **CodeMgr**: Executable formats (PE, PEF, PE32, XCOFF, ZXD)
 - **HeapMgr, SwapKit, DmaKit**: Memory management

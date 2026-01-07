@@ -49,7 +49,7 @@ namespace Detail {
 /// @param blob file blob.
 /***********************************************************************************/
 PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
-  if (fCachedBlob.HasError()) {
+  if (fCachedBlob.Leak().Leak()) {
     this->fBad = YES;
     return;
   }
@@ -94,7 +94,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
   /// @note zero here means that the FileMgr will read every container header inside the file.
   fCachedBlob = fFile->Read(kPefHeader, 0UL);
 
-  if (!fCachedBlob) {
+  if (!fCachedBlob.Leak().Leak()) {
     this->fBad = YES;
     return;
   }
@@ -130,8 +130,10 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
 /// @brief PEF destructor.
 /***********************************************************************************/
 PEFLoader::~PEFLoader() {
-  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak().Leak());
-  fFile.Reset();
+  if (fCachedBlob) {
+    mm_free_ptr(fCachedBlob.Leak().Leak());
+    fFile.Reset();
+  }
 }
 
 /***********************************************************************************/
@@ -140,7 +142,7 @@ PEFLoader::~PEFLoader() {
 /// @param kind kind of symbol we want.
 /***********************************************************************************/
 ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
-  if (!fCachedBlob || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
+  if (!fCachedBlob.Leak().Leak() || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
   auto blob = fFile->Read(name, sizeof(PEFCommandHeader));
 
@@ -255,7 +257,7 @@ ErrorOr<VoidPtr> PEFLoader::FindStart() {
 /// @brief Tells if the executable is loaded or not.
 /// @return Whether it's not bad and is cached.
 bool PEFLoader::IsLoaded() {
-  return !fBad && fCachedBlob;
+  return !fBad;
 }
 
 const Char* PEFLoader::Path() {
@@ -286,44 +288,46 @@ ErrorOr<VoidPtr> PEFLoader::GetBlob() {
   return ErrorOr<VoidPtr>{this->fCachedBlob};
 }
 
-namespace Utils {
-  ProcessID rtl_create_user_process(PEFLoader&                         exec,
-                                    const UserProcess::ExecutableKind& process_kind) {
-    auto errOrStart = exec.FindStart();
+ProcessID rtl_create_user_process(PEFLoader&                         exec,
+                                  const UserProcess::ExecutableKind& process_kind) {
+  auto errOrStart = exec.FindStart();
 
-    if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
+  if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
 
-    auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
+  auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
 
-    if (!symname) {
-      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
-    }
-
-    ProcessID id =
-        UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
-                                          errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
-
-    mm_free_ptr(symname.Leak().Leak());
-
-    if (id != kSchedInvalidPID) {
-      auto stacksym = exec.FindSymbol(kPefStackSizeSymbol, kPefData);
-
-      if (!stacksym) {
-        stacksym = ErrorOr<VoidPtr>{(VoidPtr) new UIntPtr(kSchedMaxStackSz)};
-      }
-
-      if ((*(volatile UIntPtr*) stacksym.Leak().Leak()) > kSchedMaxStackSz) {
-        *(volatile UIntPtr*) stacksym.Leak().Leak() = kSchedMaxStackSz;
-      }
-
-      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].Kind = process_kind;
-      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].StackSize =
-          *(UIntPtr*) stacksym.Leak().Leak();
-
-      mm_free_ptr(stacksym.Leak().Leak());
-    }
-
-    return id;
+  if (!symname) {
+    symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
   }
-}  // namespace Utils
+
+  if (!symname) {
+    return -1;
+  }
+
+  ProcessID id =
+      UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
+                                        errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
+
+  mm_free_ptr(symname.Leak().Leak());
+
+  if (id != kSchedInvalidPID) {
+    auto stacksym = exec.FindSymbol(kPefStackSizeSymbol, kPefData);
+
+    if (!stacksym) {
+      stacksym = ErrorOr<VoidPtr>{(VoidPtr) new UIntPtr(kSchedMaxStackSz)};
+    }
+
+    if ((*(volatile UIntPtr*) stacksym.Leak().Leak()) > kSchedMaxStackSz) {
+      *(volatile UIntPtr*) stacksym.Leak().Leak() = kSchedMaxStackSz;
+    }
+
+    UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].Kind = process_kind;
+    UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].StackSize =
+        *(UIntPtr*) stacksym.Leak().Leak();
+
+    mm_free_ptr(stacksym.Leak().Leak());
+  }
+
+  return id;
+}
 }  // namespace Kernel

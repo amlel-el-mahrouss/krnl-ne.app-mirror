@@ -8,6 +8,7 @@
 #include <FirmwareKit/EFI/EFI.h>
 #include <KernelKit/CodeMgr.h>
 #include <KernelKit/HardwareThreadScheduler.h>
+#include <KernelKit/PEFCodeMgr.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/Timer.h>
 #include <NetworkKit/IPC.h>
@@ -145,11 +146,9 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  // TODO: Prosan, Process sanitizer.
-  rtl_create_user_process([]() -> void { while (YES); }, "ProSan");
+  PEFLoader ldr("/system/init.out");
 
-  // TODO: Vet sanitizer.
-  rtl_create_user_process([]() -> void { while (YES); }, "VetSan");
+  if (ldr.IsLoaded()) rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
 
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 

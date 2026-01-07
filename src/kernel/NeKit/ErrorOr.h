@@ -15,8 +15,8 @@ namespace Kernel {
 template <class T>
 class ErrorOr final {
  public:
-  explicit ErrorOr() = default;
-  ~ErrorOr()         = default;
+  ErrorOr()  = default;
+  ~ErrorOr() = default;
 
  public:
   using RefType = Ref<T>;

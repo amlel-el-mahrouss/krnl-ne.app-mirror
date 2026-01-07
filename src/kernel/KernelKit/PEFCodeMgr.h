@@ -65,9 +65,8 @@ class PEFLoader : public ILoader {
   BOOL         fBad{};
 };
 
-namespace Utils {
-  ProcessID rtl_create_user_process(PEFLoader& exec, const UserProcess::ExecutableKind& procKind);
-}  // namespace Utils
+ProcessID rtl_create_user_process(PEFLoader& exec, const UserProcess::ExecutableKind& procKind);
+
 }  // namespace Kernel
 
 #endif  // ifndef _INC_CODE_MANAGER_PEF_H_

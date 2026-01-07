@@ -54,7 +54,7 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(null
   auto kPefHeader = "PE32_BLOB";
   fCachedBlob     = fFile->Read(kPefHeader, 0);
 
-  if (fCachedBlob.HasError()) fBad = YES;
+  if (fCachedBlob.HasError() || !fCachedBlob.Leak().Leak()) fBad = YES;
 }
 
 /***********************************************************************************/
@@ -62,9 +62,10 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(null
 /***********************************************************************************/
 
 PE32Loader::~PE32Loader() {
-  if (fCachedBlob) mm_free_ptr(fCachedBlob.Leak().Leak());
-
-  fFile.Reset();
+  if (fCachedBlob) {
+    mm_free_ptr(fCachedBlob.Leak().Leak());
+    fFile.Reset();
+  }
 }
 
 /***********************************************************************************/
@@ -118,7 +119,7 @@ ErrorOr<VoidPtr> PE32Loader::FindSectionByName(const Char* name) {
 /***********************************************************************************/
 
 ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
-  if (!name || *name == 0) return ErrorOr<VoidPtr>{kErrorInvalidData};
+  if (!fCachedBlob || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
   auto section_name = "\0";
 
@@ -193,7 +194,7 @@ ErrorOr<VoidPtr> PE32Loader::FindStart() {
 /// @brief Tells if the executable is loaded or not.
 /// @return Whether it's not bad and is cached.
 bool PE32Loader::IsLoaded() {
-  return !fBad && fCachedBlob;
+  return !fBad;
 }
 
 const Char* PE32Loader::Path() {
@@ -235,6 +236,10 @@ namespace Utils {
 
     if (!symname) {
       symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PE32+")};
+    }
+
+    if (!symname) {
+      return -1;
     }
 
     ProcessID id =

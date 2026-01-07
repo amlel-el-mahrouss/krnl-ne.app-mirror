@@ -19,8 +19,8 @@ namespace Kernel {
 template <typename T>
 class Ref final {
  public:
-  explicit Ref() = default;
-  ~Ref()         = default;
+  Ref()  = default;
+  ~Ref() = default;
 
  public:
   using Type      = T;
@@ -76,9 +76,7 @@ class NonNullRef final {
   NonNullRef() = delete;
 
   NonNullRef(Type* ref) : fRef(ref) {}
-
   NonNullRef(nullPtr ref) = delete;
-
   NonNullRef(RefType ref) : fRef(ref) {}
 
   Ref<T>& operator->() {

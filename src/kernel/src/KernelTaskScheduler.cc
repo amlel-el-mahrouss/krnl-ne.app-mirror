@@ -12,9 +12,9 @@
 
 namespace Kernel {
 
-Bool KernelTaskHelper::Add(HAL::StackFramePtr frame_ptr, KID new_kid) {
+Bool KernelTaskHelper::Add(HAL::StackFramePtr frame_ptr, KID kid) {
   NE_UNUSED(frame_ptr);
-  NE_UNUSED(new_kid);
+  NE_UNUSED(kid);
 
   return NO;
 }

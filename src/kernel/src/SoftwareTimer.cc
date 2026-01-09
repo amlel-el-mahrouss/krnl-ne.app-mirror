@@ -24,7 +24,7 @@ SoftwareTimer::~SoftwareTimer() {
 }
 
 BOOL SoftwareTimer::Wait() {
-  if (fWaitFor < 1) return NO;
+  if (fWaitFor < 1L) return NO;
 
   while (*fDigitalTimer < (*fDigitalTimer + fWaitFor)) {
     ++(*fDigitalTimer);

@@ -38,3 +38,5 @@
 -DBOOTZ_GPT_SUPPORT
 -D__x86_64__
 -D__NE_USE_PEF__
+-D__nekernel_max_cores=8
+-D__nekernel_boot_core_index=0

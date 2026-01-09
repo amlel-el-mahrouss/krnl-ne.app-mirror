@@ -40,7 +40,7 @@ class SoftwareTimer final : public ITimer {
 
  private:
   UIntPtr* fDigitalTimer{nullptr};
-  Int64    fWaitFor{0};
+  Int64    fWaitFor{0L};
 };
 
 class HardwareTimer final : public ITimer {

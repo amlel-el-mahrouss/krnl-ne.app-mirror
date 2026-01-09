@@ -100,12 +100,11 @@ Bool ipc_construct_packet(_Output IPC_MSG** pckt_in) {
 /***********************************************************************************/
 Bool IPC_MSG::Pass(IPC_MSG* src, IPC_MSG* target) {
   if (src && target && (target != src)) {
-    if (src->IpcSize > target->IpcSize) return No;
     if (target->IpcSize > src->IpcSize) return No;
 
     auto timeout = 0U;
 
-    const auto kLimitTimeout = 1000000U;
+    constexpr auto kLimitTimeout = 1000000U;
 
     while ((target->IpcLock % kIPCLockUsed) != 0) {
       if (timeout > kLimitTimeout) {

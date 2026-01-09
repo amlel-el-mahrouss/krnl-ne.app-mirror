@@ -28,7 +28,7 @@ Int64 IDiskSwap::Write(SwapDiskHdr* data) {
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
 SwapDiskHdr* IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
-  if (data_len == 0) return nullptr;
+  if (data_len == 0UL) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
 

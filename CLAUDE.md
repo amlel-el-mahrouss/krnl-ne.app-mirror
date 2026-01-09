@@ -204,7 +204,7 @@ Custom filesystem inspired by HFS+ (`FSKit/NeFS.h`):
 
 128-bit addressing model (`NetworkKit/IPC.h`):
 - **Address**: ProcessID (64-bit) + Team (64-bit)
-- **Message**: 6KB payload max, CRC32 validation
+- **Message**: No payload limit, CRC32 validation
 - **Endianness**: Configurable (LE/BE/mixed)
 
 ## Important Files for Understanding Architecture

@@ -14,7 +14,8 @@
 
 #define KT_RUN_TEST(OBJECT)     \
   {                             \
-    KTTestCase##OBJECT{}.Run(); \
+    KTTestCase##OBJECT obj{};   \
+    obj.Run(); \
   }
 
 #define KT_MUST_PASS(MSG, LEFT_COND, RIGHT_COND) \

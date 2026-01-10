@@ -11,7 +11,7 @@
 
 #define cg_color(R, G, B) RGB(R, G, B)
 
-#define cg_get_clear_clr() RGB(0, 0, 0x80)
+#define cg_get_clear_clr() RGB(0, 0, 0)
 
 #define cg_clear() kCGCursor = 0UL
 

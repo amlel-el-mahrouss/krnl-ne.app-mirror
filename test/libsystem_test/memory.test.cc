@@ -110,7 +110,7 @@ KT_DECL_TEST(MmFillCRC32HeapValid, []() -> bool {
 });
 
 /// \brief Run memory tests.
-SInt32 KT_TEST_MAIN() {
+IMPORT_C SInt32 KT_TEST_MAIN() {
   KT_RUN_TEST(MmCreateHeapSuccess);
   KT_RUN_TEST(MmCreateHeapZeroSize);
   KT_RUN_TEST(MmDestroyHeapValid);

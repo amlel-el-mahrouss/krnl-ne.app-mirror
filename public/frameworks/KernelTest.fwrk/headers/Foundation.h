@@ -17,4 +17,10 @@
 #define KT_TEST_SUCCESS (kErrorSuccess)
 #define KT_TEST_FAILURE (kErrorSuccess + 1)
 
+#ifndef __KT_TEST_MAIN
+#define __KT_TEST_MAIN WinMain
+#endif
+
+#define KT_TEST_MAIN __KT_TEST_MAIN
+
 #endif

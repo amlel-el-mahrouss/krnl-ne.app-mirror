@@ -6,6 +6,8 @@
 #include <libSystem/SystemKit/Syscall.h>
 #include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Verify.h>
+#include "hint/CompilerHint.h"
+#include "libSystem/SystemKit/Macros.h"
 
 using namespace LibSystem;
 
@@ -146,6 +148,58 @@ IMPORT_C UInt64 IoTellFile(_Input Ref desc) {
   if (!ret_ptr) return ~0UL;
   auto ret = static_cast<volatile UInt64*>(ret_ptr);
   return *ret;
+}
+
+IMPORT_C SInt32 PrintRelease(_Input IORef buf) {
+  SInt32* ret = static_cast<SInt32*>(libsys_syscall_arg_2(SYSCALL_HASH("PrintRelease"), static_cast<VoidPtr>(buf)));
+  if (!ret) return -kErrorInvalidData;
+
+  return static_cast<SInt32>(*ret);
+}
+
+IMPORT_C IORef PrintCreate(Void) {
+  return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate")));
+}
+
+
+IMPORT_C VoidPtr MmCreateHeap(UInt64 initial_size, UInt32 max_size) {
+  return static_cast<VoidPtr>(libsys_syscall_arg_3(SYSCALL_HASH("MmCreateHeap"),
+                                                    reinterpret_cast<VoidPtr>(&initial_size),
+                                                    reinterpret_cast<VoidPtr>(&max_size)));
+}
+
+IMPORT_C SInt32 MmDestroyHeap(VoidPtr heap)
+{
+  auto ret = libsys_syscall_arg_2(SYSCALL_HASH("MmDestroyHeap"), static_cast<VoidPtr>(heap));
+  return *static_cast<SInt32*>(ret);
+}
+
+IMPORT_C SInt32 PrintIn(_Input IORef desc, const Char* fmt, ...) {
+  va_list args;
+  va_start(args, fmt);
+
+  auto buf = StrFmt(fmt, args);
+
+  va_end(args);
+
+  // if truncated, `needed` >= kBufferSz; we still send truncated buffer
+  auto ret_ptr = libsys_syscall_arg_3(SYSCALL_HASH("PrintIn"), static_cast<VoidPtr>(desc),
+                                      Verify::sys_safe_cast<Char, Void>(buf));
+
+  if (!ret_ptr) return -kErrorInvalidData;
+
+  auto ret = static_cast<const volatile SInt32*>(ret_ptr);
+
+  return *ret;
+}
+
+IMPORT_C IORef PrintGet(const Char* path) {
+  return static_cast<IORef>(libsys_syscall_arg_2(SYSCALL_HASH("PrintGet"),
+                                                 Verify::sys_safe_cast<Char, Void>(path)));
+}
+
+IMPORT_C ErrRef ErrGetLastError(Void) {
+  return *static_cast<ErrRef*>(libsys_syscall_arg_1(SYSCALL_HASH("ErrGetLastError")));
 }
 
 IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {

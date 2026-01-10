@@ -55,7 +55,7 @@ KT_DECL_TEST(ErrGetLastErrorMultipleCalls, []() -> bool {
 });
 
 /// \brief Run error tests.
-SInt32 KT_TEST_MAIN() {
+IMPORT_C SInt32 KT_TEST_MAIN() {
   KT_RUN_TEST(ErrGetLastErrorInitial);
   KT_RUN_TEST(ErrGetLastErrorAfterSuccess);
   KT_RUN_TEST(ErrGetLastErrorAfterFailure);

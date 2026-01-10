@@ -120,7 +120,7 @@ KT_DECL_TEST(ThrExitMainThreadValid, []() -> bool {
 });
 
 /// \brief Run threading tests.
-SInt32 KT_TEST_MAIN() {
+IMPORT_C SInt32 KT_TEST_MAIN() {
   KT_RUN_TEST(ThrCreateThreadValid);
   KT_RUN_TEST(ThrCreateThreadNull);
   KT_RUN_TEST(ThrCreateThreadWithName);

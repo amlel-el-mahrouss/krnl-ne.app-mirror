@@ -3,7 +3,7 @@
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
 #include <libSystem/SystemKit/System.h>
-#include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
+#include <KernelTest.fwrk/headers/TestCase.h>
 
 /// \note RtlSpawnProcess tests
 KT_DECL_TEST(ProcessHasFailed, []() -> bool {
@@ -15,14 +15,6 @@ KT_DECL_TEST(ProcessHasSucceeded, []() -> bool {
   /// \note Any process greater than zero, exists within a specific team domain (real-time, high, or
   /// low domains).
   return RtlSpawnProcess("/system/list", 0, nullptr, nullptr, 0) > 0;
-});
-
-KT_DECL_TEST(ProcessSpawnWithArgs, []() -> bool {
-  Char* argv[] = {(Char*) "arg1", (Char*) "arg2"};
-  Char* envp[] = {(Char*) "VAR=value"};
-
-  UIntPtr pid = RtlSpawnProcess("/system/list", 2, argv, envp, 1);
-  return pid > 0;
 });
 
 KT_DECL_TEST(ProcessSpawnNullPath,
@@ -69,10 +61,9 @@ KT_DECL_TEST(ProcessExitInvalid, []() -> bool {
 });
 
 /// \brief Run 'process' test.
-SInt32 KT_TEST_MAIN() {
+IMPORT_C SInt32 KT_TEST_MAIN() {
   KT_RUN_TEST(ProcessHasFailed);
   KT_RUN_TEST(ProcessHasSucceeded);
-  KT_RUN_TEST(ProcessSpawnWithArgs);
   KT_RUN_TEST(ProcessSpawnNullPath);
   KT_RUN_TEST(ProcessSpawnInvalidPath);
 

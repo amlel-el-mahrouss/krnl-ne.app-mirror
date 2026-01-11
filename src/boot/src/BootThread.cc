@@ -52,6 +52,13 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
     }
 #endif  // __NE_AMD64__ || __NE_ARM64__
 
+#if !defined(__nekernel_allow_non_nekernel_pe)
+    if (opt_header_ptr->Subsystem != kNeKernelPESubsystem) {
+      writer.Write("BootZ: Not a NeKernel PE32+ executable.\r");
+      return;
+    }
+#endif
+
     writer.Write("BootZ: PE32+ executable detected (NeKernel Subsystem).\r");
 
     auto numSecs = header_ptr->NumberOfSections;

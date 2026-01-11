@@ -15,6 +15,8 @@
 #define kPeMachineAMD64 (0x8664)
 #define kPeMachineARM64 (0xaa64)
 
+#define kNeKernelPESubsystem (0x11)
+
 typedef struct LDR_EXEC_HEADER final {
   Kernel::UInt32 Signature;
   Kernel::UInt16 Machine;

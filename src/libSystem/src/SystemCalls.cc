@@ -149,7 +149,8 @@ IMPORT_C UInt64 IoTellFile(_Input Ref desc) {
 }
 
 IMPORT_C SInt32 PrintRelease(_Input IORef buf) {
-  SInt32* ret = static_cast<SInt32*>(libsys_syscall_arg_2(SYSCALL_HASH("PrintRelease"), static_cast<VoidPtr>(buf)));
+  SInt32* ret = static_cast<SInt32*>(
+      libsys_syscall_arg_2(SYSCALL_HASH("PrintRelease"), static_cast<VoidPtr>(buf)));
   if (!ret) return -kErrorInvalidData;
 
   return static_cast<SInt32>(*ret);
@@ -159,15 +160,13 @@ IMPORT_C IORef PrintCreate(Void) {
   return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate")));
 }
 
-
 IMPORT_C VoidPtr MmCreateHeap(UInt64 initial_size, UInt32 max_size) {
   return static_cast<VoidPtr>(libsys_syscall_arg_3(SYSCALL_HASH("MmCreateHeap"),
-                                                    reinterpret_cast<VoidPtr>(&initial_size),
-                                                    reinterpret_cast<VoidPtr>(&max_size)));
+                                                   reinterpret_cast<VoidPtr>(&initial_size),
+                                                   reinterpret_cast<VoidPtr>(&max_size)));
 }
 
-IMPORT_C SInt32 MmDestroyHeap(VoidPtr heap)
-{
+IMPORT_C SInt32 MmDestroyHeap(VoidPtr heap) {
   auto ret = libsys_syscall_arg_2(SYSCALL_HASH("MmDestroyHeap"), static_cast<VoidPtr>(heap));
   return *static_cast<SInt32*>(ret);
 }
@@ -192,8 +191,8 @@ IMPORT_C SInt32 PrintIn(_Input IORef desc, const Char* fmt, ...) {
 }
 
 IMPORT_C IORef PrintGet(const Char* path) {
-  return static_cast<IORef>(libsys_syscall_arg_2(SYSCALL_HASH("PrintGet"),
-                                                 Verify::sys_safe_cast<Char, Void>(path)));
+  return static_cast<IORef>(
+      libsys_syscall_arg_2(SYSCALL_HASH("PrintGet"), Verify::sys_safe_cast<Char, Void>(path)));
 }
 
 IMPORT_C ErrRef ErrGetLastError(Void) {

@@ -98,6 +98,12 @@ ErrorOr<VoidPtr> PE32Loader::FindSectionByName(const Char* name) {
     return ErrorOr<VoidPtr>{kErrorInvalidData};
   }
 
+#if !defined(__nekernel_allow_non_nekernel_pe)
+  if (opt_header_ptr->Subsystem != kNeKernelPESubsystem) {
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
+#endif
+
   LDR_SECTION_HEADER_PTR secs =
       (LDR_SECTION_HEADER_PTR) (((Char*) opt_header_ptr) + header_ptr->SizeOfOptionalHeader);
 

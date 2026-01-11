@@ -12,10 +12,10 @@
 /// @file TestCase.h
 /// ================================================================================
 
-#define KT_RUN_TEST(OBJECT)     \
-  {                             \
-    KTTestCase##OBJECT obj{};   \
-    obj.Run(); \
+#define KT_RUN_TEST(OBJECT)   \
+  {                           \
+    KTTestCase##OBJECT obj{}; \
+    obj.Run();                \
   }
 
 #define KT_MUST_PASS(MSG, LEFT_COND, RIGHT_COND) \

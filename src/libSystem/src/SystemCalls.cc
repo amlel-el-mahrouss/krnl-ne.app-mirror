@@ -6,8 +6,6 @@
 #include <libSystem/SystemKit/Syscall.h>
 #include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Verify.h>
-#include "hint/CompilerHint.h"
-#include "libSystem/SystemKit/Macros.h"
 
 using namespace LibSystem;
 

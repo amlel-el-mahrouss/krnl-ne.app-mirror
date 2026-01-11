@@ -9,7 +9,8 @@
 
 namespace Kernel {
 
-namespace Detail {
+namespace TraceSrv {
+
   inline constexpr auto kDebugCmdLen = 256U;
   inline constexpr auto kDebugPort   = 51820;
   /// \brief Debug Magic Value
@@ -17,6 +18,7 @@ namespace Detail {
   inline constexpr auto kDebugVersion = 0x0100;
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
+
 }  // namespace Detail
 
 }  // namespace Kernel

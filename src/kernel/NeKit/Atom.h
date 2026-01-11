@@ -1,13 +1,14 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __NE_KIT_ATOM_H__
-#define __NE_KIT_ATOM_H__
+#ifndef NEKIT_ATOM_H
+#define NEKIT_ATOM_H
 
 #include <NeKit/Config.h>
 
 namespace Kernel {
+
 template <class TypeAtomic>
 class Atom final {
  public:
@@ -24,6 +25,7 @@ class Atom final {
   const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
 
   void  operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
+
   Atom& operator|=(const SizeT& bit) {
     this->operator|(bit);
     return *this;
@@ -39,6 +41,7 @@ class Atom final {
  private:
   TypeAtomic fArrayOfAtoms;
 };
+
 }  // namespace Kernel
 
 #endif

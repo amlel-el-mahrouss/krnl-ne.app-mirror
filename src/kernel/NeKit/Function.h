@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -9,22 +9,21 @@
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
-/// ================================================================================
-/// @brief Function wrapper class.
-/// ================================================================================
+
+/// @brief Function Pointer Container.
 template <typename T, typename... Args>
 class Function final {
  public:
   Function()        = delete;
   Function(nullPtr) = delete;
-  ~Function()       = default;
 
-  explicit Function(T (*Fn)(Args... args)) : fFn(Fn) { MUST_PASS(fFn); }
+  ~Function()       = default;
+  Function(T (*Fn)(Args... args)) : fFn(Fn) { MUST_PASS(fFn); }
 
   Function& operator=(const Function&) = delete;
   Function(const Function&)            = delete;
 
-  T operator()(Args&&... args) { return fFn(args...); }
+  T operator()(Args&&... args) { return fFn(forward<Args...>(args)...); }
 
   explicit operator bool() { return fFn; }
   bool     operator!() { return !fFn; }
@@ -35,6 +34,10 @@ class Function final {
 
 template <typename T, typename... Args>
 using FunctionOr = ErrorOr<Function<T, Args...>>;
+
+template <typename T, typename... Args>
+using FunctionRef = Ref<Function<T, Args...>>;
+
 }  // namespace Kernel
 
 #endif

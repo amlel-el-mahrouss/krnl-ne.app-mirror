@@ -28,7 +28,7 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
 
     Char buf[1024] = {0};
 
-    while (PrintIn(printRef, "%s:1024", buf) == kErrorSuccess);
+    while (PrintIn(printRef, "%s:1024", buf) == kErrorSuccess) PrintOut(printRef, "%s", buf);
 
     PrintRelease(in);
 

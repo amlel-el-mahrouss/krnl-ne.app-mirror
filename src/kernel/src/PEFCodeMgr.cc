@@ -130,9 +130,8 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
 /// @brief PEF destructor.
 /***********************************************************************************/
 PEFLoader::~PEFLoader() {
-  if (fCachedBlob) {
+  if (fCachedBlob.Leak().Leak()) {
     mm_free_ptr(fCachedBlob.Leak().Leak());
-    fFile.Reset();
   }
 }
 
@@ -296,13 +295,11 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
 
   auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
 
-  if (!symname) {
+  if (!symname.Leak().Leak()) {
     symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
   }
 
-  if (!symname) {
-    return -1;
-  }
+  if (!symname.Leak().Leak()) return kSchedInvalidPID;
 
   ProcessID id =
       UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),

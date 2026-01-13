@@ -24,5 +24,8 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   /// access the jail then)
   if (kJailSrv->fClient == nullptr) return EXIT_FAILURE;
 
+  ::PrintOut(nullptr, "Jail-Hash: %ul", kJailSrv->fJailHash);
+  ::PrintOut(nullptr, "Parent-ID: %ul", kJailSrv->fParentID);
+
   return EXIT_FAILURE;
 }

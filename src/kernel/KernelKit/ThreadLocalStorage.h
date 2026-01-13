@@ -59,7 +59,7 @@ EXTERN_C Kernel::Void rt_install_tib(THREAD_INFORMATION_BLOCK* TIB, THREAD_INFOR
 /// @brief TLS check (syscall)
 EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB);
 
-#include <KernelKit/ThreadLocalStorage.inl>
+#include "ThreadLocalStorage.inl"
 
 // last rev 7/7/24
 

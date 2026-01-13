@@ -52,6 +52,7 @@ namespace HAL {
         kBitMapCursor += ptr_bit_set[kBitMapSizeIdx];
 
         ptr_bit_set[kBitMapMagIdx]  = 0UL;
+        ptr_bit_set[kBitMapSizeIdx] = 0UL;
         ptr_bit_set[kBitMapUsedIdx] = No;
 
         this->GetBitMapStatus(ptr_bit_set);
@@ -135,11 +136,6 @@ namespace HAL {
 
       /// @brief Print Bitmap status
       auto GetBitMapStatus(UIntPtr* ptr_bit_set) -> Void {
-        if (!this->IsBitMap(ptr_bit_set)) {
-          (Void)(kout << "Not a BitMap: " << hex_number((UIntPtr) ptr_bit_set) << kendl);
-          return;
-        }
-
         (Void)(kout << "Magic: " << hex_number(ptr_bit_set[kBitMapMagIdx]) << kendl);
         (Void)(kout << "Is Allocated? " << (ptr_bit_set[kBitMapUsedIdx] ? "YES" : "NO") << kendl);
         (Void)(kout << "Size of BitMap (B): " << number(ptr_bit_set[kBitMapSizeIdx]) << kendl);

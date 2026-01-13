@@ -271,7 +271,7 @@ class UserProcessHelper final {
 }  // namespace Kernel
 
 #include <KernelKit/ThreadLocalStorage.h>
-#include <KernelKit/UserProcessScheduler.inl>
+#include "UserProcessScheduler.inl"
 
 ////////////////////////////////////////////////////
 // END

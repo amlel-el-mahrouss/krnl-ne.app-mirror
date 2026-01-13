@@ -71,6 +71,6 @@ class DMAFactory final {
 };
 }  // namespace Kernel
 
-#include <KernelKit/PCI/DMA.inl>
+#include "DMA.inl"
 
 #endif

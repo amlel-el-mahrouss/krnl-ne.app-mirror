@@ -324,7 +324,9 @@ IMPORT_C SInt32 PrintIn(IORef file /* nullptr to direct to stdout */, const Char
 
 IMPORT_C IORef PrintCreate(Void);
 
-IMPORT_C SInt32 PrintRelease(IORef);
+IMPORT_C UInt64 PrintSize(IORef ref);
+
+IMPORT_C SInt32 PrintRelease(IORef ref);
 
 IMPORT_C IORef PrintGet(const Char* path);
 

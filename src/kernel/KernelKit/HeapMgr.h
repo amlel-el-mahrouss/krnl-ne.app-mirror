@@ -51,6 +51,6 @@ Int32 mm_set_ptr_flags(VoidPtr heap_ptr, UInt64 flags);
 UInt64 mm_get_ptr_flags(VoidPtr heap_ptr);
 }  // namespace Kernel
 
-#include <KernelKit/HeapMgr.inl>
+#include "HeapMgr.inl"
 
 #endif  // !INC_KERNEL_HEAP_H

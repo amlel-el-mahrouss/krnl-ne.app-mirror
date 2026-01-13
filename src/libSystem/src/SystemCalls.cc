@@ -217,3 +217,8 @@ IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {
 
   return *ret;
 }
+
+IMPORT_C UInt64 PrintSize(IORef ref) {
+  MUST_PASS(ref);
+  return *static_cast<UInt64*>(libsys_syscall_arg_2(SYSCALL_HASH("PrintSize"), ref));
+}

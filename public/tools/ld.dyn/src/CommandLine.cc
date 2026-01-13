@@ -8,7 +8,8 @@
 
 /// @brief Library loader.
 
-#define DYNLIB_FLAG "-dyn"
+#define DYNLIB_FLAG "-e"
+#define DYNLIB_FLAG_ALT "-exec"
 
 SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   LIBSYS_UNUSED(argc);
@@ -19,7 +20,7 @@ SInt32 _NeMain(SInt32 argc, Char* argv[]) {
            "ld.dyn: © 2024-2025 Amlal El Mahrouss, Licensed under the Apache 2.0 license.\n");
 
   for (SInt32 i = 1U; i < argc; ++i) {
-    if (MmStrCmp(argv[i], DYNLIB_FLAG) == 0) {
+    if (MmStrCmp(argv[i], DYNLIB_FLAG) == 0 || MmStrCmp(argv[i], DYNLIB_FLAG_ALT) == 0) {
       UIntPtr ret = RtlSpawnProcess(argv[i], 0, nullptr, nullptr, 0);
 
       if (0 < ret) {

@@ -54,9 +54,7 @@ class Variant final {
   RefAny Leak();
 
   template <typename T>
-  T* As() {
-    return reinterpret_cast<T*>(fPtr);
-  }
+  T* As();
 
   VariantKind& Kind();
 
@@ -65,5 +63,7 @@ class Variant final {
   VariantKind fKind{VariantKind::kNull};
 };
 }  // namespace Kernel
+
+#include "Variant.inl"
 
 #endif

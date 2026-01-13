@@ -76,6 +76,6 @@ using DBGNetworkDevice = NetworkDevice;
 using LTENetworkDevice = NetworkDevice;
 }  // namespace Kernel
 
-#include <NetworkKit/NetworkDevice.inl>
+#include "NetworkDevice.inl"
 
 #endif  // !__INC_NETWORK_DEVICE_H__

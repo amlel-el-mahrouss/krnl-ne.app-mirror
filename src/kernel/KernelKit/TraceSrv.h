@@ -19,7 +19,7 @@ namespace TraceSrv {
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
 
-}  // namespace Detail
+}  // namespace TraceSrv
 
 }  // namespace Kernel
 

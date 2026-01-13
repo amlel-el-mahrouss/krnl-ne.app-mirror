@@ -24,7 +24,7 @@ class Atom final {
 
   const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
 
-  void  operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
+  void operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
 
   Atom& operator|=(const SizeT& bit) {
     this->operator|(bit);

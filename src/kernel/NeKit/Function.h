@@ -17,7 +17,7 @@ class Function final {
   Function()        = delete;
   Function(nullPtr) = delete;
 
-  ~Function()       = default;
+  ~Function() = default;
   Function(T (*Fn)(Args... args)) : fFn(Fn) { MUST_PASS(fFn); }
 
   Function& operator=(const Function&) = delete;

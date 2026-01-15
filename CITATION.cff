@@ -5,18 +5,18 @@ type: software
 authors:
   - given-names: Amlal
     family-names: El Mahrouss
-    email: aelmahrouss@acm.org
+    email: amlal@nekernel.org
 identifiers:
   - type: url
     value: 'https://nekernel.org'
-    description: NeKernel.org
+    description: NeKernel.org's Operating System Kernel
 repository-code: 'https://github.com/nekernel-org/nekernel'
 url: 'https://nekernel.org'
 abstract: >-
-  This is NeKernel.org's Operating System Kernel, authored
-  by Amlal El Mahrouss.
+  This is NeKernel.org's Modular Operating System Kernel.
 keywords:
   - kernel
   - operating-system
   - cpp
+  - systems
 license: Apache-2.0

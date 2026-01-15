@@ -45,7 +45,7 @@ class Variant final {
   explicit Variant(VoidPtr ptr) : fPtr(ptr), fKind(VariantKind::kBlob) {}
 
  public:
-  const Char* ToString();
+  KString ToString();
 
   /// ========================================================================
   /// @brief Returns the underlying pointer.

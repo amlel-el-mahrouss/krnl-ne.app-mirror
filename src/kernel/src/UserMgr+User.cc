@@ -11,9 +11,6 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-#define kStdUserType (0xEE)
-#define kSuperUserType (0xEF)
-
 /// @file UserMgr.cc
 /// @brief Multi-user support.
 

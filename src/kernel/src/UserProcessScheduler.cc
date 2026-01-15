@@ -111,7 +111,7 @@ ErrorOr<VoidPtr> UserProcess::New(SizeT sz, SizeT pad_amount) {
 
   hal_write_cr3(vm_register);
 #else
-  auto ptr = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
+  auto ptr           = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
 #endif
 
   if (!this->HeapTree) {

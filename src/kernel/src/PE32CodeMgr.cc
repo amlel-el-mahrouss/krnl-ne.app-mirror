@@ -234,19 +234,19 @@ ErrorOr<VoidPtr> PE32Loader::GetBlob() {
 namespace Utils {
   ProcessID rtl_create_user_process(PE32Loader&                        exec,
                                     const UserProcess::ExecutableKind& process_kind) {
+    if (!exec.IsLoaded()) return kSchedInvalidPID;
+
     ErrorOrAny errOrStart = exec.FindStart();
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
 
     ErrorOrAny symname = exec.FindSymbol(kPeImageStart, 0);
 
-    if (!symname) {
+    if (!symname.Leak().Leak()) {
       symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PE32+")};
     }
 
-    if (!symname) {
-      return -1;
-    }
+    if (!symname.Leak().Leak()) return kSchedInvalidPID;
 
     ProcessID id =
         UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
@@ -257,8 +257,14 @@ namespace Utils {
     if (id != kSchedInvalidPID) {
       auto stacksym = exec.FindSymbol(kPeStackSizeSymbol, 0);
 
-      if (!stacksym) {
+      if (!stacksym.Leak().Leak()) {
         stacksym = ErrorOr<VoidPtr>{(VoidPtr) new UIntPtr(kSchedMaxStackSz)};
+      }
+
+      if (!stacksym.Leak().Leak()) {
+        UserProcessScheduler::The().Remove(id);
+        mm_free_ptr(stacksym.Leak().Leak());
+        return kSchedInvalidPID;
       }
 
       if ((*(volatile UIntPtr*) stacksym.Leak().Leak()) > kSchedMaxStackSz) {

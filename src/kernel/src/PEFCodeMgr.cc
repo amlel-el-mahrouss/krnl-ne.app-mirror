@@ -95,7 +95,10 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
   fCachedBlob = fFile->Read(kPefHeader, 0UL);
 
   if (!fCachedBlob.Leak().Leak()) {
-    this->fBad = YES;
+    kout << "PEFLoader: warning: Binary format error!\r";
+    this->fBad       = YES;
+    this->fFatBinary = NO;
+
     return;
   }
 
@@ -122,7 +125,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
   this->fFatBinary = NO;
   this->fBad       = YES;
 
-  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob.Leak().Leak());
+  if (this->fCachedBlob.Leak().Leak()) mm_free_ptr(this->fCachedBlob.Leak().Leak());
   this->fCachedBlob.Leak().Leak() = nullptr;
 }
 
@@ -256,7 +259,7 @@ ErrorOr<VoidPtr> PEFLoader::FindStart() {
 /// @brief Tells if the executable is loaded or not.
 /// @return Whether it's not bad and is cached.
 bool PEFLoader::IsLoaded() {
-  return !fBad;
+  return fBad == false;
 }
 
 const Char* PEFLoader::Path() {
@@ -289,6 +292,8 @@ ErrorOr<VoidPtr> PEFLoader::GetBlob() {
 
 ProcessID rtl_create_user_process(PEFLoader&                         exec,
                                   const UserProcess::ExecutableKind& process_kind) {
+  if (!exec.IsLoaded()) return kSchedInvalidPID;
+
   auto errOrStart = exec.FindStart();
 
   if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
@@ -305,13 +310,19 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
       UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
                                         errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
 
-  mm_free_ptr(symname.Leak().Leak());
+  if (symname.Leak().Leak()) mm_free_ptr(symname.Leak().Leak());
 
   if (id != kSchedInvalidPID) {
     auto stacksym = exec.FindSymbol(kPefStackSizeSymbol, kPefData);
 
-    if (!stacksym) {
+    if (!stacksym.Leak().Leak()) {
       stacksym = ErrorOr<VoidPtr>{(VoidPtr) new UIntPtr(kSchedMaxStackSz)};
+    }
+
+    if (!stacksym.Leak().Leak()) {
+      UserProcessScheduler::The().Remove(id);
+      mm_free_ptr(stacksym.Leak().Leak());
+      return kSchedInvalidPID;
     }
 
     if ((*(volatile UIntPtr*) stacksym.Leak().Leak()) > kSchedMaxStackSz) {

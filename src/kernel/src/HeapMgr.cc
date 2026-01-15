@@ -124,8 +124,9 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
 
   auto result = reinterpret_cast<VoidPtr>(heap_info_ptr->fOffset);
 
-  (Void)(kout << "HeapMgr: Registered heap address: "
-              << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
+  if (result)
+    (Void)(kout << "HeapMgr: Registered heap address: "
+                << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
 
   return result;
 }

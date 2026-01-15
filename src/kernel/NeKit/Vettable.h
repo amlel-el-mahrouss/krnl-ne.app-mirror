@@ -13,7 +13,9 @@
 
 namespace Kernel {
 template <class Type>
-concept IsVettable = requires(Type) { (Type::kVettable); };
+concept IsVettable = requires(Type) {
+  (Type::kVettable);
+};
 }  // namespace Kernel
 
 #endif  // !__NE_KIT_VETTABLE_H__

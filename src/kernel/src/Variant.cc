@@ -5,7 +5,7 @@
 #include <NeKit/Variant.h>
 
 namespace Kernel {
-const Char* Variant::ToString() {
+KString Variant::ToString() {
   switch (fKind) {
     case VariantKind::kTOML:
       return ("Class:{TOML}");
@@ -14,13 +14,13 @@ const Char* Variant::ToString() {
     case VariantKind::kString:
       return ("Class:{String}");
     case VariantKind::kBlob:
-      return ("Class:{Blob}");
+      return ("Memory:{Blob}");
     case VariantKind::kNull:
-      return ("Class:{Null}");
+      return ("Memory:{Null}");
     case VariantKind::kSwap:
-      return ("Class:{Swap}");
+      return ("Memory:{Swap}");
     default:
-      return ("Class:{Unknown}");
+      return ("Memory:{Unknown}");
   }
 }
 

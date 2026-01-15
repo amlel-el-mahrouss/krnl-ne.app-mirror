@@ -27,13 +27,21 @@ class KBasicString final {
     rt_set_memory(fData, 0, fDataSz);
   }
 
-  KBasicString(SizeT Sz) : fDataSz(Sz) {
-    MUST_PASS(Sz > 1);
-
-    fData = new CharKind[Sz];
+  KBasicString(const CharKind* In) : fDataSz(oe_string_len(In)) {
+    fData = new CharKind[fDataSz];
     MUST_PASS(fData);
 
-    rt_set_memory(fData, 0, Sz);
+    rt_set_memory(fData, 0, fDataSz);
+    this->operator+=(In);
+  }
+
+  KBasicString(const SizeT Sz) : fDataSz(Sz) {
+    MUST_PASS(fDataSz > 1);
+
+    fData = new CharKind[fDataSz];
+    MUST_PASS(fData);
+
+    rt_set_memory(fData, 0, fDataSz);
   }
 
   ~KBasicString() {

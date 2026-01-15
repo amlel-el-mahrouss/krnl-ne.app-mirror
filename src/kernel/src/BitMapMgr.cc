@@ -12,7 +12,7 @@
 #include <NeKit/KernelPanic.h>
 
 #define kBitMapMagic (0x10210U)
-
+#define kBitMapMaxSz gib_cast(4)
 #define kBitMapMagIdx (0U)
 #define kBitMapSizeIdx (1U)
 #define kBitMapUsedIdx (2U)
@@ -47,15 +47,18 @@ namespace HAL {
 
         UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(page_ptr);
 
+        if (!page_ptr) return No;
+
         if (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic) return No;
+        if (ptr_bit_set[kBitMapSizeIdx] > kBitMapMaxSz) return No;
+
+        this->GetBitMapStatus(ptr_bit_set);
 
         kBitMapCursor += ptr_bit_set[kBitMapSizeIdx];
 
         ptr_bit_set[kBitMapMagIdx]  = 0UL;
         ptr_bit_set[kBitMapSizeIdx] = 0UL;
         ptr_bit_set[kBitMapUsedIdx] = No;
-
-        this->GetBitMapStatus(ptr_bit_set);
 
         return Yes;
       }
@@ -80,10 +83,11 @@ namespace HAL {
       /***********************************************************************************/
       auto FindBitMap(VoidPtr base_ptr, SizeT size, Bool wr, Bool user, SizeT pad) -> VoidPtr {
         if (!size) return nullptr;
+        if (size > kBitMapMaxSz) return nullptr;
 
         VoidPtr base = reinterpret_cast<VoidPtr>(base_ptr);
 
-        STATIC SizeT biggest = 0UL;
+        STATIC SizeT biggest{0UL};
 
         while (YES) {
           UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(base);
@@ -154,9 +158,7 @@ namespace HAL {
 
   STATIC Detail::IBitMapProxy kBitMapMgr;
 
-  auto mm_is_bitmap(VoidPtr ptr) -> BOOL {
-    return kBitMapMgr.IsBitMap(ptr);
-  }
+  auto mm_is_bitmap(VoidPtr ptr) -> BOOL { return kBitMapMgr.IsBitMap(ptr); }
 
   /***********************************************************************************/
   /// @brief Allocate a new page to be used by the OS.

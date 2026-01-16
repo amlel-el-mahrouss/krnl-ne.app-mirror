@@ -123,7 +123,7 @@ run-efi-amd64-ata: run-efi-amd64-ata-dma
 # img_2 is the rescue disk. img is the bootable disk, as provided by the Zeta specs.
 .PHONY: epm-img
 epm-img:
-	qemu-img create -f raw $(IMG) 4G
+	qemu-img create -f raw $(IMG) 256M
 
 .PHONY: efi
 efi:

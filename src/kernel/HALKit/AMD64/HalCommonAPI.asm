@@ -92,7 +92,7 @@ sched_jump_to_task:
     push rbp
     mov  rbp, rsp
 
-    mov ax, 0x30
+    mov ax, 0x33
     mov ds, ax
     mov es, ax
     mov fs, ax
@@ -101,11 +101,11 @@ sched_jump_to_task:
     mov ax, 0x18
     ltr ax
 
-    push 0x30
+    push 0x33
     mov rdx, [rcx + 0x08]
     push rdx
     o64 pushf
-    push 0x28
+    push 0x2B
     mov rdx, [rcx + 0x00]
     push rdx
 

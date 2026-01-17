@@ -127,12 +127,14 @@ namespace HAL {
           }
 
           UIntPtr raw_base = reinterpret_cast<UIntPtr>(base);
-          UIntPtr offset   = (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic)
-                                 ? (size + pad)
-                                 : ptr_bit_set[kBitMapSizeIdx];
+
+          if (ptr_bit_set[kBitMapSizeIdx] > kBitMapMaxSz) return nullptr;
+
+          UIntPtr offset = (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic)
+                               ? (size + pad)
+                               : ptr_bit_set[kBitMapSizeIdx];
 
           base = reinterpret_cast<VoidPtr>(raw_base + offset);
-          if (base == nullptr) return nullptr;
         }
 
         return nullptr;

@@ -4,7 +4,7 @@
 
 #include <StorageKit/AHCI.h>
 
-using namespace Kernel;
+namespace Kernel {
 
 /// @brief Class constructor
 /// @param Out Drive output
@@ -83,3 +83,5 @@ Void AHCIDeviceInterface::SetIndex(const UInt32& drv) {
   MUST_PASS(IMountpoint::kDriveIndexInvalid < drv);
   this->fDriveIndex = drv;
 }
+
+}  // namespace Kernel

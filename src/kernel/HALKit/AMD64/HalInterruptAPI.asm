@@ -206,7 +206,24 @@ __NE_INT_32:
 
     o64 iret
 
-IntNormal 33
+global __NE_INT_33
+__NE_INT_33:
+    cli
+
+    push rax
+
+    ; Read scancode from keyboard port to acknowledge
+    in al, 0x60
+
+    ; Send EOI to master PIC
+    mov al, 0x20
+    out 0x20, al
+
+    pop rax
+
+    std
+
+    o64 iret
 
 IntNormal 34
 IntNormal 35

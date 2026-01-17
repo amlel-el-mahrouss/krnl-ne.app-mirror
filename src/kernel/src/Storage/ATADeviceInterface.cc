@@ -20,7 +20,7 @@ ATADeviceInterface::~ATADeviceInterface() = default;
 /// @brief Returns the name of the device interface.
 /// @return it's name as a string.
 const Char* ATADeviceInterface::Name() const {
-  return "/devices/hda{}";
+  return kDeviceMgrRootDirPath "hda{}";
 }
 
 /// @brief Output operator.

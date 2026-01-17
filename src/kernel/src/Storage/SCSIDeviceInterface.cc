@@ -15,6 +15,6 @@ SCSIDeviceInterface::~SCSIDeviceInterface() {
 }
 
 const Char* SCSIDeviceInterface::Name() const {
-  return ("/devices/sda{}");
+  return kDeviceMgrRootDirPath "sd{}{}";
 }
 }  // namespace Kernel

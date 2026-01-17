@@ -44,5 +44,5 @@ FBDeviceInterface& FBDeviceInterface::operator>>(FBDevicePacket* pckt) {
 /// @brief Returns the name of the device interface.
 /// @return it's name as a string.
 const Char* FBDeviceInterface::Name() const {
-  return "/devices/fb{}";
+  return kDeviceMgrRootDirPath "fb{}";
 }

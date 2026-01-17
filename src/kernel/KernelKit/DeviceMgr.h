@@ -56,7 +56,7 @@ class IDevice {
     return *this;
   }
 
-  virtual const char* Name() const { return "/devices/null"; }
+  virtual const char* Name() const { return kDeviceMgrRootDirPath "null"; }
 
   operator bool() { return fOut && fIn; }
 

@@ -9,7 +9,7 @@ namespace Kernel {
 /// \brief Getter for fNetworkName.
 /// \return Network device name.
 const Char* NetworkDevice::Name() const {
-  return "/devices/net/net{}";
+  return kDeviceMgrRootDirPath "net/nic{}";
 }
 
 /// \brief Setter for fNetworkName.

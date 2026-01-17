@@ -20,7 +20,7 @@ AHCIDeviceInterface::~AHCIDeviceInterface() = default;
 /// @brief Returns the name of the device interface.
 /// @return it's name as a string.
 const Char* AHCIDeviceInterface::Name() const {
-  return "/devices/sda{}";
+  return kDeviceMgrRootDirPath "sd{}{}";
 }
 
 /// @brief Output operator.

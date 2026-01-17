@@ -15,7 +15,7 @@ NVMEDeviceInterface::~NVMEDeviceInterface() {
 }
 
 const Char* NVMEDeviceInterface::Name() const {
-  return ("/devices/nvm{}");
+  return kDeviceMgrRootDirPath "nvm{}";
 }
 
 OwnPtr<IMountpoint*> NVMEDeviceInterface::operator()(UInt32 dma_low, UInt32 dma_high,

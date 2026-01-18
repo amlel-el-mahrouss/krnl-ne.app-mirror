@@ -123,6 +123,8 @@ EXTERN_C BOOL mp_register_task(HAL::StackFramePtr stack_frame, ThreadID thrdid) 
   kHWThread[thrdid].mThreadID = thrdid;
   kHWThread[thrdid].mFramePtr = stack_frame;
 
+  hal_send_ipi_msg(thrdid, kAPICLocales[thrdid], kSMPInterrupt + 32);
+
   return YES;
 }
 
@@ -209,8 +211,6 @@ Void mp_init_cores(VoidPtr vendor_ptr) {
 
       entry_ptr += length;
     }
-
-    kSMPAware = kSMPCount > 1;
   }
 }
 }  // namespace Kernel::HAL

@@ -149,6 +149,27 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   if (ldr.IsLoaded()) rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
 
+  rtl_create_user_process(
+      []() {
+        while (YES)
+          ;
+      },
+      "idle");
+
+  rtl_create_user_process(
+      []() {
+        while (YES)
+          ;
+      },
+      "idle2");
+
+  rtl_create_user_process(
+      []() {
+        while (YES)
+          ;
+      },
+      "idle3");
+
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
   HAL::Register64 idt_reg;

@@ -193,6 +193,7 @@ IntNormal 31
 
 [extern idt_handle_scheduler]
 [extern kApicBaseAddress]
+[global __NE_INT_33]
 
 __NE_INT_32:
     cli
@@ -206,7 +207,6 @@ __NE_INT_32:
 
     o64 iret
 
-global __NE_INT_33
 __NE_INT_33:
     cli
 

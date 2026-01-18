@@ -50,7 +50,6 @@ namespace HAL {
         if (!page_ptr) return No;
 
         if (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic) return No;
-        if (ptr_bit_set[kBitMapSizeIdx] > kBitMapMaxSz) return No;
 
         this->GetBitMapStatus(ptr_bit_set);
 
@@ -127,8 +126,6 @@ namespace HAL {
           }
 
           UIntPtr raw_base = reinterpret_cast<UIntPtr>(base);
-
-          if (ptr_bit_set[kBitMapSizeIdx] > kBitMapMaxSz) return nullptr;
 
           UIntPtr offset = (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic)
                                ? (size + pad)

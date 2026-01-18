@@ -8,7 +8,7 @@
 #include <libSystem/SystemKit/System.h>
 
 namespace CF {
-template <typename Key, typename Value>
+template <class Key, class Value>
 class CFDictionary final {
  public:
   explicit CFDictionary() = default;

@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNEL_KIT_USER_MGR_H__
-#define __KERNEL_KIT_USER_MGR_H__
+#ifndef KERNELKIT_USERMGR_H
+#define KERNELKIT_USERMGR_H
 
 /* ========================================
 
@@ -96,4 +96,4 @@ inline User* kCurrentUser = nullptr;
 inline User* kRootUser = nullptr;
 }  // namespace Kernel
 
-#endif /* ifndef __KERNEL_KIT_USER_MGR_H__ */
+#endif /* ifndef KERNELKIT_USERMGR_H */

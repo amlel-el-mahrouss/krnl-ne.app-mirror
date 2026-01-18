@@ -5,11 +5,11 @@
 //! @file ThreadLocalStorage.inl
 //! @brief Allocate resources from the process's heap storage.
 
-#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
+#ifndef KERNELKIT_USERPROCESSSCHEDULER_H
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
-template <typename T>
+template <class T>
 inline T* tls_new_ptr(void) {
   using namespace Kernel;
 
@@ -24,7 +24,7 @@ inline T* tls_new_ptr(void) {
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
-template <typename T>
+template <class T>
 inline Kernel::Bool tls_delete_ptr(T* obj) {
   using namespace Kernel;
 
@@ -39,14 +39,14 @@ inline Kernel::Bool tls_delete_ptr(T* obj) {
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
-template <typename T>
+template <class T>
 inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj) {
   return tls_delete_ptr(obj.Leak());
 }
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
-template <typename T>
+template <class T>
 inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) {
   return tls_delete_ptr(obj->Leak());
 }
@@ -56,7 +56,7 @@ inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) {
 /// @tparam ...Args varg class type.
 /// @param args arguments list.
 /// @return Class instance.
-template <typename T, typename... Args>
+template <class T, class... Args>
 T* tls_new_class(Args&&... args) {
   using namespace Kernel;
 
@@ -74,7 +74,7 @@ T* tls_new_class(Args&&... args) {
 /// @tparam T
 /// @param obj
 /// @return
-template <typename T>
+template <class T>
 inline Kernel::Bool tls_delete_class(T* obj) {
   using namespace Kernel;
 

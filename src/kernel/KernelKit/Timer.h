@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNEL_KIT_TIMER_H__
-#define __KERNEL_KIT_TIMER_H__
+#ifndef KERNELKIT_TIMER_H
+#define KERNELKIT_TIMER_H
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/KPC.h>
@@ -70,4 +70,4 @@ inline constexpr UInt64 rtl_milliseconds(UInt64 time) {
 }
 }  // namespace Kernel
 
-#endif  // !__KERNEL_KIT_TIMER_H__
+#endif  // !KERNELKIT_TIMER_H

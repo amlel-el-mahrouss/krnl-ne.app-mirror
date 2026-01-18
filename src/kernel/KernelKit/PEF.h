@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNELKIT_PEF_H__
-#define __KERNELKIT_PEF_H__
+#ifndef KERNELKIT_PEF_H
+#define KERNELKIT_PEF_H
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/ILoader.h>
@@ -105,4 +105,4 @@ enum {
 };
 }  // namespace Kernel
 
-#endif /* ifndef __KERNELKIT_PEF_H__ */
+#endif /* ifndef KERNELKIT_PEF_H */

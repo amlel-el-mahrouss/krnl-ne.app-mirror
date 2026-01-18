@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNELKIT_TRACESRV_H__
-#define __KERNELKIT_TRACESRV_H__
+#ifndef KERNELKIT_TRACESRV_H
+#define KERNELKIT_TRACESRV_H
 
 #include <CompilerKit/CompilerKit.h>
 
@@ -23,4 +23,4 @@ namespace TraceSrv {
 
 }  // namespace Kernel
 
-#endif  // !__KERNELKIT_TRACESRV_H__
+#endif  // !KERNELKIT_TRACESRV_H

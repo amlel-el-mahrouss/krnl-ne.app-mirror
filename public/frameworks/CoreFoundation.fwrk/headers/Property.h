@@ -15,7 +15,7 @@ namespace CF {
 class CFString;
 class CFProperty;
 
-template <typename Cls, SizeT N>
+template <class Cls, SizeT N>
 class CFArray;
 
 /// ================================================================================

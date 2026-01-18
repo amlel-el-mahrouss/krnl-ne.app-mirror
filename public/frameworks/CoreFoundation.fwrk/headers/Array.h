@@ -8,7 +8,7 @@
 #include <libSystem/SystemKit/System.h>
 
 namespace CF {
-template <typename T, SizeT N>
+template <class T, SizeT N>
 class CFArray final {
  public:
   explicit CFArray() = default;

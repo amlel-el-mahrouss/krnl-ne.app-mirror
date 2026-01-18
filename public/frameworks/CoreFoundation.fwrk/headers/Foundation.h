@@ -13,7 +13,7 @@ union CFGuid;
 class CFProperty;
 class CFObject;
 
-template <typename T>
+template <class T>
 class CFRef;
 class CFFont;
 struct CFPoint;

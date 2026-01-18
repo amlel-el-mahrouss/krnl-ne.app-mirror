@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNEL_KIT_TLS_H__
-#define __KERNEL_KIT_TLS_H__
+#ifndef KERNELKIT_TLS_H
+#define KERNELKIT_TLS_H
 
 /// @author Amlal El Mahrouss
 /// @file Semaphore.h
@@ -108,4 +108,4 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 tim
 }
 }  // namespace Kernel
 
-#endif  // !__KERNEL_KIT_TLS_H__
+#endif  // !KERNELKIT_TLS_H

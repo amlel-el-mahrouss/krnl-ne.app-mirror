@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef _INC_CODE_MANAGER_PEF_H_
-#define _INC_CODE_MANAGER_PEF_H_
+#ifndef KERNELKIT_CODEMGR_PEF_H
+#define KERNELKIT_CODEMGR_PEF_H
 
 /// @file PEFCodeMgr.h
 /// @brief PEF Code Manager header file.
@@ -14,7 +14,7 @@
 #include <NeKit/ErrorOr.h>
 #include <NeKit/KString.h>
 
-#ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__
+#ifndef KERNELKIT_USERPROCESSSCHEDULER_H
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
@@ -69,4 +69,4 @@ ProcessID rtl_create_user_process(PEFLoader& exec, const UserProcess::Executable
 
 }  // namespace Kernel
 
-#endif  // ifndef _INC_CODE_MANAGER_PEF_H_
+#endif  // ifndef KERNELKIT_CODEMGR_PEF_H

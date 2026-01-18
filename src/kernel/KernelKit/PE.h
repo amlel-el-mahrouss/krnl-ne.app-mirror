@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNELKIT_INC_PE_H__
-#define __KERNELKIT_INC_PE_H__
+#ifndef KERNELKIT_INC_PE_H
+#define KERNELKIT_INC_PE_H
 
 #include <NeKit/Config.h>
 
@@ -120,4 +120,4 @@ enum {
   kPEResourceId = 0xFFaadd00,
 };
 
-#endif /* ifndef __KERNELKIT_INC_PE_H__ */
+#endif /* ifndef KERNELKIT_INC_PE_H */

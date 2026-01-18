@@ -277,4 +277,4 @@ class UserProcessHelper final {
 // END
 ////////////////////////////////////////////////////
 
-#endif /* ifndef __KERNEL_KIT_USER_PROCESS_SCHEDULER_H__ */
+#endif /* ifndef KERNELKIT_USERPROCESSSCHEDULER_H */

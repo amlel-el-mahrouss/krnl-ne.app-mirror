@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef INC_XOCFF_H
-#define INC_XOCFF_H
+#ifndef KERNELKIT_XCOFF_H
+#define KERNELKIT_XCOFF_H
 
 #include <NeKit/Config.h>
 
@@ -39,4 +39,4 @@ typedef struct XCOFF_FORK_HEADER {
   Kernel::Char fCodeSignFork[kXCOFF64ForkNameLen];
 } XCOFF_FORK_HEADER;
 
-#endif  // ifndef INC_XOCFF_H
+#endif  // ifndef KERNELKIT_XCOFF_H

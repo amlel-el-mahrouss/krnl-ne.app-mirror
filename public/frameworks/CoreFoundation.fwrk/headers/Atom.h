@@ -8,7 +8,7 @@
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 
 namespace CF {
-template <typename T>
+template <class T>
 class CFAtom final {
  public:
   explicit CFAtom() = default;

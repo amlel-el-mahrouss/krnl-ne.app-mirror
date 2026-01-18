@@ -10,13 +10,13 @@
 #include <libSystem/SystemKit/System.h>
 
 namespace CF {
-template <typename T>
+template <class T>
 class CFRef;
 
 /// ================================================================================
 /// @brief CFRef class for reference counting.
 /// ================================================================================
-template <typename T>
+template <class T>
 class CFRef final CF_OBJECT {
  public:
   CFRef() = default;

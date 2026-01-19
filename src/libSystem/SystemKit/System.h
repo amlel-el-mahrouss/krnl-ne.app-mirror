@@ -2,14 +2,18 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef LIBSYS_SYSTEM_CALLS_H
-#define LIBSYS_SYSTEM_CALLS_H
+#ifndef SYSTEMKIT_SYSTEM_H
+#define SYSTEMKIT_SYSTEM_H
 
 #include <libSystem/SystemKit/Macros.h>
 
 /// @brief TTY device path.
-#define kPrintDevicePath "/devices/tty{}"
-#define kCDDevicePath "/devices/dvd{}"
+#define kPrintDevicePath "/devices/tty{}{}"
+
+/// @brief Secure TTY device path.
+#define kSecurePrintDevicePath "/devices/stty{}{}"
+
+#define kCDDevicePath "/devices/dvd{}{}"
 
 // ------------------------------------------------------------------------------------------ //
 /// @brief Types API.
@@ -383,4 +387,4 @@ IMPORT_C Char* StrFmt(const Char* fmt, ...);
 
 IMPORT_C UInt64 StrMathToNumber(const Char* in, const Char** endp, const SInt16 base);
 
-#endif  // ifndef LIBSYS_SYSTEM_CALLS_H
+#endif  // ifndef SYSTEMKIT_SYSTEM_H

@@ -12,10 +12,10 @@ namespace Kernel {
 class FBDeviceInterface;
 struct FBDevicePacket;
 
-typedef UInt32 FBCoord2x2;
-typedef UInt32 FBDim2x2;
-typedef UInt32 FBColorProfile;
-typedef UInt32 FBFlags;
+using FBCoord2x2 = UInt32;
+using FBDim2x2 = UInt32;
+using FBColorProfile = UInt32;
+using FBFlags = UInt32;
 
 /// @brief Framebuffer device interface packet.
 /// @details This structure is used to send and receive data from the framebuffer device.

@@ -27,6 +27,11 @@ struct DDK_STATUS_STRUCT DDK_FINAL {
 
 typedef void* ptr_t;
 
+typedef ptr_t addr_t;
+
+typedef ptr_t vaddr_t;
+typedef ptr_t paddr_t;
+
 /// @brief Call Kernel procedure.
 /// @param name the procedure name.
 /// @param cnt number of elements in **dat**

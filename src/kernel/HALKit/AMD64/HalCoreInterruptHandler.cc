@@ -12,7 +12,7 @@
 EXTERN_C Kernel::Void idt_handle_breakpoint(Kernel::UIntPtr rip);
 EXTERN_C Kernel::UIntPtr kApicBaseAddress;
 
-static bool kIsRunning = NO;
+STATIC BOOL kIsRunning{NO};
 
 /// @brief Notify APIC and PIC that we're done with the interrupt.
 /// @note

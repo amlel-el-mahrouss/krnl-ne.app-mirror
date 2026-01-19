@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -10,12 +10,12 @@
 IMPORT_C SInt32 nelaunch_startup_fn(Void) {
   /// Start LaunchHelpers.fwrk services, and make the launcher manageable too (via mgmt.launch)
   UInt32* ret = static_cast<UInt32*>(
-      libsys_syscall_arg_1(libsys_hash_64("__launch_register_launch_service")));
+      libsys_syscall_arg_1(libsys_hash_64("__launch_register_service")));
 
   if (ret) {
     switch (*ret) {
       case kErrorSuccess: {
-        libsys_syscall_arg_1(libsys_hash_64("__launch_listen_as_root"));
+        libsys_syscall_arg_1(libsys_hash_64("__launch_listen_as_super"));
         return *ret;
       }
       default:

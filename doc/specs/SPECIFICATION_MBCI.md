@@ -14,7 +14,8 @@
 
 ===================================
 
-- MBCI Host
+- MBCI Client, the controlled MBCI component.
+- MBCI Host, it shall govern how the MBCI Client act. 
 - MBCI Authentication key (24-bit number)
 - MBCI Host Kind and Flags.
 

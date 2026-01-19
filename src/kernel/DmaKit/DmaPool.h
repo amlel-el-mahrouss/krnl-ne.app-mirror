@@ -7,17 +7,10 @@
 
 #include <KernelKit/DebugOutput.h>
 
-#ifdef __NE_AMD64__
-#include <HALKit/AMD64/Processor.h>
-#define kNeDMAPoolStart (0x1000000)
-#define kNeDMAPoolSize (0x1000000)
-#elif defined(__NE_ARM64__)
-#include <HALKit/ARM64/Processor.h>
+#include __nekernel_halkit_include_processor
 
-/// @todo what reference offset shall we use?
-#define kNeDMAPoolStart (0x1000000)
-#define kNeDMAPoolSize (0x1000000)
-#endif
+#define kNeDMAPoolStart (__nekernel_dma_pool_start)
+#define kNeDMAPoolSize (__nekernel_dma_pool_size)
 
 #define kNeDMABestAlign (8)
 

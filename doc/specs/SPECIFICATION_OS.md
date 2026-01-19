@@ -77,3 +77,12 @@
 - Multi-drive support (A, B, C, D indices).
 - Packet-based I/O operations.
 - Separation of read/write operations per drive.
+
+===================================
+
+# 6: The TraceSrv:
+
+==================================
+
+- Opcode Based Debug System.
+- Packet Based Messages with a 'type' field. The 'type' field shall decide how the message shall be interpreted.

@@ -13,11 +13,35 @@ namespace TraceSrv {
 
   inline constexpr auto kDebugCmdLen = 256U;
   inline constexpr auto kDebugPort   = 51820;
-  /// \brief Debug Magic Value
   inline constexpr auto kDebugMagic   = "NE1.0.0;";
   inline constexpr auto kDebugVersion = 0x0100;
   inline constexpr auto kDebugDelim   = ';';
   inline constexpr auto kDebugEnd     = '\r';
+
+  enum class TRACE_SOURCE_OPCODE {
+    kStop,
+    kContinue,
+    kStepIn,
+    kStepOver,
+    kStepOut,
+    kSetBreakpoint,
+    kRemoveBreakpoint,
+    kGetStackTrace,
+    kGetSourceMessage,
+    kGetVariables,
+    kEvaluateExpression,
+    kUnknown
+  };
+
+  inline constexpr auto kDebugSymbolLen = 0x0100;
+
+  struct TRACE_SOURCE_MESSAGE {
+    Int32 fType;
+    Int32 fChksum;
+    Char fSymbol[kDebugSymbolLen];
+    UInt32 fOffset;
+    UInt32 fOpcode;
+  };
 
 }  // namespace TraceSrv
 

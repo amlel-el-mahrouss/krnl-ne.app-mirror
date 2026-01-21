@@ -103,7 +103,6 @@ namespace HAL {
               mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
               if (biggest < (size + pad)) biggest = size + pad;
-
               kBitMapCursor += size + pad;
 
               return (VoidPtr) ptr_bit_set;
@@ -119,7 +118,6 @@ namespace HAL {
             mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
             if (biggest < (size + pad)) biggest = (size + pad);
-
             kBitMapCursor += size + pad;
 
             return (VoidPtr) ptr_bit_set;
@@ -167,7 +165,7 @@ namespace HAL {
   /***********************************************************************************/
   auto mm_alloc_bitmap(Boolean wr, Boolean user, SizeT size, Bool is_page, SizeT pad) -> VoidPtr {
     VoidPtr ptr_new = nullptr;
-    if (is_page) return nullptr;
+    if (is_page) return ptr_new;
 
     ptr_new = kBitMapMgr.FindBitMap(kKernelBitMpStart, size, wr, user, pad);
     return ptr_new;

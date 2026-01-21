@@ -137,8 +137,6 @@ _Output NodePtr HeFileSystemMgr::Open(_Input const Char* path, _Input const Char
     return nullptr;
   }
 
-  kout << "Unimplemented.\r";
-
   return nullptr;
 }
 

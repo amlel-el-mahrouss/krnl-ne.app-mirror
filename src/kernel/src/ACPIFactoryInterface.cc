@@ -44,8 +44,10 @@ ErrorOr<voidPtr> ACPIFactoryInterface::Find(const Char* signature) {
 
   static constexpr const UInt16 cAcpiSignatureLength = 4U;
 
-  for (Size index = 0; index < this->fEntries; ++index) {
+  for (Size index{}; index < this->fEntries; ++index) {
     SDT* sdt = reinterpret_cast<SDT*>(xsdt->AddressArr[index]);
+
+    if (!sdt) continue;
 
     (Void)(kout << "ACPI: Checksum: " << number(sdt->Checksum) << kendl);
     (Void)(kout << "ACPI: Revision: " << number(sdt->Revision) << kendl);
@@ -56,6 +58,7 @@ ErrorOr<voidPtr> ACPIFactoryInterface::Find(const Char* signature) {
       if (signature_index == (cAcpiSignatureLength - 1)) {
         (Void)(kout << "ACPI: SDT Signature: " << sdt->Signature << kendl);
         (Void)(kout << "ACPI: SDT OEM ID: " << sdt->OemId << kendl);
+
         return ErrorOr<voidPtr>(reinterpret_cast<voidPtr>(xsdt->AddressArr[index]));
       }
     }

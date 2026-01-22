@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -12,10 +12,10 @@ namespace Kernel {
 class FBDeviceInterface;
 struct FBDevicePacket;
 
-using FBCoord2x2 = UInt32;
-using FBDim2x2 = UInt32;
+using FBCoord2x2     = UInt32;
+using FBDim2x2       = UInt32;
 using FBColorProfile = UInt32;
-using FBFlags = UInt32;
+using FBFlags        = UInt32;
 
 /// @brief Framebuffer device interface packet.
 /// @details This structure is used to send and receive data from the framebuffer device.

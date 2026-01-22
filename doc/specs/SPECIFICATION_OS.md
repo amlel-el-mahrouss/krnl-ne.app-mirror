@@ -85,4 +85,5 @@
 ==================================
 
 - Opcode Based Debug System.
+- Defines 'String', and 'Source' messages are foundational message types.
 - Packet Based Messages with a 'type' field. The 'type' field shall decide how the message shall be interpreted.

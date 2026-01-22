@@ -17,7 +17,7 @@ class GPUDeviceInterface;
 class GPUDeviceInterface NE_DEVICE<VoidPtr> {
  public:
   GPUDeviceInterface(void (*out)(IDevice* self, GPUDeviceInterface* out),
-                    void (*in)(IDevice* self, GPUDeviceInterface* in));
+                     void (*in)(IDevice* self, GPUDeviceInterface* in));
 
   virtual ~GPUDeviceInterface() override;
 

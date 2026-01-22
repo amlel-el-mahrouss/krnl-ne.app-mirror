@@ -6,20 +6,20 @@
 
 namespace Kernel {
 Int32 rt_string_cmp(const Char* src, const Char* cmp, Size size) {
-  for (Size i = 0; i < size; ++i) {
+  for (Size i{}; i < size; ++i) {
     if (src[i] != cmp[i]) return static_cast<Int32>(src[i]) - static_cast<Int32>(cmp[i]);
   }
   return 0;
 }
 
 SizeT rt_string_len(const Char* str, SizeT max_len) {
-  SizeT len = 0;
+  SizeT len{};
   while (len < max_len && str[len] != '\0') ++len;
   return len;
 }
 
 Size rt_string_len(const Char* ptr) {
-  Size cnt = 0;
+  Size cnt{};
   while (ptr[cnt] != '\0') ++cnt;
   return cnt;
 }
@@ -50,7 +50,7 @@ Int32 rt_copy_memory_safe(const voidPtr src, voidPtr dst, Size len, Size dst_siz
   auto s = reinterpret_cast<const UInt8*>(src);
   auto d = reinterpret_cast<UInt8*>(dst);
 
-  for (Size i = 0; i < len; ++i) d[i] = s[i];
+  for (Size i{}; i < len; ++i) d[i] = s[i];
 
   return static_cast<Int>(len);
 }
@@ -59,7 +59,7 @@ voidPtr rt_set_memory_safe(voidPtr dst, UInt32 value, Size len, Size dst_size) {
   if (!dst || len > dst_size) return nullptr;
   auto  p = reinterpret_cast<UInt8*>(dst);
   UInt8 v = static_cast<UInt8>(value & 0xFF);
-  for (Size i = 0; i < len; ++i) p[i] = v;
+  for (Size i{}; i < len; ++i) p[i] = v;
   return dst;
 }
 
@@ -75,7 +75,7 @@ rt_set_memory(voidPtr src, UInt32 value, Size len) {
   if (!src) return nullptr;
   auto  p = reinterpret_cast<UInt8*>(src);
   UInt8 v = static_cast<UInt8>(value & 0xFF);
-  for (Size i = 0; i < len; ++i) p[i] = v;
+  for (Size i{}; i < len; ++i) p[i] = v;
   return src;
 }
 
@@ -87,7 +87,7 @@ Int32 rt_copy_memory(const voidPtr src, voidPtr dst, Size len) {
   auto s = reinterpret_cast<const UInt8*>(src);
   auto d = reinterpret_cast<UInt8*>(dst);
 
-  for (Size i = 0; i < len; ++i) d[i] = s[i];
+  for (Size i{}; i < len; ++i) d[i] = s[i];
 
   return static_cast<Int>(len);
 }
@@ -120,14 +120,14 @@ Char rt_to_char(UInt64 value, Int32 base) {
 Bool rt_to_string(Char* str, UInt64 value, Int32 base) {
   if (!str || base < 2 || base > 16) return NO;
 
-  Int i = 0;
+  Int i{};
   do {
     str[i++] = rt_to_char(value, base);
     value /= base;
   } while (value);
   str[i] = '\0';
   // in-place
-  for (Int j = 0; j < i / 2; ++j) {
+  for (Int j{}; j < i / 2; ++j) {
     Char tmp       = str[j];
     str[j]         = str[i - j - 1];
     str[i - j - 1] = tmp;
@@ -143,7 +143,7 @@ VoidPtr rt_string_in_string(const Char* haystack, const Char* needle) {
   SizeT hay_len    = rt_string_len(haystack);
 
   if (needle_len > hay_len) return nullptr;
-  for (SizeT i = 0; i <= hay_len - needle_len; ++i) {
+  for (SizeT i{}; i <= hay_len - needle_len; ++i) {
     if (rt_string_cmp(haystack + i, needle, needle_len) == 0) {
       return reinterpret_cast<voidPtr>(const_cast<Char*>(haystack + i));
     }

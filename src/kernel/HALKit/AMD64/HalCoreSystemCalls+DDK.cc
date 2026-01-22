@@ -4,6 +4,4 @@
 
 #include <ArchKit/ArchKit.h>
 
-namespace Kernel {
-    
-}
+namespace Kernel {}

@@ -10,7 +10,8 @@
 #include <NeKit/ErrorOr.h>
 
 namespace Kernel {
-template <typename T, SizeT N>
+
+template <class T, SizeT N>
 class Array final {
  public:
   explicit Array() = default;
@@ -36,10 +37,11 @@ class Array final {
   T fArray[N];
 };
 
-template <typename ValueType>
+template <class ValueType>
 inline auto make_array(ValueType& val) -> auto {
   return Array<ValueType, ARRAY_SIZE(val)>{val};
 }
+
 }  // namespace Kernel
 
 #endif

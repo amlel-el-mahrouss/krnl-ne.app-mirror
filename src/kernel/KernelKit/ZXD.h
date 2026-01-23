@@ -11,10 +11,11 @@
 #define kZXDVersion (0x0001)
 
 namespace Kernel {
+  
 struct ZxdExec;
 struct ZxdStub;
 
-enum struct ZxdFlags {
+enum struct ZxdFlags : Int32 {
   kZXDFlagsInvalid = 0,
   kZXDFlagsDriver  = 120,
   kZXDFlagsBoot,
@@ -51,10 +52,14 @@ struct PACKED ZxdStub final {
 };
 
 inline constexpr auto kDriverName = ".drvr";
+
+/// @note This is ProcessSanitizer specific.
 inline constexpr auto kProsanName = ".pros";
 
 using ZxdExecPtr = ZxdExec*;
+
 using ZxdStubPtr = ZxdStub*;
+
 }  // namespace Kernel
 
 #endif

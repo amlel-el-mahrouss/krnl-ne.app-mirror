@@ -35,6 +35,7 @@
 /// Framebuffer helpers.
 /***********************************************************************************/
 
+/// @brief The **BootZ** namespace.
 namespace Boot {
 void ThrowError(const WideChar* errorCode, const WideChar* reason);
 

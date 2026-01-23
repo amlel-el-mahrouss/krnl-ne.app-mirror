@@ -21,6 +21,8 @@ class Atom final {
 
  public:
   using Type = TypeAtomic;
+  using Ref = TypeAtomic&;
+  using ConstRef = const TypeAtomic&;
 
   const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
 

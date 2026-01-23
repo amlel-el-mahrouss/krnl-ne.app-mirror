@@ -19,8 +19,9 @@
  public           \
   ::Kernel::ICodec
 
-/// @brief The **Kernel** namespace.
+/// @brief The **NeKernel** namespace.
 namespace Kernel {
+
 using voidPtr = void*;
 using VoidPtr = void*;
 using nullPtr = decltype(nullptr);
@@ -208,6 +209,7 @@ struct TrueResult final {
   static constexpr bool kValue = true;
 };
 
+
 template <class Type>
 struct PropertyResult final {
   using ResultType    = Type;
@@ -218,6 +220,7 @@ struct PropertyResult final {
 
   static constexpr bool kValue = Type::kValue;
 };
+
 }  // namespace Kernel
 
 #endif

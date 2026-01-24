@@ -14,8 +14,8 @@
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-using namespace Kernel;
-
+namespace Kernel {
+  
 /**
  * @brief Checks for cookie inside the TIB.
  * @param tib_ptr the TIB to check.
@@ -30,6 +30,8 @@ Boolean tls_check_tib(THREAD_INFORMATION_BLOCK* tib_ptr) {
          tib_ptr->Cookie[kCookieMag1Idx] == kCookieMag1 &&
          tib_ptr->Cookie[kCookieMag2Idx] == kCookieMag2;
 }
+
+}  // namespace Kernel
 
 /**
  * @brief System call implementation of the TLS check.

@@ -22,6 +22,7 @@
 #define kSemaphoreDecrementOwner(sem) (sem[kSemaphoreOwnerIndex]--)
 
 namespace Kernel {
+
 /// @brief Semaphore structure used for synchronization.
 using SemaphoreArr = UInt64[kSemaphoreCount];
 
@@ -106,6 +107,7 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 tim
 
   return false;  // Failed to acquire semaphore
 }
+
 }  // namespace Kernel
 
 #endif  // !KERNELKIT_TLS_H

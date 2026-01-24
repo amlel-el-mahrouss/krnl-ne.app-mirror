@@ -11,7 +11,7 @@
 #define kZXDVersion (0x0001)
 
 namespace Kernel {
-  
+
 struct ZxdExec;
 struct ZxdStub;
 

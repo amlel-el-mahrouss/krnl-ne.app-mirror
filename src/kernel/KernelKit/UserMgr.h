@@ -30,6 +30,7 @@
 #define kMaxUserTokenLen (256U)
 
 namespace Kernel {
+
 class User;
 
 enum struct UserRingKind : Int32 {
@@ -90,10 +91,11 @@ class User final {
 using UserPtr = User*;
 
 /// \brief Current running user.
-inline User* kCurrentUser = nullptr;
+inline UserPtr kCurrentUser = nullptr;
 
 /// \brief Super user.
-inline User* kRootUser = nullptr;
+inline UserPtr kRootUser = nullptr;
+
 }  // namespace Kernel
 
 #endif /* ifndef KERNELKIT_USERMGR_H */

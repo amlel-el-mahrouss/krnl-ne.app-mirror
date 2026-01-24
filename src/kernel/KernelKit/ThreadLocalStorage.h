@@ -20,6 +20,8 @@
 
 #define kCookieMagLen (3U)
 
+namespace Kernel {
+
 struct THREAD_INFORMATION_BLOCK;
 
 /// @brief Thread Information Block.
@@ -59,8 +61,10 @@ EXTERN_C Kernel::Void rt_install_tib(THREAD_INFORMATION_BLOCK* TIB, THREAD_INFOR
 /// @brief TLS check (syscall)
 EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB);
 
+}  // namespace Kernel
+
 #include "ThreadLocalStorage.inl"
 
-// last rev 7/7/24
+// last rev 1/24/26
 
 #endif /* ifndef KERNELKIT_TLS_H */

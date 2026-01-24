@@ -23,8 +23,6 @@
 
 #define kPeApplicationMime "application/vnd-portable-executable"
 
-#define kPeImageStart "__ImageStart"
-
 namespace Kernel {
 ///
 /// \name PE32Loader

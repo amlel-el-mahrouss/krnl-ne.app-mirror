@@ -20,8 +20,8 @@ class Atom final {
   Atom(const Atom&)            = delete;
 
  public:
-  using Type = TypeAtomic;
-  using Ref = TypeAtomic&;
+  using Type     = TypeAtomic;
+  using Ref      = TypeAtomic&;
   using ConstRef = const TypeAtomic&;
 
   const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }

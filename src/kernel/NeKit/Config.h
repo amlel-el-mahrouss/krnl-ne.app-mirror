@@ -209,7 +209,6 @@ struct TrueResult final {
   static constexpr bool kValue = true;
 };
 
-
 template <class Type>
 struct PropertyResult final {
   using ResultType    = Type;

@@ -15,6 +15,8 @@
 #define kXCOFFLnno (0x0004)
 #define kXCOFFLSyms (0x0008)
 
+namespace Kernel {
+
 struct XCOFF_FILE_HEADER;
 struct XCOFF_FORK_HEADER;
 
@@ -38,5 +40,7 @@ typedef struct XCOFF_FORK_HEADER {
   Kernel::Char fDynamicLoaderFork[kXCOFF64ForkNameLen];
   Kernel::Char fCodeSignFork[kXCOFF64ForkNameLen];
 } XCOFF_FORK_HEADER;
+
+}  // namespace Kernel
 
 #endif  // ifndef KERNELKIT_XCOFF_H

@@ -9,6 +9,7 @@
 #include <KernelKit/KPC.h>
 
 namespace Kernel {
+
 class SoftwareTimer;
 class ITimer;
 
@@ -68,6 +69,7 @@ inline constexpr UInt64 rtl_milliseconds(UInt64 time) {
   if (time < 1) return 0;
   return time;
 }
+
 }  // namespace Kernel
 
 #endif  // !KERNELKIT_TIMER_H

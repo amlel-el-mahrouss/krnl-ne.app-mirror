@@ -9,6 +9,8 @@
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
+namespace Kernel {
+
 template <class T>
 inline T* tls_new_ptr(void) {
   using namespace Kernel;
@@ -83,3 +85,5 @@ inline Kernel::Bool tls_delete_class(T* obj) {
   obj->~T();
   return tls_delete_ptr(obj);
 }
+
+}  // namespace Kernel

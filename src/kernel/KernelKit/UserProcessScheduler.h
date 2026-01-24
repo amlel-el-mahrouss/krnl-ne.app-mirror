@@ -20,6 +20,7 @@
 ////////////////////////////////////////////////////
 
 namespace Kernel {
+
 //! @brief Forward declarations.
 
 class IDylibObject;
@@ -268,6 +269,7 @@ class UserProcessHelper final {
   STATIC ErrorOr<ProcessID> TheCurrentPID();
   STATIC SizeT              StartScheduling();
 };
+
 }  // namespace Kernel
 
 #include <KernelKit/ThreadLocalStorage.h>

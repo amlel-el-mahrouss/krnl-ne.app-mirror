@@ -21,6 +21,7 @@
 #define kPefApplicationMime "application/vnd-nekernel-executable"
 
 namespace Kernel {
+
 ///
 /// \name PEFLoader
 /// \brief PEF loader class.

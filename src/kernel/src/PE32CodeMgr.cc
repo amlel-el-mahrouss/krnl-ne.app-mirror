@@ -15,6 +15,7 @@
 #define kPeStackSizeSymbol "__NESizeOfReserveStack"
 #define kPeHeapSizeSymbol "__NESizeOfReserveHeap"
 #define kPeNameSymbol "__NEProgramName"
+#define kPeImageStart "__ImageStart"
 
 namespace Kernel {
 namespace Detail {

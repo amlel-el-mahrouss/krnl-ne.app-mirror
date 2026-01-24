@@ -17,7 +17,7 @@ DDK_EXTERN void kputc(const char ch) {
   assembled[0]      = ch;
   assembled[1]      = 0;
 
-  ke_call_dispatch("ke_put_string", 1, assembled, 1);
+  ke_call_dispatch("ke_put_string", 2, assembled, 2);
 }
 
 /// @brief print string to UART.

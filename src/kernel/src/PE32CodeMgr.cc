@@ -18,6 +18,7 @@
 #define kPeImageStart "__ImageStart"
 
 namespace Kernel {
+    
 namespace Detail {
   /***********************************************************************************/
   /// @brief Get the PE32+ platform signature according to the compiled architecture.
@@ -241,11 +242,10 @@ namespace Utils {
 
     if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
 
-    ErrorOrAny symname = exec.FindSymbol(kPeImageStart, 0);
+    ErrorOrAny symname = exec.FindSymbol(kPeNameSymbol, 0);
 
-    if (!symname.Leak().Leak()) {
-      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PE32+")};
-    }
+    if (!symname.Leak().Leak())
+      symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string(kPeImageStart)};
 
     if (!symname.Leak().Leak()) return kSchedInvalidPID;
 
@@ -283,4 +283,5 @@ namespace Utils {
     return id;
   }
 }  // namespace Utils
+
 }  // namespace Kernel

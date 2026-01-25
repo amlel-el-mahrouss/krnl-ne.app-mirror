@@ -13,9 +13,8 @@
 #include <NeKit/Vettable.h>
 
 namespace Kernel {
-/// =========================================================== ///
-/// @brief Reference wrapper class.                          ///
-/// =========================================================== ///
+
+/// @brief Reference wrapper class.
 template <typename T>
 class Ref final {
  public:
@@ -67,6 +66,7 @@ class Ref final {
   Type fClass;
 };
 
+/// @brief Non Nullable Reference class.
 template <typename T>
 class NonNullRef final {
  public:
@@ -93,6 +93,7 @@ class NonNullRef final {
 
 using RefAny        = Ref<Any>;
 using NonNullRefAny = NonNullRef<Any>;
+
 }  // namespace Kernel
 
 #endif  // ifndef _NEKIT_REF_H_

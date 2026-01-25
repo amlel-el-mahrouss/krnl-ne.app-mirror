@@ -39,7 +39,9 @@
       KT_MUST_PASS(ret, ret, true);                    \
     }                                                  \
   }                                                    \
-  inline const Char* KTTestCase##NAME::ToString() { return #FN; }
+  inline const Char* KTTestCase##NAME::ToString() {    \
+    return #FN;                                        \
+  }
 
 KT_DECL_TEST(AlwaysBreak, []() -> bool {
   KT_MUST_PASS("AlwaysBreak", YES, NO);

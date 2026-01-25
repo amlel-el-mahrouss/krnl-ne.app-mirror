@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -8,6 +8,8 @@
 #include <libSystem/SystemKit/System.h>
 
 namespace CF {
+
+/// @brief The following class makes a dictionary of values, based on their keys.
 template <class Key, class Value>
 class CFDictionary final {
  public:
@@ -21,10 +23,8 @@ class CFDictionary final {
 
   Bool Empty() { return this->fCount > 0; }
 
-  Bool Find(Key& key) {
-    NE_UNUSED(key);
-    return false;
-  }
+  Bool Find(Key& key);
+  Bool Find(const Key& key);
 
   operator bool() { return !this->Empty(); }
 
@@ -36,6 +36,10 @@ template <typename KeyType, typename ValueType>
 inline auto make_dict() {
   return CFDictionary<KeyType, ValueType>{};
 }
+
+template <typename K, V>
+using CFDict = CFDictionary<K, V>;
+
 }  // namespace CF
 
 #endif

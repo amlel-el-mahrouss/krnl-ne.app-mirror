@@ -10,11 +10,18 @@
 struct DDK_STATUS_STRUCT;
 struct DDK_OBJECT_MANIFEST;
 
+typedef void* ptr_t;
+
+typedef ptr_t addr_t;
+
+typedef ptr_t vaddr_t;
+typedef ptr_t paddr_t;
+
 /// \brief Object handle manifest.
 struct DDK_OBJECT_MANIFEST DDK_FINAL {
   char*   p_name;
   int32_t p_kind;
-  void*   p_object;
+  ptr_t   p_object;
 };
 
 /// \brief DDK status ping structure.
@@ -24,13 +31,6 @@ struct DDK_STATUS_STRUCT DDK_FINAL {
   int32_t                     s_group_id;
   struct DDK_OBJECT_MANIFEST* s_object;
 };
-
-typedef void* ptr_t;
-
-typedef ptr_t addr_t;
-
-typedef ptr_t vaddr_t;
-typedef ptr_t paddr_t;
 
 /// @brief Call Kernel procedure.
 /// @param name the procedure name.

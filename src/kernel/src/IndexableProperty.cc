@@ -16,13 +16,21 @@
 
 namespace Kernel {
 namespace Indexer {
-  Index& IndexableProperty::Leak() { return fIndex; }
+  Index& IndexableProperty::Leak() {
+    return fIndex;
+  }
 
-  Void IndexableProperty::AddFlag(UInt16 flag) { fFlags |= flag; }
+  Void IndexableProperty::AddFlag(UInt16 flag) {
+    fFlags |= flag;
+  }
 
-  Void IndexableProperty::RemoveFlag(UInt16 flag) { fFlags &= ~(flag); }
+  Void IndexableProperty::RemoveFlag(UInt16 flag) {
+    fFlags &= ~(flag);
+  }
 
-  UInt16 IndexableProperty::HasFlag(UInt16 flag) { return fFlags & flag; }
+  UInt16 IndexableProperty::HasFlag(UInt16 flag) {
+    return fFlags & flag;
+  }
 
   /// @brief Index a file into the indexer instance.
   /// @param filename filesystem path to access.

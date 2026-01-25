@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -15,6 +15,7 @@
 /// @brief Multi-user support.
 
 namespace Kernel {
+
 namespace Detail {
   ////////////////////////////////////////////////////////////
   /// \brief Constructs a password by hashing the password.
@@ -22,10 +23,10 @@ namespace Detail {
   /// \return the hashed password
   ////////////////////////////////////////////////////////////
   STATIC UInt64 user_fnv_generator(const Char* password, User* user) {
+    kout << "user_fnv_generator: Try hashing user password...\r";
+
     if (!password || !user) return 0;
     if (*password == 0) return 0;
-
-    kout << "user_fnv_generator: Hashing user password...\r";
 
     const UInt64 kFnvOffsetBasis = 0xcbf29ce484222325ULL;
     const UInt64 kFnvPrime       = 0x100000001b3ULL;
@@ -117,4 +118,5 @@ Bool User::IsStdUser() {
 Bool User::IsSuperUser() {
   return this->Ring() == UserRingKind::kRingSuperUser;
 }
+
 }  // namespace Kernel

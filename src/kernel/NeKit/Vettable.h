@@ -11,11 +11,14 @@
 #define NE_VETTABLE static constexpr BOOL kVettable = YES
 #define NE_NON_VETTABLE static constexpr BOOL kVettable = NO
 
+#define NE_UN_VETTABLE static constexpr BOOL kUnvettable = YES
+
 namespace Kernel {
 template <class Type>
-concept IsVettable = requires(Type) {
-  (Type::kVettable);
-};
+concept IsVettable = requires(Type) { (Type::kVettable); };
+
+template <class Type>
+concept IsUnVettable = requires(Type) { (Type::kUnvettable); };
 }  // namespace Kernel
 
 #endif  // !__NE_KIT_VETTABLE_H__

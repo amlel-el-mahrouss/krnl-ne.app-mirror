@@ -11,8 +11,7 @@
 using namespace Boot;
 
 EXTERN_C void rt_halt() {
-  while (Yes)
-    ;
+  while (Yes);
 }
 
 EXTERN_C void rt_cli() {}

@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -6,7 +6,7 @@
 #define MSGKIT_SERVER_H
 
 #ifdef __cplusplus
-#include <public/frameworks/CoreFoundation.fwrk/headers/String.h>
+#include <CoreFoundation.fwrk/headers/String.h>
 #else
 #include <libSystem/SystemKit/System.h>
 #endif

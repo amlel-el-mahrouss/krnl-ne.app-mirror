@@ -15,7 +15,7 @@
 /***********************************************************************************/
 
 namespace Kernel {
-  
+
 /**
  * @brief Checks for cookie inside the TIB.
  * @param tib_ptr the TIB to check.

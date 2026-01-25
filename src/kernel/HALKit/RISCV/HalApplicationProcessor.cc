@@ -11,8 +11,7 @@ using namespace Kernel;
 namespace Kernel {
 namespace Detail {
   STATIC void mp_hang_fn(void) {
-    while (YES)
-      ;
+    while (YES);
   }
 
 }  // namespace Detail

@@ -266,7 +266,7 @@ inline UInt32 hefs_hour_get(ATime raw_atime) {
 /// @return the minute value.
 /// @note The minute is stored in the lower 8 bits of the ATime value.
 inline UInt32 hefs_minute_get(ATime raw_atime) {
-  return (raw_atime) &0xFF;
+  return (raw_atime) & 0xFF;
 }
 
 inline constexpr UInt32 kOpenHeFSBaseYear   = 1970;
@@ -386,10 +386,10 @@ class HeFileSystemParser final {
   ~HeFileSystemParser() = default;
 
  public:
-  HeFileSystemParser(const HeFileSystemParser&) = delete;
+  HeFileSystemParser(const HeFileSystemParser&)            = delete;
   HeFileSystemParser& operator=(const HeFileSystemParser&) = delete;
 
-  HeFileSystemParser(HeFileSystemParser&&) = delete;
+  HeFileSystemParser(HeFileSystemParser&&)            = delete;
   HeFileSystemParser& operator=(HeFileSystemParser&&) = delete;
 
  public:

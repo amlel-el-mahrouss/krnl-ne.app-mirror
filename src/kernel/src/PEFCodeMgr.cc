@@ -21,8 +21,10 @@
 #define kPefStackSizeSymbol "__PEFSizeOfReserveStack"
 #define kPefHeapSizeSymbol "__PEFSizeOfReserveHeap"
 #define kPefNameSymbol "__PEFProgramName"
+#define kPefImageStart "__ImageStart"
 
 namespace Kernel {
+
 namespace Detail {
   /***********************************************************************************/
   /// @brief Get the PEF platform signature according to the compiled architecture.
@@ -298,11 +300,10 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
 
   if (errOrStart.Error() != kErrorSuccess) return kSchedInvalidPID;
 
-  auto symname = exec.FindSymbol(kPefNameSymbol, kPefData);
+  auto symname = exec.FindSymbol(kPefNameSymbol, kPefCode);
 
-  if (!symname.Leak().Leak()) {
-    symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string("USER_PROCESS_PEF")};
-  }
+  if (!symname.Leak().Leak())
+    symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string(kPefImageStart)};
 
   if (!symname.Leak().Leak()) return kSchedInvalidPID;
 
@@ -338,4 +339,5 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
 
   return id;
 }
+
 }  // namespace Kernel

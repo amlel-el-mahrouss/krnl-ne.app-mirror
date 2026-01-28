@@ -15,7 +15,7 @@ IMPORT_C SInt32 nelaunch_startup_fn(Void) {
   if (ret) {
     switch (*ret) {
       case kErrorSuccess: {
-        libsys_syscall_arg_1(libsys_hash_64("__launch_listen_as_super"));
+        ret = static_cast<UInt32*>(libsys_syscall_arg_1(libsys_hash_64("__launch_listen_as_super")));
         return *ret;
       }
       default:

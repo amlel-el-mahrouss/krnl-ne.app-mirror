@@ -1,9 +1,9 @@
 {
   "compiler_path": "x86_64-w64-mingw32-g++",
   "compiler_std": "c++20",
-  "headers_path": ["../", "./"],
-  "sources_path": ["src/*.cc", "src/*.stub.obj"],
-  "output_name": "libSystem.dll",
+  "headers_path": ["../", "../../public/frameworks", "./"],
+  "sources_path": ["src/*.cc"],
+  "output_name": "libMsg.dll",
   "compiler_flags": [
     "-ffreestanding",
     "-shared",
@@ -17,5 +17,5 @@
     "kLibSystemVersionHighest=0x0100",
     "kLibSystemVersionLowest=0x0100"
   ],
-  "description": "System Kit for NeKernel."
+  "description": "OpenMessage Kit for NeKernel."
 }

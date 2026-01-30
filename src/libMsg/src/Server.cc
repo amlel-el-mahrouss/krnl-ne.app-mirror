@@ -2,9 +2,4 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef KERNELKIT_USERMGR_H
-#define KERNELKIT_USERMGR_H
-
-#include <KernelKit/UserMgr+User.h>
-
-#endif
+#include <libMsg/MsgKit/Server.h>

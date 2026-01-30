@@ -9,7 +9,7 @@
 #include <FirmwareKit/GPT.h>
 #include <KernelKit/KPC.h>
 #include <KernelKit/ProcessScheduler.h>
-#include <KernelKit/UserMgr.h>
+#include <KernelKit/UserMgr+User.h>
 #include <NeKit/Crc32.h>
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>

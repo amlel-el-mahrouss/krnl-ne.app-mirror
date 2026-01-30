@@ -18,7 +18,7 @@
 #define kPeImageStart "__ImageStart"
 
 namespace Kernel {
-    
+
 namespace Detail {
   /***********************************************************************************/
   /// @brief Get the PE32+ platform signature according to the compiled architecture.

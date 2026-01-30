@@ -6,7 +6,7 @@
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/KPC.h>
 #include <KernelKit/ThreadLocalStorage.h>
-#include <KernelKit/UserMgr.h>
+#include <KernelKit/UserMgr+User.h>
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>

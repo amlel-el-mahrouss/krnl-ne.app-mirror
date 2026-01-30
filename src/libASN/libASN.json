@@ -2,8 +2,8 @@
   "compiler_path": "x86_64-w64-mingw32-gcc",
   "compiler_std": "c++20",
   "headers_path": ["../", "./"],
-  "sources_path": ["src/*.c", "src/*.cc", "src/*.S"],
-  "output_name": "libDDK.dll",
+  "sources_path": ["src/*.c", "src/*.S"],
+  "output_name": "libASN.dll",
   "compiler_flags": [
     "-ffreestanding",
     "-shared",
@@ -14,11 +14,11 @@
   ],
   "cpp_macros": [
     "__NEOSKRNL__",
-    "__DDK_AMD64__",
-    "__DDK__",
-    "kDDKVersionHighest=0x0100",
-    "kDDKVersionLowest=0x0100",
-    "kDDKVersion=0x0100"
+    "__ASN_AMD64__",
+    "__ASN__",
+    "kASNVersionHighest=0x0100",
+    "kASNVersionLowest=0x0100",
+    "kASNVersion=0x0100"
   ],
-  "description": "Driver Development Kit for NeKernel."
+  "description": "Audio Subsystem for NeKernel—handle multimedia requests."
 }

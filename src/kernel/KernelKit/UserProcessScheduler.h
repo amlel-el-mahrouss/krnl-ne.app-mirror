@@ -12,7 +12,7 @@
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/CoreProcessScheduler.h>
 #include <KernelKit/LockDelegate.h>
-#include <KernelKit/UserMgr.h>
+#include <KernelKit/UserMgr+User.h>
 #include <NeKit/MutableArray.h>
 
 ////////////////////////////////////////////////////

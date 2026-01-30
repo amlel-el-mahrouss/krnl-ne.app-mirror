@@ -11,6 +11,11 @@ namespace Kernel {
 
 class GPUDeviceInterface;
 
+using GPUCoord2x2     = UInt32;
+using GPUDim2x2       = UInt32;
+using GPUColorProfile = UInt32;
+using GPUFlags        = UInt32;
+
 /// @brief Framebuffer device interface.
 /// @details This class is used to send and receive data from the framebuffer device.
 /// @note The class is derived from the IDevice class.

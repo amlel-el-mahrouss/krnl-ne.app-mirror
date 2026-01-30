@@ -5,12 +5,11 @@
 #ifndef DRIVERKIT_DRIVER_BASE_H
 #define DRIVERKIT_DRIVER_BASE_H
 
-#include <CompilerKit/CompilerKit.h>
 #include <libDDK/DriverKit/macros.h>
 
 #define DDK_DRIVER_IMPL \
   final:                \
-  public                \
+ public                 \
   ::Kernel::DDK::IDriverBase
 
 /// @author Amlal El Mahrouss
@@ -25,7 +24,8 @@ class IDriverBase {
   IDriverBase()          = default;
   virtual ~IDriverBase() = default;
 
-  NE_COPY_DELETE(IDriverBase);
+  IDriverBase& operator=(const IDriverBase&) = delete;
+  IDriverBase(const IDriverBase&)            = delete;
 
   using PtrType = void*;
 
@@ -39,7 +39,7 @@ class IDriverBase {
 /// @author @amlel-el-mahrouss
 template <typename Driver>
 concept IsValidDriver = requires(Driver drv) {
-  { drv.IsActive() && drv.Type() > kInvalidType };
+  {drv.IsActive() && drv.Type() > kInvalidType};
 };
 }  // namespace Kernel::DDK
 

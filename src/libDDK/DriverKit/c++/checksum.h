@@ -33,7 +33,6 @@ inline UInt64 rtl_checksum(const IndexableBlob path) {
 
 using Blob = VoidPtr;
 
-}
-
+}  // namespace Kernel::DDK
 
 #endif

@@ -29,6 +29,7 @@ struct THREAD_INFORMATION_BLOCK;
 struct PACKED THREAD_INFORMATION_BLOCK final {
   Kernel::Char    Cookie[kCookieMagLen]{0};  //! Thread Magic Number.
   Kernel::VoidPtr UserData{nullptr};  //! Thread Information Record (User defined canary structure)
+  Char            Pad{};
 };
 
 ///! @brief Cookie Sanity check.

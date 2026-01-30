@@ -4,7 +4,7 @@
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/ProcessScheduler.h>
-#include <KernelKit/UserMgr.h>
+#include <KernelKit/UserMgr+User.h>
 #include <NeKit/Atom.h>
 #include <NeKit/KString.h>
 #include <SignalKit/Signals.h>
@@ -65,7 +65,8 @@ EXTERN_C void idt_handle_scheduler(Kernel::UIntPtr rsp) {
 
   hal_idt_send_eoi(32);
 
-  while (kIsRunning);
+  while (kIsRunning)
+    ;
 
   kIsRunning = YES;
 

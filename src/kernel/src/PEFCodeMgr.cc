@@ -302,8 +302,7 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
 
   auto symname = exec.FindSymbol(kPefNameSymbol, kPefCode);
 
-  if (!symname.Leak().Leak())
-    symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string(kPefImageStart)};
+  if (!symname.Leak().Leak()) symname = ErrorOr<VoidPtr>{(VoidPtr) rt_alloc_string(kPefImageStart)};
 
   if (!symname.Leak().Leak()) return kSchedInvalidPID;
 

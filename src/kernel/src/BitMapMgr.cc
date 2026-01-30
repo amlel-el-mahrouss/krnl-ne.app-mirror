@@ -155,9 +155,7 @@ namespace HAL {
 
   STATIC Detail::IBitMapProxy kBitMapMgr;
 
-  auto mm_is_bitmap(VoidPtr ptr) -> BOOL {
-    return kBitMapMgr.IsBitMap(ptr);
-  }
+  auto mm_is_bitmap(VoidPtr ptr) -> BOOL { return kBitMapMgr.IsBitMap(ptr); }
 
   /***********************************************************************************/
   /// @brief Allocate a new page to be used by the OS.

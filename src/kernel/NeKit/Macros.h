@@ -15,7 +15,7 @@
 #endif
 
 #ifndef kib_cast
-#define kib_cast(X) (Kernel::UInt64)((X) * 1024)
+#define kib_cast(X) (Kernel::UInt64)((X) *1024)
 #endif
 
 #ifndef MIB
@@ -116,7 +116,7 @@
 #define NE_UNUSED(X) ((Kernel::Void) X)
 
 #ifndef RGB
-#define RGB(R, G, B) ((Kernel::UInt32) ((0xFF << 24) | ((R) << 16) | ((G) << 8) | (B)))
+#define RGB(R, G, B) ((Kernel::UInt32)((0xFF << 24) | ((R) << 16) | ((G) << 8) | (B)))
 #endif  // !RGB
 
 #ifdef __NE_AMD64__

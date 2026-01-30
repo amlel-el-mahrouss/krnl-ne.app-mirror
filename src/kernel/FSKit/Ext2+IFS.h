@@ -31,7 +31,7 @@ class Ext2Context final {
     }
   }
 
-  Ext2Context(const Ext2Context&)            = delete;
+  Ext2Context(const Ext2Context&) = delete;
   Ext2Context& operator=(const Ext2Context&) = delete;
 
   Ext2Context(Ext2Context&& other) : drive(other.drive), superblock(other.superblock) {

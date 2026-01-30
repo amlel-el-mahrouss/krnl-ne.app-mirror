@@ -18,8 +18,8 @@
 
 #define kSemaphoreCount (2U)
 
-#define kSemaphoreIncrementOwner(sem) (sem[kSemaphoreOwnerIndex]++)
-#define kSemaphoreDecrementOwner(sem) (sem[kSemaphoreOwnerIndex]--)
+#define kSemaphoreIncrementOwner(sem) (++sem[kSemaphoreOwnerIndex])
+#define kSemaphoreDecrementOwner(sem) (--sem[kSemaphoreOwnerIndex])
 
 namespace Kernel {
 

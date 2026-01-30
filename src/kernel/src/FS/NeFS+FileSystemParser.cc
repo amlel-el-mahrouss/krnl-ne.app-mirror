@@ -11,7 +11,7 @@
 #include <KernelKit/IFS.h>
 #include <KernelKit/KPC.h>
 #include <KernelKit/ProcessScheduler.h>
-#include <KernelKit/UserMgr.h>
+#include <KernelKit/UserMgr+User.h>
 #include <NeKit/Crc32.h>
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>
@@ -152,8 +152,8 @@ _Output BOOL NeFileSystemParser::CreateFork(_Input NEFS_FORK_STRUCT& the_fork) {
 /// @return the newly found fork.
 /***********************************************************************************/
 _Output NEFS_FORK_STRUCT* NeFileSystemParser::FindFork(_Input NEFS_CATALOG_STRUCT* catalog,
-                                                       _Input const Char*          name,
-                                                       _Input Boolean              is_data) {
+                                                       _Input const Char* name,
+                                                       _Input Boolean     is_data) {
   if (!catalog || !name) return nullptr;
 
   auto&            drive = kMountpoint.A();
@@ -215,7 +215,7 @@ _Output NEFS_CATALOG_STRUCT* NeFileSystemParser::CreateCatalog(_Input const Char
 /// @param kind the catalog kind.
 /// @return catalog pointer.
 /***********************************************************************************/
-_Output NEFS_CATALOG_STRUCT* NeFileSystemParser::CreateCatalog(_Input const Char*  name,
+_Output NEFS_CATALOG_STRUCT* NeFileSystemParser::CreateCatalog(_Input const Char* name,
                                                                _Input const Int32& flags,
                                                                _Input const Int32& kind) {
   kout << "CreateCatalog(*...*)\r";

@@ -11,6 +11,7 @@
 namespace Kernel {
 
 class SoftwareTimer;
+class HardwareTimer;
 class ITimer;
 
 inline constexpr Int16 kTimeUnit = 1000;

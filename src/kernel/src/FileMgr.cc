@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -17,6 +17,7 @@ STATIC IFilesystemMgr* kMountedFilesystem = nullptr;
 /// @brief FilesystemMgr getter.
 /// @return The mounted filesystem.
 _Output IFilesystemMgr* IFilesystemMgr::GetMounted() {
+  MUST_PASS(kMountedFilesystem && kMountedFilesystem->GetMounted());
   return kMountedFilesystem;
 }
 
@@ -24,9 +25,11 @@ _Output IFilesystemMgr* IFilesystemMgr::GetMounted() {
 /// @return The unmounted filesystem.
 _Output IFilesystemMgr* IFilesystemMgr::Unmount() {
   if (kMountedFilesystem) {
-    auto mount         = kMountedFilesystem;
-    kMountedFilesystem = nullptr;
+    auto mount = kMountedFilesystem;
 
+    MUST_PASS(mount->GetMounted());
+
+    kMountedFilesystem = nullptr;
     return mount;
   }
 

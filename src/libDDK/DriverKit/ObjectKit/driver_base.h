@@ -9,13 +9,14 @@
 
 #define DDK_DRIVER_IMPL \
   final:                \
- public                 \
+  public                \
   ::Kernel::DDK::IDriverBase
 
 /// @author Amlal El Mahrouss
 /// @brief The DDK C++ API.
 
 namespace Kernel::DDK {
+
 inline constexpr auto kInvalidType = 0;
 
 /// @brief Driver interface type.
@@ -39,8 +40,9 @@ class IDriverBase {
 /// @author @amlel-el-mahrouss
 template <typename Driver>
 concept IsValidDriver = requires(Driver drv) {
-  {drv.IsActive() && drv.Type() > kInvalidType};
+  { drv.IsActive() && drv.Type() > kInvalidType };
 };
+
 }  // namespace Kernel::DDK
 
 #endif

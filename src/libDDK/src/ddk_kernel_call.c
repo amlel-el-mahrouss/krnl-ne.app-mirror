@@ -13,7 +13,7 @@
 
 /// @brief this is an internal call, do not use it.
 DDK_EXTERN ATTRIBUTE(naked) /*  */
-    ptr_t __ke_call_dispatch(const int32_t name, int32_t cnt, void* data, size_t sz);
+ptr_t      __ke_call_dispatch(const int32_t name, int32_t cnt, void* data, size_t sz);
 
 /// @brief This function hashes the path into a FNV symbol.
 /// @param path the path to hash.

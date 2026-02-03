@@ -63,7 +63,7 @@ typedef struct SwapDiskHdr {
   UInt64  fVirtualAddress;
   SizeT   fBlobSz;
   UInt8   fBlob[1];
-} PACKED ALIGN(8) SwapDiskHdr;
+} PACKED ALIGN(8) SwapDiskHdr, *SwapDiskHdrPtr;
 
 }  // namespace Kernel
 

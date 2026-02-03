@@ -6,13 +6,14 @@
 #include <SwapKit/DiskSwap.h>
 
 namespace Kernel {
-static constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
+
+STATIC constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
 
 /***********************************************************************************/
 /// @brief Write memory chunk onto disk.
 /// @param data the data packet.
 /***********************************************************************************/
-Int64 IDiskSwap::Write(SwapDiskHdr* data) {
+Int64 IDiskSwap::Write(SwapDiskHdrPtr data) {
   if (!data || data->fMagic != kSwapDiskHeaderMagic) return 0UL;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
@@ -27,7 +28,7 @@ Int64 IDiskSwap::Write(SwapDiskHdr* data) {
 /// @param data the data packet length.
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
-SwapDiskHdr* IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
+SwapDiskHdrPtr IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
   if (data_len == 0UL) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
@@ -42,4 +43,5 @@ SwapDiskHdr* IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
 
   return reinterpret_cast<SwapDiskHdr*>(blob.Leak().Leak());
 }
+
 }  // namespace Kernel

@@ -5,33 +5,34 @@
 #ifndef DRIVERKIT_CHECKSUM_H
 #define DRIVERKIT_CHECKSUM_H
 
-#include <DriverKit/c++/driver_base.h>
+#include <DriverKit/ObjectKit/driver_base.h>
 
 namespace Kernel::DDK {
 
-using IndexableBlob = Char*;
+using IndexableBlob = char*;
+using Indexable = char;
 
 /// @note This uses the FNV 64-bit variant.
 /// @brief Performs a checksum computation for a memory region.
-inline UInt64 rtl_checksum(const IndexableBlob path) {
+inline uintptr_t rtl_checksum(const IndexableBlob path) {
   if (!path || *path == 0) return 0;
 
-  const UInt64 kFNVSeed  = 0xcbf29ce484222325ULL;
-  const UInt64 kFNVPrime = 0x100000001b3ULL;
+  const uintptr_t kFNVSeed  = 0xcbf29ce484222325ULL;
+  const uintptr_t kFNVPrime = 0x100000001b3ULL;
 
-  UInt64 hash = kFNVSeed;
+  uintptr_t hash = kFNVSeed;
 
   IndexableBlob path_ = path;
 
   while (*path_) {
-    hash ^= (Char) (*path_++);
+    hash ^= (Indexable) (*path_++);
     hash *= kFNVPrime;
   }
 
   return hash;
 }
 
-using Blob = VoidPtr;
+using Blob = void*;
 
 }  // namespace Kernel::DDK
 

@@ -157,7 +157,6 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   HAL::IDTLoader idt_loader;
   idt_loader.Load(idt_reg);
 
-  while (YES)
-    ;
+  while (YES);
 }
 #endif  // ifndef __NE_MODULAR_KERNEL_COMPONENTS__

@@ -15,6 +15,7 @@
 ///! BUG COUNT: 0
 
 namespace Kernel {
+
 UserProcess::UserProcess()  = default;
 UserProcess::~UserProcess() = default;
 
@@ -111,7 +112,7 @@ ErrorOr<VoidPtr> UserProcess::New(SizeT sz, SizeT pad_amount) {
 
   hal_write_cr3(vm_register);
 #else
-  auto ptr           = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
+  auto ptr = mm_alloc_ptr(sz, Yes, Yes, pad_amount);
 #endif
 
   if (!this->HeapTree) {
@@ -599,17 +600,17 @@ Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) 
         HardwareThreadScheduler::The()[index].Leak()->Kind() == ThreadKind::kAPBoot)
       continue;
 
-    (Void)(kout << "AP_" << hex_number(index) << kendl);
+    (Void)(kout << "AP_" << hex_number(index));
 
     if (HardwareThreadScheduler::The()[index].Leak()->IsBusy()) {
-      (Void)(kout << "AP_" << hex_number(index));
-      kout << " is busy\r";
+      kout << ": is busy\r";
 
       continue;
     }
 
-    (Void)(kout << "AP_" << hex_number(index));
-    kout << " is now trying to run a new task!\r";
+    (Void)(kout << kendl);
+
+    kout << ": is now trying to run a new task!\r";
 
     ////////////////////////////////////////////////////////////
     ///	Prepare task switch.								 ///
@@ -666,4 +667,5 @@ Bool UserProcessScheduler::operator!() {
 
   return cnt == 0L;
 }
+
 }  // namespace Kernel

@@ -144,7 +144,7 @@ HAL::StackFramePtr HardwareThreadScheduler::Leak() {
 /***********************************************************************************/
 Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
   if (idx > kMaxAPInsideSched) {
-    static HardwareThread* kFakeThread = nullptr;
+    STATIC HardwareThread* kFakeThread = nullptr;
     return {kFakeThread};
   }
 

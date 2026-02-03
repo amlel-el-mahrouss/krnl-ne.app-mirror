@@ -6,9 +6,9 @@
 #include <NeKit/Utils.h>
 
 /***********************************************************************************/
-/// @file FileMgr.cc
+//! @file FileMgr.cc
 //! @brief File System Manager API.
-///! @author Amlal El Mahrouss (amlal@nekernel.org)
+//! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
 namespace Kernel {

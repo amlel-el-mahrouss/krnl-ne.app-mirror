@@ -34,7 +34,7 @@ class OwnPtr final {
     }
 
     fCls = new T(arg...);
-    return fCls;
+    return fCls != nullptr;
   }
 
   void Reset() {

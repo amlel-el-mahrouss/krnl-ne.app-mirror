@@ -17,7 +17,6 @@ STATIC IFilesystemMgr* kMountedFilesystem = nullptr;
 /// @brief FilesystemMgr getter.
 /// @return The mounted filesystem.
 _Output IFilesystemMgr* IFilesystemMgr::GetMounted() {
-  MUST_PASS(kMountedFilesystem && kMountedFilesystem->GetMounted());
   return kMountedFilesystem;
 }
 
@@ -26,8 +25,6 @@ _Output IFilesystemMgr* IFilesystemMgr::GetMounted() {
 _Output IFilesystemMgr* IFilesystemMgr::Unmount() {
   if (kMountedFilesystem) {
     auto mount = kMountedFilesystem;
-
-    MUST_PASS(mount->GetMounted());
 
     kMountedFilesystem = nullptr;
     return mount;

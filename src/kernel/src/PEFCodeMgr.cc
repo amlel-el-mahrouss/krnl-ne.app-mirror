@@ -89,6 +89,12 @@ PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
 /***********************************************************************************/
 PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false), fBad(false) {
   fFile.New(const_cast<Char*>(path), kRestrictRB);
+
+  if (!fFile) {
+    this->fBad = YES;
+    return;
+  }
+
   fPath = KStringBuilder::Construct(path).Leak();
 
   constexpr auto kPefHeader = "PEF_CONTAINER";

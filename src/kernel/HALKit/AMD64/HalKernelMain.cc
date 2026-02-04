@@ -133,6 +133,14 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
 }
 
 EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
+  HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
+
+  HAL::Register64 idt_reg;
+  idt_reg.Base = reinterpret_cast<UIntPtr>(kInterruptVectorTable);
+
+  HAL::IDTLoader idt_loader;
+  idt_loader.Load(idt_reg);
+
 #ifdef __FSKIT_INCLUDES_OPENHEFS__
   OpenHeFS::fs_init_openhefs();
   HeFileSystemMgr::Mount(new HeFileSystemMgr());
@@ -149,13 +157,7 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   if (ldr.IsLoaded()) rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
 
-  HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
-
-  HAL::Register64 idt_reg;
-  idt_reg.Base = reinterpret_cast<UIntPtr>(kInterruptVectorTable);
-
-  HAL::IDTLoader idt_loader;
-  idt_loader.Load(idt_reg);
+  UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 
   while (YES);
 }

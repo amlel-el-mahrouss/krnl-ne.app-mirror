@@ -31,7 +31,6 @@ ErrorOr<voidPtr> ACPIFactoryInterface::Find(const Char* signature) {
   */
   if (num < 1) {
     /// stop here, we should have entries...
-    ke_panic(RUNTIME_CHECK_ACPI);
     return ErrorOr<voidPtr>{-kErrorInvalidData};
   }
 

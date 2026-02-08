@@ -11,7 +11,7 @@
   </p>
 </div>
 
-<img src="meta/media/demo.gif" alt="NeKernel Logo" width="1280"/>
+<img src="meta/media/demo.gif" alt="NeKernel Demo" width="1280"/>
 
 ## Getting Started
 
@@ -76,8 +76,14 @@ cd nekernel
 
 ## Authors & Credits
 
-- **Amlal El Mahrouss** — Lead Developer and Kernel Architect.
+- **Amlal El Mahrouss** — Lead and Kernel Architect.
 - [Full contributor list](https://github.com/nekernel-org/nekernel/graphs/contributors)
+
+---
+
+## Citing
+
+- Refer to [CITATION.cff][CITATION.cff]
 
 ---
 

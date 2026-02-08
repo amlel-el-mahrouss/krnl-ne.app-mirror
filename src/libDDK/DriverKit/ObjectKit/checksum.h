@@ -10,7 +10,7 @@
 namespace Kernel::DDK {
 
 using IndexableBlob = char*;
-using Indexable = char;
+using Indexable     = char;
 
 /// @note This uses the FNV 64-bit variant.
 /// @brief Performs a checksum computation for a memory region.

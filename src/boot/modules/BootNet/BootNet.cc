@@ -87,8 +87,8 @@ STATIC Void bootnet_read_ip_packet(BOOTNET_INTERNET_HEADER   inet,
   auto len = inet.Length;
 
   /// And receive the handshake packet.
-  if (kEfiProtocol->Receive(kEfiProtocol, &size_inet, (UInt32*)&len, (VoidPtr) &inet, nullptr, nullptr,
-                            nullptr) == kEfiOk) {
+  if (kEfiProtocol->Receive(kEfiProtocol, &size_inet, (UInt32*) &len, (VoidPtr) &inet, nullptr,
+                            nullptr, nullptr) == kEfiOk) {
     BOOTNET_INTERNET_HEADER* out = nullptr;
 
     BS->AllocatePool(EfiLoaderData, sizeof(BOOTNET_INTERNET_HEADER) + inet.Length, (VoidPtr*) &out);

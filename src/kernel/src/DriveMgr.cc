@@ -31,6 +31,8 @@ STATIC UInt16 kAHCIPortsImplemented [[maybe_unused]] = 0UL;
 /// @param pckt Packet structure (fPacketContent must be non null)
 /// @return
 Void io_drv_input(DriveTrait::DrivePacket& pckt) {
+  NE_UNUSED(pckt);
+
 #ifdef __AHCI__
   drv_std_read(pckt.fPacketLba, (Char*) pckt.fPacketContent, kAHCISectorSize, pckt.fPacketSize);
 
@@ -70,6 +72,7 @@ Void io_drv_output(DriveTrait::DrivePacket& pckt) {
 /// @param pckt the packet to read.
 /// @return
 Void io_drv_init(DriveTrait::DrivePacket& pckt) {
+  NE_UNUSED(pckt);
 #if defined(__ATA_PIO__) || defined(__ATA_DMA__)
   kATAMaster = 0;
   kATAIO     = 0;

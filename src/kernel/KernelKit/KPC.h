@@ -12,8 +12,10 @@
 
 #define err_local_ok() \
   (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() == Kernel::kErrorSuccess)
+
 #define err_local_fail() \
   (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() != Kernel::kErrorSuccess)
+
 #define err_local_get() (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode())
 
 #define err_global_ok() (Kernel::kErrorLocalNumber == Kernel::kErrorSuccess)
@@ -65,6 +67,7 @@ inline constexpr KPCError kErrorOutOfBitMapMemory  = 67;
 inline constexpr KPCError kErrorTimeout            = 68;
 inline constexpr KPCError kErrorAccessDenied       = 69;
 inline constexpr KPCError kErrorUnavailable        = 70;
+inline constexpr KPCError kErrorIPCTimeOut         = 71;
 /// Generic errors.
 inline constexpr KPCError kErrorUnimplemented = -1;
 

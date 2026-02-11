@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef KERNELKIT_PROCESSSCHEDULER_H
-#define KERNELKIT_PROCESSSCHEDULER_H
+#ifndef KERNELKIT_PROCESS_SCHEDULER_H
+#define KERNELKIT_PROCESS_SCHEDULER_H
 
 #include <KernelKit/KernelTaskScheduler.h>
 #include <KernelKit/UserProcessScheduler.h>

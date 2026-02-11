@@ -10,7 +10,10 @@
 #include <NeKit/ErrorOr.h>
 #include <hint/CompilerHint.h>
 
+#define NE_EXEC_LOADER : public ::Kernel::ILoader
+
 namespace Kernel {
+
 /// @brief This interface is used to make loader contracts (MSCOFF, PEF).
 /// @author Amlal El Mahrouss
 class ILoader {
@@ -30,6 +33,7 @@ class ILoader {
     return ErrorOr<VoidPtr>{};
   }
 };
+
 }  // namespace Kernel
 
 #endif

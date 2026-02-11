@@ -17,7 +17,7 @@
 #include <NeKit/ErrorOr.h>
 #include <NeKit/KString.h>
 
-#ifndef KERNELKIT_USERPROCESSSCHEDULER_H
+#ifndef KERNELKIT_PROCESS_SCHEDULER_H
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
@@ -28,7 +28,7 @@ namespace Kernel {
 /// \name PE32Loader
 /// \brief PE32+ loader class.
 ///
-class PE32Loader : public ILoader {
+class PE32Loader NE_EXEC_LOADER {
  private:
   explicit PE32Loader() = delete;
 

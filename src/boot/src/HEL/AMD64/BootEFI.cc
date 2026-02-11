@@ -73,6 +73,8 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     Boot::Stop();
   }
 
+  writer.Write("BootZ: The NeKernel Bootloader. Copyright 2024-2026, Amlal El Mahrouss and al.\r");
+
   for (SizeT index_vt = 0; index_vt < sys_table->NumberOfTableEntries; ++index_vt) {
     Char* vendor_table =
         reinterpret_cast<Char*>(sys_table->ConfigurationTable[index_vt].VendorTable);
@@ -127,9 +129,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   handover_hdr->f_BitMapStart = nullptr; /* Start of bitmap. */
   handover_hdr->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
 
-  kHandoverHeader->f_BitMapStart = nullptr; /* Start of bitmap. */
-  kHandoverHeader->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
-
   // Get memory map to determine available memory for bitmap allocation.
   BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
 
@@ -154,11 +153,9 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   free_pages -= 1024;
 
   // Set bitmap to use the first free page region found.
-  kHandoverHeader->f_BitMapStart = first_free_page;
   handover_hdr->f_BitMapStart    = first_free_page;
 
   // Convert pages to bytes (assuming 4K pages) for bitmap size.
-  kHandoverHeader->f_BitMapSize = free_pages * 4096;
   handover_hdr->f_BitMapSize    = free_pages * 4096;
 
   handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;

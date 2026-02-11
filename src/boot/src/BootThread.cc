@@ -59,7 +59,7 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
     }
 #endif
 
-    writer.Write("BootZ: PE32+ executable detected (NeKernel Subsystem).\r");
+    writer.Write("BootZ: PE32+ executable detected. (NeKernel Subsystem)\r");
 
     auto numSecs = header_ptr->NumberOfSections;
 

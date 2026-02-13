@@ -34,6 +34,17 @@ EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
 
   bootnet_read_ip_packet(inet, &inet_out);
 
+  if (!inet_out) {
+    writer.Write("BootNet: Not a packet, aborting.\r");
+    return kEfiFail;
+  }
+
+  if (inet_out->NB1 != 'O' || inet_out->NB1 != 'N' || inet_out->NB1 != 'E' ||
+      inet_out->NB1 != 'T') {
+    writer.Write("BootNet: Not a packet, aborting.\r");
+    return kEfiFail;
+  }
+
   if (inet_out->Length < 1) {
     writer.Write("BootNet: No executable attached to the packet, aborting.\r");
     return kEfiFail;

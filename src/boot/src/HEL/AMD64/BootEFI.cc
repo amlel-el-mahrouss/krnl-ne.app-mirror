@@ -153,10 +153,10 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   free_pages -= 1024;
 
   // Set bitmap to use the first free page region found.
-  handover_hdr->f_BitMapStart    = first_free_page;
+  handover_hdr->f_BitMapStart = first_free_page;
 
   // Convert pages to bytes (assuming 4K pages) for bitmap size.
-  handover_hdr->f_BitMapSize    = free_pages * 4096;
+  handover_hdr->f_BitMapSize = free_pages * 4096;
 
   handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
   handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;

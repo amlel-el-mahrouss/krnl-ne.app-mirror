@@ -48,7 +48,7 @@ namespace Detail {
                                                                    UInt8           kind);
 
   /***********************************************************************************/
-  /// @brief Allocate a new index node->
+  /// @brief Allocate a new index node.
   /// @param boot The boot node of the filesystem.
   /// @param mnt The mnt to read/write from.
   /// @param dir_name The name of the parent directory.

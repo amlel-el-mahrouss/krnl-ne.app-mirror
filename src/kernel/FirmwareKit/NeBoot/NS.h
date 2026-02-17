@@ -5,7 +5,17 @@
 #ifndef FIRMWAREKIT_NS_H
 #define FIRMWAREKIT_NS_H
 
+/// @brief internal macro
+#ifdef NE_WRAP_NEBOOT
+namespace NeBoot {
+#endif
+
 #include <FirmwareKit/NeBoot/BootNet.h>
 #include <FirmwareKit/NeBoot/NeBoot.h>
+
+#ifdef NE_WRAP_NEBOOT
+}
+#endif
+
 
 #endif

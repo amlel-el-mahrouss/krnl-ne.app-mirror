@@ -17,5 +17,5 @@
     "kLibSystemVersionHighest=0x0100",
     "kLibSystemVersionLowest=0x0100"
   ],
-  "description": "System Kit for NeKernel."
+  "description": "The System Call Kit for the NeKernel Stack."
 }

@@ -37,7 +37,7 @@ bool HeFileSystemMgr::Remove(_Input const Char* path) {
     return NO;
   }
 
-  return NO;
+  return YES;
 }
 
 /// @brief Creates a node with the specified.
@@ -49,7 +49,7 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
     return nullptr;
   }
 
-  // TODO: its own helper!
+  // TODO: It needs its own helper!
   SizeT len = oe_string_len<Char>(path);
 
   Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
@@ -58,9 +58,16 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
     out[indx] = path[indx];
   }
 
-  if (mParser->CreateINode(&mDriveTrait, 0, nullptr, out, 0))
-    return nullptr;  // AMLALE TODO: FetchINode method!
+  err_local_get() = kErrorSuccess;
 
+  if (auto node = mParser->CreateINode(&mDriveTrait, 0, nullptr, out, 0);
+     node)
+    return nullptr;
+
+  kout << "OpenHeFS: ERROR: Check KPC.\r";
+
+  err_local_get() = kErrorDiskIsFull;  
+  
   return nullptr;
 }
 
@@ -72,6 +79,26 @@ NodePtr HeFileSystemMgr::CreateDirectory(const Char* path) {
     kout << "OpenHeFS: CreateDirectory called with null or empty path\r";
     return nullptr;
   }
+
+  // TODO: It needs its own helper!
+  SizeT len = oe_string_len<Char>(path);
+
+  Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
+
+  for (SizeT indx = 0UL; indx < len; ++indx) {
+    out[indx] = path[indx];
+  }
+
+  err_local_get() = kErrorSuccess;
+
+  if (auto node = mParser->CreateINodeDirectory(&mDriveTrait, 0, out);
+     node)
+    return nullptr;
+
+  kout << "OpenHeFS: ERROR: Check KPC.\r";
+
+  err_local_get() = kErrorDiskIsFull;  
+  
   return nullptr;
 }
 
@@ -83,6 +110,26 @@ NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
     kout << "OpenHeFS: CreateAlias called with null or empty path\r";
     return nullptr;
   }
+  
+  // TODO: It needs its own helper!
+  SizeT len = oe_string_len<Char>(path);
+
+  Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
+
+  for (SizeT indx = 0UL; indx < len; ++indx) {
+    out[indx] = path[indx];
+  }
+
+  err_local_get() = kErrorSuccess;
+
+  if (auto node = mParser->CreateINode(&mDriveTrait, kOpenHeFSFileKindSymbolicLink, nullptr, out, 0);
+     node)
+    return nullptr;
+
+  kout << "OpenHeFS: ERROR: Check KPC.\r";
+
+  err_local_get() = kErrorDiskIsFull;  
+  
   return nullptr;
 }
 

@@ -11,12 +11,12 @@
     "../../src/BootTextWriter.cc",
     "../../src/BootSupport.cc",
     "../../src/New+Delete.cc",
-    "../../../kernel/HALKit/AMD64/PCI/*.cc",
-    "../../../kernel/HALKit/AMD64/Storage/*.cc",
-    "../../../kernel/src/Storage/*.cc",
-    "../../../kernel/HALKit/AMD64/*.cc",
+    "../../../kernel/HALKit/AMD64/PCI/*.cpp",
+    "../../../kernel/HALKit/AMD64/Storage/*.cpp",
+    "../../../kernel/src/Storage/*.cpp",
+    "../../../kernel/HALKit/AMD64/*.cpp",
     "../../../kernel/HALKit/AMD64/*.s",
-    "../../../kernel/src/*.cc"
+    "../../../kernel/src/*.cpp"
   ],
   "output_name": "chk.efi",
   "compiler_flags": [

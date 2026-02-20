@@ -2,7 +2,7 @@
 
 <div align="center">
   <h1>
-    <b>NeKernel</b>
+    <b>The NeKernel System</b>
   </h1>
   <p>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>

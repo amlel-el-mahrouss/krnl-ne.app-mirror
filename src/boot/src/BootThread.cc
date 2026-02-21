@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -80,7 +80,7 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
     fStack = new UInt8[kBootThreadSz];
 
     if (!fStack) {
-      writer.Write("BootZ: Unable to allocate stack.\r");
+      writer.Write("BootZ: Unable to allocate the stack for the thread.\r");
       return;
     }
 
@@ -143,7 +143,7 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
         }
       }
 
-      writer.Write("BootZ: Raw offset: ")
+      writer.Write("BootZ: Raw-Offset: ")
           .Write(sect->PointerToRawData)
           .Write(" of ")
           .Write(sect->Name)

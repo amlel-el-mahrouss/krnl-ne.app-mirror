@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -69,7 +69,7 @@ Boot::BootFileReader::BootFileReader(const CharacterTypeUTF16* path, EfiHandlePt
     mWriter.Write(L"BootZ: Fetch-Protocol: No-Such-Path: ").Write(mPath).Write(L"\r");
     this->mErrorCode = kNotSupported;
 
-    cg_render_string("BootZ: PLEASE RECOVER YOUR NEKERNEL INSTALL.", 40, 10, RGB(0xFF, 0xFF, 0xFF));
+    cg_render_string("BOOTZ: PLEASE RECOVER YOUR NEKERNEL INSTALL.", 40, 10, RGB(0xFF, 0xFF, 0xFF));
 
     mRootFs->Close(mRootFs);
 
@@ -114,7 +114,7 @@ Void Boot::BootFileReader::ReadAll(SizeT readUntil, SizeT chunkToRead, UIntPtr o
 
   if (mFile->GetInfo(mFile, &kFileInfoGUID, &szInfo, &newPtrInfo) == kEfiOk) {
     readUntil = newPtrInfo.FileSize;
-    mWriter.Write(L"BootZ: File size: ").Write(readUntil).Write("\r");
+    mWriter.Write(L"BootZ: File-Size: ").Write(readUntil).Write("\r");
   }
 
   if (readUntil == 0) {

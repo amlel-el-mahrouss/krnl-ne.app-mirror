@@ -1,11 +1,11 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef _NE_COMPILERHINT_H_
-#define _NE_COMPILERHINT_H_
+#ifndef NE_COMPILERHINT_H
+#define NE_COMPILERHINT_H
 
-#ifdef __NECTI__
+#ifdef __NECTAR__
 #pragma compiler(hint_manifest)
 #endif
 
@@ -20,4 +20,7 @@
 #define _InOut
 #define _StrictInOut
 
-#endif  // ifndef _NE_COMPILERHINT_H_
+#define _OptionalIn
+#define _OptionalOut
+
+#endif  // ifndef NE_COMPILERHINT_H

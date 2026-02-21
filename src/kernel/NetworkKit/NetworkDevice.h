@@ -1,9 +1,9 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __INC_NETWORK_DEVICE_H__
-#define __INC_NETWORK_DEVICE_H__
+#ifndef INC_NETWORK_DEVICE_H
+#define INC_NETWORK_DEVICE_H
 
 #include <KernelKit/DeviceMgr.h>
 #include <NetworkKit/IP.h>

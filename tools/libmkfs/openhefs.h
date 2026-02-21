@@ -5,6 +5,10 @@
 #ifndef LIBMKFS_OPENHEFS_H
 #define LIBMKFS_OPENHEFS_H
 
+#ifndef __GNUC__
+#error !! libmkfs isn't working in MSVC yet !!
+#endif
+
 #include <cstdint>
 #include <cstring>
 
@@ -112,6 +116,7 @@ struct __attribute__((packed)) BootNode {
   std::uint64_t endBlock{};
   char          pad[272]{};
 };
+
 }  // namespace mkfs::hefs
 
 #endif

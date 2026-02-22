@@ -3,7 +3,7 @@
 
 <div align="center">
   <h1>
-    <b>The NeKernel System</b>
+    <b>The NeKernel System.</b>
   </h1>
   <p>
     <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
@@ -11,8 +11,6 @@
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
   </p>
 </div>
-
-<img src="meta/media/demo.gif" alt="NeKernel Demo" width="1280"/>
 
 ## Getting Started
 
@@ -93,6 +91,13 @@ cd nekernel
 NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 ---
+
+## Figures:
+
+#### Figure 1: The Microkernel Booting
+
+<img src="meta/media/ne_kernel.png" alt="NeKernel Microkernel Booting" width="1280"/>
+
 
 <div align="center">
   <sub>

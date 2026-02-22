@@ -1,3 +1,4 @@
+
 <!-- Read Me of NeKernel -->
 
 <div align="center">
@@ -83,18 +84,18 @@ cd nekernel
 
 ## Citing
 
-- Refer to [CITATION.cff][CITATION.cff]
+- Refer to [CITATION.cff](CITATION.cff)
 
 ---
 
 ## License
 
-This project is licensed under the [Apache-2.0 License](LICENSE).
+NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 ---
 
 <div align="center">
   <sub>
-    &copy; 2024-2025 Amlal El Mahrouss & NeKernel Authors. Licensed under the Apache 2.0 license.
+    &copy; 2023-2026 Amlal El Mahrouss & NeKernel Authors. Licensed under the Apache 2.0 license.
   </sub>
 </div>

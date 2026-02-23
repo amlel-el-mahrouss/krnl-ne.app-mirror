@@ -21,7 +21,7 @@ using KID = ProcessID;
 
 /// @brief Equivalent of UserProcess, but for kernel tasks.
 /// @author Amlal
-class KernelTask {
+class KernelTask final {
  public:
   Char               Name[kSchedNameLen] = {"KernelTask"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemKernel};

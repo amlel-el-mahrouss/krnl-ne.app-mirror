@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -9,6 +9,7 @@
 #include <NeKit/KString.h>
 
 namespace Kernel {
+
 /// \brief TOML Object Handle
 class TOMLObject final {
  public:
@@ -18,10 +19,11 @@ class TOMLObject final {
   STATIC TOMLObject kNull;
 
  private:
-  Bool    fUndefined{YES};  // is this instance undefined?
-  KString fKey;
-  KString fValue;
+  Bool    mUndefined{YES};  // is this instance undefined?
+  KString mKey;
+  KString mValue;
 };
+
 }  // namespace Kernel
 
 #endif

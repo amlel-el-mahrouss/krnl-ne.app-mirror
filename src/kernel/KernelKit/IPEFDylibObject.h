@@ -1,9 +1,9 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef __KERNELKIT_PEF_SHARED_OBJECT_H__
-#define __KERNELKIT_PEF_SHARED_OBJECT_H__
+#ifndef KERNELKIT_PEF_SHARED_OBJECT_H
+#define KERNELKIT_PEF_SHARED_OBJECT_H
 
 #include <KernelKit/IDylibObject.h>
 #include <KernelKit/PEF.h>
@@ -12,6 +12,7 @@
 #include <NeKit/Config.h>
 
 namespace Kernel {
+
 /**
  * @brief Shared Library class
  * Load library from this class
@@ -82,6 +83,7 @@ using IDylibRef = IPEFDylibObject*;
 
 EXTERN_C IDylibRef rtl_init_dylib_pef(UserProcess& header);
 EXTERN_C Void      rtl_fini_dylib_pef(UserProcess& header, IDylibRef lib, Bool* successful);
+
 }  // namespace Kernel
 
 #endif /* ifndef __KERNELKIT_PEF_SHARED_OBJECT_H__ */

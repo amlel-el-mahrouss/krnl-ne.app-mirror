@@ -24,6 +24,7 @@
 /// @brief Signal Generation API.
 
 namespace Kernel {
+
 typedef SizeT rt_signal_kind;
 
 /// @brief Standard signal seed for general purpose usage.
@@ -49,6 +50,7 @@ inline BOOL sig_matches_seed(rt_signal_kind sig) {
 inline BOOL sig_validate_unique(rt_signal_kind sig) {
   return sig > SIGBAD && sig > SIGDTCH;
 }
+
 }  // namespace Kernel
 
 #endif

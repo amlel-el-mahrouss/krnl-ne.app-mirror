@@ -31,7 +31,7 @@ class UserProcessHelper;
 /// @name UserProcess
 /// @brief UserProcess class, holds information about the running process/thread.
 /***********************************************************************************/
-class UserProcess {
+class UserProcess final {
  public:
   UserProcess();
   ~UserProcess();

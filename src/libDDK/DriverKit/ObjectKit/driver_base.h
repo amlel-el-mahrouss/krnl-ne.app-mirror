@@ -1,9 +1,9 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef DRIVERKIT_DRIVER_BASE_H
-#define DRIVERKIT_DRIVER_BASE_H
+#ifndef DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
+#define DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
 
 #include <libDDK/DriverKit/macros.h>
 
@@ -25,8 +25,8 @@ class IDriverBase {
   IDriverBase()          = default;
   virtual ~IDriverBase() = default;
 
-  IDriverBase& operator=(const IDriverBase&) = delete;
-  IDriverBase(const IDriverBase&)            = delete;
+  IDriverBase& operator=(const IDriverBase&) = default;
+  IDriverBase(const IDriverBase&)            = default;
 
   using PtrType = void*;
 

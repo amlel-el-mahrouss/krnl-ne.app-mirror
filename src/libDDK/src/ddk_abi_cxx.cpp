@@ -5,6 +5,8 @@
 #include <DriverKit/ddk.h>
 
 void* operator new(size_t sz) {
+  if (!sz) ++sz;
+
   return ::kalloc(sz);
 }
 
@@ -13,6 +15,8 @@ void operator delete(void* ptr) {
 }
 
 void* operator new[](size_t sz) {
+  if (!sz) ++sz;
+
   return ::kalloc(sz);
 }
 

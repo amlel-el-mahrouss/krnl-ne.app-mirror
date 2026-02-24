@@ -8,10 +8,6 @@
 
 #include <libSystem/SystemKit/System.h>
 
-namespace ASN {
-
-
-
-}
+namespace ASN {}
 
 #endif

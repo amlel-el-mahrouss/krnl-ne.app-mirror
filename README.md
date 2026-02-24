@@ -12,6 +12,10 @@
   </p>
 </div>
 
+## Community:
+
+Join us in our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!
+
 ## Getting Started
 
 ### **Requirements**

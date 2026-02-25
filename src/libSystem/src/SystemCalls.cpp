@@ -11,8 +11,7 @@ using namespace LibSystem;
 
 IMPORT_C Char* StrFmt(const Char* fmt, ...) {
   if (!fmt || *fmt == 0) return const_cast<Char*>("(null)");
-
-  return const_cast<Char*>("");
+  return const_cast<Char*>("(null)");
 }
 
 // memmove-style copy
@@ -125,9 +124,7 @@ IMPORT_C Ref IoOpenFile(_Input const Char* path, _Input const Char* drv_letter) 
                                                Verify::sys_safe_cast<Char, Void>(drv_letter)));
 }
 
-IMPORT_C Void IoCloseFile(_Input Ref desc) {
-  libsys_syscall_arg_2(SYSCALL_HASH("IoCloseFile"), static_cast<VoidPtr>(desc));
-}
+IMPORT_C Void IoCloseFile(_Input Ref desc) { libsys_syscall_arg_2(SYSCALL_HASH("IoCloseFile"), static_cast<VoidPtr>(desc)); }
 
 IMPORT_C UInt64 IoSeekFile(_Input Ref desc, _Input UInt64 off) {
   auto ret_ptr = libsys_syscall_arg_3(SYSCALL_HASH("IoSeekFile"), static_cast<VoidPtr>(desc),
@@ -136,14 +133,18 @@ IMPORT_C UInt64 IoSeekFile(_Input Ref desc, _Input UInt64 off) {
   if (!ret_ptr) return ~0UL;
 
   auto   ret    = static_cast<volatile UInt64*>(ret_ptr);
+
   UInt64 result = *ret;
   MUST_PASS(result != ~0UL);
+
   return result;
 }
 
 IMPORT_C UInt64 IoTellFile(_Input Ref desc) {
   auto ret_ptr = libsys_syscall_arg_2(SYSCALL_HASH("IoTellFile"), static_cast<VoidPtr>(desc));
+
   if (!ret_ptr) return ~0UL;
+
   auto ret = static_cast<volatile UInt64*>(ret_ptr);
   return *ret;
 }
@@ -151,14 +152,13 @@ IMPORT_C UInt64 IoTellFile(_Input Ref desc) {
 IMPORT_C SInt32 PrintRelease(_Input IORef buf) {
   SInt32* ret = static_cast<SInt32*>(
       libsys_syscall_arg_2(SYSCALL_HASH("PrintRelease"), static_cast<VoidPtr>(buf)));
+
   if (!ret) return -kErrorInvalidData;
 
   return static_cast<SInt32>(*ret);
 }
 
-IMPORT_C IORef PrintCreate(Void) {
-  return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate")));
-}
+IMPORT_C IORef PrintCreate(Void) { return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate"))); }
 
 IMPORT_C VoidPtr MmCreateHeap(UInt64 initial_size, UInt32 max_size) {
   return static_cast<VoidPtr>(libsys_syscall_arg_3(SYSCALL_HASH("MmCreateHeap"),
@@ -219,6 +219,6 @@ IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {
 }
 
 IMPORT_C UInt64 PrintSize(IORef ref) {
-  MUST_PASS(ref);
   return *static_cast<UInt64*>(libsys_syscall_arg_2(SYSCALL_HASH("PrintSize"), ref));
 }
+

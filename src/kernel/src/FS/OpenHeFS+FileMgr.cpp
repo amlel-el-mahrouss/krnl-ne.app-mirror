@@ -138,6 +138,10 @@ NodePtr HeFileSystemMgr::CreateSwapFile(const Char* path) {
     kout << "OpenHeFS: CreateSwapFile called with null or empty path\r";
     return nullptr;
   }
+
+  kout << "OpenHEFS: ERROR: Swap Files are not supported natively by OpenHeFS.\r";
+  err_local_get() = kErrorProcessFault;
+
   return nullptr;
 }
 
@@ -174,6 +178,7 @@ _Output NodePtr HeFileSystemMgr::Open(_Input const Char* path, _Input const Char
     kout << "OpenHeFS: Open called with null or empty path\r";
     return nullptr;
   }
+
   if (!r || *r == 0) {
     kout << "OpenHeFS: Open called with null or empty mode string\r";
     return nullptr;

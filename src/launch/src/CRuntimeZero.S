@@ -1,10 +1,10 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
 .text
 
-.extern nelaunch_startup_fn
+.extern launch_startup_fn
 .extern ThrExitMainThread
 .globl _NeMain
 
@@ -15,7 +15,7 @@ _NeMain:
   push %rbp
   movq %rsp, %rbp
 
-  callq nelaunch_startup_fn
+  callq launch_startup_fn
 
   movq %rcx, 0
   

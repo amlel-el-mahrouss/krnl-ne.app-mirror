@@ -6,15 +6,18 @@
 
 using namespace Kernel;
 
+/// @brief Standard NeKernel Size type.
+using ksz_t = long long unsigned int;
+
 /// =========================================================== ///
 /// @brief C Standard Library overrides.                     ///
 /// =========================================================== ///
 
-EXTERN_C void* memset(void* dst, int c, long long unsigned int len) {
+EXTERN_C void* memset(void* dst, int c, ksz_t len) {
   return Kernel::rt_set_memory_safe(dst, c, static_cast<Size>(len), static_cast<Size>(len));
 }
 
-EXTERN_C void* memcpy(void* dst, const void* src, long long unsigned int len) {
+EXTERN_C void* memcpy(void* dst, const void* src, ksz_t len) {
   Kernel::rt_copy_memory_safe(const_cast<void*>(src), dst, static_cast<Size>(len),
                               static_cast<Size>(len));
   return dst;

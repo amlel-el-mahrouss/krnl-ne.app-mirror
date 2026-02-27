@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -326,7 +326,7 @@ namespace Detail {
 
             if (tmpend->fChecksum !=
                 ke_calculate_crc32((Char*) tmpend, sizeof(HEFS_INDEX_NODE_DIRECTORY)))
-              ke_panic(RUNTIME_CHECK_FILESYSTEM, "Bad CRC32 value, aborting.");
+              ke_panic(RUNTIME_CHECK_FILESYSTEM, "OpenHeFS: Bad CRC32 value aborting.");
 
             if (delete_or_create)
               --tmpend->fEntryCount;

@@ -19,12 +19,12 @@ NeFileSystemMgr::NeFileSystemMgr() {
   mParser = new NeFileSystemParser();
   MUST_PASS(mParser);
 
-  kout << "We are done allocating NeFileSystemParser...\n";
+  kout << "NeFS: Allocated NeFileSystemParser...\n";
 }
 
 NeFileSystemMgr::~NeFileSystemMgr() {
   if (mParser) {
-    kout << "Destroying NeFileSystemParser...\n";
+    kout << "NeFS: Destroying NeFileSystemParser...\n";
     delete mParser;
     mParser = nullptr;
   }
@@ -247,7 +247,11 @@ _Output NeFileSystemParser* NeFileSystemMgr::GetParser() {
 
 static inline bool is_valid_nefs_catalog(NodePtr node) {
   if (!node) return false;
+
   auto cat = reinterpret_cast<NEFS_CATALOG_STRUCT*>(node);
+
+  if (cat->ForkOrCatalog) return false;
+
   switch (cat->Kind) {
     case kNeFSCatalogKindFile:
     case kNeFSCatalogKindDir:
@@ -257,13 +261,16 @@ static inline bool is_valid_nefs_catalog(NodePtr node) {
     default:
       return false;
   }
+
   bool null_found = false;
+
   for (int i = 0; i < kNeFSCatalogNameLen; ++i) {
     if (cat->Name[i] == 0) {
       null_found = true;
       break;
     }
   }
+
   if (!null_found) return false;
   return true;
 }

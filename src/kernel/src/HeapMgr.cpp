@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -20,13 +20,14 @@
 
  ======================================== */
 
-//! @file HeapMgr.cc
+//! @file HeapMgr.cpp
 //! @brief Heap system that serves as the main memory manager.
 
 #define kHeapMgrMagic (0xD4D75)
 #define kHeapMgrAlignSz (4U)
 
 namespace Kernel {
+
 /// @brief Implementation details.
 namespace Detail {
   struct PACKED MM_INFORMATION_BLOCK;
@@ -257,4 +258,5 @@ _Output Boolean mm_protect_ptr(VoidPtr heap_ptr) {
 
   return No;
 }
+
 }  // namespace Kernel

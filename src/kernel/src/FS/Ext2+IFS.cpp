@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -14,6 +14,8 @@
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
+
+/// @note There's no current maintainer of Ext2, the position is vacant.
 
 constexpr static UInt32 EXT2_DIRECT_BLOCKS                           = 12;
 constexpr static UInt32 EXT2_SINGLE_INDIRECT_INDEX                   = 12;

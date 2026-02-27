@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -17,12 +17,13 @@ HeFileSystemMgr::HeFileSystemMgr() {
   mParser = new HeFileSystemParser();
   MUST_PASS(mParser);
 
-  kout << "We are done allocating HeFileSystemParser...\r";
+  kout << "OpenHeFS: Allocated HeFileSystemParser...\r";
 }
 
 HeFileSystemMgr::~HeFileSystemMgr() {
   if (mParser) {
-    kout << "Destroying HeFileSystemParser...\r";
+    kout << "OpenHeFS: Destroying HeFileSystemParser...\r";
+
     delete mParser;
     mParser = nullptr;
   }
@@ -37,7 +38,16 @@ bool HeFileSystemMgr::Remove(_Input const Char* path) {
     return NO;
   }
 
-  return YES;
+  auto len = oe_string_len<Char>(path);
+
+  if (len == 0) return NO;
+
+  Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
+
+  err_local_get() = kErrorSuccess;
+
+  bool ret = mParser->DeleteINode(&mDriveTrait, 0, nullptr, out, 0);
+  return ret;
 }
 
 /// @brief Creates a node with the specified.
@@ -51,6 +61,8 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
 
   // TODO: It needs its own helper!
   SizeT len = oe_string_len<Char>(path);
+
+  if (len == 0) return nullptr;
 
   Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
 
@@ -66,8 +78,8 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
 
   kout << "OpenHeFS: ERROR: Check KPC.\r";
 
-  err_local_get() = kErrorDiskIsFull;  
-  
+  err_local_get() = kErrorDiskIsFull;
+
   return nullptr;
 }
 
@@ -82,6 +94,8 @@ NodePtr HeFileSystemMgr::CreateDirectory(const Char* path) {
 
   // TODO: It needs its own helper!
   SizeT len = oe_string_len<Char>(path);
+
+  if (len == 0) return nullptr;
 
   Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
 
@@ -113,6 +127,8 @@ NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
   
   // TODO: It needs its own helper!
   SizeT len = oe_string_len<Char>(path);
+
+  if (len == 0) return nullptr;
 
   Utf8Char* out = static_cast<Utf8Char*>(RTL_ALLOCA(sizeof(Utf8Char) * len));
 

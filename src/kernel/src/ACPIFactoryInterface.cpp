@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -20,9 +20,11 @@ ErrorOr<voidPtr> ACPIFactoryInterface::Find(const Char* signature) {
 
   RSDP* rsp_ptr = reinterpret_cast<RSDP*>(this->fRsdp);
 
-  if (rsp_ptr->Revision < kMinACPIVer) return ErrorOr<voidPtr>{-kErrorInvalidData};
+  if (!rsp_ptr || rsp_ptr->Revision < kMinACPIVer) return ErrorOr<voidPtr>{-kErrorInvalidData};
 
   RSDT* xsdt = reinterpret_cast<RSDT*>(rsp_ptr->RsdtAddress);
+
+  if (!xsdt) return ErrorOr<voidPtr>{-kErrorInvalidData};
 
   Int64 num = (xsdt->Length - sizeof(SDT)) / sizeof(Int64);
 

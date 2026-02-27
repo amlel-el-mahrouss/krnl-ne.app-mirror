@@ -17,7 +17,7 @@ ifneq ($(findstring CYGWIN_NT-10.0,$(shell uname)), )
 EMU=qemu-system-x86_64w.exe
 else
 # this for NT distributions
-EMU=qemu-system-x86_64  
+EMU=qemu-system-x86_64
 endif
 
 ifeq ($(NEOS_MODEL), )
@@ -100,9 +100,9 @@ endif
 compile-amd64:
 	$(WINDRES) src/boot_rsrc.rsrc -O coff -o boot_rsrc.o
 	$(CC_GNU) $(NE_MODEL) $(STANDALONE_MACRO) $(FLAG_GNU) $(DEBUG) \
-	$(wildcard src/HEL/AMD64/*.cc) \
+	$(wildcard src/HEL/AMD64/*.cpp) \
 	$(wildcard src/HEL/AMD64/*.S) \
-	$(wildcard src/*.cc)
+	$(wildcard src/*.cpp)
 	mv *.o obj/
 
 .PHONY: run-efi-amd64-ahci

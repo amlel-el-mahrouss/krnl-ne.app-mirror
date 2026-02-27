@@ -18,10 +18,10 @@ EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
 
   Boot::BootTextWriter writer;
 
-  writer.Write("BootNet: Init BootNet...\r");
+  writer.Write("Net: Init BootNet...\r");
 
   if (BS->LocateProtocol(&kEfiSimpleProtoGUID, nullptr, (VoidPtr*) &kEfiProtocol) != kEfiOk) {
-    writer.Write("BootNet: Not supported by firmware.\r");
+    writer.Write("Net: Not supported by the current firmware.\r");
     return kEfiFail;
   }
 
@@ -30,28 +30,28 @@ EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
 
   SetMem(&inet, 0, sizeof(BOOTNET_INTERNET_HEADER));
 
-  writer.Write("BootNet: Downloading kernel...\r");
+  writer.Write("Net: Downloading image...\r");
 
   bootnet_read_ip_packet(inet, &inet_out);
 
   if (!inet_out) {
-    writer.Write("BootNet: Not a packet, aborting.\r");
+    writer.Write("Net: Not a packet, aborting.\r");
     return kEfiFail;
   }
 
   if (inet_out->NB1 != 'O' || inet_out->NB1 != 'N' || inet_out->NB1 != 'E' ||
       inet_out->NB1 != 'T') {
-    writer.Write("BootNet: Not a packet, aborting.\r");
+    writer.Write("Net: Not a packet, aborting.\r");
     return kEfiFail;
   }
 
   if (inet_out->Length < 1) {
-    writer.Write("BootNet: No executable attached to the packet, aborting.\r");
+    writer.Write("Net: No executable attached to the packet, aborting.\r");
     return kEfiFail;
   }
 
   if (inet_out->Version != kBootNetVersion) {
-    writer.Write("BootNet: The version clashes, not good.\r");
+    writer.Write("Net: The version clashes, not good.\r");
     return kEfiFail;
   }
 
@@ -59,7 +59,7 @@ EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
     Boot::BootThread thread(inet_out->Data);
 
     if (thread.IsValid()) {
-      writer.Write("BootNet: Running NeKernel...\r");
+      writer.Write("Net: Running image...\r");
       return thread.Start(handover, YES);
     }
 
@@ -68,11 +68,11 @@ EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
     constexpr auto kROMSize = 0x200;
 
     if (inet_out->Length > kROMSize) {
-      writer.Write("BootNet: Not within 512K, won't flash EEPROM.\r");
+      writer.Write("Net: Not an image within 512K, we won't flash the EEPROM.\r");
       return kEfiFail;
     }
 
-    writer.Write("BootNet: Programming the flash...\r");
+    writer.Write("Net: Programming the EEPROM...\r");
 
     /// TODO: Program new firmware to EEPROM (if crc and size matches)
 

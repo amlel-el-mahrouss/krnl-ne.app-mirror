@@ -56,8 +56,9 @@ inline constexpr auto kDriverName = ".drvr";
 /// @note This is ProcessSanitizer specific.
 inline constexpr auto kProsanName = ".pros";
 
+/// @brief Exec ptr alias.
 using ZxdExecPtr = ZxdExec*;
-
+/// @brief Exec stub alias.
 using ZxdStubPtr = ZxdStub*;
 
 }  // namespace Kernel

@@ -9,11 +9,11 @@
     "./"
   ],
   "sources_path": [
-    "*.cc",
+    "*.cpp",
     "*.S",
-    "../../src/HEL/AMD64/*.cc",
+    "../../src/HEL/AMD64/*.cpp",
     "../../src/HEL/AMD64/*.S",
-    "../../src/*.cc"
+    "../../src/*.cpp"
   ],
   "output_name": "net.efi",
   "compiler_flags": [

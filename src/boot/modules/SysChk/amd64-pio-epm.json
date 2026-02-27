@@ -9,14 +9,14 @@
     "./"
   ],
   "sources_path": [
-    "*.cc",
+    "*.cpp",
     "*.S",
-    "../../src/HEL/AMD64/BootATA.cc",
-    "../../src/HEL/AMD64/BootPlatform.cc",
+    "../../src/HEL/AMD64/BootATA.cpp",
+    "../../src/HEL/AMD64/BootPlatform.cpp",
     "../../src/HEL/AMD64/BootAPI.S",
-    "../../src/BootTextWriter.cc",
-    "../../src/BootSupport.cc",
-    "../../src/New+Delete.cc"
+    "../../src/BootTextWriter.cpp",
+    "../../src/BootSupport.cpp",
+    "../../src/New+Delete.cpp"
   ],
   "output_name": "chk.efi",
   "compiler_flags": [

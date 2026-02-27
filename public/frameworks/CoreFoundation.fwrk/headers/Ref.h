@@ -1,5 +1,4 @@
-
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -62,7 +61,7 @@ class CFRef final CF_OBJECT {
 /// @brief CFNonNullRef class for non-null reference counting.
 /// ================================================================================
 template <typename T>
-class CFNonNullRef final {
+class CFNonNullRef final CF_OBJECT {
  public:
   CFNonNullRef()        = delete;
   CFNonNullRef(nullPtr) = delete;

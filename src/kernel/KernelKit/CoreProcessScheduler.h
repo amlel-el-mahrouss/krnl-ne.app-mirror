@@ -48,7 +48,7 @@ enum struct TreeKind : UInt32 {
 };
 
 template <typename T>
-struct ProcessHeapTree {
+struct ProcessHeapTree final {
   static constexpr auto kHeap    = true;
   static constexpr auto kFile    = false;
   static constexpr auto kSpecial = false;
@@ -67,7 +67,7 @@ struct ProcessHeapTree {
 };
 
 template <typename T>
-struct ProcessFileTree {
+struct ProcessFileTree final {
   static constexpr auto kHeap    = false;
   static constexpr auto kFile    = true;
   static constexpr auto kSpecial = false;
@@ -88,7 +88,7 @@ struct ProcessFileTree {
 };
 
 template <typename T>
-struct ProcessSpecialTree {
+struct ProcessSpecialTree final {
   static constexpr auto kHeap    = false;
   static constexpr auto kFile    = false;
   static constexpr auto kSpecial = true;

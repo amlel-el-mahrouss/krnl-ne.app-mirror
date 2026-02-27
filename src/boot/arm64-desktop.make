@@ -74,9 +74,9 @@ endif
 compile:
 	$(RESCMD)
 	$(CC_GNU) $(NE_MODEL) $(STANDALONE_MACRO) $(FLAG_GNU) $(DEBUG) \
-	$(wildcard src/HEL/ARM64/*.cc) \
+	$(wildcard src/HEL/ARM64/*.cpp) \
 	$(wildcard src/HEL/ARM64/*.S) \
-	$(wildcard src/*.cc)
+	$(wildcard src/*.cpp)
 
 .PHONY: run
 run:

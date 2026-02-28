@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -8,6 +8,7 @@
 #include <KernelKit/DriveMgr.h>
 
 namespace Kernel {
+
 /// @brief Read from IFS disk.
 /// @param Mnt mounted interface.
 /// @param DrvTrait drive info
@@ -21,6 +22,7 @@ Int32 fs_ifs_read(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 /// @param DrvIndex drive index.
 /// @return Status code
 Int32 fs_ifs_write(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
+    
 }  // namespace Kernel
 
 #endif

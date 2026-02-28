@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
@@ -12,7 +12,7 @@
 #define kNeDMAPoolStart (__nekernel_dma_pool_start)
 #define kNeDMAPoolSize (__nekernel_dma_pool_size)
 
-#define kNeDMABestAlign (8)
+#define kNeDMABestAlign (__nekernel_dma_best_align)
 
 namespace Kernel {
 

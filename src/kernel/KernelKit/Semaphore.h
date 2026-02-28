@@ -1,9 +1,9 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#ifndef KERNELKIT_TLS_H
-#define KERNELKIT_TLS_H
+#ifndef KERNELKIT_SEMAPHORE_H
+#define KERNELKIT_SEMAPHORE_H
 
 /// @author Amlal El Mahrouss
 /// @file Semaphore.h
@@ -68,7 +68,7 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 tim
     return false;
   }
 
-  if (timeout < 1) {
+  if (timeout == 0) {
     err_global_get() = kErrorTimeout;
 
     return false;
@@ -110,4 +110,4 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 tim
 
 }  // namespace Kernel
 
-#endif  // !KERNELKIT_TLS_H
+#endif  // !KERNELKIT_SEMAPHORE_H

@@ -13,7 +13,7 @@
 
 /// @author Amlal El Mahrouss
 /// @file Server.h
-/// @brief libMsg LISP system.
+/// @brief The libMsg LISP system.
 
 struct LIBMSG_EXPR;
 

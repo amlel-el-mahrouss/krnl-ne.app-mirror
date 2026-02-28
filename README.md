@@ -52,7 +52,7 @@ cd nekernel
 - `src/libMsg/` — NeKernel OpenMSG framework
 - `public/tools/` — CLI tools (mkfs, fsck, open, manual, etc.)
 - `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)
-- `docs/` — Specifications, design docs, and diagrams
+- `doc/` — Specifications, design docs, and diagrams
 
 ---
 
@@ -65,8 +65,8 @@ cd nekernel
 
 ## Documentation
 
-- [Documentation](https://docs.nekernel.org/)
-- [Specifications](docs/tex/)
+- [Documentation](https://docs.src.nekernel.org/)
+- [Specifications](doc/tex/)
 
 ---
 

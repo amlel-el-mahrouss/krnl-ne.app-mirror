@@ -18,6 +18,7 @@ The NeKernel System uses macro to configure its compilation. Some of them shall 
 - `__nekernel_halkit_include_processor` HALKit include directory for Processor.h
 - `__nekernel_dma_pool_start` NeKernel DMA pool start.
 - `__nekernel_dma_pool_size` NeKernel DMA pool size.
+- `__nekernel_dma_best_align` NeKernel Best DMA align size.
 
 ===================================
 

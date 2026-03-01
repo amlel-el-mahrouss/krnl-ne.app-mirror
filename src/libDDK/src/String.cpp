@@ -6,7 +6,7 @@
 
 ======================================== */
 
-#include <DriverKit/str.h>
+#include <DriverKit/String.h>
 
 DDK_EXTERN size_t kstrlen(const char* in) {
   if (in == nil) return 0;

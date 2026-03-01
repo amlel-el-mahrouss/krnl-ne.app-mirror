@@ -8,7 +8,7 @@
 
 ======================================== */
 
-#include <DriverKit/ddk.h>
+#include <DriverKit/DriverKit.h>
 #include <stdarg.h>
 
 /// @brief this is an internal call, do not use it.

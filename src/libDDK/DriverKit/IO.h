@@ -1,11 +1,11 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef DRIVERKIT_IO_H
 #define DRIVERKIT_IO_H
 
-#include <DriverKit/str.h>
+#include <DriverKit/String.h>
 
 /// @brief print character into UART.
 DDK_EXTERN void kputc(const char ch);

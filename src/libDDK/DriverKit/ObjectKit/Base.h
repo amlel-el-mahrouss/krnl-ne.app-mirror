@@ -5,7 +5,7 @@
 #ifndef DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
 #define DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
 
-#include <libDDK/DriverKit/macros.h>
+#include <libDDK/DriverKit/Defines.h>
 
 #define DDK_DRIVER_IMPL \
   final:                \

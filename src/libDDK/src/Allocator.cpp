@@ -6,7 +6,7 @@
 
 ======================================== */
 
-#include <DriverKit/ddk.h>
+#include <DriverKit/DriverKit.h>
 
 /**
   \brief Allocates a new heap on the Kernel's side.

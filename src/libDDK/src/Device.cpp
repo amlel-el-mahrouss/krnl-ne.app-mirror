@@ -6,8 +6,8 @@
 
 ======================================== */
 
-#include <DriverKit/dev.h>
-#include <DriverKit/str.h>
+#include <DriverKit/Device.h>
+#include <DriverKit/String.h>
 
 /// @brief Open a new binary device from path.
 DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* devicePath) {

@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#include <DriverKit/ddk.h>
+#include <DriverKit/DriverKit.h>
 
 void* operator new(size_t sz) {
   if (!sz) ++sz;

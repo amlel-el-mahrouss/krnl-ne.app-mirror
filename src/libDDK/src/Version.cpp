@@ -6,7 +6,7 @@
 
 ======================================== */
 
-#include <DriverKit/ddk.h>
+#include <DriverKit/DriverKit.h>
 
 #ifndef kDDKVersionHighest
 #define kDDKVersionHighest 1

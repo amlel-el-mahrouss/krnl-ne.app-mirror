@@ -74,7 +74,7 @@ class CFNonNullRef final CF_OBJECT {
     return fRef;
   }
 
-  CFNonNullRef& operator=(const CFNonNullRef<T>& ref) = delete;
+  CFNonNullRef& operator=(const CFNonNullRef<T>& ref) = default;
   CFNonNullRef(const CFNonNullRef<T>& ref)            = default;
 
  private:

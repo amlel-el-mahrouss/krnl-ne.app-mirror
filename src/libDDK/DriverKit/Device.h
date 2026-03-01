@@ -1,19 +1,29 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
 #ifndef DRIVERKIT_DEV_H
 #define DRIVERKIT_DEV_H
 
-#include <DriverKit/ddk.h>
+#include <DriverKit/DriverKit.h>
 
 struct _DDK_DEVICE;
 
 #define DDK_DEVICE_NAME_LEN (255)
 
+#define DDK_TYPE_SOCKET (1)
+#define DDK_TYPE_FILE (2)
+#define DDK_TYPE_DEVICE (3)
+
+#define DDK_SUB_TYPE_TCP (1)
+#define DDK_SUB_TYPE_UDP (2)
+#define DDK_SUB_TYPE_BT  (3)
+
 /// @brief Kernel Device driver.
 typedef struct _DDK_DEVICE DDK_FINAL {
   char d_name[DDK_DEVICE_NAME_LEN];     // the device name. Could be /./DEVICE_NAME/
+  int  d_type;
+  int  d_subtype;
   void* (*d_read)(void* arg, int len);  // read from device.
   void (*d_write)(void* arg, int len);
   void (*d_wait)(void);                             // write to device.

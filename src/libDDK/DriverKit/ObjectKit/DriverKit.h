@@ -5,7 +5,7 @@
 #ifndef DRIVERKIT_DDK_H
 #define DRIVERKIT_DDK_H
 
-#include <DriverKit/ObjectKit/checksum.h>
-#include <DriverKit/ObjectKit/driver_base.h>
+#include <DriverKit/ObjectKit/Checksum.h>
+#include <DriverKit/ObjectKit/Base.h>
 
 #endif

@@ -8,7 +8,7 @@
 
 ======================================== */
 
-#include <DriverKit/io.h>
+#include <DriverKit/IO.h>
 
 DDK_EXTERN void kputc(const char ch) {
   if (!ch) return;

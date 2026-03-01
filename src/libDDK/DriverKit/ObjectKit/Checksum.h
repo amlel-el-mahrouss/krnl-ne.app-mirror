@@ -5,7 +5,7 @@
 #ifndef DRIVERKIT_CHECKSUM_H
 #define DRIVERKIT_CHECKSUM_H
 
-#include <DriverKit/ObjectKit/driver_base.h>
+#include <DriverKit/ObjectKit/Base.h>
 
 namespace Kernel::DDK {
 

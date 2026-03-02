@@ -2,7 +2,7 @@
 
 ## Notice: CoreProcessScheduler paper.
 
-The CPS has been moved to WG02,for more information, clone the following repository: [https://github.com/nekernel-org/draft](https://github.com/nekernel-org/draft).
+The CPS has been moved to WG02,for more information, clone the following repository: [https://github.com/ne-foss-org/draft](https://github.com/ne-foss-org/draft).
 
 ## Recommended:
 

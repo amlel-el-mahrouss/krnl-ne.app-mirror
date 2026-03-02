@@ -1,6 +1,6 @@
 // Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
-// Official repository: https://github.com/nekernel-org/nekernel
+// Official repository: https://github.com/ne-foss-org/nekernel
 
 #ifndef __NE_KIT_INIT_LIST_H__
 #define __NE_KIT_INIT_LIST_H__

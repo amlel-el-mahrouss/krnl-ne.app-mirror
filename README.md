@@ -6,8 +6,8 @@
     <b>The NeKernel System.</b>
   </h1>
   <p>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
-    <a href="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/nekernel-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg" alt="CI"></a>
+    <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
+    <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg" alt="CI"></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
   </p>
 </div>
@@ -23,10 +23,10 @@ Join us in our [Discord](https://discord.gg/uD76Qweght), we're quite active and 
 - [MinGW](https://www.mingw-w64.org/)
 - [Clang](https://clang.llvm.org/)
 - [NASM](https://nasm.us/)
-- [NeBuild](https://github.com/nekernel-org/nebuild)
+- [NeBuild](https://github.com/ne-foss-org/nebuild)
 - CoreUtils
 - [Git](https://git-scm.com/)
-- [Nectar](https://github.com/nekernel-org/nectar)
+- [Nectar](https://github.com/ne-foss-org/nectar)
 
 ### **Building & Running**
 
@@ -80,7 +80,7 @@ cd nekernel
 ## Authors & Credits
 
 - **Amlal El Mahrouss** — Lead and Kernel Architect.
-- [Full contributor list](https://github.com/nekernel-org/nekernel/graphs/contributors)
+- [Full contributor list](https://github.com/ne-foss-org/nekernel/graphs/contributors)
 
 ---
 

@@ -10,7 +10,7 @@ identifiers:
   - type: url
     value: 'https://nekernel.org'
     description: NeKernel.org's Operating System Kernel
-repository-code: 'https://github.com/nekernel-org/nekernel'
+repository-code: 'https://github.com/ne-foss-org/nekernel'
 url: 'https://nekernel.org'
 abstract: >-
   This is NeKernel.org's Modular Operating System Kernel.

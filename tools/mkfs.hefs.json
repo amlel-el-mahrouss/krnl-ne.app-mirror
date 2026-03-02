@@ -5,7 +5,7 @@
         "../"
     ],
     "sources_path": [
-        "mkfs.hefs.cc"
+        "mkfs.hefs.cpp"
     ],
     "output_name": "./dist/mkfs.hefs",
     "cpp_macros": [

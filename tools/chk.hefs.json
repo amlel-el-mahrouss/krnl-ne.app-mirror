@@ -5,7 +5,7 @@
         "../"
     ],
     "sources_path": [
-        "chk.hefs.cc"
+        "chk.hefs.cpp"
     ],
     "output_name": "./dist/chk.hefs",
     "cpp_macros": [

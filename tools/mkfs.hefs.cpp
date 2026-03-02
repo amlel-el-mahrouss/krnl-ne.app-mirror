@@ -1,9 +1,9 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/nekernel-org/nekernel
 
-#include <tools/libmkfs/mkfs.h>
-#include <tools/libmkfs/openhefs.h>
+#include <tools/libmkfs/mkfs.hpp>
+#include <tools/libmkfs/openhefs.hpp>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>

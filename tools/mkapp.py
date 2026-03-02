@@ -45,9 +45,7 @@ def create_directory_structure(base_path, project_name):
         "compiler_path": "clang++",
         "compiler_std": "c++20",
         "headers_path": ["./", "../../../src/kernel", "../../../public/frameworks/", "../../../src/", "./"],
-        "sources_path": [
-            
-        ],
+        "sources_path": [],
         "output_name": f"./dist/{project_name}",
         "cpp_macros": [
             "kSampleFWVersion=0x0100",
@@ -56,7 +54,7 @@ def create_directory_structure(base_path, project_name):
             "__NE_SDK__"
         ]
     }
-    
+
     with open(proj_json_path, 'w') as json_file:
         json.dump(manifest, json_file, indent=4)
 
@@ -67,6 +65,8 @@ def create_directory_structure(base_path, project_name):
     with open(proj_cpp_path, 'w') as cpp_file_io:
         cpp_file_io.write(cpp_file)
 
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("HELP: mkapp.py <project_name>")
@@ -74,5 +74,8 @@ if __name__ == "__main__":
 
     base_path = os.getcwd()  # Use the current working directory as the base path
     create_directory_structure(base_path, sys.argv[1])
-    
     print("INFO: Application created successfully.")
+
+
+
+    

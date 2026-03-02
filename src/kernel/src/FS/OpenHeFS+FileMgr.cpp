@@ -156,7 +156,7 @@ NodePtr HeFileSystemMgr::CreateSwapFile(const Char* path) {
   }
 
   kout << "OpenHEFS: ERROR: Swap Files are not supported natively by OpenHeFS.\r";
-  err_local_get() = kErrorProcessFault;
+  err_local_get() = kErrorInvalidData;
 
   return nullptr;
 }
@@ -212,9 +212,9 @@ Void HeFileSystemMgr::Write(_Input NodePtr node, _Input VoidPtr data, _Input Int
 }
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _Input SizeT size) {
-  NE_UNUSED(node);
   NE_UNUSED(flags);
-  NE_UNUSED(size);
+
+  if (!node || !size) return nullptr;
 
   return nullptr;
 }

@@ -33,7 +33,7 @@ Join us in our [Discord](https://discord.gg/uD76Qweght), we're quite active and 
 Please fork, and clone the repository. Then follow those steps:
 
 ```sh
-git clone -j8 https://github.com/<your-username>/nekernel.git
+git clone -j8 https://github.com/ne-foss-org/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh
@@ -105,6 +105,6 @@ NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 <div align="center">
   <sub>
-    &copy; 2023-2026 Amlal El Mahrouss & NeKernel Authors. Licensed under the Apache 2.0 license.
+    &copy; 2023-2026 Amlal El Mahrouss & Ne.org Authors. Licensed under the Apache 2.0 license.
   </sub>
 </div>

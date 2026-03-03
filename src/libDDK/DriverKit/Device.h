@@ -15,13 +15,20 @@ struct _DDK_DEVICE;
 #define DDK_TYPE_FILE (2)
 #define DDK_TYPE_DEVICE (3)
 
-#define DDK_SUB_TYPE_TCP (1)
-#define DDK_SUB_TYPE_UDP (2)
-#define DDK_SUB_TYPE_BT  (3)
+#define DDK_SUB_TYPE_TCP (1) /* TCP/IP */
+#define DDK_SUB_TYPE_UDP (2) /* Datagram  */
+#define DDK_SUB_TYPE_BT (3) /* Bluetooth */
+
+/// @brief This enum takes care of the network stack.
+enum {
+    DDK_NET_DO_NOT_FLUSH,
+    DDK_NET_FLUSH_NOW,
+    DDK_NET_AUTO_FLUSH,
+};
 
 /// @brief Kernel Device driver.
 typedef struct _DDK_DEVICE DDK_FINAL {
-  char d_name[DDK_DEVICE_NAME_LEN];     // the device name. Could be /./DEVICE_NAME/
+  char d_name[DDK_DEVICE_NAME_LEN];  // the device name. Could be /./DEVICE_NAME/
   int  d_type;
   int  d_subtype;
   void* (*d_read)(void* arg, int len);  // read from device.

@@ -39,7 +39,7 @@ Boolean mm_protect_ptr(VoidPtr heap_ptr);
 /// @brief Makes a Kernel page.
 /// @param heap_ptr the page pointer.
 /// @return status code
-Int32 mm_make_page(VoidPtr heap_ptr);
+    Int32 mm_control_page(VoidPtr heap_ptr, const Bool);
 
 /// @brief Overwrites and set the flags of a heap header.
 /// @param heap_ptr the pointer to update.

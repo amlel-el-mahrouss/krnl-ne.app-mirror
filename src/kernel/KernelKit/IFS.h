@@ -22,7 +22,7 @@ Int32 fs_ifs_read(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 /// @param DrvIndex drive index.
 /// @return Status code
 Int32 fs_ifs_write(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
-    
+
 }  // namespace Kernel
 
 #endif

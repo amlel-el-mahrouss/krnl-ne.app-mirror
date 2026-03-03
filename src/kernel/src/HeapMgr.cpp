@@ -15,7 +15,7 @@
  Revision History:
   10/8/24: FIX: Fix useless long name, alongside a new WR (WriteRead) field.
   20/10/24: FIX: Fix mm_new_ and mm_delete_ APIs inside HeapMgr.h header. (amlal)
-    27/01/25: REFACTOR: Reworked code as the memory manager.
+  27/01/25: REFACTOR: Reworked code as the memory manager.
   25/03/25: REFACTOR: Refactor HeapMgr code and log freed address location.
 
  ======================================== */
@@ -38,34 +38,24 @@ namespace Detail {
   struct PACKED MM_INFORMATION_BLOCK final {
     ///! @brief 32-bit value which contains the magic number of the heap.
     UInt32 fMagic : 24;
-
     ///! @brief Is the heap present?
     UInt8 fPresent : 1;
-
     /// @brief Is this value writable?
     UInt8 fWriteRead : 1;
-
     /// @brief Is this value owned by the user?
     UInt8 fUser : 1;
-
     /// @brief Is this a page pointer?
     UInt8 fPage : 1;
-
     /// @brief 32-bit CRC checksum.
     UInt32 fCRC32;
-
     /// @brief 64-bit Allocation flags.
     UInt16 fFlags;
-
     /// @brief 64-bit pointer size.
     SizeT fSize;
-
     /// @brief 64-bit target offset pointer.
     UIntPtr fOffset;
-
-    /// @brief Padding.
+    /// @brief Padding count.
     UInt32 fPad;
-
     /// @brief Padding bytes for header.
     UInt8 fPadding[kHeapMgrAlignSz];
   };
@@ -77,14 +67,8 @@ namespace Detail {
     if (!heap_ptr) return false;
 
     IntPtr base_ptr = ((IntPtr) heap_ptr) - sizeof(Detail::MM_INFORMATION_BLOCK);
-
     /// Add that check in case we're having an integer underflow. ///
-
-    if (base_ptr < 0) {
-      return false;
-    }
-
-    return true;
+    return base_ptr < 1;
   }
 
   typedef MM_INFORMATION_BLOCK* MM_INFORMATION_BLOCK_PTR;
@@ -101,7 +85,6 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   auto sz_fix = sz;
 
   if (sz_fix == 0) return nullptr;
-
   sz_fix += sizeof(Detail::MM_INFORMATION_BLOCK);
 
   auto wrapper = kPageMgr.Request(wr, user, No, sz_fix, pad_amount);
@@ -109,6 +92,8 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
       reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>(wrapper.VirtualAddress() +
                                                          sizeof(Detail::MM_INFORMATION_BLOCK));
+
+  if (!heap_info_ptr) return nullptr;
 
   heap_info_ptr->fSize  = sz_fix;
   heap_info_ptr->fMagic = kHeapMgrMagic;
@@ -132,10 +117,10 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   return result;
 }
 
-/// @brief Makes a page heap.
+/// @brief Controls the page's heap.
 /// @param heap_ptr the pointer to make a page heap.
 /// @return kErrorSuccess if successful, otherwise an error code.
-_Output Int32 mm_make_page(VoidPtr heap_ptr) {
+  _Output Int32 mm_ctl_page(VoidPtr heap_ptr, const Bool enable) {
   if (Detail::mm_check_ptr_address(heap_ptr) == No) return kErrorHeapNotPresent;
 
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
@@ -144,11 +129,7 @@ _Output Int32 mm_make_page(VoidPtr heap_ptr) {
 
   if (!heap_info_ptr) return kErrorHeapNotPresent;
 
-  heap_info_ptr->fPage = true;
-
-  (Void)(kout << "HeapMgr: Registered page from heap address: "
-              << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
-
+  heap_info_ptr->fPage = enable;
   return kErrorSuccess;
 }
 

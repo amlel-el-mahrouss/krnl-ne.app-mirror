@@ -219,13 +219,21 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _
   return nullptr;
 }
 
+  /// @note name is not used in OpenHeFS to mark data offsets. That's an NeFS-ism.
 Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input VoidPtr data,
                             _Input Int32 flags, _Input SizeT size) {
-  NE_UNUSED(node);
-  NE_UNUSED(flags);
-  NE_UNUSED(size);
+  //NE_UNUSED(node);
+  //NE_UNUSED(flags);
+  //NE_UNUSED(size);
   NE_UNUSED(name);
-  NE_UNUSED(data);
+  //NE_UNUSED(data);
+
+  if (!node) return;
+  if (!flags) return;
+  if (!size) return;
+  if (!data) return;
+
+
 }
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr node,
@@ -239,8 +247,7 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
 }
 
 _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
-  NE_UNUSED(node);
-  NE_UNUSED(off);
+  if (!node || !off) return false;
 
   return false;
 }
@@ -249,16 +256,18 @@ _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
 /// @param node
 /// @return kFileMgrNPos if invalid, else current offset.
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
-  NE_UNUSED(node);
-  return kFileMgrNPos;
+  if (!node) return kFileMgrNPos;
+  SizeT pos = 0ULL;
+  return pos;
 }
 
 /// @brief Rewinds the catalog
 /// @param node
 /// @return False if invalid, nah? calls Seek(node, 0).
 _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
-  NE_UNUSED(node);
-  return kFileMgrNPos;
+  if (!node) return kFileMgrNPos;
+
+  return 0;
 }
 
 /// @brief Returns the parser of OpenHeFS.

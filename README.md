@@ -37,7 +37,7 @@ git clone -j8 https://github.com/ne-foss-org/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh
-./scripts/debug_ahci_x64.sh   # For debug generic AHCI target (QEMU)
+./scripts/debug_ahci_x64.sh   # For debug generic AHCI target (QEMU, USB)
 ```
 
 ---

@@ -17,13 +17,13 @@ struct _DDK_DEVICE;
 
 #define DDK_SUB_TYPE_TCP (1) /* TCP/IP */
 #define DDK_SUB_TYPE_UDP (2) /* Datagram  */
-#define DDK_SUB_TYPE_BT (3) /* Bluetooth */
+#define DDK_SUB_TYPE_BT (3)  /* Bluetooth */
 
 /// @brief This enum takes care of the network stack.
 enum {
-    DDK_NET_DO_NOT_FLUSH,
-    DDK_NET_FLUSH_NOW,
-    DDK_NET_AUTO_FLUSH,
+  DDK_NET_DO_NOT_FLUSH,
+  DDK_NET_FLUSH_NOW,
+  DDK_NET_AUTO_FLUSH,
 };
 
 /// @brief Kernel Device driver.

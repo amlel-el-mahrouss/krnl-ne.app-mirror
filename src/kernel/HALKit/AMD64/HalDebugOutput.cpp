@@ -27,6 +27,7 @@ namespace Detail {
   bool hal_serial_init() {
     if (kState == kStateReady || kState == kStateTransmit) return true;
 
+#ifdef __DEBUG__
     HAL::rt_out8(PORT + 1, 0x00);  // Disable all interrupts
     HAL::rt_out8(PORT + 3, 0x80);  // Enable DLAB (set baud rate divisor)
     HAL::rt_out8(PORT + 0, 0x03);  // Set divisor to 3 (lo byte) 38400 baud
@@ -43,11 +44,12 @@ namespace Detail {
       return false;
     }
 
-    kState = kStateReady;
-
     // If serial is not faulty set it in normal operation mode
     // (not-loopback with IRQs enabled and OUT#1 and OUT#2 bits enabled)
     HAL::rt_out8(PORT + 4, 0x0F);
+#endif
+
+    kState = kStateReady;
 
     return true;
   }
@@ -88,7 +90,7 @@ EXTERN_C void ke_utf_io_write(IDevice<const Utf8Char*>* obj, const Utf8Char* byt
     tmp_str[0] = (bytes[index] > 127) ? '?' : bytes[index];
     tmp_str[1] = 0;
 
-    cg_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
+    cg_render_string(tmp_str, kY, kX, RGB(0x00, 0x00, 0x00));
 
     if (bytes[index] == '\r') {
       kY += kFontSizeY;
@@ -144,7 +146,7 @@ EXTERN_C void ke_io_write(IDevice<const Char*>* obj, const Char* bytes) {
     tmp_str[0] = bytes[index];
     tmp_str[1] = 0;
 
-    cg_render_string(tmp_str, kY, kX, RGB(0xff, 0xff, 0xff));
+    cg_render_string(tmp_str, kY, kX, RGB(0x00, 0x00, 0x00));
 
     if (bytes[index] == '\r') {
       kY += kFontSizeY;

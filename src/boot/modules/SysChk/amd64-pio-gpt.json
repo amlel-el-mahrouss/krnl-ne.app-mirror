@@ -34,6 +34,7 @@
     "__ATA_PIO__",
     "__NE_VEPM__",
     "__nekernel_max_cores=8",
+    "__nekernel_dma_best_align=8",
     "__nekernel_dma_pool_start=0x1000000",
     "__nekernel_dma_pool_size=0x1000000",
     "__nekernel_halkit_include_processor=\"<HALKit/AMD64/Processor.h>\"",

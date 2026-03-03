@@ -185,29 +185,7 @@ Int32 BootThread::Start(HEL::BootInfoHeader* handover, Bool own_stack) {
   writer.Write("BootZ: Starting: ").Write(fBlobName).Write("\r");
   writer.Write("BootZ: Handover address: ").Write((UIntPtr) fHandover).Write("\r");
 
-  if (own_stack) {
-    writer.Write("BootZ: Using it's own stack.\r");
-    writer.Write("BootZ: Stack address: ").Write((UIntPtr) &fStack[kBootThreadSz - 1]).Write("\r");
-    writer.Write("BootZ: Stack size: ").Write(kBootThreadSz).Write("\r");
-
-    fHandover->f_StackTop = &fStack[kBootThreadSz - 1];
-    fHandover->f_StackSz  = kBootThreadSz;
-
-    auto ret = rt_jump_to_address(fStartAddress, fHandover, &fStack[kBootThreadSz - 1]);
-
-    // we don't need the stack anymore.
-
-    delete[] fStack;
-    fStack = nullptr;
-
-    return ret;
-  } else {
-    writer.Write("BootZ: Using the bootloader's stack.\r");
-
-    return reinterpret_cast<HEL::HandoverProc>(fStartAddress)(fHandover);
-  }
-
-  return kEfiFail;
+  return reinterpret_cast<HEL::HandoverProc>(fStartAddress)(fHandover);
 }
 
 const Char* BootThread::GetName() {

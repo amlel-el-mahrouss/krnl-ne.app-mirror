@@ -30,7 +30,7 @@ EXTERN_C Int32 SysChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
   Boot::BDiskFormatFactory<Boot::BootDeviceSATA> partition_factory;
 #endif
 
-  if (partition_factory.IsPartitionValid()) return kEfiOk;
+  if (!partition_factory.IsPartitionValid()) return kEfiFail;
 
   return partition_factory.Format(kMachineModel);
 }

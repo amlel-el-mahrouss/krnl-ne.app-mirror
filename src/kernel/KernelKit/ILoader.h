@@ -25,9 +25,9 @@ class ILoader {
 
  public:
   virtual _Output ErrorOr<VoidPtr> GetBlob() { return ErrorOr<VoidPtr>{}; }
-  virtual _Output const Char*      AsString() { return "(null)"; }
-  virtual _Output const Char*      MIME() { return "*/*"; }
-  virtual _Output const Char*      Path() { return "(null)"; }
+  virtual _Output const Char* AsString() { return "(null)"; }
+  virtual _Output const Char* MIME() { return "*/*"; }
+  virtual _Output const Char* Path() { return "(null)"; }
   virtual _Output ErrorOr<VoidPtr> FindStart() { return ErrorOr<VoidPtr>{}; }
   virtual _Output ErrorOr<VoidPtr> FindSymbol(_Input const Char*, _Input Int32) {
     return ErrorOr<VoidPtr>{};

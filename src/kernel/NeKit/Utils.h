@@ -54,9 +54,9 @@ inline constexpr SizeT oe_string_len(const CharType* str) {
   if (!str) return 0;
 
 #if __cplusplus == 202302L
-  if consteval {
-    return ARRAY_SIZE(str);
-  } else {
+  if
+    consteval { return ARRAY_SIZE(str); }
+  else {
     SizeT len{0};
     while (str[len] != 0) ++len;
     return len;

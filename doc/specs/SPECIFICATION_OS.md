@@ -32,7 +32,7 @@
 
 ===================================
 
-# 2: The Filesystem (NeFS, or OpenHeFS)
+# 2: The Filesystem (NeFS)
 
 ===================================
 

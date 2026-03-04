@@ -263,7 +263,7 @@ namespace Detail {
   STATIC _Output BOOL hefsi_update_ind_status(HEFS_BOOT_NODE* boot, DriveTrait* mnt,
                                               const Utf8Char* dir_name, UInt16 flags,
                                               const BOOL delete_or_create) {
-    if (mnt) {
+    if (mnt && boot) {
       HEFS_INDEX_NODE_DIRECTORY* tmpdir =
           (HEFS_INDEX_NODE_DIRECTORY*) mm_alloc_ptr(sizeof(HEFS_INDEX_NODE_DIRECTORY), Yes, No);
 
@@ -462,7 +462,7 @@ namespace Detail {
                                                                    const Utf8Char* dir_name,
                                                                    const Utf8Char* file_name,
                                                                    UInt8           kind) {
-    if (mnt) {
+    if (mnt && boot) {
       if (boot->fStartIND > boot->fEndIND) return nullptr;
       if (boot->fStartIN > boot->fEndIN) return nullptr;
 
@@ -751,6 +751,8 @@ namespace Kernel {
 /// @return If it was sucessful, see err_local_get().
 _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input const Int32 flags,
                                         _Input const Utf8Char* vol_name) {
+  if (!mnt) return NO;
+
   // Verify Disk.
   mnt->fVerify(mnt->fPacket);
 
@@ -859,6 +861,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
 
   mnt->fOutput(mnt->fPacket);
 
+#if defined(__NE_VERBOSE_HEFS__)
   (Void)(kout << "Protocol: " << mnt->fProtocol() << kendl);
   (Void)(kout8 << u8"Volume Name: " << boot->fVolName << kendl8);
   (Void)(kout << "Start IND: " << hex_number(boot->fStartIND) << kendl);
@@ -870,6 +873,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
   (Void)(kout << "Number of IND: " << hex_number(boot->fINDCount) << kendl);
   (Void)(kout << "Sector Size: " << hex_number(boot->fSectorSize) << kendl);
   (Void)(kout << "Drive Kind: " << Detail::hefs_drive_kind_to_string(boot->fDiskKind) << kendl);
+#endif
 
   if (!mnt->fPacket.fPacketGood) {
     err_global_get() = kErrorDiskIsCorrupted;

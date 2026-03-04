@@ -1,6 +1,6 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
-// Official repository: https://github.com/ne-foss-org/nekernel
+// Official repository: https://github.com/ne-foss-org/kernel
 
 #include <KernelKit/UserProcessScheduler.h>
 
@@ -12,12 +12,9 @@ UserProcessTeam::UserProcessTeam() {
     this->mProcessList[i].RTime  = 0;
     this->mProcessList[i].UTime  = 0;
     this->mProcessList[i].Status = ProcessStatusKind::kKilled;
-
-    auto team{this->mProcessList[i].GetParentTeam()};
-    team = this;
-    (void) team;
   }
 
+  // se the cursor to zero.
   this->mProcessCur = 0UL;
 }
 
@@ -36,6 +33,7 @@ Array<UserProcess, kSchedProcessLimitPerTeam>& UserProcessTeam::AsArray() {
 /***********************************************************************************/
 
 ProcessID& UserProcessTeam::Id() {
+  MUST_PASS(mTeamId >= 0);
   return this->mTeamId;
 }
 

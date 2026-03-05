@@ -72,7 +72,7 @@ struct DriveTrait final {
   Void (*fOutput)(DrivePacket& packet){nullptr};
   Void (*fVerify)(DrivePacket& packet){nullptr};
   Void (*fInit)(DrivePacket& packet){nullptr};
-  const Char* (*fProtocol)(Void){nullptr};
+  const Char* (*fProtocol)(Void) {nullptr};
 };
 
 namespace Probe {

@@ -63,10 +63,10 @@ class HardwareThread final {
   BOOL IsWakeup();
 
  public:
-  HAL::StackFramePtr StackFrame();
+  HAL::StackFramePtr        StackFrame();
   _Output const ThreadKind& Kind();
   BOOL                      IsBusy();
-  _Output const ThreadID& ID();
+  _Output const ThreadID&   ID();
 
  private:
   HAL::StackFramePtr fStack{};
@@ -101,7 +101,7 @@ class HardwareThreadScheduler final : public ISchedulable {
  public:
   Ref<HardwareThread*> operator[](SizeT idx);
   bool                 operator!();
-                       operator bool();
+  operator bool();
 
   Bool IsUser() override { return Yes; }
 

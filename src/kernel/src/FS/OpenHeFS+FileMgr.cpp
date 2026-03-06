@@ -247,6 +247,9 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
   NE_UNUSED(name);
 
   UInt8* retBlob = new UInt8[sz];
+
+  if (!retBlob) return nullptr;
+
   rt_set_memory(retBlob, 0, sz);
 
   static IMountpoint mnt;

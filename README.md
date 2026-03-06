@@ -22,9 +22,9 @@ Love our work? Give us a star!
 
 Join us in our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!
 
-## Getting Started
+## Getting Started:
 
-### **Requirements**
+### **Requirements**:
 
 - [MinGW](https://www.mingw-w64.org/)
 - [Clang](https://clang.llvm.org/)

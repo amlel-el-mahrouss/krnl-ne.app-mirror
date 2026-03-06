@@ -9,6 +9,7 @@
 #include <NeKit/Crc32.h>
 #include <NeKit/PageMgr.h>
 #include <NeKit/Utils.h>
+#include <KernelKit/LockDelegate.h>
 
 /* ========================================
 
@@ -82,9 +83,15 @@ STATIC PageMgr kPageMgr;
 /// @param user User enable bit.
 /// @return The newly allocated pointer.
 _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
+  static Bool locked = false;
+  LockDelegate<255> lock{&locked};
+
   auto sz_fix = sz;
 
   if (sz_fix == 0) return nullptr;
+
+  locked = true;
+
   sz_fix += sizeof(Detail::MM_INFORMATION_BLOCK);
 
   auto wrapper = kPageMgr.Request(wr, user, No, sz_fix, pad_amount);
@@ -93,7 +100,10 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
       reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>(wrapper.VirtualAddress() +
                                                          sizeof(Detail::MM_INFORMATION_BLOCK));
 
-  if (!heap_info_ptr) return nullptr;
+  if (!heap_info_ptr) {
+    locked = false;
+    return nullptr;
+  }
 
   heap_info_ptr->fSize  = sz_fix;
   heap_info_ptr->fMagic = kHeapMgrMagic;
@@ -113,6 +123,8 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   if (result)
     (Void)(kout << "HeapMgr: Registered heap address: "
                 << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
+
+  locked = false;
 
   return result;
 }
@@ -198,6 +210,8 @@ _Output Int32 mm_free_ptr(VoidPtr heap_ptr) {
     kPageMgr.Free(pte_address);
 
     return kErrorSuccess;
+  } else {
+    ke_panic(RUNTIME_CHECK_TLS, "Double-Free Detected on HeapMgr, aborting.");
   }
 
   return kErrorInternal;
@@ -227,9 +241,7 @@ _Output Boolean mm_protect_ptr(VoidPtr heap_ptr) {
         reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>((UIntPtr) heap_ptr -
                                                            sizeof(Detail::MM_INFORMATION_BLOCK));
 
-    /// TODO: if valid, present and is heap header, then compute crc32
     if (heap_info_ptr && heap_info_ptr->fPresent && kHeapMgrMagic == heap_info_ptr->fMagic) {
-      /// TODO: Protect only the header, information in it may change.
       heap_info_ptr->fCRC32 =
           ke_calculate_crc32((Char*) heap_info_ptr, sizeof(Detail::MM_INFORMATION_BLOCK));
 

@@ -17,6 +17,7 @@ STATIC IFilesystemMgr* kMountedFilesystem = nullptr;
 /// @brief FilesystemMgr getter.
 /// @return The mounted filesystem.
 _Output IFilesystemMgr* IFilesystemMgr::GetMounted() {
+  MUST_PASS(kMountedFilesystem);
   return kMountedFilesystem;
 }
 

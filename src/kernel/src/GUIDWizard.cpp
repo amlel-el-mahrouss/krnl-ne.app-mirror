@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -37,7 +37,7 @@ auto cf_make_sequence(const Array<UInt32, 10>& uuidSeq) -> Ref<GUIDSequence*> {
 // @brief Tries to make a guid out of a string.
 // This function is not complete for now
 auto cf_try_guid_to_string(Ref<GUIDSequence*>& seq) -> ErrorOr<Ref<KString>> {
-  Char buf[kGUIDSize];
+  Char buf[kGUIDSize] = {0};
 
   for (SizeT index = 0; index < 16; ++index) {
     buf[index] = seq.Leak()->fU8[index] + kGUIDAsciiBegin;

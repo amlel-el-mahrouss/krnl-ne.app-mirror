@@ -27,7 +27,7 @@ namespace Kernel {
 using SemaphoreArr = UInt64[kSemaphoreCount];
 
 /// @brief Checks if the semaphore is valid.
-inline bool rtl_sem_is_valid(const SemaphoreArr& sem, UInt64 owner = 0) {
+inline bool rtl_sem_is_valid(const SemaphoreArr& sem, const UInt64& owner = 0) {
   return sem[kSemaphoreOwnerIndex] == owner && sem[kSemaphoreCountIndex] > 0;
 }
 
@@ -45,10 +45,10 @@ inline bool rtl_sem_release(SemaphoreArr& sem) {
 /// @param sem the semaphore array to use.
 /// @param owner the owner to set, could be anything identifitable.
 /// @return
-inline bool rtl_sem_acquire(SemaphoreArr& sem, const UInt64 owner) {
+inline bool rtl_sem_acquire(SemaphoreArr& sem, const UInt64& owner) {
   if (!owner) {
     err_global_get() = kErrorInvalidData;
-    return false;  // Invalid owner
+    return false;  // Invalid owner, return false and set KPC.
   }
 
   sem[kSemaphoreOwnerIndex] = owner;
@@ -62,7 +62,7 @@ inline bool rtl_sem_acquire(SemaphoreArr& sem, const UInt64 owner) {
 /// @param timeout
 /// @param condition condition pointer.
 /// @return
-inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64 owner, const UInt64 timeout,
+inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64& owner, const UInt64& timeout,
                          bool& condition) {
   if (!rtl_sem_is_valid(sem, owner)) {
     return false;

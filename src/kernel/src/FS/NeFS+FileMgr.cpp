@@ -49,6 +49,7 @@ NodePtr NeFileSystemMgr::Create(_Input const Char* path) {
     kout << "NeFS: Create called with null or empty path\n";
     return nullptr;
   }
+  
   return rtl_node_cast(mParser->CreateCatalog(path));
 }
 
@@ -60,6 +61,7 @@ NodePtr NeFileSystemMgr::CreateDirectory(const Char* path) {
     kout << "NeFS: CreateDirectory called with null or empty path\n";
     return nullptr;
   }
+  
   return rtl_node_cast(mParser->CreateCatalog(path, 0, kNeFSCatalogKindDir));
 }
 
@@ -71,6 +73,7 @@ NodePtr NeFileSystemMgr::CreateAlias(const Char* path) {
     kout << "NeFS: CreateAlias called with null or empty path\n";
     return nullptr;
   }
+  
   return rtl_node_cast(mParser->CreateCatalog(path, 0, kNeFSCatalogKindAlias));
 }
 
@@ -115,10 +118,12 @@ _Output NodePtr NeFileSystemMgr::Open(_Input const Char* path, _Input const Char
     kout << "NeFS: Open called with null or empty path\n";
     return nullptr;
   }
+  
   if (!r || *r == 0) {
     kout << "NeFS: Open called with null or empty mode string\n";
     return nullptr;
   }
+  
   auto catalog = mParser->GetCatalog(path);
   if (!catalog) {
     kout << "NeFS: Open could not find catalog for path\n";

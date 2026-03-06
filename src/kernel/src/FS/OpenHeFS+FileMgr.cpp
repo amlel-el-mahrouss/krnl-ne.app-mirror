@@ -222,18 +222,21 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _
   /// @note name is not used in OpenHeFS to mark data offsets. That's an NeFS-ism.
 Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input VoidPtr data,
                             _Input Int32 flags, _Input SizeT size) {
-  //NE_UNUSED(node);
+  NE_UNUSED(node);
   //NE_UNUSED(flags);
   //NE_UNUSED(size);
-  NE_UNUSED(name);
+  //NE_UNUSED(name);
   //NE_UNUSED(data);
 
-  if (!node) return;
   if (!flags) return;
   if (!size) return;
   if (!data) return;
+  if (!name) return;
 
-
+  static IMountpoint mnt;
+  io_construct_main_drive(mnt.A());
+  
+  mParser->INodeManip(&mnt.A(), (VoidPtr)data, size, u8"/", (Char8*)name, 0, NO);
 }
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr node,
@@ -243,31 +246,38 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
   NE_UNUSED(sz);
   NE_UNUSED(name);
 
-  return nullptr;
+  UInt8* retBlob = new UInt8[sz];
+  rt_set_memory(retBlob, 0, sz);
+
+  static IMountpoint mnt;
+  io_construct_main_drive(mnt.A());
+
+  mParser->INodeManip(&mnt.A(), (VoidPtr)retBlob, sz, u8"/", (Char8*)name, 0, YES);
+  
+  return retBlob;
 }
 
 _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
-  if (!node || !off) return false;
-
-  return false;
+  if (this->Tell(node) == kFileMgrNPos) return false;
+  return off > 0;
 }
 
 /// @brief Tell current offset within catalog.
-/// @param node
+/// @param node The HeFS node we need.
 /// @return kFileMgrNPos if invalid, else current offset.
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
   if (!node) return kFileMgrNPos;
   SizeT pos = 0ULL;
+  
   return pos;
 }
 
 /// @brief Rewinds the catalog
-/// @param node
+/// @param node The needed HeFS node.
 /// @return False if invalid, nah? calls Seek(node, 0).
 _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
-  if (!node) return kFileMgrNPos;
-
-  return 0;
+  if (!node) return false;
+  return true;
 }
 
 /// @brief Returns the parser of OpenHeFS.

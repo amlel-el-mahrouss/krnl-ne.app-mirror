@@ -12,6 +12,12 @@
   </p>
 </div>
 
+## Helping:
+
+Love our work? Give us a star!
+
+![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/kernel)
+
 ## Community:
 
 Join us in our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!

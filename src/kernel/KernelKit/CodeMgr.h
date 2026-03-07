@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -18,6 +18,8 @@ namespace Kernel {
 /// @brief Image process entrypoint.
 typedef void (*rtl_start_kind)(void);
 
+typedef void (*rtl_kstart_kind)(VoidPtr);
+
 /// @brief C++ Constructor entrypoint.
 typedef void (*rtl_cxx_ctor_kind)(void);
 
@@ -29,7 +31,7 @@ typedef void (*rtl_cxx_dtor_kind)(void);
 /// accessible.
 /// @param main the start of the process.
 /// @return The team's process id.
-BOOL rtl_create_kernel_task(HAL::StackFramePtr main, const KID kid);
+BOOL rtl_create_kernel_task(KernelTask& main, const KID& kid);
 
 /// @brief Executes a new process from a function. User code only.
 /// @note This sets up a new stack, anything on the main function that calls the Kernel will not be

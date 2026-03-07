@@ -178,6 +178,8 @@ _Output UInt64 mm_get_ptr_flags(VoidPtr heap_ptr) {
 /// @param heap_ptr the pointer.
 /// @return
 _Output Int32 mm_free_ptr(VoidPtr heap_ptr) {
+  if (!heap_ptr) return kErrorHeapNotPresent;
+
   if (Detail::mm_check_ptr_address(heap_ptr) == No) return kErrorHeapNotPresent;
 
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =

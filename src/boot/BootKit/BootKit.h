@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -257,8 +257,8 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
 #if defined(BOOTZ_EPM_SUPPORT)
   EPM_PART_BLOCK* epm_boot = (EPM_PART_BLOCK*) RTL_ALLOCA(sizeof(EPM_PART_BLOCK));
 
-  const auto kFsName    = "NeKernel";
-  const auto kBlockName = " NeKernelOS";
+  const auto kFsName    = "Ne";
+  const auto kBlockName = " NeSystem";
 
   epm_boot->FsVersion = 0;
   epm_boot->LbaStart  = sizeof(EPM_PART_BLOCK);

@@ -11,7 +11,6 @@
 
 #define kNeDMAPoolStart (__nekernel_dma_pool_start)
 #define kNeDMAPoolSize (__nekernel_dma_pool_size)
-
 #define kNeDMABestAlign (__nekernel_dma_best_align)
 
 namespace Kernel {

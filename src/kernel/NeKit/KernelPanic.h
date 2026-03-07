@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -60,8 +60,13 @@ enum RUNTIME_CHECK {
 typedef enum RUNTIME_CHECK RTL_RUNTIME_CHECK;
 
 namespace Kernel {
+
+/// @brief Raises a runtime-check for the system, it failing, the system will raise a panic.
 void ke_runtime_check(bool expr, const Char* file, const Char* line);
+
+/// @brief Stops the system from running when unrecoverable.
 void ke_panic(const Int32& id, const Char* message = nullptr);
+
 }  // namespace Kernel
 
 #endif

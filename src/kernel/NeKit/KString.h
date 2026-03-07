@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -22,6 +22,8 @@ class KBasicString final {
     fDataSz = MinSz;
 
     fData = new CharKind[fDataSz];
+    if (!fData) return;
+
     MUST_PASS(fData);
 
     rt_set_memory(fData, 0, fDataSz);
@@ -29,6 +31,8 @@ class KBasicString final {
 
   KBasicString(const CharKind* In) : fDataSz(oe_string_len(In)) {
     fData = new CharKind[fDataSz];
+    if (!fData) return;
+
     MUST_PASS(fData);
 
     rt_set_memory(fData, 0, fDataSz);
@@ -39,6 +43,8 @@ class KBasicString final {
     MUST_PASS(fDataSz > 1);
 
     fData = new CharKind[fDataSz];
+    if (!fData) return;
+
     MUST_PASS(fData);
 
     rt_set_memory(fData, 0, fDataSz);
@@ -74,8 +80,8 @@ class KBasicString final {
 
  private:
   CharKind* fData{nullptr};
-  Size      fDataSz{0};
-  Size      fCur{0};
+  SizeT     fDataSz{};
+  SizeT     fCur{};
 
   friend class KStringBuilder;
 };

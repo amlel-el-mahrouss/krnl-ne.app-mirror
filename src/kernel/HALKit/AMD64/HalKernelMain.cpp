@@ -156,7 +156,8 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   PEFLoader ldr("/system/init.out");
 
   if (ldr.IsLoaded()) rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
-
+  else ke_panic(RUNTIME_CHECK_PROCESS, "RuntimeCheck: Invalid Process Data!");
+  
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 
   while (YES);

@@ -27,8 +27,8 @@ class Stream final {
 
   template <typename Data>
   friend Stream<StreamTrait, Kind>& operator<<(Stream<StreamTrait, Kind>& Ks, Ref<Data>& Buf) {
-    Ks.fKind = Buf;
     *Ks = Ks.fStream->Out(Buf.Leak());
+    Ks.fKind = Buf;
     return *Ks;
   }
 

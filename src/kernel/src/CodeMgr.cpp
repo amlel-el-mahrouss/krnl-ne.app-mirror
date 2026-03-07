@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -14,9 +14,9 @@ namespace Kernel {
 /// @param main the start of the process.
 /// @param kid the Kernel ID of the new task.
 /// @return The process started or not.
-BOOL rtl_create_kernel_task(HAL::StackFramePtr task, const KID kid) {
-  if (!kid || task == nullptr) return FALSE;
-  return KernelTaskHelper::Add(task, kid);
+BOOL rtl_create_kernel_task(KernelTask& task, const KID& kid) {
+  if (!kid) return FALSE;
+  return KernelTaskHelper::Start(task, kid);
 }
 
 /***********************************************************************************/

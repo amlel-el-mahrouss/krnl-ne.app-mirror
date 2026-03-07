@@ -40,11 +40,8 @@ class KernelTask final {
 /// @author Amlal
 class KernelTaskHelper final {
  public:
-  STATIC Bool Add(HAL::StackFramePtr frame_ptr, KID kid);
-  STATIC Bool Remove(const KID kid);
-  STATIC Bool CanBeScheduled(const KernelTask& process);
-  STATIC ErrorOr<KID> TheCurrentKID();
-  STATIC SizeT        StartScheduling();
+  STATIC Bool Start(KernelTask& task_ref, const KID& kid);
+  STATIC Bool CanBeStarted(const KernelTask& task_ref);
 };
 
 }  // namespace Kernel

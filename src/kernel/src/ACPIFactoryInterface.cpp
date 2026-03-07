@@ -78,7 +78,7 @@ bool ACPIFactoryInterface::Checksum(const Char* checksum, SSizeT len) {
 
   Char chr = 0;
 
-  for (SSizeT index = 0L; index < len; ++index) {
+  for (SSizeT index{}; index < len; ++index) {
     chr += checksum[index];
   }
 

@@ -5,7 +5,7 @@
 #ifndef KERNELKIT_PROCESS_SCHEDULER_H
 #define KERNELKIT_PROCESS_SCHEDULER_H
 
-#include <KernelKit/KernelTaskScheduler.h>
+#include <KernelKit/KernelTask.h>
 #include <KernelKit/UserProcessScheduler.h>
 
 #ifdef __NEOSKRNL__

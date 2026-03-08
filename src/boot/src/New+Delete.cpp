@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -13,6 +13,8 @@
 /// @param sz the size.
 /// @return
 void* operator new(size_t sz) {
+  if (sz == 0) ++sz;
+  
   void* buf = nullptr;
 
   while (BS->AllocatePool(EfiMemoryType::EfiLoaderData, sz, &buf) != kEfiOk);
@@ -24,6 +26,8 @@ void* operator new(size_t sz) {
 /// @param sz the size.
 /// @return
 void* operator new[](size_t sz) {
+  if (sz == 0) ++sz;
+  
   void* buf = nullptr;
   BS->AllocatePool(EfiMemoryType::EfiLoaderData, sz, &buf);
 
@@ -52,8 +56,7 @@ void operator delete[](void* buf) {
 void operator delete(void* buf, size_t size) {
   if (!buf) return;
 
-  NE_UNUSED(size);
-
+  SetMem(buf, 0, size);
   BS->FreePool(buf);
 }
 
@@ -63,8 +66,7 @@ void operator delete(void* buf, size_t size) {
 void operator delete[](void* buf, size_t size) {
   if (!buf) return;
 
-  NE_UNUSED(size);
-
+  SetMem(buf, 0, size);
   BS->FreePool(buf);
 }
 

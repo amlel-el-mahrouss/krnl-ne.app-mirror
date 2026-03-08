@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -6,7 +6,7 @@
 #define INC_DRIVE_MANAGER_H
 
 /// @file DriveMgr.h
-/// @brief Drive Manager.
+/// @brief NeKernel's drive manager.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 #include <CompilerKit/CompilerKit.h>
@@ -111,7 +111,7 @@ class IMountpoint final {
     kDriveIndexInvalid,
   };
 
-  DriveTraitPtr GetAddressOf(const Int32& index) {
+  DriveTraitPtr GetAddressOf(const UInt32& index) {
     err_local_get() = kErrorSuccess;
 
     switch (index) {
@@ -125,7 +125,7 @@ class IMountpoint final {
         return &mD;
       default: {
         err_local_get() = kErrorNoSuchDisk;
-        kout << "No such disc letter.\n";
+        kout << "No such disc letter.\r";
 
         break;
       }
@@ -155,12 +155,7 @@ DriveTrait io_construct_blank_drive(Void);
 /// @brief Fetches the main drive.
 /// @param trait the new drive as a trait.
 Void io_construct_main_drive(DriveTrait& trait);
-
-/// @brief Fetches the main drive.
-/// @return the new drive as a trait.
-/// @deprecated use io_construct_main_drive(DriveTrait& trait) instead.
-DriveTrait io_construct_main_drive(Void);
-
+  
 namespace Detect {
   Void io_detect_drive(DriveTrait& trait);
 }

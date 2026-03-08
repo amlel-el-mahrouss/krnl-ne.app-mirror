@@ -201,7 +201,7 @@ namespace Probe {
         trait.fPacket.fPacketReadOnly = YES;
         trait.fKind                   = kMassStorageDrive | kUnformattedDrive | kReadOnlyDrive;
 
-        trait.fSectorSz = 512;
+        trait.fSectorSz = 0x200;
         trait.fLbaEnd   = drv_std_get_sector_count() - 1;
         trait.fLbaStart = 0x400;
       }
@@ -214,27 +214,6 @@ namespace Probe {
     trait.fPacket.fPacketContent = nullptr;
   }
 }  // namespace Probe
-
-/// @brief Fetches the main drive.
-/// @return the new drive. (returns kEPMDrive if EPM formatted)
-DriveTrait io_construct_main_drive() {
-  constexpr auto kMainDrive = "/media/main/";
-
-  DriveTrait trait;
-
-  rt_copy_memory((VoidPtr) kMainDrive, trait.fName, rt_string_len(kMainDrive));
-  MUST_PASS(trait.fName[0] != 0);
-
-  trait.fVerify   = io_drv_unimplemented;
-  trait.fOutput   = io_drv_output;
-  trait.fInput    = io_drv_input;
-  trait.fInit     = io_drv_init;
-  trait.fProtocol = io_drv_kind;
-
-  Probe::io_detect_drive(trait);
-
-  return trait;
-}
 
 /// @brief Replacement for io_construct_main_drive that works with IMountpoint.
 /// @return the new drive. (returns kEPMDrive if EPM formatted)

@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -11,6 +11,7 @@
 #include <NeKit/Ref.h>
 
 namespace Kernel {
+
 class RawIPAddress6;
 class RawIPAddress;
 class IPFactory;
@@ -74,6 +75,7 @@ class IPFactory final {
   static ErrorOr<KBasicString<UInt8>> ToKString(Ref<RawIPAddress>& ipv4);
   static bool                         IpCheckVersion4(const Char* ip);
 };
+
 }  // namespace Kernel
 
 #endif

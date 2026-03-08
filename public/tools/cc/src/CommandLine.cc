@@ -1,7 +1,7 @@
 /*
  * Created on Thu Oct 17 08:00:42 CEST 2024
  *
- * Copyright (c) 2024-2025 Amlal El Mahrouss
+ * Copyright (c) 2024-2026 Amlal El Mahrouss
  */
 
 #include <libSystem/SystemKit/System.h>

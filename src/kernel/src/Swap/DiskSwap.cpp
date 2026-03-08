@@ -17,7 +17,6 @@ Int64 IDiskSwap::Write(SwapDiskHdrPtr data) {
   if (!data || data->fMagic != kSwapDiskHeaderMagic) return 0UL;
 
   FileStream file(kSwapPageFilePath, kRestrictWRB);
-
   Ref<Int64> ret = file.Write(data->fOffset, data, sizeof(SwapDiskHdr) + data->fBlobSz);
 
   return ret.Leak();
@@ -32,7 +31,6 @@ SwapDiskHdrPtr IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
   if (data_len == 0UL) return nullptr;
 
   FileStream file(kSwapPageFilePath, kRestrictRB);
-
   ErrorOrAny blob = file.Read(offset, sizeof(SwapDiskHdr) + data_len);
 
   if (blob.HasError() ||

@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -25,7 +25,7 @@
 
 namespace Kernel {
 
-typedef SizeT rt_signal_kind;
+using rt_signal_kind = SizeT;
 
 /// @brief Standard signal seed for general purpose usage.
 inline constexpr auto kUserSignalSeed = 0x0895034fUL;
@@ -42,12 +42,12 @@ inline rt_signal_kind sig_generate_unique() {
 
 /// @brief Checks if the signal matches the seed (user_seed or kernel_seed)
 template <SizeT Seed>
-inline BOOL sig_matches_seed(rt_signal_kind sig) {
+inline BOOL sig_matches_seed(const rt_signal_kind& sig) {
   return (sig & 0xFF000000) == (Seed & 0xFF000000);
 }
 
 /// @brief Validate signal from **sig** and whtether the signal is greater than SIGDTCH.
-inline BOOL sig_validate_unique(rt_signal_kind sig) {
+inline BOOL sig_validate_unique(const rt_signal_kind& sig) {
   return sig > SIGBAD && sig > SIGDTCH;
 }
 

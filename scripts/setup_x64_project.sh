@@ -10,7 +10,7 @@ make libsys_asm_io_x64
 cd ..
 nebuild libSystem.json
 cd ../libDDK
-nebuild ddk.json
+nebuild libDDK.json
 cd ../boot
 make -f amd64-desktop.make  efi
 make -f amd64-desktop.make  epm-img

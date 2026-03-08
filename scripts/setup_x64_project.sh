@@ -9,7 +9,7 @@ cd src
 make libsys_asm_io_x64
 cd ..
 nebuild libSystem.json
-cd ../ddk
+cd ../libDDK
 nebuild ddk.json
 cd ../boot
 make -f amd64-desktop.make  efi

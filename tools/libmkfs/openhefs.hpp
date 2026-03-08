@@ -6,7 +6,7 @@
 #define LIBMKFS_OPENHEFS_H
 
 #ifndef __GNUC__
-#error !! libmkfs isn't working in MSVC yet !!
+#error !! libmkfs isn't working on MSVC yet !!
 #endif
 
 #include <cstdint>

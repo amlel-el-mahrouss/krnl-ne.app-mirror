@@ -13,6 +13,7 @@
 static std::uint16_t kVersion       = kOpenHeFSVersion;
 static std::uint16_t kNumericalBase = 10;
 
+/// AMLALE: Should we enforce 4GB by default? I believe it should be 1GB. Depending on use cases.
 static std::size_t   kDiskSize = mkfs::detail::gib_cast(4UL);
 static std::u8string kDiskLabel;
 static std::size_t   kDiskSectorSz = 512;

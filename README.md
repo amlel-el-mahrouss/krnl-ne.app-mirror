@@ -104,9 +104,9 @@ NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 ## Figures:
 
-#### Figure 1: The Microkernel Booting
+#### Figure 1: The Hybrid Kernel booting
 
-<img src="meta/media/ne_kernel.png" alt="NeKernel Microkernel Booting" width="1280"/>
+<img src="meta/media/ne_kernel.png" alt="NeKernel Hybrid Kernel booting" width="1280"/>
 
 
 <div align="center">

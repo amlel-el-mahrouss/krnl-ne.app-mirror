@@ -155,7 +155,7 @@ DriveTrait io_construct_blank_drive(Void);
 /// @brief Fetches the main drive.
 /// @param trait the new drive as a trait.
 Void io_construct_main_drive(DriveTrait& trait);
-  
+
 namespace Detect {
   Void io_detect_drive(DriveTrait& trait);
 }

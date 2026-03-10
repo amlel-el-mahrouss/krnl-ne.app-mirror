@@ -14,7 +14,7 @@
   ],
   "cpp_macros": [
     "__NEOSKRNL__",
-    "__POSIX_AMD64__",
+    "__XOPEN_SOURCE__",
     "__POSIX_SOURCE__",
     "kPosixVersionHighest=0x0100",
     "kPosixVersionLowest=0x0100",

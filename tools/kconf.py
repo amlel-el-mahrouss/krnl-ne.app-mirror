@@ -5,7 +5,7 @@ import os, json, sys
 
 if __name__ == '__main__':
     print("kconf: running kernel as standalone...")
-    os.system("../script/debug_ahci_x64.sh")
+    os.system("../scripts/debug_ahci_x64.sh")
     sys.exit(0)
 
 

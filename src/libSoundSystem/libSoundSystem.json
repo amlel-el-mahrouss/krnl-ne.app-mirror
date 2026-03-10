@@ -13,8 +13,7 @@
   ],
   "cpp_macros": [
     "__NEOSKRNL__",
-    "__ASN_AMD64__",
-    "__ASN__",
+    "__SOUND_SYSTEM__",
     "kASNVersionHighest=0x0100",
     "kASNVersionLowest=0x0100",
     "kASNVersion=0x0100"

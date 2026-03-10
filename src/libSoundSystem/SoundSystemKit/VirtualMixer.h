@@ -8,6 +8,10 @@
 
 #include <libSystem/SystemKit/System.h>
 
-namespace ASN {}
+namespace SoundSystem {
+  struct VirtualMixer;
+  struct VirtualSource;
+  struct VirtualVolume;
+}
 
 #endif

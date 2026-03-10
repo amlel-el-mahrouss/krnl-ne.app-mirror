@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -27,7 +27,10 @@ Size rt_string_len(const Char* ptr) {
 const Char* rt_alloc_string(const Char* src) {
   SizeT slen   = rt_string_len(src);
   Char* buffer = new Char[slen + 1];
+
   if (!buffer) return nullptr;
+
+  rt_set_memory(buffer, 0, slen);
 
   if (rt_copy_memory_safe(reinterpret_cast<voidPtr>(const_cast<Char*>(src)),
                           reinterpret_cast<voidPtr>(buffer), slen, slen + 1) < 0) {
@@ -100,7 +103,9 @@ Int32 rt_to_lower(Int ch) {
 }
 
 Int32 rt_is_alnum(Int ch) {
-  return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
+  return (ch >= 'a' && ch <= 'z') ||
+    (ch >= 'A' && ch <= 'Z') ||
+      (ch >= '0' && ch <= '9');
 }
 
 Boolean rt_is_space(Int ch) {

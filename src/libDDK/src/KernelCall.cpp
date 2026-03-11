@@ -1,12 +1,8 @@
-/* ========================================
-
-  DDK
-  Copyright Amlal El Mahrouss.
-
-  Author: Amlal El Mahrouss
-  Purpose: DDK kernel dispatch system.
-
-======================================== */
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2025-2026, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (See accompanying
+// file LICENSE or copy at http://www.apache.org/licenses/LICENSE-2.0)
+// Official repository: https://github.com/ne-foss-org/ne_kernel
 
 #include <DriverKit/DriverKit.h>
 #include <stdarg.h>

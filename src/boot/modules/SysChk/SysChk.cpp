@@ -1,4 +1,4 @@
-// Copyright 2024-2025, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
@@ -28,9 +28,11 @@ EXTERN_C Int32 SysChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
   Boot::BDiskFormatFactory<Boot::BootDeviceATA> partition_factory;
 #elif defined(__AHCI__)
   Boot::BDiskFormatFactory<Boot::BootDeviceSATA> partition_factory;
+#elif defined(__NVME__)
+  Boot::BDiskFormatFactory<Boot::BootDeviceNVME> partition_factory;
 #endif
 
-  if (!partition_factory.IsPartitionValid()) return kEfiFail;
+  if (partition_factory.IsPartitionValid()) return kEfiOk;
 
   return partition_factory.Format(kMachineModel);
 }

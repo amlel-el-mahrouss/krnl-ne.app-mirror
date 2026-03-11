@@ -15,14 +15,6 @@
 #include <modules/CoreGfx/CoreGfx.h>
 #include <modules/CoreGfx/TextGfx.h>
 
-#ifndef kExpectedWidth
-#define kExpectedWidth (800)
-#endif
-
-#ifndef kExpectedHeight
-#define kExpectedHeight (600)
-#endif
-
 /** Graphics related. */
 
 STATIC EfiGraphicsOutputProtocol* kGop       = nullptr;
@@ -44,20 +36,7 @@ STATIC Bool boot_init_fb() {
 
   kGopStride = 4;
 
-  for (SizeT i = 0; i < kGop->Mode->MaxMode; ++i) {
-    EfiGraphicsOutputProtocolModeInformation* infoPtr = nullptr;
-    UInt32                                    sz      = 0U;
-
-    kGop->QueryMode(kGop, i, &sz, &infoPtr);
-
-    if (infoPtr->HorizontalResolution == kExpectedWidth &&
-        infoPtr->VerticalResolution == kExpectedHeight) {
-      kGop->SetMode(kGop, i);
-      return Yes;
-    }
-  }
-
-  return No;
+  return Yes;
 }
 
 EXTERN EfiBootServices* BS;
@@ -71,7 +50,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader = new HEL::BootInfoHeader();
 
-#ifdef ZBA_USE_FB
+#ifdef BOOTZ_USE_FB
   if (!boot_init_fb()) return kEfiFail;  ///! Init the GOP.
 
   for (SizeT index_vt = 0; index_vt < sys_table->NumberOfTableEntries; ++index_vt) {
@@ -97,7 +76,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   kHandoverHeader->f_GOP.f_PixelPerLine = kGop->Mode->Info->PixelsPerScanLine;
   kHandoverHeader->f_GOP.f_PixelFormat  = kGop->Mode->Info->PixelFormat;
   kHandoverHeader->f_GOP.f_Size         = kGop->Mode->FrameBufferSize;
-#endif  // ZBA_USE_FB
+#endif  // BOOTZ_USE_FB
 
   // ------------------------------------------- //
   // Grab MP services, extended to runtime.	   //

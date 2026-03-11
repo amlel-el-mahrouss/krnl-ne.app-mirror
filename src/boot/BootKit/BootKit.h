@@ -276,12 +276,12 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
           StrLen(kEPMMagic));
 
   fDiskDev.Leak().mBase = kEPMBootBlockLba;  // always always resies at zero block.
-  fDiskDev.Leak().mSize = sizeof(EPM_PART_BLOCK);
 
+  fDiskDev.Leak().mSize = sizeof(EPM_PART_BLOCK);
   fDiskDev.Write((Char*) epm_boot, sizeof(EPM_PART_BLOCK));
 
   BootTextWriter writer;
-  writer.Write(L"BootZ: Drive is EPM formatted.\r");
+  writer.Write(L"BootZ: Drive is now EPM formatted.\r");
 #elif defined(BOOTZ_GPT_SUPPORT)
   NE_UNUSED(part_name);
 
@@ -317,12 +317,12 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
   SetMem(gpt_part->Reserved2, 0, kSectorAlignGPT_PartTbl);
 
   fDiskDev.Leak().mBase = kGPTPartitionTableLBA;  // always always resies at zero block.
+  
   fDiskDev.Leak().mSize = sizeof(GPT_PARTITION_TABLE);
-
   fDiskDev.Write((Char*) gpt_part, sizeof(GPT_PARTITION_TABLE));
 
   BootTextWriter writer;
-  writer.Write(L"BootZ: Drive is GPT formatted.\r");
+  writer.Write(L"BootZ: Drive is now GPT formatted.\r");
 #else
   NE_UNUSED(part_name);
 #endif

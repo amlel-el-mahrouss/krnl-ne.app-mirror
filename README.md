@@ -12,16 +12,6 @@
   </p>
 </div>
 
-## Helping:
-
-Love our work? Give us a star!
-
-![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/kernel)
-
-## Community:
-
-Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!
-
 ## Getting Started:
 
 ### **Requirements**:
@@ -48,17 +38,35 @@ cd nekernel
 
 ---
 
+## Love our work?
+
+Give us a star on GitHub!
+
+![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/kernel)
+
+## Community:
+
+Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!
+
 ## Structure
 
-- `src/kernel/` — Core kernel source (scheduling, memory, VFS, drivers)
-- `src/boot/` — Bootloader, platform bring-up, and early system code
-- `src/libDDK/` — Driver Development Kit (DDK) and sample drivers
+- `src/kernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
+- `src/boot/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
+- `src/libDDK/` — Driver Development Kit (DDK)
 - `src/libSystem/` — Userland system call interface and runtime
-- `src/launch/` — NeKernel Launch System
-- `src/libMsg/` — NeKernel OpenMSG framework
-- `public/tools/` — CLI tools (mkfs, fsck, open, manual, etc.)
+- `src/launch/` — NeKernel Launch System.
+- `src/libMsg/` — NeKernel OpenMSG framework.
+- `public/tools/` — CLI tools (mkfs, chk, open, manual, etc.)
 - `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)
-- `doc/` — Specifications, design docs, and diagrams
+- `doc/` — Specifications, design docs, requirements, and diagrams.
+
+---
+
+## Design Rationale:
+
+The sources are designed to be modular and gracefully error when needed.
+
+Modern C/C++ is also used to implement the system, alongside assembly stubs in the HAL.
 
 ---
 
@@ -111,6 +119,6 @@ NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 <div align="center">
   <sub>
-    &copy; 2023-2026 Amlal El Mahrouss & Ne.org Authors. Licensed under the Apache 2.0 license.
+    &copy; 2022-2026 Amlal El Mahrouss & Ne.org Authors. Licensed under the Apache 2.0 license.
   </sub>
 </div>

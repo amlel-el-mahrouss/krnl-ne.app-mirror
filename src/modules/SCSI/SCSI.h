@@ -2,6 +2,7 @@
 // Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
+
 #ifndef SCSI_SCSI_H
 #define SCSI_SCSI_H
 

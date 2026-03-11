@@ -3,6 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
+
 /// @brief UPS inline definitions.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /// @date Tue Apr 22 22:01:07 CEST 2025

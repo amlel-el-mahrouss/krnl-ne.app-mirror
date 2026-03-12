@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef INC_DRIVE_MANAGER_H
 #define INC_DRIVE_MANAGER_H
 
@@ -74,7 +73,7 @@ struct DriveTrait final {
   Void (*fOutput)(DrivePacket& packet){nullptr};
   Void (*fVerify)(DrivePacket& packet){nullptr};
   Void (*fInit)(DrivePacket& packet){nullptr};
-  const Char* (*fProtocol)(Void) {nullptr};
+  const Char* (*fProtocol)(Void){nullptr};
 };
 
 namespace Probe {

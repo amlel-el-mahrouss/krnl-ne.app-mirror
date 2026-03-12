@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef FSKIT_EXT2_IFS_H
 #define FSKIT_EXT2_IFS_H
 
@@ -33,7 +32,7 @@ class Ext2Context final {
     }
   }
 
-  Ext2Context(const Ext2Context&)            = delete;
+  Ext2Context(const Ext2Context&) = delete;
   Ext2Context& operator=(const Ext2Context&) = delete;
 
   Ext2Context(Ext2Context&& other) : drive(other.drive), superblock(other.superblock) {

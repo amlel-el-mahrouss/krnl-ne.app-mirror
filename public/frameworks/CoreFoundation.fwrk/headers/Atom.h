@@ -20,9 +20,8 @@ class CFAtom final {
   CFAtom(const CFAtom&)            = delete;
 
  public:
-  T operator[](SizeT bit) { return (fArrayOfAtoms & (1 << bit)); }
-
-  void operator|(SizeT bit) { fArrayOfAtoms |= (1 << bit); }
+  const T& operator[](const T& bit) { return (fArrayOfAtoms & (T{1} << bit)); }
+  void     operator|(const T& bit) { fArrayOfAtoms |= (T{1} << bit); }
 
   friend Boolean operator==(CFAtom<T>& atomic, const T& idx) { return atomic[idx] == idx; }
 

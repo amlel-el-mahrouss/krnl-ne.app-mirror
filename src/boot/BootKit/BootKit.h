@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef __BOOTKIT_H__
 #define __BOOTKIT_H__
 
@@ -292,16 +291,16 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
   CopyMem(gpt_part->Signature, reinterpret_cast<VoidPtr>(const_cast<Char*>(kMagicGPT)),
           StrLen(kMagicGPT));
 
-  gpt_part->Revision   = 0x00010000;
+  gpt_part->Revision = 0x00010000;
   gpt_part->HeaderSize = sizeof(GPT_PARTITION_TABLE);
 
   gpt_part->CRC32 = 0x00000000;
 
-  gpt_part->Reserved1     = 0x00000000;
-  gpt_part->LBAHeader     = 0x00000000;
-  gpt_part->LBAAltHeader  = 0x00000000;
+  gpt_part->Reserved1 = 0x00000000;
+  gpt_part->LBAHeader = 0x00000000;
+  gpt_part->LBAAltHeader = 0x00000000;
   gpt_part->FirstGPTEntry = 0x00000000;
-  gpt_part->LastGPTEntry  = 0x00000000;
+  gpt_part->LastGPTEntry = 0x00000000;
 
   gpt_part->Guid.Data1 = 0x00000000;
   gpt_part->Guid.Data2 = 0x0000;
@@ -311,15 +310,15 @@ inline Boolean BDiskFormatFactory<BootDev>::Format(const Char* part_name) {
 
   gpt_part->Revision = 0x00010000;
 
-  gpt_part->StartingLBA         = 0x00000000;
+  gpt_part->StartingLBA = 0x00000000;
   gpt_part->NumPartitionEntries = 0x00000000;
-  gpt_part->SizeOfEntries       = 0x00000000;
-  gpt_part->CRC32PartEntry      = 0x00000000;
+  gpt_part->SizeOfEntries = 0x00000000;
+  gpt_part->CRC32PartEntry = 0x00000000;
 
   SetMem(gpt_part->Reserved2, 0, kSectorAlignGPT_PartTbl);
 
   fDiskDev.Leak().mBase = kGPTPartitionTableLBA;  // always always resies at zero block.
-  
+
   fDiskDev.Leak().mSize = sizeof(GPT_PARTITION_TABLE);
   fDiskDev.Write((Char*) gpt_part, sizeof(GPT_PARTITION_TABLE));
 

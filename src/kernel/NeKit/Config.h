@@ -17,7 +17,7 @@
 
 #define NE_ICODEC \
   final:          \
-  public          \
+ public           \
   ::Kernel::ICodec
 
 /// @brief The **NeKernel** namespace.
@@ -113,12 +113,12 @@ inline Args&& move(Args&& arg) {
 
 template <class Type>
 concept IsSerializable = requires() {
-  { Type::kValue };
+  {Type::kValue};
 };
 
 template <class Type>
 concept IsNotSerializable = requires() {
-  { !Type::kValue };
+  {!Type::kValue};
 };
 
 /// @brief Encoding interface, used as a proxy to convert T to Char*

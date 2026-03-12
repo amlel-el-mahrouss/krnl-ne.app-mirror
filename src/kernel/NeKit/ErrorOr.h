@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef NEKIT_ERROROR_H
 #define NEKIT_ERROROR_H
 

@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef NEKIT_ATOM_H
 #define NEKIT_ATOM_H
 
@@ -26,11 +25,12 @@ class Atom final {
   using Ref      = TypeAtomic&;
   using ConstRef = const TypeAtomic&;
 
-  const TypeAtomic& operator[](const SizeT& bit) { return (fArrayOfAtoms & (1 << bit)); }
+  const TypeAtomic& operator[](const TypeAtomic& bit) {
+    return (fArrayOfAtoms & (TypeAtomic{} << bit));
+  }
+  void operator|(const TypeAtomic& bit) { fArrayOfAtoms |= (TypeAtomic{1} << bit); }
 
-  void operator|(const SizeT& bit) { fArrayOfAtoms |= (1 << bit); }
-
-  Atom& operator|=(const SizeT& bit) {
+  Atom& operator|=(const TypeAtomic& bit) {
     this->operator|(bit);
     return *this;
   }

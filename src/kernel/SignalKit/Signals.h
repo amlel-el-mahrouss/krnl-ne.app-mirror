@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef SIGNALKIT_SIGNALS_H
 #define SIGNALKIT_SIGNALS_H
 

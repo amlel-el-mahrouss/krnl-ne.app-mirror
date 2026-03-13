@@ -1,6 +1,8 @@
 
 <!-- Read Me of NeKernel -->
 
+![Logotype](meta/media/ne_logotype.png)
+
 <div align="center">
   <h1>
     <b>The NeKernel System.</b>

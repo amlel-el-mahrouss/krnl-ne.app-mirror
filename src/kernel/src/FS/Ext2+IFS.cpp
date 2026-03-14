@@ -18,11 +18,13 @@
 #include <NeKit/Utils.h>
 
 /// @note There's no current maintainer of Ext2, the position is vacant.
+/// @note AMLALE: @0xf00sec has written this driver, and I @amlel-el-mahrouss is currently working on adding triple indirect indices.
+/// @note AMLALE: This driver is too verbose, we need a complete overhaul of it.
 
 constexpr static UInt32 EXT2_DIRECT_BLOCKS                           = 12;
 constexpr static UInt32 EXT2_SINGLE_INDIRECT_INDEX                   = 12;
 constexpr static UInt32 EXT2_DOUBLE_INDIRECT_INDEX                   = 13;
-constexpr ATTRIBUTE(unused) static UInt32 EXT2_TRIPLE_INDIRECT_INDEX = 14;
+constexpr static UInt32 EXT2_TRIPLE_INDIRECT_INDEX = 14;
 constexpr static UInt32 EXT2_ROOT_INODE                              = 2;
 constexpr ATTRIBUTE(unused) static UInt32 EXT2_SUPERBLOCK_BLOCK      = 1;
 constexpr static UInt32 EXT2_GROUP_DESC_BLOCK_SMALL                  = 2;
@@ -385,6 +387,8 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
   // Double
   UInt32 doubleStart = EXT2_DIRECT_BLOCKS + blocksPerPointerBlock;
   UInt32 doubleSpan  = blocksPerPointerBlock * blocksPerPointerBlock;
+  UInt32 tripleSpan  = blocksPerPointerBlock * blocksPerPointerBlock * blocksPerPointerBlock;
+
   if (logicalBlockIndex < doubleStart + doubleSpan) {
     if (node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX] == 0) {
       auto groupInfoRes = ext2_get_group_descriptor_info(ctx, node->inodeNumber);
@@ -430,6 +434,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
     UInt32 secondIdx = idxWithin % blocksPerPointerBlock;
 
     auto doubleRes = ext2_read_block_ptr(ctx, node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX]);
+
     if (doubleRes.HasError()) return ErrorOr<Void*>(doubleRes.Error());
 
     UInt32* doublePtr           = doubleRes.Leak().Leak();
@@ -438,6 +443,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
     // Allocate single-indirect if missing
     if (singleIndirectBlock == 0) {
       auto groupInfoRes = ext2_get_group_descriptor_info(ctx, node->inodeNumber);
+
       if (groupInfoRes.HasError()) {
         mm_free_ptr(doublePtr);
         return ErrorOr<Void*>(groupInfoRes.Error());
@@ -445,6 +451,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
 
       auto groupInfo   = groupInfoRes.Leak().Leak();
       auto newBlockRes = ext2_alloc_block(ctx, groupInfo->groupDesc);
+
       if (newBlockRes.HasError()) {
         mm_free_ptr(doublePtr);
         mm_free_ptr(reinterpret_cast<void*>(groupInfo->blockBuffer));
@@ -469,13 +476,16 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
 
       // Zero single-indirect block
       auto zeroBuf = mm_alloc_ptr(blockSize, true, false);
+
       if (!zeroBuf) {
         mm_free_ptr(doublePtr);
         return ErrorOr<Void*>(kErrorHeapOutOfMemory);
       }
 
       rt_zero_memory(zeroBuf, blockSize);
+
       UInt32 singleLba = ext2_block_to_lba(ctx, singleIndirectBlock);
+
       if (!ext2_write_block(ctx->drive, singleLba, zeroBuf, blockSize)) {
         mm_free_ptr(zeroBuf);
         mm_free_ptr(doublePtr);
@@ -486,6 +496,7 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
 
       // Write double-indirect back to disk
       UInt32 dblLba = ext2_block_to_lba(ctx, node->inode.fBlock[EXT2_DOUBLE_INDIRECT_INDEX]);
+
       if (!ext2_write_block(ctx->drive, dblLba, doublePtr, blockSize)) {
         mm_free_ptr(doublePtr);
         return ErrorOr<Void*>(kErrorDisk);
@@ -509,10 +520,24 @@ static ErrorOr<Void*> ext2_set_block_address(Ext2Context* ctx, Ext2Node* node,
 
     mm_free_ptr(singlePtr);
     return ErrorOr<Void*>(nullptr);
+  } else if (logicalBlockIndex < doubleStart + tripleSpan) {
+    UInt32 tripleLba = ext2_block_to_lba(ctx, node->inode.fBlock[EXT2_TRIPLE_INDIRECT_INDEX]);
+    auto triplePtrRef = ext2_read_block_ptr(ctx, node->inode.fBlock[EXT2_TRIPLE_INDIRECT_INDEX]);
+
+    if (triplePtrRef.HasError()) {
+      return ErrorOr<Void*>(kErrorDisk);
+    }
+
+    if (!ext2_write_block(ctx->drive, tripleLba, triplePtrRef.Leak().Leak(), blockSize)) {
+      mm_free_ptr(triplePtrRef.Leak().Leak());
+      return ErrorOr<Void*>(kErrorDisk);
+    }
+
+    mm_free_ptr(triplePtrRef.Leak().Leak());
   }
 
-  // Triple indirect blocks not implemented
-  return ErrorOr<Void*>(kErrorUnimplemented);
+
+  return ErrorOr<Void*>(kErrorDisk);
 }
 
 // Find a directory entry by name within a directory inode

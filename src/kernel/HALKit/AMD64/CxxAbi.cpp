@@ -8,8 +8,9 @@
 #include <KernelKit/UserProcessScheduler.h>
 #include <NeKit/CxxAbi.h>
 
-atexit_func_entry_t __atexit_funcs[kAtExitMacDestructors];
+#define kAtExitMaxDestructors (128U)
 
+atexit_func_entry_t __atexit_funcs[kAtExitMaxDestructors];
 uarch_t __atexit_func_count;
 
 /// @brief dynamic shared object Handle.
@@ -31,7 +32,7 @@ EXTERN_C void ___chkstk_ms(PtrDiff frame_size) {
 }
 
 EXTERN_C int atexit(void (*f)()) {
-  if (__atexit_func_count >= kAtExitMacDestructors) return 1;
+  if (__atexit_func_count >= kAtExitMaxDestructors) return 1;
 
   __atexit_funcs[__atexit_func_count].destructor_func = f;
 

@@ -15,4 +15,4 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build CI
       run: sudo curl https://github.com/ne-foss-org/nebuild/releases/download/v0.0.6-apple-m1/nebuild-debian -o /bin/nebuild && sudo chmod +x /bin/nebuild && sudo apt update && sudo apt install mingw-w64 qemu-utils nasm &&
-          ./scripts/modules_ahci_x64.sh && ./scripts/setup_x64_project.sh && ./scripts/kernel_ci_x64.sh
+          ./scripts/modules_ahci_x64.sh && ./scripts/setup_x64_project.sh && ./scripts/any_ci_x64.sh

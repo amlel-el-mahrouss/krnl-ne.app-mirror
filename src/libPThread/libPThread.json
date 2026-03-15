@@ -1,0 +1,22 @@
+{
+  "compiler_path": "x86_64-w64-mingw32-gcc",
+  "compiler_std": "c++20",
+  "headers_path": ["../", "./"],
+  "sources_path": ["src/*.cpp"],
+  "output_name": "libPThread.dll",
+  "compiler_flags": [
+    "-ffreestanding",
+    "-shared",
+    "-std=c++20",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-Wl,--subsystem=17"
+  ],
+  "cpp_macros": [
+    "__NEOSKRNL__",
+    "kPosixVersionHighest=0x0100",
+    "kPosixVersionLowest=0x0100",
+    "kPosixVersion=0x0100"
+  ],
+  "description": "The NeKernel PThread System. Refer to: https://man7.org/linux/man-pages/man7/pthreads.7.html"
+}

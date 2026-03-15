@@ -12,13 +12,13 @@
 IMPORT_C SInt32 launch_startup_fn(Void) {
   /// Start LaunchHelpers.fwrk services, and make the launcher manageable too (via mgmt.launch)
   UInt32* ret =
-      static_cast<UInt32*>(libsys_syscall_arg_1(libsys_hash_64("__launch_register_service")));
+    static_cast<UInt32*>(libsys_syscall_arg_1(libsys_hash_64("__launch_register_service"))); // Register service based on program data.
 
   if (ret) {
     switch (*ret) {
       case kErrorSuccess: {
         ret =
-            static_cast<UInt32*>(libsys_syscall_arg_1(libsys_hash_64("__launch_listen_as_super")));
+          static_cast<UInt32*>(libsys_syscall_arg_1(libsys_hash_64("__launch_attach_service"))); // Attach this program as the service process.
         return *ret;
       }
       default:

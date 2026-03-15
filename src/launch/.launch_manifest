@@ -1,0 +1,4 @@
+[Launch]
+RunAsRoot=YES
+# NOTE: This has to be generated and passed here to enable all-trustee permissions.
+RootKey=

@@ -14,6 +14,7 @@
 /// @brief Secure TTY device path.
 #define kSecurePrintDevicePath "/devices/stty{}{}"
 
+/// @brief Laser-disc path (Blu-ray, DVD, CD, etc.)
 #define kCDDevicePath "/devices/dvd{}{}"
 
 // ------------------------------------------------------------------------------------------ //

@@ -20,7 +20,21 @@ _NeMain:
   callq launch_startup_fn
 
   movq %rcx, 0
-  
   callq ThrExitMainThread
-  
   popq %rbp
+
+.data
+.global _ProgramData
+_ProgramData:
+  //;; ident
+  .word 0xffeecc
+  //;; version
+  .word 0x0110
+  //;; kind: 0x0 = LaunchSystem
+  .word 0x0
+  //;;  flags
+  .word 0x0
+  //;; Launcher name
+  .asciz "NeKernel Launcher"
+
+  

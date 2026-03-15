@@ -8,8 +8,8 @@
 
 #include <NeKit/Macros.h>
 
-#define NEKIT_VERSION_STR "0.0.2"
-#define NEKIT_VERSION_BCD 0x0002
+#define NEKIT_VERSION "0.0.3"
+#define NEKIT_VERSION_BCD 0x0003
 
 #if __cplusplus < 202002L
 #error !!! NeKernel compiles with C++20 as of December 4, 2025 !!!

@@ -8,8 +8,8 @@
 
 #include <NeKit/Config.h>
 
-#define KERNELKIT_VERSION "0.0.2"
-#define KERNELKIT_VERSION_BCD 0x0002
+#define KERNELKIT_VERSION "0.0.3"
+#define KERNELKIT_VERSION_BCD 0x0003
 
 namespace Kernel {
 class UserProcessScheduler;

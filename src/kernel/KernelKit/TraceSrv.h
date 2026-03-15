@@ -7,6 +7,7 @@
 #define KERNELKIT_TRACESRV_H
 
 #include <CompilerKit/CompilerKit.h>
+#include <NeKit/NeKit.h>
 
 namespace Kernel {
 

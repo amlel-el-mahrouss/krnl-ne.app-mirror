@@ -20,7 +20,6 @@
 
 #define kCPSMaxMemoryLimit (gib_cast(128)) /* max physical memory limit */
 #define kCPSMaxStackSz (kib_cast(8))       /* maximum stack size */
-
 #define kCPSNameLen (128U)
 
 EXTERN_C void sched_idle_task(void);

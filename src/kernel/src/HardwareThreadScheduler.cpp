@@ -22,8 +22,6 @@ namespace Kernel {
 EXTERN_C Bool hal_check_task(HAL::StackFramePtr frame);
 EXTERN_C Bool mp_register_task(HAL::StackFramePtr frame, ProcessID pid);
 
-STATIC HardwareThreadScheduler kHardwareThreadScheduler;
-
 ///! A HardwareThread class takes care of it's owned hardware thread.
 ///! It has a stack for it's core.
 
@@ -126,6 +124,7 @@ HardwareThreadScheduler::~HardwareThreadScheduler() = default;
 /// @brief Shared singleton function
 /***********************************************************************************/
 HardwareThreadScheduler& HardwareThreadScheduler::The() {
+  STATIC HardwareThreadScheduler kHardwareThreadScheduler;
   return kHardwareThreadScheduler;
 }
 

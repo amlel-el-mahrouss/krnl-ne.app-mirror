@@ -102,7 +102,7 @@ STATIC T* sched_try_go_upper_ptr_tree(T* tree) {
 /***********************************************************************************/
 
 ErrorOr<VoidPtr> UserProcess::New(SizeT sz, SizeT pad_amount) {
-  if (this->UsedMemory > kSchedMaxMemoryLimit) return ErrorOr<VoidPtr>(-kErrorHeapOutOfMemory);
+  if (this->UsedMemory > kCPSMaxMemoryLimit) return ErrorOr<VoidPtr>(-kErrorHeapOutOfMemory);
 
 #ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
   auto vm_register = kKernelVM;
@@ -347,7 +347,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
   ProcessID pid = this->mTeam.mProcessCur;
 
-  if (pid > kSchedProcessLimitPerTeam) {
+  if (pid > kCPSProcessLimitPerTeam) {
     return -kErrorProcessFault;
   }
 
@@ -360,12 +360,12 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
   SizeT len = rt_string_len(name);
 
-  if (len > kSchedNameLen) {
+  if (len > kCPSNameLen) {
     return -kErrorProcessFault;
   }
 
   rt_copy_memory_safe(reinterpret_cast<VoidPtr>(const_cast<Char*>(name)), process.Name, len,
-                      kSchedNameLen);
+                      kCPSNameLen);
 
 #ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
   process.VMRegister = kKernelVM;
@@ -394,7 +394,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
                    HAL::kMMFlagsUser | HAL::kMMFlagsPresent);
 #endif  // ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
 
-  process.StackSize = kSchedMaxStackSz;
+  process.StackSize = kCPSMaxStackSz;
 
   rt_set_memory(process.StackReserve, 0, process.StackSize);
 
@@ -429,8 +429,8 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 /***********************************************************************************/
 
 UserProcessScheduler& UserProcessScheduler::The() {
-  STATIC UserProcessScheduler kScheduler;
-  return kScheduler;
+  STATIC UserProcessScheduler kUserScheduler;
+  return kUserScheduler;
 }
 
 /***********************************************************************************/
@@ -443,7 +443,7 @@ UserProcessScheduler& UserProcessScheduler::The() {
 /***********************************************************************************/
 
 Void UserProcessScheduler::Remove(ProcessID process_id) {
-  if (process_id < 0 || process_id > kSchedProcessLimitPerTeam) return;
+  if (process_id < 0 || process_id > kCPSProcessLimitPerTeam) return;
   if (this->mTeam.mProcessList[process_id].Status == ProcessStatusKind::kInvalid) return;
 
   mTeam.mProcessList[process_id].Exit(kErrorSuccess);
@@ -566,7 +566,7 @@ Bool UserProcessHelper::CanBeScheduled(const UserProcess& process) {
 
   if (process.Status != ProcessStatusKind::kRunning) return No;
   if (process.Affinity == AffinityKind::kInvalid) return No;
-  if (process.StackSize > kSchedMaxStackSz) return No;
+  if (process.StackSize > kCPSMaxStackSz) return No;
   if (!process.Name[0]) return No;
   if (process.Signal.SignalID == sig_generate_unique<SIGTRAP>()) return No;
 

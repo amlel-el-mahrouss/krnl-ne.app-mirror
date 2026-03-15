@@ -59,7 +59,7 @@ STATIC Int32   kSMPInterrupt                   = 0;
 STATIC UInt64  kAPICLocales[kMaxAPInsideSched] = {0};
 STATIC VoidPtr kRawMADT                        = nullptr;
 
-STATIC HAL_HARDWARE_THREAD kHWThread[kSchedProcessLimitPerTeam] = {{}};
+STATIC HAL_HARDWARE_THREAD kHWThread[kCPSProcessLimitPerTeam] = {{}};
 
 /// @brief Multiple APIC Descriptor Table.
 struct HAL_APIC_MADT final SDT_OBJECT {

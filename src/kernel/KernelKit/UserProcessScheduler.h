@@ -52,17 +52,17 @@ class UserProcess final {
     UIntPtr           SignalID{0};
   };
 
-  Char               Name[kSchedNameLen] = {"UserProcess"};
+  Char               Name[kCPSNameLen] = {"UserProcess"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemUser};
   User*              Owner{nullptr};
   HAL::StackFramePtr StackFrame{nullptr};
   AffinityKind       Affinity{AffinityKind::kStandard};
   ProcessStatusKind  Status{ProcessStatusKind::kKilled};
-  UInt8              StackReserve[kSchedMaxStackSz];
-  SizeT              StackSize{kSchedMaxStackSz};
+  UInt8              StackReserve[kCPSMaxStackSz];
+  SizeT              StackSize{kCPSMaxStackSz};
   IDylibObject*      DylibDelegate{nullptr};
   SizeT              MemoryCursor{0UL};
-  SizeT              MemoryLimit{kSchedMaxMemoryLimit};
+  SizeT              MemoryLimit{kCPSMaxMemoryLimit};
   SizeT              UsedMemory{0UL};
   UserProcessSignal  Signal;
   ProcessImage       Image;
@@ -86,7 +86,7 @@ class UserProcess final {
   ProcessTime RTime{0};  //! @brief Process run time.
   ProcessTime UTime{0};  //! #brief Process used time.
 
-  ProcessID      ProcessId{kSchedInvalidPID};
+  ProcessID      ProcessId{kCPSInvalidPID};
   ExecutableKind Kind{ExecutableKind::kExecutableKind};
 
  public:
@@ -193,7 +193,7 @@ inline bool operator>=(UserProcess::ExecutableKind lhs, UserProcess::ExecutableK
   return lhs_int >= rhs_int;
 }
 
-using UserProcessArray = Array<UserProcess, kSchedProcessLimitPerTeam>;
+using UserProcessArray = Array<UserProcess, kCPSProcessLimitPerTeam>;
 using UserProcessRef   = Ref<UserProcess>;
 
 /// \brief Processs Team (contains multiple processes inside it.)
@@ -205,7 +205,7 @@ class UserProcessTeam final {
 
   NE_COPY_DEFAULT(UserProcessTeam)
 
-  Array<UserProcess, kSchedProcessLimitPerTeam>& AsArray();
+  Array<UserProcess, kCPSProcessLimitPerTeam>& AsArray();
   Ref<UserProcess>&                              AsRef();
   ProcessID&                                     Id();
 

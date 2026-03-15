@@ -24,11 +24,11 @@ using KID = ProcessID;
 /// @author Amlal
 class KernelTask final {
  public:
-  Char               Name[kSchedNameLen] = {"KernelTask"};
+  Char               Name[kCPSNameLen] = {"KernelTask"};
   ProcessSubsystem   SubSystem{ProcessSubsystem::kProcessSubsystemKernel};
   HAL::StackFramePtr StackFrame{nullptr};
   UInt8*             StackReserve{nullptr};
-  SizeT              StackSize{kSchedMaxStackSz};
+  SizeT              StackSize{kCPSMaxStackSz};
   ProcessImage       Image{};
 
   /// @brief a KID is a Kernel ID, it is used to find a task running within the kernel.

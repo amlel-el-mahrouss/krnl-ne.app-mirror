@@ -30,7 +30,7 @@ BOOL rtl_create_kernel_task(KernelTask& task, const KID& kid) {
 /***********************************************************************************/
 
 ProcessID rtl_create_user_process(rtl_start_kind main, const Char* process_name) {
-  if (!process_name || *process_name == 0) return kSchedInvalidPID;
+  if (!process_name || *process_name == 0) return kCPSInvalidPID;
   return UserProcessScheduler::The().Spawn(process_name, reinterpret_cast<VoidPtr>(main), nullptr);
 }
 

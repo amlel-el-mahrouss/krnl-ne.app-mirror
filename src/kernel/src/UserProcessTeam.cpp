@@ -24,7 +24,7 @@ UserProcessTeam::UserProcessTeam() {
 /// @return The list of process to schedule.
 /***********************************************************************************/
 
-Array<UserProcess, kSchedProcessLimitPerTeam>& UserProcessTeam::AsArray() {
+Array<UserProcess, kCPSProcessLimitPerTeam>& UserProcessTeam::AsArray() {
   return this->mProcessList;
 }
 

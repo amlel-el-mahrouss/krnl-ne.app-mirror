@@ -13,15 +13,15 @@
 /// @brief Core Process Scheduler header file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
-#define kSchedMinMicroTime (AffinityKind::kStandard)
-#define kSchedInvalidPID (-1)
-#define kSchedProcessLimitPerTeam (32U)
-#define kSchedTeamCount (256U)
+#define kCPSMinMicroTime (AffinityKind::kStandard)
+#define kCPSInvalidPID (-1)
+#define kCPSProcessLimitPerTeam (32U)
+#define kCPSTeamCount (256U)
 
-#define kSchedMaxMemoryLimit (gib_cast(128)) /* max physical memory limit */
-#define kSchedMaxStackSz (kib_cast(8))       /* maximum stack size */
+#define kCPSMaxMemoryLimit (gib_cast(128)) /* max physical memory limit */
+#define kCPSMaxStackSz (kib_cast(8))       /* maximum stack size */
 
-#define kSchedNameLen (128U)
+#define kCPSNameLen (128U)
 
 EXTERN_C void sched_idle_task(void);
 

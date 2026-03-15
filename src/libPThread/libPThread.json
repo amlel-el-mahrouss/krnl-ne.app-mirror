@@ -20,6 +20,6 @@
     "kPosixVersionLowest=0x0100",
     "kPosixVersion=0x0100"
   ],
-  "description": "The NeKernel PThread System."
+  "description": "The NeKernel PThread System. Refer to: https://man7.org/linux/man-pages/man7/pthreads.7.html"
 }
 i

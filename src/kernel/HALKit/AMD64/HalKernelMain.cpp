@@ -133,6 +133,8 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
   return kEfiFail;
 }
 
+EXTERN_C BOOL rtl_init_nic_rtl8139();
+
 EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
@@ -160,6 +162,10 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   else ke_panic(RUNTIME_CHECK_PROCESS, "RuntimeCheck: Invalid Process Data!");
   
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
+
+#ifdef __HALKIT_INCLUDES_BNID__
+  rtl_init_nic_rtl8139();
+#endif
 
   while (YES);
 }

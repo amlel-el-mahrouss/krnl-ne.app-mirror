@@ -51,7 +51,7 @@ class Device final {
   }
 
  public:
-  UShort  DeviceId();
+  UInt16  DeviceId();
   UShort  VendorId();
   UShort  InterfaceId();
   UChar   Class();

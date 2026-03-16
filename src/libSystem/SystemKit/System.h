@@ -21,6 +21,7 @@
 /// @brief Types API.
 // ------------------------------------------------------------------------------------------ //
 
+/// @brief Reference type, used for all references in the system, such as file descriptors, dylib handles, thread handles, etc.
 struct REF_TYPE {
   UInt64  __hash;  /// @brief Hash of the syscall
   VoidPtr __self;  /// @brief Syscall self value.
@@ -210,11 +211,14 @@ typedef SInt32 (*ThrProcKind)(SInt32 argc, Char** argv);
 /// @param flags Thread flags.
 /// @return the thread object.
 IMPORT_C ThreadRef ThrCreateThread(const Char* thread_name, ThrProcKind procedure,
-                                   SInt32 argument_count, SInt32 flags);
+                                   SInt32 argument_count, VoidPtr args, SInt32 flags);
 
 /// @brief Yields the current thread.
 /// @param thread the thread to yield.
 IMPORT_C SInt32 ThrYieldThread(ThreadRef thrd);
+
+/// @brief Get the current thread's ID.
+IMPORT_C ThreadRef ThrCurrentThread(Void);
 
 /// @brief Joins a thread.
 /// @param thread the thread to join.
@@ -388,5 +392,18 @@ IMPORT_C BOOL IfsIsMounted(const Char* drive_letter);
 IMPORT_C Char* StrFmt(const Char* fmt, ...);
 
 IMPORT_C UInt64 StrMathToNumber(const Char* in, const Char** endp, const SInt16 base);
+
+// ------------------------------------------------------------------------------------------ //
+// @brief Semaphore API.
+// ------------------------------------------------------------------------------------------ //
+
+/// @brief Create a semaphore.
+IMPORT_C _Output SemaphoreRef SemCreate(_Input UInt32 initial_count, _Input UInt32 max_count, _Input const Char* name);
+
+/// @brief Wait on a semaphore.
+IMPORT_C SInt32 SemWait(_Input SemaphoreRef sem);
+
+/// @brief Close a semaphore.
+IMPORT_C SInt32 SemClose(_Input SemaphoreRef sem);
 
 #endif  // ifndef SYSTEMKIT_SYSTEM_H

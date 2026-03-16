@@ -6,6 +6,7 @@
 #ifndef MSGKIT_SERVER_H
 #define MSGKIT_SERVER_H
 
+#include "libSystem/SystemKit/Macros.h"
 #ifdef __cplusplus
 #include <CoreFoundation.fwrk/headers/String.h>
 #else
@@ -25,8 +26,11 @@ struct LIBMSG_EXPR final {
   CF::CFString* l_value{nullptr};
 #else
   // if we use C, we won't know about CF, so let's make those private.
-  VoidPtr l_private_data[2]{nullptr};
+  VoidPtr l_key{nullptr};
+  VoidPtr l_value{nullptr};
 #endif
+
+  SizeT l_index{};
 
   LIBMSG_EXPR* l_head{nullptr};
   LIBMSG_EXPR* l_tail{nullptr};
@@ -38,6 +42,6 @@ typedef Void (*libmsg_func_type)(struct LIBMSG_EXPR* self, VoidPtr arg, SizeT ar
 
 IMPORT_C Void   libmsg_init_library(libmsg_func_type* funcs, SizeT cnt);
 IMPORT_C UInt32 libmsg_close_library(Void);
-IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head);
+IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head, VoidPtr arg, SizeT arg_size);
 
 #endif

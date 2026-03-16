@@ -11,4 +11,11 @@
 #define PTHREAD_UNSAFE /* hint */
 #define PTHREAD_SAFE /* hint */
 
+PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr attr, VoidPtr (*start_routine)(VoidPtr), VoidPtr arg);
+PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval);
+PTHREAD_SAFE SInt32 pthread_exit(SInt32 retval);
+PTHREAD_SAFE SInt32 pthread_detach(ThreadRef thread);
+PTHREAD_SAFE ThreadRef pthread_self(Void);
+PTHREAD_SAFE SInt32 pthread_yield(void);
+
 #endif  // LIBPOSIX_POSIXKIT_THREAD_H

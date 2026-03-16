@@ -40,14 +40,14 @@ static uint64_t ddk_fnv_64(const char* path) {
 /// @retval nil Kernel call failed, call KernelLastError(void)
 DDK_EXTERN void* ke_call_dispatch(const char* name, int32_t cnt, void* data, size_t sz) {
   if (name == nil || *name == 0 || data == nil || cnt == 0) return nil;
-  return __ke_call_dispatch(ddk_fnv_64(name), cnt, data, sz);
+  return ::__ke_call_dispatch(ddk_fnv_64(name), cnt, data, sz);
 }
 
 /// @brief Add system call.
 /// @param slot system call slot
 /// @param slotFn, syscall slot.
 DDK_EXTERN void ke_set_syscall(const int slot, void (*slotFn)(void* a0)) {
-  ke_call_dispatch("ke_set_syscall", slot, (ptr_t) slotFn, 1);
+  ::ke_call_dispatch("ke_set_syscall", slot, (ptr_t) slotFn, 1);
 }
 
 /// @brief Get a Kernel object.
@@ -56,7 +56,7 @@ DDK_EXTERN void ke_set_syscall(const int slot, void (*slotFn)(void* a0)) {
 /// @return Object manifest.
 DDK_EXTERN struct DDK_OBJECT_MANIFEST* ke_get_obj(const int slot, const char* name) {
   struct DDK_OBJECT_MANIFEST* manifest =
-      (struct DDK_OBJECT_MANIFEST*) ke_call_dispatch("cfkit_get_kobj", slot, (void*) name, 1);
+      (struct DDK_OBJECT_MANIFEST*) ::ke_call_dispatch("cfkit_get_kobj", slot, (void*) name, 1);
 
   if (!manifest) return nil;
 
@@ -70,5 +70,5 @@ DDK_EXTERN struct DDK_OBJECT_MANIFEST* ke_get_obj(const int slot, const char* na
 /// @return property's object.
 DDK_EXTERN void* ke_set_obj(const int slot, const struct DDK_OBJECT_MANIFEST* ddk_ptr) {
   if (ddk_ptr == nil) return nil;
-  return ke_call_dispatch("cfkit_set_kobj", slot, (void*) ddk_ptr, 1);
+  return ::ke_call_dispatch("cfkit_set_kobj", slot, (void*) ddk_ptr, 1);
 }

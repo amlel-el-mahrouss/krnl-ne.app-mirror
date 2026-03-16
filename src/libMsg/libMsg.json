@@ -17,5 +17,5 @@
     "kLibSystemVersionHighest=0x0100",
     "kLibSystemVersionLowest=0x0100"
   ],
-  "description": "OpenMessage Kit for NeKernel."
+  "description": "OpenMessage Kit for the NeSystem."
 }

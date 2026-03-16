@@ -5,29 +5,38 @@
 
 #include <libPThread/PThreadKit/Thread.h>
 
-namespace POSIXKit::Detail {
+PTHREAD_SAFE SInt32 pthread_detach(ThreadRef thread) {
+  return ThrDetachThread(thread);
+}
 
-  /// @brief Max path structure.
-  constexpr auto kMaxPathLen = 255;
-  static constexpr auto kCanaryValue = 0xf0f0488f;
+PTHREAD_SAFE SInt32 pthread_yield(void) {
+  return ThrYieldThread(pthread_self());
+}
 
-  /// @brief Thread Information Structure.
-  struct ThreadFrameParams final {
-    SInt64  fCanary;
-    VoidPtr fStackPtr;
-    VoidPtr fCodePtr;
-    SizeT   fCodeSz;
-    SizeT   fStackSz;
-    SInt64  fThrdID;
-    SInt64  fUsrID, fGrpID;
-    SInt64*  fFD{};
-    SizeT    fFDCnt;
-    Char    fCWD[kMaxPathLen];
-    Char    fRoot[kMaxPathLen];
-    ThreadRef fRef;
-  };
+PTHREAD_SAFE ThreadRef pthread_self(Void) {
+  return ThrCurrentThread();
+}
 
-} // namespace POSIX::Detail
+PTHREAD_SAFE SInt32 pthread_exit(SInt32 retval) {
+  return ThrExitCurrentThread(retval);
+}
 
+PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
+  SInt32* ret = (SInt32*)retval;
+  *ret = ThrJoinThread(thread);
 
+  return 0;
+}
+
+PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr attr, VoidPtr (*start_routine)(VoidPtr), VoidPtr arg) {
+  LIBSYS_UNUSED(attr);
+
+  /// @note passing zero means you'd have to read the argv until you hit a nullptr. 
+  ThreadRef thrd = ThrCreateThread("pthread_thread", (ThrProcKind)start_routine, 0, arg, 0);
+
+  if (!thrd) return -1;
+
+  *thread = thrd;
+  return 0;
+}
 

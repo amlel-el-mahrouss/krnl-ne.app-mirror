@@ -13,7 +13,7 @@ DDK_EXTERN void kputc(const char ch) {
   assembled[0]      = ch;
   assembled[1]      = 0;
 
-  ke_call_dispatch("ke_put_string", 2, assembled, 2);
+  ::ke_call_dispatch("ke_put_string", 2, assembled, 2);
 }
 
 /// @brief print string to UART.
@@ -23,10 +23,10 @@ DDK_EXTERN void kprint(const char* message) {
   if (*message == '\0') return;
 
   size_t index = 0;
-  size_t len   = kstrlen(message);
+  size_t len   = ::kstrlen(message);
 
   while (index < len) {
-    kputc(message[index]);
+    ::kputc(message[index]);
     ++index;
   }
 }

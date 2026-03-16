@@ -7,15 +7,15 @@
 #include <DriverKit/DriverKit.h>
 
 #ifndef kDDKVersionHighest
-#define kDDKVersionHighest 1
+#define kDDKVersionHighest 0x010000
 #endif  // !kDDKVersionHighest
 
 #ifndef kDDKVersionLowest
-#define kDDKVersionLowest 1
+#define kDDKVersionLowest 0x010000
 #endif  // !kDDKVersionLowest
 
 #ifndef kDDKVersion
-#define kDDKVersion 1
+#define kDDKVersion 0x010000
 #endif  // !kDDKVersion
 
 uint32_t kApiVersionHighest = kDDKVersionHighest;

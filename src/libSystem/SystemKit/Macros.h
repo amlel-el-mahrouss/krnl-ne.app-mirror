@@ -15,6 +15,9 @@
 
 #define ATTRIBUTE(X) __attribute__((X))
 
+#define __THREAD_SAFE ATTRIBUTE(thread_safe)
+#define __THREAD_UNSAFE
+
 #define IMPORT_CXX extern "C++"
 #define IMPORT_C extern "C"
 

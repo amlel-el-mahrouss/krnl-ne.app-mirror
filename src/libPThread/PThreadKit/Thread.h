@@ -8,8 +8,9 @@
 
 #include <libPOSIXWrapper/POSIXKit/unistd.h>
 
-#define PTHREAD_UNSAFE /* hint */
-#define PTHREAD_SAFE /* hint */
+/// @brief Please use these macros to specify whether your function is thread safe or not.
+#define PTHREAD_UNSAFE __THREAD_UNSAFE
+#define PTHREAD_SAFE __THREAD_SAFE
 
 PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr attr, VoidPtr (*start_routine)(VoidPtr), VoidPtr arg);
 PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval);

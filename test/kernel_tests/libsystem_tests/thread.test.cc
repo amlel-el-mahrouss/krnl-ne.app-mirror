@@ -1,6 +1,6 @@
 /// \file thread.test.cc
 /// \brief Threading API tests.
-/// \author Amlal El Mahrouss (amlal at nekernel dot org)
+/// \author Amlal El Mahrouss (amlal at nekernel dot org) (2025-2026)
 
 #include <libSystem/SystemKit/System.h>
 #include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>

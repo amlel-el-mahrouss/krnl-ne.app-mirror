@@ -1,6 +1,6 @@
 # <Title of PR>
 
-<Describe brifely your PR here.>
+<Describe briefly your PR here.>
 
 ## Rationale:
 

@@ -23,14 +23,18 @@ PTHREAD_SAFE SInt32 pthread_exit(SInt32 retval) {
 
 PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
   SInt32* ret = (SInt32*) retval;
-  *ret        = ThrJoinThread(thread);
 
+  if (!ret) return -1;
+
+  *ret        = ThrJoinThread(thread);
   return 0;
 }
 
 PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr         attr,
                                    VoidPtr (*start_routine)(VoidPtr), VoidPtr arg) {
   LIBSYS_UNUSED(attr);
+
+  if (!attr || !thread || !arg || !start_routine) return -1;
 
   /// @note passing zero means you'd have to read the argv until you hit a nullptr.
   ThreadRef thrd = ThrCreateThread("pthread_thread", (ThrProcKind) start_routine, 0, arg, 0);

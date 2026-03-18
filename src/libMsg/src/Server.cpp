@@ -23,13 +23,15 @@ IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head, VoidPtr arg, SizeT ar
 
   if (!head) return 0;
 
-  kSemaphore = SemCreate(1000, 1000, "libmsg_semaphore");
+  static kSemWaitTime = 1000;
+
+  kSemaphore = ::SemCreate(kSemWaitTime, kSemWaitTime, "libmsg_semaphore");
 
   if (!kSemaphore) return 0;
 
   kFuncs[head->l_index](head, arg, arg_size);
 
-  SemClose(kSemaphore);
+  ::SemClose(kSemaphore);
   kSemaphore = nullptr;
 
   return 0;

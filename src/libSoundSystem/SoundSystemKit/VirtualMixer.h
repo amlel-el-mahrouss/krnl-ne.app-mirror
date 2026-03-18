@@ -10,9 +10,11 @@
 #include <libSystem/SystemKit/System.h>
 
 namespace SoundSystem {
-struct VirtualMixer;
-struct VirtualSource;
-struct VirtualVolume;
+
+    struct VirtualMixer;
+    struct VirtualSource;
+    struct VirtualVolume;
+
 }  // namespace SoundSystem
 
 #endif

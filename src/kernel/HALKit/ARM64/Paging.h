@@ -41,14 +41,10 @@
 
 /// Long format address range
 
-#define cPageMAll \
-  { 0b000, 0b000 }
-#define cPageMToMax(M) \
-  { M, 0b000 }
-#define cPageMaxToM(M) \
-  { 0b000, M }
-#define cPageMToN(M, N) \
-  { M, N }
+#define cPageMAll {0b000, 0b000}
+#define cPageMToMax(M) {M, 0b000}
+#define cPageMaxToM(M) {0b000, M}
+#define cPageMToN(M, N) {M, N}
 
 namespace Kernel::HAL {
 struct PACKED PTE_4KB final {
@@ -86,7 +82,9 @@ namespace Detail {
     PageEnable          = 31,
   };
 
-  inline UInt8 control_register_cast(ControlRegisterBits reg) { return static_cast<UInt8>(reg); }
+  inline UInt8 control_register_cast(ControlRegisterBits reg) {
+    return static_cast<UInt8>(reg);
+  }
 }  // namespace Detail
 
 struct PDE_4KB final {

@@ -45,19 +45,18 @@ Void RecoveryFactory::Recover() {
     HAL::rt_cli();
     HAL::rt_halt();
   }
-  
-  alreadyDumped = YES;
-  
-  HeFileSystemMgr mgr;
-  auto node = mgr.Open("/system/dump.dmp", "wb");
 
+  alreadyDumped = YES;
+
+  HeFileSystemMgr mgr;
+  auto            node = mgr.Open("/system/dump.dmp", "wb");
 
   if (node && hal_read_cr2()) mgr.Write(node, hal_read_cr2(), 0, 0x100);
   if (node) mm_free_ptr(node);
-  
+
   node = nullptr;
 #endif
-  
+
   while (YES) {
     HAL::rt_cli();
     HAL::rt_halt();

@@ -3,15 +3,14 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
-#include <tools/libmkfs/mkfs.hpp>
-#include <tools/libmkfs/openhefs.hpp>
 #include <cstdlib>
 #include <fstream>
+#include <tools/libmkfs/mkfs.hpp>
+#include <tools/libmkfs/openhefs.hpp>
 
 /// @note decimal base.
 static uint16_t kNumericalBase = 10;
-static auto kMinArgs = 2;
+static auto     kMinArgs       = 2;
 
 int main(int argc, char** argv) {
   if (argc < kMinArgs) {
@@ -20,9 +19,9 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  auto args = mkfs::detail::build_args(argc, argv);
+  auto args     = mkfs::detail::build_args(argc, argv);
   auto opt_disk = mkfs::get_option<char>(args, "in");
-  auto origin = mkfs::get_option<char>(args, "b");
+  auto origin   = mkfs::get_option<char>(args, "b");
 
   if (opt_disk.empty()) {
     mkfs::console_out() << "chk: hefs: error: OpenHeFS partition is empty! Exiting..."
@@ -58,8 +57,8 @@ int main(int argc, char** argv) {
 
   if (strncmp(boot_node.magic, kOpenHeFSMagic, kOpenHeFSMagicLen) != 0 ||
       boot_node.sectorCount < 1 || boot_node.sectorSize < kMkFsSectorSz) {
-    mkfs::console_out() << "chk: hefs: error: Device does not contain an OpenHeFS disk: " << opt_disk
-                        << "\n";
+    mkfs::console_out() << "chk: hefs: error: Device does not contain an OpenHeFS disk: "
+                        << opt_disk << "\n";
     return EXIT_FAILURE;
   }
 

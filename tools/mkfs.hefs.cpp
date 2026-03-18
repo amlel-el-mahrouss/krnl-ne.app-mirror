@@ -3,14 +3,13 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
-#include <tools/libmkfs/mkfs.hpp>
-#include <tools/libmkfs/openhefs.hpp>
 #include <algorithm>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <limits>
+#include <tools/libmkfs/mkfs.hpp>
+#include <tools/libmkfs/openhefs.hpp>
 
 static std::uint16_t kVersion       = kOpenHeFSVersion;
 static std::uint16_t kNumericalBase = 10;

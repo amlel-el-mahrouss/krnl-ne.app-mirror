@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #include <NeKit/Utils.h>
 
 namespace Kernel {
@@ -105,9 +104,7 @@ Int32 rt_to_lower(Int ch) {
 }
 
 Int32 rt_is_alnum(Int ch) {
-  return (ch >= 'a' && ch <= 'z') ||
-    (ch >= 'A' && ch <= 'Z') ||
-      (ch >= '0' && ch <= '9');
+  return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9');
 }
 
 Boolean rt_is_space(Int ch) {

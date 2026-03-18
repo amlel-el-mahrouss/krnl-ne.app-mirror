@@ -63,10 +63,10 @@ class UserProcess final {
   IDylibObject*      DylibDelegate{nullptr};
   SizeT              MemoryCursor{0UL};
   SizeT              MemoryLimit{kCPSMaxMemoryLimit};
-  SizeT              UsedMemory{0UL}; /// AMLALE: This should be thread-safe as well.
-  SizeT              UsedFiles{0UL}; /// AMLALE: This is a thread-safe counter to track file allocation count.
-  UserProcessSignal  Signal;
-  ProcessImage       Image;
+  SizeT              UsedMemory{0UL};  /// AMLALE: This should be thread-safe as well.
+  SizeT UsedFiles{0UL};  /// AMLALE: This is a thread-safe counter to track file allocation count.
+  UserProcessSignal Signal;
+  ProcessImage      Image;
 
  private:
   ProcessFileTree<Any>* FileTree{nullptr};
@@ -207,8 +207,8 @@ class UserProcessTeam final {
   NE_COPY_DEFAULT(UserProcessTeam)
 
   Array<UserProcess, kCPSProcessLimitPerTeam>& AsArray();
-  Ref<UserProcess>&                              AsRef();
-  ProcessID&                                     Id();
+  Ref<UserProcess>&                            AsRef();
+  ProcessID&                                   Id();
 
  public:
   UserProcessArray mProcessList;

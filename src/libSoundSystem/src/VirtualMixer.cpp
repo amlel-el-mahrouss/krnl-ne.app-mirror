@@ -6,4 +6,3 @@
 #include <SoundSystemKit/VirtualMixer.h>
 
 namespace SoundSystem {}
-

@@ -4,5 +4,3 @@
 // Official repository: https://github.com/ne-foss-org/nekernel
 
 #include <DriverKit/ObjectKit/Base.h>
-
-

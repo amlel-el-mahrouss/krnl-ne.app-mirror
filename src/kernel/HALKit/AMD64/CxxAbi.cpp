@@ -11,7 +11,7 @@
 #define kAtExitMaxDestructors (128U)
 
 atexit_func_entry_t __atexit_funcs[kAtExitMaxDestructors];
-uarch_t __atexit_func_count;
+uarch_t             __atexit_func_count;
 
 /// @brief dynamic shared object Handle.
 Kernel::UIntPtr __dso_handle;

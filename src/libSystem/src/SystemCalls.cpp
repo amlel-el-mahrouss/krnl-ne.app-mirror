@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #include <libSystem/SystemKit/Err.h>
 #include <libSystem/SystemKit/Syscall.h>
 #include <libSystem/SystemKit/System.h>
@@ -126,7 +125,9 @@ IMPORT_C Ref IoOpenFile(_Input const Char* path, _Input const Char* drv_letter) 
                                                Verify::sys_safe_cast<Char, Void>(drv_letter)));
 }
 
-IMPORT_C Void IoCloseFile(_Input Ref desc) { libsys_syscall_arg_2(SYSCALL_HASH("IoCloseFile"), static_cast<VoidPtr>(desc)); }
+IMPORT_C Void IoCloseFile(_Input Ref desc) {
+  libsys_syscall_arg_2(SYSCALL_HASH("IoCloseFile"), static_cast<VoidPtr>(desc));
+}
 
 IMPORT_C UInt64 IoSeekFile(_Input Ref desc, _Input UInt64 off) {
   auto ret_ptr = libsys_syscall_arg_3(SYSCALL_HASH("IoSeekFile"), static_cast<VoidPtr>(desc),
@@ -134,7 +135,7 @@ IMPORT_C UInt64 IoSeekFile(_Input Ref desc, _Input UInt64 off) {
 
   if (!ret_ptr) return ~0UL;
 
-  auto   ret    = static_cast<volatile UInt64*>(ret_ptr);
+  auto ret = static_cast<volatile UInt64*>(ret_ptr);
 
   UInt64 result = *ret;
   MUST_PASS(result != ~0UL);
@@ -160,7 +161,9 @@ IMPORT_C SInt32 PrintRelease(_Input IORef buf) {
   return static_cast<SInt32>(*ret);
 }
 
-IMPORT_C IORef PrintCreate(Void) { return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate"))); }
+IMPORT_C IORef PrintCreate(Void) {
+  return static_cast<IORef>(libsys_syscall_arg_1(SYSCALL_HASH("PrintCreate")));
+}
 
 IMPORT_C VoidPtr MmCreateHeap(UInt64 initial_size, UInt32 max_size) {
   return static_cast<VoidPtr>(libsys_syscall_arg_3(SYSCALL_HASH("MmCreateHeap"),
@@ -223,4 +226,3 @@ IMPORT_C SInt32 PrintOut(_Input IORef desc, const Char* fmt, ...) {
 IMPORT_C UInt64 PrintSize(IORef ref) {
   return *static_cast<UInt64*>(libsys_syscall_arg_2(SYSCALL_HASH("PrintSize"), ref));
 }
-

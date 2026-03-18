@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #ifndef __NE_MINIMAL_OS__
 #ifdef __FSKIT_INCLUDES_OPENHEFS__
 
@@ -74,9 +73,7 @@ NodePtr HeFileSystemMgr::Create(_Input const Char* path) {
 
   err_local_get() = kErrorSuccess;
 
-  if (auto node = mParser->CreateINode(&mDriveTrait, 0, nullptr, out, 0);
-     node)
-    return nullptr;
+  if (auto node = mParser->CreateINode(&mDriveTrait, 0, nullptr, out, 0); node) return nullptr;
 
   kout << "OpenHeFS: ERROR: Check KPC.\r";
 
@@ -107,14 +104,12 @@ NodePtr HeFileSystemMgr::CreateDirectory(const Char* path) {
 
   err_local_get() = kErrorSuccess;
 
-  if (auto node = mParser->CreateINodeDirectory(&mDriveTrait, 0, out);
-     node)
-    return nullptr;
+  if (auto node = mParser->CreateINodeDirectory(&mDriveTrait, 0, out); node) return nullptr;
 
   kout << "OpenHeFS: ERROR: Check KPC.\r";
 
-  err_local_get() = kErrorDiskIsFull;  
-  
+  err_local_get() = kErrorDiskIsFull;
+
   return nullptr;
 }
 
@@ -126,7 +121,7 @@ NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
     kout << "OpenHeFS: CreateAlias called with null or empty path\r";
     return nullptr;
   }
-  
+
   // TODO: It needs its own helper!
   SizeT len = oe_string_len<Char>(path);
 
@@ -140,14 +135,15 @@ NodePtr HeFileSystemMgr::CreateAlias(const Char* path) {
 
   err_local_get() = kErrorSuccess;
 
-  if (auto node = mParser->CreateINode(&mDriveTrait, kOpenHeFSFileKindSymbolicLink, nullptr, out, 0);
-     node)
+  if (auto node =
+          mParser->CreateINode(&mDriveTrait, kOpenHeFSFileKindSymbolicLink, nullptr, out, 0);
+      node)
     return nullptr;
 
   kout << "OpenHeFS: ERROR: Check KPC.\r";
 
-  err_local_get() = kErrorDiskIsFull;  
-  
+  err_local_get() = kErrorDiskIsFull;
+
   return nullptr;
 }
 
@@ -221,14 +217,14 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _
   return nullptr;
 }
 
-  /// @note name is not used in OpenHeFS to mark data offsets. That's an NeFS-ism.
+/// @note name is not used in OpenHeFS to mark data offsets. That's an NeFS-ism.
 Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input VoidPtr data,
                             _Input Int32 flags, _Input SizeT size) {
   NE_UNUSED(node);
-  //NE_UNUSED(flags);
-  //NE_UNUSED(size);
-  //NE_UNUSED(name);
-  //NE_UNUSED(data);
+  // NE_UNUSED(flags);
+  // NE_UNUSED(size);
+  // NE_UNUSED(name);
+  // NE_UNUSED(data);
 
   if (!flags) return;
   if (!size) return;
@@ -237,8 +233,8 @@ Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input
 
   static IMountpoint mnt;
   io_construct_main_drive(mnt.A());
-  
-  mParser->INodeManip(&mnt.A(), (VoidPtr)data, size, u8"/", (Char8*)name, 0, NO);
+
+  mParser->INodeManip(&mnt.A(), (VoidPtr) data, size, u8"/", (Char8*) name, 0, NO);
 }
 
 _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr node,
@@ -257,8 +253,8 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
   static IMountpoint mnt;
   io_construct_main_drive(mnt.A());
 
-  mParser->INodeManip(&mnt.A(), (VoidPtr)retBlob, sz, u8"/", (Char8*)name, 0, YES);
-  
+  mParser->INodeManip(&mnt.A(), (VoidPtr) retBlob, sz, u8"/", (Char8*) name, 0, YES);
+
   return retBlob;
 }
 
@@ -273,7 +269,7 @@ _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
   if (!node) return kFileMgrNPos;
   SizeT pos = 0ULL;
-  
+
   return pos;
 }
 

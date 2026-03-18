@@ -3,7 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #include <BootKit/BootKit.h>
 #include <BootKit/Platform.h>
 #include <BootKit/Protocol.h>
@@ -16,7 +15,7 @@
 /// @return
 void* operator new(size_t sz) {
   if (sz == 0) ++sz;
-  
+
   void* buf = nullptr;
 
   while (BS->AllocatePool(EfiMemoryType::EfiLoaderData, sz, &buf) != kEfiOk);
@@ -29,7 +28,7 @@ void* operator new(size_t sz) {
 /// @return
 void* operator new[](size_t sz) {
   if (sz == 0) ++sz;
-  
+
   void* buf = nullptr;
   BS->AllocatePool(EfiMemoryType::EfiLoaderData, sz, &buf);
 

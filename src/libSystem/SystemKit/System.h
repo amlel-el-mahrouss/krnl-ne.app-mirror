@@ -21,7 +21,8 @@
 /// @brief Types API.
 // ------------------------------------------------------------------------------------------ //
 
-/// @brief Reference type, used for all references in the system, such as file descriptors, dylib handles, thread handles, etc.
+/// @brief Reference type, used for all references in the system, such as file descriptors, dylib
+/// handles, thread handles, etc.
 struct REF_TYPE {
   UInt64  __hash;  /// @brief Hash of the syscall
   VoidPtr __self;  /// @brief Syscall self value.
@@ -398,7 +399,8 @@ IMPORT_C UInt64 StrMathToNumber(const Char* in, const Char** endp, const SInt16 
 // ------------------------------------------------------------------------------------------ //
 
 /// @brief Create a semaphore.
-IMPORT_C _Output SemaphoreRef SemCreate(_Input UInt32 initial_count, _Input UInt32 max_count, _Input const Char* name);
+IMPORT_C _Output SemaphoreRef SemCreate(_Input UInt32 initial_count, _Input UInt32 max_count,
+                                        _Input const Char* name);
 
 /// @brief Wait on a semaphore.
 IMPORT_C SInt32 SemWait(_Input SemaphoreRef sem);

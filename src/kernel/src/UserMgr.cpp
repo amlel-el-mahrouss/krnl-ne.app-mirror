@@ -16,8 +16,8 @@
 /// @brief Multi-user support.
 
 namespace Kernel {
-  namespace Detail {
-    struct UserPermissionControl;
-    struct UserPermissionElevator;
-  }
-}
+namespace Detail {
+  struct UserPermissionControl;
+  struct UserPermissionElevator;
+}  // namespace Detail
+}  // namespace Kernel

@@ -16,13 +16,13 @@
 #define kAtExitMaxDestructors (128U)
 
 typedef struct atexit_func_entry {
-  void(*destructor_func)();
+  void (*destructor_func)();
 } atexit_func_entry_t;
 
 typedef long long uarch_t;
 
 atexit_func_entry_t __atexit_funcs[kAtExitMaxDestructors];
-uarch_t __atexit_func_count;
+uarch_t             __atexit_func_count;
 
 /// @note This function is a stub, not implemented by the bootloader as of right now. (AMLALE)
 EXTERN_C int atexit(void (*f)()) {

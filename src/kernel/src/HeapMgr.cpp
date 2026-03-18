@@ -3,15 +3,14 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/DebugOutput.h>
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/KPC.h>
+#include <KernelKit/LockDelegate.h>
 #include <NeKit/Crc32.h>
 #include <NeKit/PageMgr.h>
 #include <NeKit/Utils.h>
-#include <KernelKit/LockDelegate.h>
 
 /* ========================================
 
@@ -85,7 +84,7 @@ STATIC PageMgr kPageMgr;
 /// @param user User enable bit.
 /// @return The newly allocated pointer.
 _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
-  static Bool locked = false;
+  static Bool       locked = false;
   LockDelegate<255> lock{&locked};
 
   auto sz_fix = sz;
@@ -134,7 +133,7 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
 /// @brief Controls the page's heap.
 /// @param heap_ptr the pointer to make a page heap.
 /// @return kErrorSuccess if successful, otherwise an error code.
-  _Output Int32 mm_ctl_page(VoidPtr heap_ptr, const Bool enable) {
+_Output Int32 mm_ctl_page(VoidPtr heap_ptr, const Bool enable) {
   if (Detail::mm_check_ptr_address(heap_ptr) == No) return kErrorHeapNotPresent;
 
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =

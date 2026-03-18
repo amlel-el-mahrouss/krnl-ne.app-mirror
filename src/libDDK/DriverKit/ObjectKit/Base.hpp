@@ -29,6 +29,7 @@ class IDriverBase {
   IDriverBase& operator=(const IDriverBase&) = default;
   IDriverBase(const IDriverBase&)            = default;
 
+public:
   using PtrType = void*;
 
   virtual constexpr bool    IsCastable() { return false; }

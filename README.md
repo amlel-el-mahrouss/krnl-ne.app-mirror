@@ -1,11 +1,8 @@
-
 <!-- Read Me of NeKernel -->
-
-![Logotype](meta/media/ne_logotype.png)
 
 <div align="center">
   <h1>
-    <b>The NeKernel System.</b>
+    <b>🍯 The NeKernel:</b>
   </h1>
   <p>
     <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>

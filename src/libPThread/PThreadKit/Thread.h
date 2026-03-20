@@ -8,16 +8,15 @@
 
 #include <libPOSIXWrapper/POSIXKit/unistd.h>
 
-/// @brief Please use these macros to specify whether your function is thread safe or not.
-#define PTHREAD_UNSAFE __THREAD_UNSAFE
-#define PTHREAD_SAFE __THREAD_SAFE
+/// @internal Internal type, please do not rely on it for multi-platform builds.
+typedef ThreadRef pthread_ref_t;
 
-PTHREAD_SAFE SInt32    pthread_create(_Output ThreadRef* thread, VoidPtr         attr,
+PTHREAD_SAFE IMPORT_C SInt32    pthread_create(_Output pthread_ref_t* thread, VoidPtr         attr,
                                       VoidPtr (*start_routine)(VoidPtr), VoidPtr arg);
-PTHREAD_SAFE SInt32    pthread_join(ThreadRef thread, VoidPtr* retval);
-PTHREAD_SAFE SInt32    pthread_exit(SInt32 retval);
-PTHREAD_SAFE SInt32    pthread_detach(ThreadRef thread);
-PTHREAD_SAFE ThreadRef pthread_self(Void);
-PTHREAD_SAFE SInt32    pthread_yield(void);
+PTHREAD_SAFE IMPORT_C SInt32    pthread_join(pthread_ref_t thread, VoidPtr* retval);
+PTHREAD_SAFE IMPORT_C SInt32    pthread_exit(SInt32 retval);
+PTHREAD_SAFE IMPORT_C SInt32    pthread_detach(pthread_ref_t thread);
+PTHREAD_SAFE IMPORT_C pthread_ref_t pthread_self(Void);
+PTHREAD_SAFE IMPORT_C SInt32    pthread_yield(void);
 
 #endif  // LIBPOSIX_POSIXKIT_THREAD_H

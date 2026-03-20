@@ -8,7 +8,7 @@
 
 ## About:
 
-The Base OS of the NeSystem designed for portability and scalability.
+The Base OS of the NeSystem designed for portability and scalability. A hybrid system written in modern C++ for backend systems. 
 
 ## Getting Started:
 

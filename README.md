@@ -1,15 +1,15 @@
 <!-- Read Me of NeKernel -->
 
-<div align="center">
-  <h1>
-    <b>🍯 The NeKernel:</b>
-  </h1>
-  <p>
-    <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
-    <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg" alt="CI"></a>
-    <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
-  </p>
-</div>
+# 🍯 The NeKernel
+
+<a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI"></a>
+<a href="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg" alt="CI"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
+![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/ne-kernel)
+
+## About:
+
+The Base OS of the NeSystem designed for portability and scalability. A hybrid system written in modern C++ for backend systems. 
 
 ## Getting Started:
 
@@ -32,16 +32,10 @@ git clone -j8 https://github.com/ne-foss-org/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh
-./scripts/debug_ahci_x64.sh   # For debug generic AHCI target (QEMU, USB)
+./scripts/debug_ahci_x64.sh   # For debug generic AHCI target (QEMU, UDF)
 ```
 
 ---
-
-## Love our work?
-
-Give us a star on GitHub!
-
-![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/kernel)
 
 ## Community:
 

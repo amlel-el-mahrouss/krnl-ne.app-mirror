@@ -26,7 +26,7 @@ PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
 
   if (!ret) return -1;
 
-  *ret        = ThrJoinThread(thread);
+  *ret = ThrJoinThread(thread);
   return 0;
 }
 

@@ -11,9 +11,9 @@
 
 namespace SoundSystem {
 
-    struct VirtualMixer;
-    struct VirtualSource;
-    struct VirtualVolume;
+struct VirtualMixer;
+struct VirtualSource;
+struct VirtualVolume;
 
 }  // namespace SoundSystem
 

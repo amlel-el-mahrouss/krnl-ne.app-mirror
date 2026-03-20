@@ -8,6 +8,7 @@
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 namespace Kernel {
+
 Size urt_string_len(const Utf8Char* str) {
   if (!str) return 0;
 
@@ -58,4 +59,5 @@ Int32 urt_copy_memory(const VoidPtr src, VoidPtr dst, Size len) {
 
   return index;
 }
+
 }  // namespace Kernel

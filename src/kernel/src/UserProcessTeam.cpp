@@ -7,7 +7,7 @@
 
 namespace Kernel {
 UserProcessTeam::UserProcessTeam() {
-  for (SizeT i = 0U; i < this->mProcessList.Count(); ++i) {
+  for (SizeT i{}; i < kCPSProcessLimitPerTeam; ++i) {
     this->mProcessList[i]        = UserProcess{};
     this->mProcessList[i].PTime  = 0;
     this->mProcessList[i].RTime  = 0;
@@ -15,7 +15,10 @@ UserProcessTeam::UserProcessTeam() {
     this->mProcessList[i].Status = ProcessStatusKind::kKilled;
   }
 
-  // se the cursor to zero.
+  // We dont know our team yet.
+  this->mTeamId = 0UL;
+
+  // We dont have any running processes.
   this->mProcessCur = 0UL;
 }
 

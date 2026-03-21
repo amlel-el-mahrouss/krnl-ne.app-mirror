@@ -1,12 +1,14 @@
 # [PR]: <Title of PR>
 
+## Description:
+
 <Describe briefly your PR here.>
 
-## Rationale:
+### PR Rationale:
 
 <Describe the rationale here>
 
-## Process:
+### PR Process:
 
 <Describe your process here>
 
@@ -14,7 +16,7 @@
 
 <Describe the results here>
 
-## Additionals:
+### Additional Informations:
 
-
+<Describe additional information (Optional)>
 

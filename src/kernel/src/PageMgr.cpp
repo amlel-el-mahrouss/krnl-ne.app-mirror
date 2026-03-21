@@ -13,6 +13,7 @@
 #endif  // ifdef __NE_AMD64__ || defined(__NE_ARM64__)
 
 namespace Kernel {
+  
 PTEWrapper::PTEWrapper(Boolean Rw, Boolean User, Boolean ExecDisable, UIntPtr VirtAddr)
     : fRw(Rw),
       fUser(User),
@@ -91,4 +92,5 @@ Void PTEWrapper::NoExecute(const bool enable) {
 Bool PTEWrapper::NoExecute() {
   return fExecDisable;
 }
+
 }  // namespace Kernel

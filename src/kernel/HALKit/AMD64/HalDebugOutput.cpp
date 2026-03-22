@@ -59,7 +59,7 @@ namespace Detail {
 TerminalDevice::~TerminalDevice() = default;
 
 #ifdef __DEBUG__
-STATIC SizeT kX = kFontSizeX, kY = kFontSizeY + 66;
+STATIC SizeT kX = kFontSizeX, kY = kFontSizeY + 70;
 #endif  // __DEBUG__
 
 EXTERN_C void ke_utf_io_write(IDevice<const Utf8Char*>* obj, const Utf8Char* bytes) {
@@ -161,7 +161,7 @@ EXTERN_C void ke_io_write(IDevice<const Char*>* obj, const Char* bytes) {
     }
 
     if (kY > kHandoverHeader->f_GOP.f_Height) {
-      kY = kFontSizeY + 66;
+      kY = kFontSizeY + 70;
 
       FBDrawInRegion(cg_get_clear_clr(), FB::CGAccessibilty::Height(), FB::CGAccessibilty::Width(),
                      0, 0);

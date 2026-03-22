@@ -7,23 +7,15 @@
 #include <KernelKit/ProcessScheduler.h>
 
 namespace Kernel {
-/***********************************************************************************/
-/// @brief Unlocks the binary mutex.
-/***********************************************************************************/
-
-#ifndef __NE_TIMEOUT_CONFIG__
-#define __NE_TIMEOUT_CONFIG__ 10000
-#endif
 
 Bool BinaryMutex::Unlock() {
-  auto timeout = 0UL;
-  constexpr auto kTimoutLimit = __NE_TIMEOUT_CONFIG__;
+  if (!fLockingProcess)
+    return No;
 
-  while (fLockingProcess->Status == ProcessStatusKind::kRunning) {
-    ++timeout;
-
-    if (timeout > kTimoutLimit)
-      return No;
+  // restore original priority if we boosted the owner
+  if (fOwnerOriginalAffinity != AffinityKind::kInvalid) {
+    fLockingProcess->Affinity = fOwnerOriginalAffinity;
+    fOwnerOriginalAffinity = AffinityKind::kInvalid;
   }
 
   fLockingProcess = nullptr;
@@ -35,9 +27,20 @@ Bool BinaryMutex::Unlock() {
 /***********************************************************************************/
 
 Bool BinaryMutex::Lock(BinaryMutex::LockedPtr process) {
-  if (!process || this->IsLocked()) return No;
+  if (!process) return No;
+
+  // if already locked, implement priority inheritance
+  if (this->IsLocked() && fLockingProcess) {
+    // boost owner to waiter's priority if waiter is higher priority (lower value = higher priority)
+    if (process->Affinity < fLockingProcess->Affinity) {
+      fOwnerOriginalAffinity = fLockingProcess->Affinity;
+      fLockingProcess->Affinity = process->Affinity;
+    }
+    return No;  // lock not acquired, but owner boosted
+  }
 
   this->fLockingProcess = process;
+  fOwnerOriginalAffinity = AffinityKind::kInvalid;
 
   return Yes;
 }
@@ -51,15 +54,19 @@ Bool BinaryMutex::IsLocked() const {
 }
 
 /***********************************************************************************/
-/// @brief Try lock or wait.
+/// @brief Try lock, waiting until timeout if already locked.
 /***********************************************************************************/
 
 Bool BinaryMutex::LockAndWait(BinaryMutex::LockedPtr process, ITimer* timer) {
-  if (timer == nullptr) return No;
+  if (timer == nullptr || !process) return No;
 
+  // try to acquire lock immediately
+  if (this->Lock(process))
+    return Yes;
+
+  // wait and retry
   timer->Wait();
-  this->Lock(process);
-  return this->Unlock();
+  return this->Lock(process);
 }
 
 /***********************************************************************************/

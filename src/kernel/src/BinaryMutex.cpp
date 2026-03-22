@@ -11,14 +11,23 @@ namespace Kernel {
 /// @brief Unlocks the binary mutex.
 /***********************************************************************************/
 
-Bool BinaryMutex::Unlock() {
-  if (fLockingProcess->Status == ProcessStatusKind::kRunning) {
-    fLockingProcess = nullptr;
+#ifndef __NE_TIMEOUT_CONFIG__
+#define __NE_TIMEOUT_CONFIG__ 10000
+#endif
 
-    return Yes;
+Bool BinaryMutex::Unlock() {
+  auto timeout = 0UL;
+  constexpr auto kTimoutLimit = __NE_TIMEOUT_CONFIG__;
+
+  while (fLockingProcess->Status == ProcessStatusKind::kRunning) {
+    ++timeout;
+
+    if (timeout > kTimoutLimit)
+      return No;
   }
 
-  return No;
+  fLockingProcess = nullptr;
+  return Yes;
 }
 
 /***********************************************************************************/
@@ -49,7 +58,8 @@ Bool BinaryMutex::LockAndWait(BinaryMutex::LockedPtr process, ITimer* timer) {
   if (timer == nullptr) return No;
 
   timer->Wait();
-  return this->Lock(process);
+  this->Lock(process);
+  return this->Unlock();
 }
 
 /***********************************************************************************/

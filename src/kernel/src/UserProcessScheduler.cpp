@@ -12,6 +12,7 @@
 #include <NeKit/KString.h>
 #include <NeKit/Utils.h>
 #include <SignalKit/Signals.h>
+#include "KernelKit/CoreProcessScheduler.h"
 
 ///! BUG COUNT: 0
 
@@ -474,47 +475,53 @@ Bool UserProcessScheduler::HasMP() {
 /***********************************************************************************/
 
 SizeT UserProcessScheduler::Run() {
-  if (mTeam.mProcessCur < 1) {
-    return 0UL;
+  STATIC SizeT process_index{};  //! we store this guy to tell the scheduler how many
+                                     //! things we have scheduled.
+
+  UserProcessTeam& team  = mTeam;
+  SizeT            limit = team.AsArray().Capacity();
+
+  if (team.mProcessCur < 1) {
+    return {};
   }
 
-  SizeT process_index = 0UL;  //! we store this guy to tell the scheduler how many
-                              //! things we have scheduled.
+  if (process_index > limit)
+    process_index = 0UL;
+  else
+    ++process_index;
 
-  for (; process_index < mTeam.AsArray().Capacity(); ++process_index) {
-    auto& process = mTeam.AsArray()[process_index];
+  auto& process = team.AsArray()[process_index];
 
-    //! Check if the process needs to be run.
-    if (UserProcessHelper::CanBeScheduled(process)) {
-      kout << process.Name << " will be scheduled to run...\r";
+  //! Check if the process needs to be run.
+  if (UserProcessHelper::CanBeScheduled(process)) {
+    kout << process.Name << " will be scheduled to run...\r";
 
-      //! Increase the usage time of the process.
-      if (process.UTime < process.PTime) {
-        ++process.UTime;
-      }
-
-      this->TheCurrentProcess() = process;
-
-      if (UserProcessHelper::Switch(process.StackFrame, process.ProcessId)) {
-        process.PTime = static_cast<Int32>(process.Affinity);
-
-        // We add a bigger cooldown according to the RTime and affinity here.
-        if (process.PTime < process.RTime && AffinityKind::kRealTime != process.Affinity) {
-          if (process.RTime < (Int32) AffinityKind::kVeryHigh)
-            process.RTime += (Int32) AffinityKind::kLowUsage;
-          else if (process.RTime < (Int32) AffinityKind::kHigh)
-            process.RTime += (Int32) AffinityKind::kStandard;
-          else if (process.RTime < (Int32) AffinityKind::kStandard)
-            process.RTime += (Int32) AffinityKind::kHigh;
-
-          process.PTime -= process.RTime;
-          process.RTime = 0UL;
-        }
-      }
-    } else {
-      ++process.RTime;
-      --process.PTime;
+    //! Increase the usage time of the process.
+    if (process.UTime < process.PTime) {
+      ++process.UTime;
     }
+
+    this->TheCurrentProcess() = process;
+
+    if (UserProcessHelper::Switch(process.StackFrame, process.ProcessId)) {
+      // We add a bigger cooldown according to the RTime and affinity here.
+      if (process.PTime < process.RTime && AffinityKind::kUltraHigh != process.Affinity) {
+        if (process.RTime < (Int32) AffinityKind::kVeryHigh)
+          process.RTime += (Int32) AffinityKind::kLowUsage;
+        else if (process.RTime < (Int32) AffinityKind::kHigh)
+          process.RTime += (Int32) AffinityKind::kStandard;
+        else if (process.RTime < (Int32) AffinityKind::kStandard)
+          process.RTime += (Int32) AffinityKind::kHigh;
+
+        process.PTime -= process.RTime;
+        process.RTime = 0UL;
+      } else if (AffinityKind::kUltraHigh != process.Affinity) {
+        process.PTime += (Int32)AffinityKind::kUltraHigh;
+      }
+    }
+  } else {
+    ++process.RTime;
+    --process.PTime;
   }
 
   return process_index;
@@ -562,7 +569,7 @@ ErrorOr<ProcessID> UserProcessHelper::TheCurrentPID() {
 /// @retval true can be schedulded.
 /// @retval false cannot be schedulded.
 Bool UserProcessHelper::CanBeScheduled(const UserProcess& process) {
-  if (process.Affinity == AffinityKind::kRealTime) return Yes;
+  if (process.Affinity == AffinityKind::kUltraHigh) return Yes;
 
   if (process.Status != ProcessStatusKind::kRunning) return No;
   if (process.Affinity == AffinityKind::kInvalid) return No;
@@ -594,7 +601,7 @@ SizeT UserProcessHelper::StartScheduling() {
 Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) {
   (Void)(kout << "IP: " << hex_number(frame_ptr->IP) << kendl);
 
-  for (SizeT index = 0UL; index < HardwareThreadScheduler::The().Capacity(); ++index) {
+  for (SizeT index{}; index < HardwareThreadScheduler::The().Capacity(); ++index) {
     if (!HardwareThreadScheduler::The()[index].Leak()) continue;
 
     if (HardwareThreadScheduler::The()[index].Leak()->Kind() == ThreadKind::kAPInvalid ||

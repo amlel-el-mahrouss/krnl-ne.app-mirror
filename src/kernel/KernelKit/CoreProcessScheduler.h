@@ -146,7 +146,7 @@ enum struct ProcessStatusKind : Int32 {
 /***********************************************************************************/
 enum struct AffinityKind : Int32 {
   kInvalid      = 0,
-  kRealTime     = 100,
+  kUltraHigh     = 100,
   kVeryHigh     = 150,
   kHigh         = 200,
   kStandard     = 1000,

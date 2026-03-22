@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef INC_DRIVE_MANAGER_H
-#define INC_DRIVE_MANAGER_H
+#ifndef KERNELKIT_DRIVEMGR_H
+#define KERNELKIT_DRIVEMGR_H
 
 /// @file DriveMgr.h
 /// @brief NeKernel's drive manager.
@@ -166,4 +166,4 @@ Void io_drv_input(DriveTrait::DrivePacket pckt);
 Void io_drv_output(DriveTrait::DrivePacket pckt);
 }  // namespace Kernel
 
-#endif /* ifndef INC_DRIVE_MANAGER_H */
+#endif /* ifndef KERNELKIT_DRIVEMGR_H */

@@ -221,10 +221,6 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input NodePtr node, _Input Int32 flags, _
 Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input VoidPtr data,
                             _Input Int32 flags, _Input SizeT size) {
   NE_UNUSED(node);
-  // NE_UNUSED(flags);
-  // NE_UNUSED(size);
-  // NE_UNUSED(name);
-  // NE_UNUSED(data);
 
   if (!flags) return;
   if (!size) return;
@@ -260,6 +256,7 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
 
 _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
   if (this->Tell(node) == kFileMgrNPos) return false;
+  kout << "The Method is not implemented in the Hybrid kernel.\r";
   return off > 0;
 }
 
@@ -269,7 +266,7 @@ _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
   if (!node) return kFileMgrNPos;
   SizeT pos = 0ULL;
-
+  kout << "The Method is not implemented in the Hybrid kernel.\r";
   return pos;
 }
 

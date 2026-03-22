@@ -6,6 +6,6 @@
 #ifndef KERNELKIT_USERMGR_H
 #define KERNELKIT_USERMGR_H
 
-#include <KernelKit/UserMgr+User.h>
+#include <KernelKit/User.h>
 
 #endif

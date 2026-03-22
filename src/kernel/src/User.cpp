@@ -7,12 +7,12 @@
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/KPC.h>
 #include <KernelKit/ThreadLocalStorage.h>
-#include <KernelKit/UserMgr+User.h>
+#include <KernelKit/User.h>
 #include <NeKit/KString.h>
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-/// @file UserMgr+User.cpp
+/// @file User.cpp
 /// @brief Multi-user support.
 
 namespace Kernel {

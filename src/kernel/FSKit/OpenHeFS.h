@@ -8,7 +8,7 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/DriveMgr.h>
-#include <KernelKit/UserMgr+User.h>
+#include <KernelKit/User.h>
 #include <NeKit/Config.h>
 #include <NeKit/Crc32.h>
 #include <NeKit/KString.h>

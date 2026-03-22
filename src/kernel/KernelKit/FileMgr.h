@@ -3,14 +3,14 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef INC_FILEMGR_H
-#define INC_FILEMGR_H
+#ifndef KERNELKIT_FILEMGR_H
+#define KERNELKIT_FILEMGR_H
 
 /// @file FileMgr.h
 /// @brief File Manager Subsystem.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
-//! Include filesystems that NeKernel supports.
+//! Include filesystems that the hybrid kernel supports.
 #include <FSKit/Ext2+IFS.h>
 #include <FSKit/NeFS.h>
 #include <FSKit/OpenHeFS.h>
@@ -352,7 +352,7 @@ class FileStream final {
 
   /// @brief Leak MIME.
   /// @return The MIME.
-  Char* MIME() { return const_cast<Char*>(fMime); }
+  Char* MIME() { return fMime; }
 
   enum {
     kFileMgrRestrictRead = 100,
@@ -364,14 +364,15 @@ class FileStream final {
   };
 
  private:
-  NodePtr     fFile{nullptr};
-  Int32       fFileRestrict{kFileMgrRestrictReadBinary};
-  const Char* fMime{kFileMimeGeneric};
+  NodePtr fFile{nullptr};
+  Int32   fFileRestrict{kFileMgrRestrictReadBinary};
+  Char*   fMime{const_cast<Char*>(kFileMimeGeneric)};
 };
 
 using FileStreamASCII = FileStream<Char>;
 using FileStreamUTF8  = FileStream<Utf8Char>;
-using FileStreamUTF16 = FileStream<WideChar>;
+using FileStreamUTF16 = FileStream<Utf16Char>;
+using FileStreamWide  = FileStream<WideChar>;
 
 typedef UInt64 CursorType;
 
@@ -423,9 +424,9 @@ inline FileStream<Encoding, Class>::FileStream(const Encoding* path, const Encod
 /// @brief destructor of the file stream.
 template <typename Encoding, typename Class>
 inline FileStream<Encoding, Class>::~FileStream() {
-  mm_free_ptr(fFile);
+  if (fFile) mm_free_ptr(fFile);
   fFile = nullptr;
 }
 }  // namespace Kernel
 
-#endif  // ifndef INC_FILEMGR_H
+#endif  // ifndef KERNELKIT_FILEMGR_H

@@ -37,7 +37,7 @@ void* operator new[](size_t sz) {
 
 /// @brief Deletes the object.
 /// @param buf the object.
-void operator delete(void* buf) {
+void operator delete(void* buf) noexcept {
   if (!buf) return;
 
   BS->FreePool(buf);
@@ -45,7 +45,7 @@ void operator delete(void* buf) {
 
 /// @brief Deletes the object.
 /// @param buf the object.
-void operator delete[](void* buf) {
+void operator delete[](void* buf) noexcept {
   if (!buf) return;
 
   BS->FreePool(buf);
@@ -54,7 +54,7 @@ void operator delete[](void* buf) {
 /// @brief Deletes the object (array specific).
 /// @param buf the object.
 /// @param size it's size.
-void operator delete(void* buf, size_t size) {
+void operator delete(void* buf, size_t size) noexcept {
   if (!buf) return;
 
   SetMem(buf, 0, size);
@@ -64,7 +64,7 @@ void operator delete(void* buf, size_t size) {
 /// @brief Deletes the object (array specific).
 /// @param buf the object.
 /// @param size it's size.
-void operator delete[](void* buf, size_t size) {
+void operator delete[](void* buf, size_t size) noexcept {
   if (!buf) return;
 
   SetMem(buf, 0, size);

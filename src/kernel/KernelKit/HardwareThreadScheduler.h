@@ -12,6 +12,7 @@
 
 /// @note Last Rev Sun 28 Jul CET 2024
 /// @note Last Rev Thu, Aug  1, 2024  9:07:38 AM
+/// @note Last Rev Sun, March  22, 2026  5:16 PM
 
 #if defined(__nekernel_max_cores)
 /// \note This can be edited at compile-time to specify how many cores can be used by NeKernel.

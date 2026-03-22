@@ -7,8 +7,8 @@
 #define KERNELKIT_BINARYMUTEX_H
 
 #include <CompilerKit/CompilerKit.h>
-#include <KernelKit/Timer.h>
 #include <KernelKit/CoreProcessScheduler.h>
+#include <KernelKit/Timer.h>
 #include <NeKit/Config.h>
 
 namespace Kernel {
@@ -38,7 +38,7 @@ class BinaryMutex final {
   NE_COPY_DEFAULT(BinaryMutex)
 
  private:
-  LockedPtr fLockingProcess{nullptr};
+  LockedPtr    fLockingProcess{nullptr};
   AffinityKind fOwnerOriginalAffinity{AffinityKind::kInvalid};  // for priority inheritance
 };
 }  // namespace Kernel

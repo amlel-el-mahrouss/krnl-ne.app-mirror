@@ -9,13 +9,12 @@
 namespace Kernel {
 
 Bool BinaryMutex::Unlock() {
-  if (!fLockingProcess)
-    return No;
+  if (!fLockingProcess) return No;
 
   // restore original priority if we boosted the owner
   if (fOwnerOriginalAffinity != AffinityKind::kInvalid) {
     fLockingProcess->Affinity = fOwnerOriginalAffinity;
-    fOwnerOriginalAffinity = AffinityKind::kInvalid;
+    fOwnerOriginalAffinity    = AffinityKind::kInvalid;
   }
 
   fLockingProcess = nullptr;
@@ -33,13 +32,13 @@ Bool BinaryMutex::Lock(BinaryMutex::LockedPtr process) {
   if (this->IsLocked() && fLockingProcess) {
     // boost owner to waiter's priority if waiter is higher priority (lower value = higher priority)
     if (process->Affinity < fLockingProcess->Affinity) {
-      fOwnerOriginalAffinity = fLockingProcess->Affinity;
+      fOwnerOriginalAffinity    = fLockingProcess->Affinity;
       fLockingProcess->Affinity = process->Affinity;
     }
     return No;  // lock not acquired, but owner boosted
   }
 
-  this->fLockingProcess = process;
+  this->fLockingProcess  = process;
   fOwnerOriginalAffinity = AffinityKind::kInvalid;
 
   return Yes;
@@ -61,8 +60,7 @@ Bool BinaryMutex::LockAndWait(BinaryMutex::LockedPtr process, ITimer* timer) {
   if (timer == nullptr || !process) return No;
 
   // try to acquire lock immediately
-  if (this->Lock(process))
-    return Yes;
+  if (this->Lock(process)) return Yes;
 
   // wait and retry
   timer->Wait();

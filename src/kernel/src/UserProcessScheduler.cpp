@@ -477,7 +477,7 @@ Bool UserProcessScheduler::HasMP() {
 
 SizeT UserProcessScheduler::Run() {
   STATIC SizeT process_index{};  //! we store this guy to tell the scheduler how many
-                                     //! things we have scheduled.
+                                 //! things we have scheduled.
 
   UserProcessTeam& team  = mTeam;
   SizeT            limit = team.AsArray().Capacity();
@@ -506,8 +506,7 @@ SizeT UserProcessScheduler::Run() {
     if (process.STime > 0) {
       // the longer it slept, the bigger the boost (capped at kVeryHigh level)
       ProcessTime boost = process.STime / 10;
-      if (boost > (Int32)AffinityKind::kHigh)
-        boost = (Int32)AffinityKind::kHigh;
+      if (boost > (Int32) AffinityKind::kHigh) boost = (Int32) AffinityKind::kHigh;
       process.PTime += boost;
       process.STime = 0;  // reset sleep counter after boost
     }
@@ -527,7 +526,7 @@ SizeT UserProcessScheduler::Run() {
         process.PTime -= process.RTime;
         process.RTime = 0UL;
       } else if (AffinityKind::kUltraHigh != process.Affinity) {
-        process.PTime += (Int32)AffinityKind::kUltraHigh;
+        process.PTime += (Int32) AffinityKind::kUltraHigh;
       }
     }
   } else {

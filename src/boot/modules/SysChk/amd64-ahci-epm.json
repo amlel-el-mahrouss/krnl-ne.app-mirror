@@ -13,6 +13,7 @@
     "../../src/New+Delete.cpp",
     "../../../kernel/HALKit/AMD64/PCI/*.cpp",
     "../../../kernel/HALKit/AMD64/Storage/*.cpp",
+    "../../../kernel/HALKit/AMD64/Network/*.cpp",
     "../../../kernel/src/Storage/*.cpp",
     "../../../kernel/src/Network/*.cpp",
     "../../../kernel/HALKit/AMD64/*.cpp",

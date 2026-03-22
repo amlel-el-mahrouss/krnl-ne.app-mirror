@@ -7,6 +7,7 @@
 #include <KernelKit/ProcessScheduler.h>
 
 namespace Kernel {
+
 /***********************************************************************************/
 /// @brief Unimplemented function (crashes by default)
 /// @param process The process handle.
@@ -26,4 +27,5 @@ EXTERN_C Bool hal_check_task(HAL::StackFramePtr stack_ptr) {
 
   return stack_ptr->SP != 0 && stack_ptr->IP != 0;
 }
+
 }  // namespace Kernel

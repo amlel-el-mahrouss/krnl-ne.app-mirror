@@ -18,6 +18,9 @@
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
 
+#include <BootKit/Shared/BootImg.rsrc>
+#include "NeKit/KernelPanic.h"
+
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
 
@@ -154,6 +157,10 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   NeFileSystemMgr::Mount(new NeFileSystemMgr());
 #endif
 
+  cg_init();
+  FBDrawBitMapInRegion(kBootLogo, BOOT_LOGO_WIDTH, BOOT_LOGO_HEIGHT, 10, 10);
+  cg_clear();
+
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
   PEFLoader ldr("/system/init.out");
@@ -161,7 +168,7 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   if (ldr.IsLoaded())
     rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
   else
-    ke_panic(RUNTIME_CHECK_PROCESS, "RuntimeCheck: Invalid Process Data!");
+    ke_panic(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Init Process.");
 
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 

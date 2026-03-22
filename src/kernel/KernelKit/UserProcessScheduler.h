@@ -83,9 +83,10 @@ class UserProcess final {
     kExecutableKindCount,
   };
 
-  ProcessTime PTime{0};  //! @brief Process allocated tine.
+  ProcessTime PTime{0};  //! @brief Process allocated time.
   ProcessTime RTime{0};  //! @brief Process run time.
-  ProcessTime UTime{0};  //! #brief Process used time.
+  ProcessTime UTime{0};  //! @brief Process used time.
+  ProcessTime STime{0};  //! @brief Process sleep time (for dynamic priority boost).
 
   ProcessID      ProcessId{kCPSInvalidPID};
   ExecutableKind Kind{ExecutableKind::kExecutableKind};

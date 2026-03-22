@@ -8,12 +8,14 @@
 
 #include <CompilerKit/CompilerKit.h>
 #include <KernelKit/Timer.h>
+#include <KernelKit/CoreProcessScheduler.h>
 #include <NeKit/Config.h>
 
 namespace Kernel {
 class UserProcess;
 
 /// @brief Access control class, which locks a task until one is done.
+/// Implements priority inheritance to prevent priority inversion.
 class BinaryMutex final {
  public:
   using LockedPtr = UserProcess*;
@@ -37,6 +39,7 @@ class BinaryMutex final {
 
  private:
   LockedPtr fLockingProcess{nullptr};
+  AffinityKind fOwnerOriginalAffinity{AffinityKind::kInvalid};  // for priority inheritance
 };
 }  // namespace Kernel
 

@@ -406,6 +406,7 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
   process.PTime     = 0;
   process.UTime     = 0;
   process.RTime     = 0;
+  process.STime     = 0;
 
   if (!process.FileTree) {
     process.FileTree = new ProcessFileTree<VoidPtr>();
@@ -501,6 +502,16 @@ SizeT UserProcessScheduler::Run() {
       ++process.UTime;
     }
 
+    //! boost priority for processes that slept (interactive boost)
+    if (process.STime > 0) {
+      // the longer it slept, the bigger the boost (capped at kVeryHigh level)
+      ProcessTime boost = process.STime / 10;
+      if (boost > (Int32)AffinityKind::kHigh)
+        boost = (Int32)AffinityKind::kHigh;
+      process.PTime += boost;
+      process.STime = 0;  // reset sleep counter after boost
+    }
+
     this->TheCurrentProcess() = process;
 
     if (UserProcessHelper::Switch(process.StackFrame, process.ProcessId)) {
@@ -520,6 +531,10 @@ SizeT UserProcessScheduler::Run() {
       }
     }
   } else {
+    //! track sleep time for processes that are blocked/waiting
+    if (process.Status == ProcessStatusKind::kFrozen) {
+      ++process.STime;
+    }
     ++process.RTime;
     --process.PTime;
   }

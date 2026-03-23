@@ -4,7 +4,7 @@
 
 <Describe briefly your PR here.>
 
-### PR Rationale:
+## PR Rationale:
 
 <Describe the rationale here>
 
@@ -16,7 +16,7 @@
 
 <Describe the results here>
 
-### Additional Informations:
+## Additional Information:
 
 <Describe additional information (Optional)>
 

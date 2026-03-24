@@ -408,4 +408,10 @@ IMPORT_C SInt32 SemWait(_Input SemaphoreRef sem);
 /// @brief Close a semaphore.
 IMPORT_C SInt32 SemClose(_Input SemaphoreRef sem);
 
+// ------------------------------------------------------------------------------------------ //
+// @brief User AgeAuth API.
+// ------------------------------------------------------------------------------------------ //
+
+IMPORT_C SInt32 UserIsAdult(_Input SInt32 uid);
+
 #endif  // ifndef SYSTEMKIT_SYSTEM_H

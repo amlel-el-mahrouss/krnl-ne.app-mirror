@@ -23,7 +23,7 @@ namespace Detail {
   /// \param password password to hash.
   /// \return the hashed password
   ////////////////////////////////////////////////////////////
-  STATIC UInt64 user_fnv_generator(const Char* password, User* user) {
+  STATIC UInt64 user_fnv_generator(const UserPublicKeyType* password, User* user) {
     kout << "user_fnv_generator: Try hashing user password...\r";
 
     if (!password || !user) return 0;
@@ -48,24 +48,25 @@ namespace Detail {
 ////////////////////////////////////////////////////////////
 /// @brief User ring constructor.
 ////////////////////////////////////////////////////////////
-User::User(const Int32& sel, const Char* user_name) : mUserRing((UserRingKind) sel) {
+User::User(const Int32& sel, const UserPublicKeyType* user_name) : mUserRing((UserRingKind) sel) {
   MUST_PASS(sel >= 0);
-  rt_copy_memory_safe((VoidPtr) user_name, this->mUserName, rt_string_len(user_name),
-                      kMaxUserNameLen);
+  urt_copy_memory((VoidPtr) user_name, this->mUserName, urt_string_len(user_name));
 }
 
 ////////////////////////////////////////////////////////////
 /// @brief User ring constructor.
 ////////////////////////////////////////////////////////////
-User::User(const UserRingKind& ring_kind, const Char* user_name) : mUserRing(ring_kind) {
-  rt_copy_memory_safe((VoidPtr) user_name, this->mUserName, rt_string_len(user_name),
-                      kMaxUserNameLen);
+User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
+    : mUserRing(ring_kind) {
+  urt_copy_memory((VoidPtr) user_name, this->mUserName, urt_string_len(user_name));
 }
 
 ////////////////////////////////////////////////////////////
 /// @brief User destructor class.
 ////////////////////////////////////////////////////////////
 User::~User() = default;
+
+Bool User::IsAdult() { return mUserIsAdult; }
 
 Bool User::Save(const UserPublicKey password) {
   if (!password || *password == 0) return No;

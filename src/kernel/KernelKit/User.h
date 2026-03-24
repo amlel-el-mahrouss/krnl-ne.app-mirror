@@ -42,16 +42,16 @@ enum struct UserRingKind : Int32 {
   kRingCount     = 3,
 };
 
-using UserPublicKey     = Char*;
-using UserPublicKeyType = Char;
+using UserPublicKey     = Char8*;
+using UserPublicKeyType = Char8;
 
 /// @brief System User class.
 class User final {
  public:
   User() = delete;
 
-  User(const Int32& sel, const Char* username);
-  User(const UserRingKind& kind, const Char* username);
+  User(const Int32& sel, const UserPublicKeyType* username);
+  User(const UserRingKind& kind, const UserPublicKeyType* username);
 
   ~User();
 
@@ -82,10 +82,15 @@ class User final {
   /// @param password the password to check.
   Bool Login(const UserPublicKey password);
 
+  /// @brief Returns whether the user is an adult or not. 
+  Bool IsAdult();
+
  private:
   UserRingKind mUserRing{UserRingKind::kRingStdUser};
   Char         mUserName[kMaxUserNameLen] = {0};
   UInt64       mUserFNV{0UL};
+  Bool         mUserIsAdult{NO};
+
 };
 
 /// \brief Alias for user ptr.

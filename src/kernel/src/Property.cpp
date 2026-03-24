@@ -6,6 +6,7 @@
 #include <CFKit/Property.h>
 
 namespace Kernel::CF {
+
 /***********************************************************************************/
 /// @brief Destructor.
 /***********************************************************************************/
@@ -37,4 +38,5 @@ KBasicString<>& Property::GetKey() {
 PropertyId& Property::GetValue() {
   return fValue;
 }
+
 }  // namespace Kernel::CF

@@ -66,6 +66,8 @@ User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
 ////////////////////////////////////////////////////////////
 User::~User() = default;
 
+Bool User::IsAdult() { return mUserIsAdult; }
+
 Bool User::Save(const UserPublicKey password) {
   if (!password || *password == 0) return No;
 

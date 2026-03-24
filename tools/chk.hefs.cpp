@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  mkfs::console_out() << "chk: hefs: OpenHeFS partition is healthy. Exiting...\n";
+  mkfs::console_out() << "chk: hefs: The OpenHeFS partition is healthy. Exiting...\n";
 
   return EXIT_SUCCESS;
 }

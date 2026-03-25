@@ -157,9 +157,11 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   NeFileSystemMgr::Mount(new NeFileSystemMgr());
 #endif
 
-  cg_init();
-  FBDrawBitMapInRegion(kBootLogo, BOOT_LOGO_WIDTH, BOOT_LOGO_HEIGHT, 10, 10);
-  cg_clear();
+  for (SizeT idxCore{0}; idxCore < kHandoverHeader->f_NumberOfProcessors; ++idxCore) {
+    cg_init();
+    FBDrawBitMapInRegion(kBootLogo, BOOT_LOGO_WIDTH, BOOT_LOGO_HEIGHT, 10, 12 + BOOT_LOGO_WIDTH * idxCore);
+    cg_clear();
+  }
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 

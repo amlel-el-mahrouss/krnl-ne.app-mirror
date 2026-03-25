@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 
 #define kHandoverMagic (0xBADCC)
-#define kHandoverVersion (0x0117)
+#define kHandoverVersion (0x0118)
 
 /* Initial bitmap pointer location and size. */
 #define kHandoverStructSz sizeof(HEL::BootInfoHeader)
@@ -79,7 +79,8 @@ struct BootInfoHeader final {
     UInt32  f_PixelPerLine;
   } f_GOP;
 
-  UInt64 f_FirmwareSpecific[8];
+  UInt64 f_NumberOfProcessors;
+  UInt64 f_FirmwareSpecific[7];
 };
 
 enum {

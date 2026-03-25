@@ -120,7 +120,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   if (mp) {
     mp->GetNumberOfProcessors(mp, &cnt_disabled, &cnt_enabled);
-    kHandoverHeader->f_NumberOfProcessors = cnt_enabled;;
+    kHandoverHeader->f_NumberOfProcessors = cnt_enabled;
     handover_hdr->f_HardwareTables.f_MultiProcessingEnabled = cnt_enabled > 1;
   } else {
     handover_hdr->f_NumberOfProcessors                   = 1;

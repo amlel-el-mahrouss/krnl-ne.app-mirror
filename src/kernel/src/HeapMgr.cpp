@@ -28,6 +28,8 @@
 #define kHeapMgrMagic (0xD4D75)
 #define kHeapMgrAlignSz (4U)
 
+#define kHeapMgrSpinMax (255'000)
+
 namespace Kernel {
 
 /// @brief Implementation details.
@@ -63,8 +65,8 @@ namespace Detail {
   };
 
   /// @brief Check for heap address validity.
-  /// @param heap_ptr The address_ptr to check.
   /// @return Bool if the pointer is valid or not.
+  /// @param heap_ptr The address_ptr to check.
   _Output auto mm_check_ptr_address(VoidPtr heap_ptr) -> Bool {
     if (!heap_ptr) return false;
 
@@ -85,7 +87,7 @@ STATIC PageMgr kPageMgr;
 /// @return The newly allocated pointer.
 _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   static Bool       locked = false;
-  LockDelegate<255> lock{&locked};
+  LockDelegate<kHeapMgrSpinMax> lock{&locked};
 
   auto sz_fix = sz;
 
@@ -100,11 +102,6 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
       reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>(wrapper.VirtualAddress() +
                                                          sizeof(Detail::MM_INFORMATION_BLOCK));
-
-  if (!heap_info_ptr) {
-    locked = false;
-    return nullptr;
-  }
 
   heap_info_ptr->fSize  = sz_fix;
   heap_info_ptr->fMagic = kHeapMgrMagic;

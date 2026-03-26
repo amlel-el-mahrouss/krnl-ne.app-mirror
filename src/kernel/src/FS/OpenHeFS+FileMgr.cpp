@@ -13,6 +13,7 @@
 /// BUGS: 0
 
 namespace Kernel {
+
 /// @brief C++ constructor
 HeFileSystemMgr::HeFileSystemMgr() {
   mParser = new HeFileSystemParser();
@@ -282,6 +283,7 @@ _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
 _Output HeFileSystemParser* HeFileSystemMgr::GetParser() {
   return mParser;
 }
+
 }  // namespace Kernel
 
 #endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__

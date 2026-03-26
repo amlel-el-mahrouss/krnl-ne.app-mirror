@@ -4,37 +4,37 @@
 // Official repository: https://github.com/ne-foss-org/nekernel
 
 #include <libMsg/MsgKit/Server.h>
+#include <libSystem/SystemKit/Err.h>
 
 static libmsg_func_type* kFuncs{nullptr};
 static SizeT             kFuncCnt{0};
 static SemaphoreRef      kSemaphore{nullptr};
 
 IMPORT_C UInt32 libmsg_close_library(Void) {
-  if (kSemaphore) return 0;
+  if (kSemaphore) return kErrorInvalidData;
 
   kFuncs   = nullptr;
   kFuncCnt = 0;
 
-  return 0;
+  return kErrorSuccess;
 }
 
 IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head, VoidPtr arg, SizeT arg_size) {
-  if (kSemaphore) return 0;
+  if (kSemaphore) return kErrorInvalidData;
+  if (!head) return kErrorInvalidData;
 
-  if (!head) return 0;
-
-  static kSemWaitTime = 1000;
+  static auto kSemWaitTime = 1000;
 
   kSemaphore = ::SemCreate(kSemWaitTime, kSemWaitTime, "libmsg_semaphore");
 
-  if (!kSemaphore) return 0;
+  if (!kSemaphore) return kErrorInvalidData;
 
   kFuncs[head->l_index](head, arg, arg_size);
 
   ::SemClose(kSemaphore);
   kSemaphore = nullptr;
 
-  return 0;
+  return kErrorSuccess;
 }
 
 IMPORT_C Void libmsg_init_library(libmsg_func_type* funcs, SizeT cnt) {

@@ -4,6 +4,7 @@
 // Official repository: https://github.com/ne-foss-org/nekernel
 
 #include <libPThread/PThreadKit/Thread.h>
+#include <libSystem/SystemKit/Err.h>
 
 PTHREAD_SAFE SInt32 pthread_detach(ThreadRef thread) {
   return ThrDetachThread(thread);
@@ -24,23 +25,23 @@ PTHREAD_SAFE SInt32 pthread_exit(SInt32 retval) {
 PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
   SInt32* ret = (SInt32*) retval;
 
-  if (!ret) return -1;
+  if (!ret) return kErrorInvalidData;
 
   *ret = ThrJoinThread(thread);
-  return 0;
+  return kErrorSuccess;
 }
 
 PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr         attr,
                                    VoidPtr (*start_routine)(VoidPtr), VoidPtr arg) {
   LIBSYS_UNUSED(attr);
 
-  if (!attr || !thread || !arg || !start_routine) return -1;
+  if (!attr || !thread || !arg || !start_routine) return kErrorInvalidData;
 
   /// @note passing zero means you'd have to read the argv until you hit a nullptr.
   ThreadRef thrd = ThrCreateThread("pthread_thread", (ThrProcKind) start_routine, 0, arg, 0);
 
-  if (!thrd) return -1;
+  if (!thrd) return kErrorInvalidData;
 
   *thread = thrd;
-  return 0;
+  return kErrorSuccess;
 }

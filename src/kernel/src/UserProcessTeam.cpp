@@ -12,6 +12,7 @@ UserProcessTeam::UserProcessTeam() {
     this->mProcessList[i].PTime  = 0;
     this->mProcessList[i].RTime  = 0;
     this->mProcessList[i].UTime  = 0;
+    this->mProcessList[i].STime  = 0;
     this->mProcessList[i].Status = ProcessStatusKind::kKilled;
   }
 

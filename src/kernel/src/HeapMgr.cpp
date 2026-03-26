@@ -86,18 +86,19 @@ STATIC PageMgr kPageMgr;
 /// @param user User enable bit.
 /// @return The newly allocated pointer.
 _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
-  static Bool       locked = false;
-  LockDelegate<kHeapMgrSpinMax> lock{&locked};
+  static Bool       kAllocationLocked = false;
+  LockDelegate<kHeapMgrSpinMax> lock{&kAllocationLocked};
 
   auto sz_fix = sz;
 
   if (sz_fix == 0) return nullptr;
 
-  locked = true;
+  kAllocationLocked = true;
 
   sz_fix += sizeof(Detail::MM_INFORMATION_BLOCK);
 
-  auto wrapper = kPageMgr.Request(wr, user, No, sz_fix, pad_amount);
+  PTEWrapper wrapper = kPageMgr.Request(wr, user, 
+                  No, sz_fix, pad_amount);
 
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
       reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>(wrapper.VirtualAddress() +
@@ -122,7 +123,7 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
     (Void)(kout << "HeapMgr: Registered heap address: "
                 << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
 
-  locked = false;
+  kAllocationLocked = false;
 
   return result;
 }

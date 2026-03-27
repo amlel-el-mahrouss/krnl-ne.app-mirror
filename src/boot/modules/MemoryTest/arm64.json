@@ -15,21 +15,21 @@
     "../../src/HEL/ARM64/*.S",
     "../../src/*.cpp"
   ],
-  "output_name": "net.efi",
+  "output_name": "memtest.efi",
   "compiler_flags": [
     "-nostdlib",
     "-std=c++20",
     "-fno-rtti",
     "-fno-exceptions",
-    "-Wl,--subsystem=17,--image-base,0x20000000,-e,BootNetModuleMain"
+    "-Wl,--subsystem=17,--image-base,0x20000000,-e,MemoryTestModuleMain"
   ],
   "cpp_macros": [
     "__BOOTZ__",
     "__BOOTZ_STANDALONE__",
     "__NE_ARM64__",
     "__nekernel_max_cores=8 ",
-    "kBootNetVersionHighest=0x0100",
-    "kBootNetVersionLowest=0x0100",
-    "kBootNetEFIVersion=0x0100"
+    "kMemTestVersionHighest=0x0100",
+    "kMemTestVersionLowest=0x0100",
+    "kMemTestEFIVersion=0x0100"
   ]
 }

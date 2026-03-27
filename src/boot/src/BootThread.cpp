@@ -13,9 +13,10 @@
 #include <KernelKit/PE.h>
 #include <KernelKit/PEF.h>
 #include <modules/CoreGfx/TextGfx.h>
+#include "FirmwareKit/Handover.h"
 
 // \brief This macro defines the maximum size of a image's stack.
-#define kBootThreadSz mib_cast(16)
+#define kBootThreadSz kib_cast(8)
 
 /// @brief External boot services symbol.
 EXTERN EfiBootServices* BS;
@@ -77,13 +78,6 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
     EfiPhysicalAddress loadStartAddress = opt_header_ptr->ImageBase;
 
     writer.Write("BootZ: Image-Base: ").Write(loadStartAddress).Write("\r");
-
-    fStack = new UInt8[kBootThreadSz];
-
-    if (!fStack) {
-      writer.Write("BootZ: Unable to allocate the stack for the thread.\r");
-      return;
-    }
 
     LDR_SECTION_HEADER_PTR sectPtr =
         (LDR_SECTION_HEADER_PTR) (((Char*) opt_header_ptr) + header_ptr->SizeOfOptionalHeader);
@@ -179,36 +173,16 @@ Int32 BootThread::Start(HEL::BootInfoHeader* handover, Bool own_stack) {
     return kEfiFail;
   }
 
+  NE_UNUSED(own_stack);
+
   fHandover = handover;
 
   BootTextWriter writer;
+  writer.Write("BootThread: ").Write(fBlobName).Write("\r");
 
-  writer.Write("BootZ: Starting: ").Write(fBlobName).Write("\r");
-  writer.Write("BootZ: Handover address: ").Write((UIntPtr) fHandover).Write("\r");
+  auto ret = ((HEL::HandoverProc)fStartAddress)(fHandover);
 
-  if (own_stack) {
-    writer.Write("BootZ: Using it's own stack.\r");
-    writer.Write("BootZ: Stack address: ").Write((UIntPtr) &fStack[kBootThreadSz - 1]).Write("\r");
-    writer.Write("BootZ: Stack size: ").Write(kBootThreadSz).Write("\r");
-
-    fHandover->f_StackTop = &fStack[kBootThreadSz - 1];
-    fHandover->f_StackSz  = kBootThreadSz;
-
-    auto ret = rt_jump_to_address(fStartAddress, fHandover, &fStack[kBootThreadSz - 1]);
-
-    // we don't need the stack anymore.
-
-    delete[] fStack;
-    fStack = nullptr;
-
-    return ret;
-  } else {
-    writer.Write("BootZ: Using the bootloader's stack.\r");
-
-    return reinterpret_cast<HEL::HandoverProc>(fStartAddress)(fHandover);
-  }
-
-  return kEfiFail;
+  return ret;
 }
 
 const Char* BootThread::GetName() {

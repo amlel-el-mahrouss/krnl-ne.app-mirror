@@ -9,3 +9,6 @@ nebuild amd64-ahci-epm.json
 cd ../
 cd BootNet
 nebuild amd64.json
+cd ../
+cd MemoryTest
+nebuild amd64.json

@@ -49,12 +49,12 @@ DEBUG_MACRO = -D__DEBUG__
 endif
 
 ifeq ($(KVM_SUPPORT),)
-EMU_FLAGS=-M q35 -smp 8 -m 8G \
+EMU_FLAGS=-M q35 -smp 6 -m 8G \
     -bios $(BIOS) -cdrom $(BOOT) -boot d
 endif
 
 ifneq ($(KVM_SUPPORT),)
-EMU_FLAGS=-M q35 -smp 8 -m 8G \
+EMU_FLAGS=-M q35 -smp 6 -m 8G \
     -bios $(BIOS) -M q35 -cdrom $(BOOT) -boot d -accel kvm
 endif
 
@@ -75,8 +75,11 @@ BOOTLOADER=ne_bootz
 KERNEL=ne_kernel
 SYSCHK=chk.efi
 BOOTNET=net.efi
+MEMTEST=memtest.efi
 SCIKIT=libSystem.dll
 DDK=libDDK.dll
+POSIXWRAPPER=libPOSIXWrapper.dll
+PTHREAD=libPThread.dll
 
 .PHONY: invalid-recipe
 invalid-recipe:
@@ -92,7 +95,10 @@ all: compile-amd64
 	$(COPY) ../kernel/$(KERNEL) src/root/$(KERNEL)
 	$(COPY) ./modules/SysChk/$(SYSCHK) src/root/$(SYSCHK)
 	$(COPY) ./modules/BootNet/$(BOOTNET) src/root/$(BOOTNET)
+	$(COPY) ./modules/MemoryTest/$(MEMTEST) src/root/$(MEMTEST)
 	$(COPY) ../libSystem/$(SCIKIT) src/root/$(SCIKIT)
+	$(COPY) ../libPOSIXWrapper/$(POSIXWRAPPER) src/root/$(POSIXWRAPPER)
+	# $(COPY) ../libPThread/$(PTHREAD) src/root/$(PTHREAD)
 	$(COPY) src/$(BOOTLOADER) src/root/$(BOOTLOADER)
 	$(COPY) ../libDDK/$(DDK) src/root/$(DDK)
 

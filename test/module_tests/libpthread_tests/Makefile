@@ -4,7 +4,7 @@
 ##################################################
 
 GCC=x86_64-w64-mingw32-g++ -Wl,-subsystem=17
-LIB=-L../../src/libDDK -lDDK
+LIB=-L../../src/libPThread -lPThread
 STD=-std=c++20 -DKT_TESTING_ENABLED
 INCLUDE=-I../../src -I../../public -I../../public/frameworks/ -I../../ 
 

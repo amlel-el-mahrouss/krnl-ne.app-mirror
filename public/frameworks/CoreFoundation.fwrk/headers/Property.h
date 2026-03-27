@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef HEADERS_PROPERTY_H
-#define HEADERS_PROPERTY_H
+#ifndef FW_HEADERS_PROPERTY_H
+#define FW_HEADERS_PROPERTY_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 #include <CoreFoundation.fwrk/headers/Ref.h>

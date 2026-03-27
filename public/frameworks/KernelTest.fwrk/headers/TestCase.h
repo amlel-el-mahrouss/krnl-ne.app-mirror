@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef HEADERS_TESTCASE_H
-#define HEADERS_TESTCASE_H
+#ifndef FW_HEADERS_TESTCASE_H
+#define FW_HEADERS_TESTCASE_H
 
 #include <KernelTest.fwrk/headers/SourceLocation.h>
 

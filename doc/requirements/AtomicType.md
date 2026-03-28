@@ -1,4 +1,4 @@
-# TypeAtomic Type
+# AtomicType Type Requirements:
 
 ## Abstract:
 

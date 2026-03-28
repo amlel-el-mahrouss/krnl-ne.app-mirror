@@ -10,7 +10,7 @@
 
 namespace Kernel {
 
-template <class TypeAtomic>
+template <class AtomicType>
 class Atom final {
  public:
   explicit Atom() = default;
@@ -21,29 +21,29 @@ class Atom final {
   Atom(const Atom&)            = delete;
 
  public:
-  using Type     = TypeAtomic;
-  using Ref      = TypeAtomic&;
-  using ConstRef = const TypeAtomic&;
+  using Type     = AtomicType;
+  using Ref      = AtomicType&;
+  using ConstRef = const AtomicType&;
 
-  const TypeAtomic& operator[](const TypeAtomic& bit) {
-    return (fArrayOfAtoms & (TypeAtomic{} << bit));
+  const AtomicType& operator[](const AtomicType& bit) {
+    return (fArrayOfAtoms & (AtomicType{} << bit));
   }
-  void operator|(const TypeAtomic& bit) { fArrayOfAtoms |= (TypeAtomic{1} << bit); }
+  void operator|(const AtomicType& bit) { fArrayOfAtoms |= (AtomicType{1} << bit); }
 
-  Atom& operator|=(const TypeAtomic& bit) {
+  Atom& operator|=(const AtomicType& bit) {
     this->operator|(bit);
     return *this;
   }
 
-  friend bool operator==(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) {
+  friend bool operator==(Atom<AtomicType>& atomic, const AtomicType& idx) {
     return atomic[idx] == idx;
   }
-  friend bool operator!=(Atom<TypeAtomic>& atomic, const TypeAtomic& idx) {
+  friend bool operator!=(Atom<AtomicType>& atomic, const AtomicType& idx) {
     return atomic[idx] != idx;
   }
 
  private:
-  TypeAtomic fArrayOfAtoms;
+  AtomicType fArrayOfAtoms;
 };
 
 }  // namespace Kernel

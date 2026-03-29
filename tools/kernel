@@ -4,9 +4,10 @@
 import os, sys
 
 KERNEL_SCRIPT="./scripts/debug_ahci_x64.sh"
+MODULES_SCRIPT="./scripts/modules_ahci_x64.sh"
 
 if __name__ == '__main__':
-    print("kconf: Running kernel...")
+    os.system(MODULES_SCRIPT)
     os.system(KERNEL_SCRIPT)
     sys.exit(0)
 

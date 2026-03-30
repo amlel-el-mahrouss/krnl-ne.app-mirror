@@ -12,7 +12,7 @@ def create_directory_structure(base_path, project_name):
             },
             "src": {
                 ".keep": None,
-                "CommandLine.cc": None,
+                "CommandLine.cpp": None,
             },
             "vendor": {
                 ".keep": None
@@ -69,7 +69,7 @@ def create_directory_structure(base_path, project_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("HELP: mkapp.py <project_name>")
+        print("HELP: kapp.py <project_name>")
         sys.exit(os.EX_CONFIG)
 
     base_path = os.getcwd()  # Use the current working directory as the base path

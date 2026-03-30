@@ -18,7 +18,7 @@ def create_directory_structure(base_path_fwrk, project_file_name, project_name):
             },
             "src": {
                 ".keep": None,
-                "DylibMain.cc": None,
+                "DylibMain.cpp": None,
             },
             "xml": {
                 ".keep": None

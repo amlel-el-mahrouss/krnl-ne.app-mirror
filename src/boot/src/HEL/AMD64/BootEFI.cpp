@@ -217,6 +217,17 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   ST->RuntimeServices->GetVariable(L"/props/kern_ver", kEfiGlobalNamespaceVarGUID, nullptr, &sz_ver,
                                    &ver);
 
+  UInt32 sz_smp_max = sizeof(UInt64);
+  UInt64 smp_max    = 0;
+
+  ST->RuntimeServices->GetVariable(L"/props/smp_max", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_smp_max, &smp_max);
+
+  /// This variable makes sure we enable the core we want to actually use.
+  if (smp_max > 0 && smp_max < kHandoverHeader->f_NumberOfProcessors) {
+    kHandoverHeader->f_NumberOfProcessors = smp_max;
+  }
+
   if (ver < KERNEL_VERSION_BCD) {
     ver = KERNEL_VERSION_BCD;
 

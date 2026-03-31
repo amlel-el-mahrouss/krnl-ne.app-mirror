@@ -112,6 +112,6 @@ NeKernel is licensed under the [Apache-2.0 License](LICENSE).
 
 <div align="center">
   <sub>
-    &copy; 2022-2026 Amlal El Mahrouss & Ne.org Authors. Licensed under the Apache 2.0 license.
+    &copy; 2022-2026 Amlal El Mahrouss & Ne.app Authors. Licensed under the Apache 2.0 license.
   </sub>
 </div>

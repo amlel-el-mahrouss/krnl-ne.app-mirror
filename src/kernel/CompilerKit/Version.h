@@ -6,10 +6,10 @@
 #ifndef COMPILERKIT_VERSION_H
 #define COMPILERKIT_VERSION_H
 
-#define BOOTLOADER_VERSION "v0.1.3-bootz"
-#define KERNEL_VERSION "v0.1.3-krnl"
+#define BOOTLOADER_VERSION "v0.1.4-bootz"
+#define KERNEL_VERSION "v0.1.4-neoskrnl"
 
-#define BOOTLOADER_VERSION_BCD (0x0103)
-#define KERNEL_VERSION_BCD (0x0103)
+#define BOOTLOADER_VERSION_BCD (0x0104)
+#define KERNEL_VERSION_BCD (0x0104)
 
 #endif

@@ -13,7 +13,7 @@ BEGIN
       VALUE "FileVersion", BOOTLOADER_VERSION
       VALUE "InternalName", "bootz"
       VALUE "LegalCopyright", "Copyright (C) 2024-2026, Amlal El Mahrouss licensed under the Apache 2.0 license."
-      VALUE "OriginalFilename", "ne_bootz"
+      VALUE "OriginalFilename", "bootzldr.exe"
       VALUE "ProductName", "bootz"
       VALUE "ProductVersion", BOOTLOADER_VERSION
     END

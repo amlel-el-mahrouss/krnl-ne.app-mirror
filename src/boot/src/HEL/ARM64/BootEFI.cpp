@@ -124,7 +124,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
 
-  Boot::BootFileReader reader_kernel(L"ne_kernel", image_handle);
+  Boot::BootFileReader reader_kernel(L"neoskrnl.exe", image_handle);
 
   reader_kernel.ReadAll(0);
 

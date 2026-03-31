@@ -47,8 +47,8 @@ FLAG_GNU=-fshort-wchar -c -ffreestanding -MMD -mno-red-zone -D__NE_ARM64__ -fno-
 			 -target aarch64-unknown-windows \
 				-std=c++20 -DBOOTZ_EPM_SUPPORT -D__nekernel_allow_non_nekernel_pe -DBOOTZ_USE_FB -D__FSKIT_USE_NEFS__ -D__BOOTZ_STANDALONE__ -D__NEKERNEL__ -D__BOOTZ__ -D__HAVE_NE_API__ -D__NE__ -I../ -I../kernel
 
-BOOT_LOADER=ne_bootz
-KERNEL=ne_kernel
+BOOT_LOADER=bootzldr.exe
+KERNEL_IMG=neoskrnl.exe
 SYSCHK=chk.efi
 STARTUP=startup.efi
 
@@ -62,7 +62,7 @@ all: compile
 	$(LD_GNU) $(OBJ) $(LD_FLAGS) /out:src/$(BOOT_LOADER)
 	$(COPY) src/$(BOOT_LOADER) src/root/EFI/BOOT/BOOTAA64.EFI
 	$(COPY) src/$(BOOT_LOADER) src/root/EFI/BOOT/BootZ.EFI
-	$(COPY) ../kernel/$(KERNEL) src/root/$(KERNEL)
+	$(COPY) ../kernel/$(KERNEL_IMG) src/root/$(KERNEL_IMG)
 	$(COPY) ./modules/SysChk/$(SYSCHK) src/root/$(SYSCHK)
 	$(COPY) src/$(BOOT_LOADER) src/root/$(BOOT_LOADER)
 
@@ -94,7 +94,7 @@ efi:
 	$(HTTP_GET) https://retrage.github.io/edk2-nightly/bin/DEBUGAARCH64_QEMU_EFI.fd -O OVMF.fd
 
 BINS=*.bin
-EXECUTABLES=ne_bootz ne_kernel OVMF.fd
+EXECUTABLES=bootzldr.exe neoskrnl.exe OVMF.fd
 
 TARGETS=$(REM_FLAG) $(OBJ) $(BIN) $(IMG) $(IMG_2) $(EXECUTABLES)
 

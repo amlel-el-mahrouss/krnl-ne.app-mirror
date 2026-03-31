@@ -36,7 +36,7 @@
   inline Void KTTestCase##NAME::Run() {                \
     auto ret = FN() == YES;                            \
     if (!ret) {                                        \
-      PrintOut(nullptr, "[KERNEL-TEST] TEST FAILED!"); \
+      PrintOut(nullptr, "[KERNEL_IMG-TEST] TEST FAILED!"); \
       KT_MUST_PASS(ret, ret, true);                    \
     }                                                  \
   }                                                    \

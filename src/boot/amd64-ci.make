@@ -69,8 +69,8 @@ FLAG_GNU=-fshort-wchar -Wall -Wpedantic -Wextra -Werror -D__EFI_x86_64__ -mno-re
 			-DEFI_FUNCTION_WRAPPER -I./ -I../kernel $(DEBUG_MACRO) $(DISK_DRV) -I../ -c -nostdlib -fno-rtti -fno-exceptions \
                         -std=c++20 -DBOOTZ_GPT_SUPPORT -DBOOTZ_EPM_SUPPORT -D__HAVE_NE_API__ -DBOOTZ_USE_FB -D__NE_AMD64__ -D__NE__ -DNE_AUTO_FORMAT
 
-BOOTLOADER=ne_bootz
-KERNEL=ne_kernel
+BOOTLOADER=bootzldr.exe
+KERNEL_IMG=neoskrnl.exe
 SYSCHK=chk.efi
 BOOTNET=net.efi
 SCIKIT=libSystem.dll
@@ -130,7 +130,7 @@ efi:
 	$(HTTP_GET) https://retrage.github.io/edk2-nightly/bin/DEBUGX64_OVMF.fd -O OVMF.fd
 
 BINS=*.bin
-EXECUTABLES=ne_bootz ne_kernel OVMF.fd
+EXECUTABLES=bootzldr.exe neoskrnl.exe OVMF.fd
 
 TARGETS=$(REM_FLAG) $(OBJ) $(BIN) $(IMG) $(IMG_2) $(EXECUTABLES)
 

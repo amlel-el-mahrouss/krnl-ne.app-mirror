@@ -26,8 +26,8 @@ build/
 *.pdf
 *.aux
 
-ne_kernel
-ne_bootz
+neoskrnl.exe
+bootzldr.exe
 
 neoskrnl/neoskrnl.xcodeproj/project.xcworkspace/xcshareddata/
 

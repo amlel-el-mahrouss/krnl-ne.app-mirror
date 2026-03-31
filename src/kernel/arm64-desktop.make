@@ -23,7 +23,7 @@ LDFLAGS		= -subsystem:efi_application -entry:hal_init_platform /nodefaultlib
 LDOBJ		= obj/*.obj
 
 # This file is the Kernel, responsible of task management and memory.
-KERNEL		= ne_kernel
+KERNEL_IMG		= neoskrnl.exe
 
 .PHONY: error
 error:
@@ -46,7 +46,7 @@ OBJCOPY=x86_64-w64-mingw32-objcopy
 
 .PHONY: link-arm64-epm
 link-arm64-epm:
-	$(LD) $(LDFLAGS) $(LDOBJ) /out:$(KERNEL)
+	$(LD) $(LDFLAGS) $(LDOBJ) /out:$(KERNEL_IMG)
 
 .PHONY: all
 all: nekernel-arm64-epm link-arm64-epm
@@ -61,4 +61,4 @@ help:
 
 .PHONY: clean
 clean:
-	rm -f $(LDOBJ) $(wildcard *.o) $(KERNEL)
+	rm -f $(LDOBJ) $(wildcard *.o) $(KERNEL_IMG)

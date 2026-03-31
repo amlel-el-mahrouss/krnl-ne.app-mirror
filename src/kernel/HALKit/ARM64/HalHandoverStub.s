@@ -15,5 +15,5 @@
 .word 100
   ;; // CPU (ARM64)
 .word 0
-  ;; // TYPE (KERNEL)
+  ;; // TYPE (KERNEL_IMG)
 .word 122

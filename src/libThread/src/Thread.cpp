@@ -77,5 +77,6 @@ IMPORT_C SInt32 ThrExitThread(_Input ThreadRef ref, _Input SInt32 exit_code) {
   if (kCurrentThread == ref) kCurrentThread = nullptr;
 
   kThreadExitCodes[kThreadMapMax % ref->__hash] = exit_code;
+
   return kErrorSuccess;
 }

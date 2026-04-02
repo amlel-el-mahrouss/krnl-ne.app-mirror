@@ -1,0 +1,21 @@
+{
+  "compiler_path": "x86_64-w64-mingw32-g++",
+  "compiler_std": "c++20",
+  "headers_path": [ "../", "./" ],
+  "sources_path": [ "AMD64/*.cpp" ],
+  "output_name": "hal.arm64.dll",
+  "compiler_flags": [
+    "-ffreestanding",
+    "-shared",
+    "-fPIC",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-Wl,--subsystem=17"
+  ],
+  "cpp_macros": [
+    "kHALVersion=0x0100",
+    "kHALVersionHighest=0x0100",
+    "kHALVersionLowest=0x0100"
+  ],
+  "description": "The NeSystem Hardware Abstraction Layer."
+}

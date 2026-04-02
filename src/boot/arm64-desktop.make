@@ -51,6 +51,7 @@ BOOT_LOADER=bootzldr.exe
 KERNEL_IMG=neoskrnl.exe
 SYSCHK=chk.efi
 STARTUP=startup.efi
+HAL=hal.arm64.dll
 
 .PHONY: invalid-recipe
 invalid-recipe:
@@ -65,6 +66,8 @@ all: compile
 	$(COPY) ../kernel/$(KERNEL_IMG) src/root/$(KERNEL_IMG)
 	$(COPY) ./modules/SysChk/$(SYSCHK) src/root/$(SYSCHK)
 	$(COPY) src/$(BOOT_LOADER) src/root/$(BOOT_LOADER)
+	# $(COPY) ../libPThread/$(PTHREAD) src/root/$(PTHREAD)
+	# $(COPY) ../hal/$(HAL) src/root/$(HAL)
 
 ifneq ($(DEBUG_SUPPORT), )
 DEBUG =  -D__DEBUG__

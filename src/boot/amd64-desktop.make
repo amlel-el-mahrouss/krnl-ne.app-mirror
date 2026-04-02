@@ -80,6 +80,7 @@ SCIKIT=libSystem.dll
 DDK=libDDK.dll
 POSIXWRAPPER=libPOSIXWrapper.dll
 PTHREAD=libPThread.dll
+HAL=hal.x64.dll
 
 .PHONY: invalid-recipe
 invalid-recipe:
@@ -99,6 +100,7 @@ all: compile-amd64
 	$(COPY) ../libSystem/$(SCIKIT) src/root/$(SCIKIT)
 	$(COPY) ../libPOSIXWrapper/$(POSIXWRAPPER) src/root/$(POSIXWRAPPER)
 	# $(COPY) ../libPThread/$(PTHREAD) src/root/$(PTHREAD)
+	# $(COPY) ../hal/$(HAL) src/root/$(HAL)
 	$(COPY) src/$(BOOTLOADER) src/root/$(BOOTLOADER)
 	$(COPY) ../libDDK/$(DDK) src/root/$(DDK)
 

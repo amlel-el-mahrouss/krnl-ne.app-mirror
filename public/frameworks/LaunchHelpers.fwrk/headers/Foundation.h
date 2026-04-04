@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef FW_HEADERS_FOUNDATION_H
-#define FW_HEADERS_FOUNDATION_H
+#ifndef FW_HEADERS_LAUNCH_FOUNDATION_H
+#define FW_HEADERS_LAUNCH_FOUNDATION_H
 
 #include <CoreFoundation.fwrk/headers/Foundation.h>
 #include <CoreFoundation.fwrk/headers/String.h>

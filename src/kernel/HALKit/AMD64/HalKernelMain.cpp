@@ -18,9 +18,6 @@
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/CoreGfx/TextGfx.h>
 
-#include <BootKit/Shared/BootImg.rsrc>
-#include "NeKit/KernelPanic.h"
-
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
 EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
 
@@ -156,12 +153,6 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
   NeFS::fs_init_nefs();
   NeFileSystemMgr::Mount(new NeFileSystemMgr());
 #endif
-
-  for (SizeT idxCore{0}; idxCore < kHandoverHeader->f_NumberOfProcessors; ++idxCore) {
-    cg_init();
-    FBDrawBitMapInRegion(kBootLogo, BOOT_LOGO_WIDTH, BOOT_LOGO_HEIGHT, 10, 12 + BOOT_LOGO_WIDTH * idxCore);
-    cg_clear();
-  }
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 

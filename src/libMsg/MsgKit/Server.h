@@ -6,7 +6,6 @@
 #ifndef MSGKIT_SERVER_H
 #define MSGKIT_SERVER_H
 
-#include "libSystem/SystemKit/Macros.h"
 #ifdef __cplusplus
 #include <CoreFoundation.fwrk/headers/String.h>
 #else

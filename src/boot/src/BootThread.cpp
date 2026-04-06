@@ -13,7 +13,6 @@
 #include <KernelKit/PE.h>
 #include <KernelKit/PEF.h>
 #include <modules/CoreGfx/TextGfx.h>
-#include "FirmwareKit/Handover.h"
 
 // \brief This macro defines the maximum size of a image's stack.
 #define kBootThreadSz kib_cast(8)

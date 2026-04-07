@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
-// Official repository: https://github.com/ne-foss-org/nekernel
+// Official repository: https://github.com/ne-foss/ne-kernel
 
 #include <libMsg/MsgKit/Server.h>
 #include <libSystem/SystemKit/Err.h>
@@ -25,7 +25,7 @@ IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head, VoidPtr arg, SizeT ar
 
   static auto kSemWaitTime = 1000;
 
-  kSemaphore = ::SemCreate(kSemWaitTime, kSemWaitTime, "libmsg_semaphore");
+  kSemaphore = ::SemCreate(0, kSemWaitTime, "libmsg_semaphore");
 
   if (!kSemaphore) return kErrorInvalidData;
 

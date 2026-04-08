@@ -13,9 +13,9 @@
     "-Wl,--subsystem=17"
   ],
   "cpp_macros": [
-    "kLibSystemVersion=0x0100",
-    "kLibSystemVersionHighest=0x0100",
-    "kLibSystemVersionLowest=0x0100"
+    "kMsgVersion=0x0100",
+    "kMsgVersionHighest=0x0100",
+    "kMsgVersionLowest=0x0100"
   ],
   "description": "OpenMessage Kit for the NeSystem."
 }

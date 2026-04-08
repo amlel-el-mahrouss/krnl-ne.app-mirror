@@ -66,7 +66,7 @@ namespace Kernel {
 void ke_runtime_check(bool expr, const Char* file, const Char* line);
 
 /// @brief Stops the system from running when unrecoverable.
-void ke_panic(const Int32& id, const Char* message = nullptr);
+void ke_stop(const Int32& id, const Char* message = nullptr);
 
 }  // namespace Kernel
 

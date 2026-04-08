@@ -212,7 +212,7 @@ _Output Int32 mm_free_ptr(VoidPtr heap_ptr) {
 
     return kErrorSuccess;
   } else {
-    ke_panic(RUNTIME_CHECK_TLS, "Double-Free Detected on HeapMgr, aborting.");
+    ke_stop(RUNTIME_CHECK_TLS, "Double-Free Detected on HeapMgr, aborting.");
   }
 
   return kErrorInternal;

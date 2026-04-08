@@ -28,7 +28,7 @@ class RecoveryFactory final {
 /// @brief Stops execution of the kernel.
 /// @param id kernel stop ID.
 /***********************************************************************************/
-Void ke_panic(const Kernel::Int32& id, const Char* message) {
+Void ke_stop(const Kernel::Int32& id, const Char* message) {
   (Void)(kout << "*** STOP ***\r");
   (Void)(kout << "Kernel_Panic_MSG: " << message << kendl);
   (Void)(kout << "Kernel_Panic_ID: " << hex_number(id) << kendl);
@@ -47,7 +47,7 @@ void ke_runtime_check(bool expr, const Char* file, const Char* line) {
     (Void)(kout << "Kernel_Panic_FILE: " << file << kendl);
     (Void)(kout << "Kernel_Panic_LINE: " << line << kendl);
 
-    ke_panic(RUNTIME_CHECK_FAILED, file);  // Runtime Check failed
+    ke_stop(RUNTIME_CHECK_FAILED, file);  // Runtime Check failed
   }
 }
 }  // namespace Kernel

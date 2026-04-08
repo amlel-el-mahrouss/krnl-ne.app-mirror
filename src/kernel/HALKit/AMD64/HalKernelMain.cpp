@@ -156,12 +156,12 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  PEFLoader ldr("/system/init.out");
+  PEFLoader ldr("/system/lnchst.exe");
 
   if (ldr.IsLoaded())
     rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
   else
-    ke_panic(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Init Process.");
+    ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Launch Host Process.");
 
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 

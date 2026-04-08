@@ -30,7 +30,7 @@ bug_check_fail:
   ptr = nullptr;
 
   if (kRaiseOnBugCheck) {
-    ke_panic(RUNTIME_CHECK_BAD_BEHAVIOR);
+    ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR);
   }
 
   return No;

@@ -287,7 +287,7 @@ Void UserProcess::Exit(const Int32& exit_code) {
     rtl_fini_dylib_pef(*this, reinterpret_cast<IPEFDylibObject*>(this->DylibDelegate), &success);
 
     if (!success) {
-      ke_panic(RUNTIME_CHECK_PROCESS);
+      ke_stop(RUNTIME_CHECK_PROCESS);
     }
 
     this->DylibDelegate = nullptr;

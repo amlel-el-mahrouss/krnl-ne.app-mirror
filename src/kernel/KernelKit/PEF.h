@@ -19,7 +19,7 @@
 #define kPefNameLen (256U)
 
 /* not mandatory, only for non fork based filesystems. */
-#define kPefExt ".exec"
+#define kPefExt ".exe"
 #define kPefDylibExt ".dylib"
 #define kPefLibExt ".lib"
 #define kPefObjectExt ".obj"

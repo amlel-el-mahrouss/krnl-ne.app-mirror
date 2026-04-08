@@ -327,7 +327,7 @@ namespace Detail {
 
             if (tmpend->fChecksum !=
                 ke_calculate_crc32((Char*) tmpend, sizeof(HEFS_INDEX_NODE_DIRECTORY)))
-              ke_panic(RUNTIME_CHECK_FILESYSTEM, "OpenHeFS: Bad CRC32 value aborting.");
+              ke_stop(RUNTIME_CHECK_FILESYSTEM, "OpenHeFS: Bad CRC32 value aborting.");
 
             if (delete_or_create)
               --tmpend->fEntryCount;

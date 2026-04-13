@@ -4,7 +4,7 @@
   "headers_path": ["./"],
   "sources_path": ["src/CommandLine.cc"],
   "output_name": "./dist/open",
-  "compiler_flags": "-lSCI",
+  "compiler_flags": "-lSystemKit",
   "cpp_macros": [
     "kOpenVersion=0x0100",
     "kOpenVersionHighest=0x0100",

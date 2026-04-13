@@ -308,7 +308,7 @@ enum {
   kPowerCodeReboot,
   kPowerCodeSleep,
   kPowerCodeWake,
-  kPowerCodeCount,
+  kPowerCodeCount = kPowerCodeWake - kPowerCodeShutdown + 1,
 };
 
 IMPORT_C SInt32 PwrReadCode(_Output SInt32& code);

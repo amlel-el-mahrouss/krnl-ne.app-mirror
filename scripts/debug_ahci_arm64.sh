@@ -12,5 +12,5 @@ make -f arm64-desktop.make  all
 make -f arm64-desktop.make disk
 cd ../../
 ./tools/kimg.py ./private/bootz/private/nekernel-esp.img ./private/bootz/private/root
-cd src/boot
+cd private/bootz
 make -f arm64-desktop.make -j 8 run-efi-arm64

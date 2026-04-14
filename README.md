@@ -3,7 +3,7 @@
 # 🍯 The NeKernel
 
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
-![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss-org/ne-kernel?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss/ne-kernel?style=for-the-badge)
 
 <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
 <a href="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
@@ -44,8 +44,8 @@ Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open f
 
 ## Structure
 
-- `src/kernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
-- `src/boot/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
+- `src/minkernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
+- `private/bootz/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
 - `src/libDDK/` — Driver Development Kit (DDK)
 - `src/libSystem/` — Userland system call interface and runtime
 - `src/launch/` — NeKernel Launch System.

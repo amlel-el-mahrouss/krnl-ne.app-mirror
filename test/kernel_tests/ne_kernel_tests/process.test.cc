@@ -2,7 +2,7 @@
 /// \brief Process management tests.
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
-#include <KernelTest.fwrk/headers/TestCase.h>
+#include <KernelTest/headers/TestCase.h>
 #include <libSystem/SystemKit/System.h>
 
 /// \note RtlSpawnProcess tests

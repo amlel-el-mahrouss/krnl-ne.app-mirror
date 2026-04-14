@@ -1,0 +1,46 @@
+{
+  "compiler_path": "x86_64-w64-mingw32-g++",
+  "compiler_std": "c++20",
+  "headers_path": [
+    "../",
+    "../../",
+    "../../../minkernel",
+    "../../../",
+    "./"
+  ],
+  "sources_path": [
+    "*.cpp",
+    "*.S",
+    "../../private/HEL/AMD64/BootATA.cpp",
+    "../../private/HEL/AMD64/BootPlatform.cpp",
+    "../../private/HEL/AMD64/BootAPI.S",
+    "../../private/BootTextWriter.cpp",
+    "../../private/BootSupport.cpp",
+    "../../private/New+Delete.cpp"
+  ],
+  "output_name": "chk.efi",
+  "compiler_flags": [
+    "-nostdlib",
+    "-std=c++20",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-Wl,--subsystem=17,--image-base,0x20000000,-e,SysChkModuleMain"
+  ],
+  "cpp_macros": [
+    "__NEOSKRNL__",
+    "__BOOTZ__",
+    "__BOOTZ_STANDALONE__",
+    "__NE_AMD64__",
+    "__ATA_PIO__",
+    "__NE_VEPM__",
+    "__nekernel_max_cores=8",
+    "__nekernel_dma_best_align=8",
+    "__nekernel_dma_pool_start=0x1000000",
+    "__nekernel_dma_pool_size=0x1000000",
+    "__nekernel_halkit_include_processor=\"<HALKit/AMD64/Processor.h>\"",
+    "BOOTZ_GPT_SUPPORT",
+    "kChkVersionHighest=0x0100",
+    "kChkVersionLowest=0x0100",
+    "kChkVersion=0x0100"
+  ]
+}

@@ -4,13 +4,13 @@
 # 03/25/25: Add 'disk' build step.
 # 04/05/25: Improve and fix script.
 
-cd src/libSystem
+cd private/libSystem
 cd src
 make libsys_asm_io_x64
 cd ..
 nebuild libSystem.json
 cd ../libDDK
 nebuild libDDK.json
-cd ../boot
+cd ../bootz
 make -f amd64-desktop.make  efi
 make -f amd64-desktop.make  epm-img

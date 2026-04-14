@@ -1,0 +1,49 @@
+{
+  "compiler_path": "clang++",
+  "compiler_std": "c++20",
+  "headers_path": ["../", "../../", "../../../minkernel", "../../../", "./"],
+  "sources_path": [
+    "*.cpp",
+    "*.S",
+    "../../private/HEL/ARM64/BootSATA.cpp",
+    "../../private/HEL/ARM64/BootPlatform.cpp",
+    "../../private/HEL/ARM64/BootAPI.S",
+    "../../private/BootTextWriter.cpp",
+    "../../private/BootSupport.cpp",
+    "../../private/New+Delete.cpp",
+    "../../../minkernel/HALKit/ARM64/PCI/*.cpp",
+    "../../../minkernel/HALKit/ARM64/Storage/*.cpp",
+    "../../../minkernel/src/Storage/*.cpp",
+    "../../../minkernel/src/Network/*.cpp",
+    "../../../minkernel/HALKit/ARM64/*.cpp",
+    "../../../minkernel/HALKit/ARM64/*.s",
+    "../../../minkernel/src/*.cpp"
+  ],
+  "output_name": "chk.efi",
+  "compiler_flags": [
+    "-ffreestanding",
+    "-nostdlib",
+    "-std=c++20",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-fuse-ld=lld",
+    "-Wl,-subsystem:efi_application,-entry:BootloaderMain",
+    "-target aarch64-unknown-windows"
+  ],
+  "cpp_macros": [
+    "__NEOSKRNL__",
+    "__BOOTZ__",
+    "__BOOTZ_STANDALONE__",
+    "__NE_ARM64__",
+    "__SYSCHK__",
+    "BOOTZ_EPM_SUPPORT",
+    "__nekernel_max_cores=8",
+    "__nekernel_dma_best_align=8",
+    "__nekernel_dma_pool_start=0x1000000",
+    "__nekernel_dma_pool_size=0x1000000",
+    "__nekernel_halkit_include_processor=\"<HALKit/ARM64/Processor.h>\"",
+    "kChkVersionHighest=0x0100",
+    "kChkVersionLowest=0x0100",
+    "kChkVersion=0x0100"
+  ]
+}

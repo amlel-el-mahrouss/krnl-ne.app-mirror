@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd src/boot
+cd private/bootz
 make -f arm64-desktop.make  efi
 make -f arm64-desktop.make  epm-img

@@ -1,4 +1,4 @@
--Isrc/kernel
+-Iprivate/minkernel
 -Isrc/
 -Isrc/user
 -Isrc/boot
@@ -14,7 +14,7 @@
 -Ipublic/tools/ld.fwrk
 -Ipublic/tools/open
 -Ipublic/frameworks
--Isrc/boot/BootKit
+-Isrc/bootz/BootKit
 -Itools/
 -D__BOOTZ_STANDALONE__
 -I./

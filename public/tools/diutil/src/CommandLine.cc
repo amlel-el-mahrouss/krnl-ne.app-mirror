@@ -7,7 +7,7 @@
 
    ======================================== */
 
-#include <DiskImage.fwrk/headers/DiskImage.h>
+#include <DiskImage/headers/DiskImage.h>
 
 static const Char kDiskName[kDIDiskNameLen] = "Empty Disk";
 static SInt32     kDiskSectorSz             = kDISectorSz;

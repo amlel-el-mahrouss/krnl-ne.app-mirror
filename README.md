@@ -5,8 +5,8 @@
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss/ne-kernel?style=for-the-badge)
 
-<a href="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
-<a href="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss-org/nekernel/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
+<a href="https://github.com/ne-foss/ne-kernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
+<a href="https://github.com/ne-foss/ne-kernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
 
 ## About:
 

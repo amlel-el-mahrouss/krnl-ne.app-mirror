@@ -13,11 +13,11 @@
     "../../private/New+Delete.cpp",
     "../../../minkernel/HALKit/ARM64/PCI/*.cpp",
     "../../../minkernel/HALKit/ARM64/Storage/*.cpp",
-    "../../../minkernel/private/Storage/*.cpp",
-    "../../../minkernel/private/Network/*.cpp",
+    "../../../minkernel/src/Storage/*.cpp",
+    "../../../minkernel/src/Network/*.cpp",
     "../../../minkernel/HALKit/ARM64/*.cpp",
     "../../../minkernel/HALKit/ARM64/*.s",
-    "../../../minkernel/private/*.cpp"
+    "../../../minkernel/src/*.cpp"
   ],
   "output_name": "chk.efi",
   "compiler_flags": [

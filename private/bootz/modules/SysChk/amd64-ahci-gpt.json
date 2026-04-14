@@ -14,11 +14,11 @@
     "../../../minkernel/HALKit/AMD64/PCI/*.cpp",
     "../../../minkernel/HALKit/AMD64/Storage/*.cpp",
     "../../../minkernel/HALKit/AMD64/Network/*.cpp",
-    "../../../minkernel/private/Storage/*.cpp",
-    "../../../minkernel/private/Network/*.cpp",
+    "../../../minkernel/src/Storage/*.cpp",
+    "../../../minkernel/src/Network/*.cpp",
     "../../../minkernel/HALKit/AMD64/*.cpp",
     "../../../minkernel/HALKit/AMD64/*.s",
-    "../../../minkernel/private/*.cpp"
+    "../../../minkernel/src/*.cpp"
   ],
   "output_name": "chk.efi",
   "compiler_flags": [

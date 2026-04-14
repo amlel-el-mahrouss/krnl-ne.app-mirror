@@ -50,7 +50,7 @@ def create_directory_structure(base_path_fwrk, project_file_name, project_name):
     manifest = {
         "compiler_path": "clang++",
         "compiler_std": "c++20",
-        "headers_path": ["./", "../../../src/kernel", "../../../public/frameworks/", "../../../src/", "./"],
+        "headers_path": ["./", "../../../private/minkernel", "../../../public/frameworks/", "../../../private/", "./"],
         "sources_path": [
 
         ],

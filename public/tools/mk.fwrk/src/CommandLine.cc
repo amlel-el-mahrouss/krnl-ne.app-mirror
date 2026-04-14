@@ -9,7 +9,7 @@
 
 #include <libSystem/SystemKit/Err.h>
 
-#include <CoreFoundation.fwrk/headers/Array.h>
+#include <CoreFoundation/headers/Array.h>
 
 /// @brief This program makes a framework/app/steps directory for NeKernel OS.
 

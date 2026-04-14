@@ -3,7 +3,7 @@
 /// \author Amlal El Mahrouss (amlal at nekernel dot org) (2025-2026)
 
 #include <libSystem/SystemKit/System.h>
-#include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
+#include <public/frameworks/KernelTest/headers/TestCase.h>
 
 /// \note Thread procedure for testing
 static SInt32 test_thread_proc(SInt32 argc, Char** argv) {

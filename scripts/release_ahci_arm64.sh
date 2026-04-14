@@ -5,12 +5,12 @@ export ATA_PIO_SUPPORT=
 export ATA_DMA_SUPPORT=
 export DEBUG_SUPPORT=
 
-cd src/kernel
+cd private/minkernel
 make -f arm64-desktop.make  all
-cd ../boot
+cd ../bootz
 make -f arm64-desktop.make  all
 make -f arm64-desktop.make disk
 cd ../../
-./tools/kimg.py ./src/boot/src/nekernel-esp.img ./src/boot/src/root
+./tools/kimg.py ./private/bootz/private/nekernel-esp.img ./private/bootz/private/root
 cd src/boot
 make -f arm64-desktop.make -j 8 run-efi-arm64

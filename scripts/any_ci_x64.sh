@@ -5,5 +5,5 @@ export ATA_PIO_SUPPORT=
 export ATA_DMA_SUPPORT=
 export DEBUG_SUPPORT=1
 
-cd src/kernel
+cd private/minkernel
 make -f amd64-desktop.make  all

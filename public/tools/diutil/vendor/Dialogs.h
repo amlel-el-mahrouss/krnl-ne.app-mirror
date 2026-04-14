@@ -704,7 +704,7 @@ inline void internal::executor::start_process(std::vector<std::string> const& co
     dup2(out[1], STDOUT_FILENO);
 
     // Ignore stderr so that it doesn’t pollute the console (e.g. GTK+ errors from zenity)
-    int fd = open("/src/null", O_WRONLY);
+    int fd = open("/private/null", O_WRONLY);
     dup2(fd, STDERR_FILENO);
     close(fd);
 

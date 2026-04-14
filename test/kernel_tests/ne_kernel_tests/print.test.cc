@@ -2,7 +2,7 @@
 /// \brief Konsole Out tests.
 
 #include <libSystem/SystemKit/System.h>
-#include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
+#include <public/frameworks/KernelTest/headers/TestCase.h>
 
 /// \note PrintGet tests
 KT_DECL_TEST(PrintIsNull, []() -> bool { return PrintGet("/null/") == nullptr; });

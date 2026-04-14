@@ -1,0 +1,25 @@
+#include "../../minkernel/CompilerKit/Version.h"
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "Amlal El Mahrouss"
+      VALUE "FileDescription", "NeKernel OS Loader."
+      VALUE "FileVersion", BOOTLOADER_VERSION
+      VALUE "InternalName", "bootz"
+      VALUE "LegalCopyright", "Copyright (C) 2024-2026, Amlal El Mahrouss licensed under the Apache 2.0 license."
+      VALUE "OriginalFilename", "bootzldr.exe"
+      VALUE "ProductName", "bootz"
+      VALUE "ProductVersion", BOOTLOADER_VERSION
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END

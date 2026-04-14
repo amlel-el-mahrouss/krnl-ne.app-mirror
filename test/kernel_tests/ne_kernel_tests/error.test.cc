@@ -3,7 +3,7 @@
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
 #include <libSystem/SystemKit/System.h>
-#include <public/frameworks/KernelTest.fwrk/headers/TestCase.h>
+#include <public/frameworks/KernelTest/headers/TestCase.h>
 
 /// \note ErrGetLastError tests
 KT_DECL_TEST(ErrGetLastErrorInitial, []() -> bool {

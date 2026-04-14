@@ -44,8 +44,8 @@ Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open f
 
 ## Structure
 
-- `src/kernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
-- `src/boot/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
+- `src/minkernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
+- `src/bootz/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
 - `src/libDDK/` — Driver Development Kit (DDK)
 - `src/libSystem/` — Userland system call interface and runtime
 - `src/launch/` — NeKernel Launch System.

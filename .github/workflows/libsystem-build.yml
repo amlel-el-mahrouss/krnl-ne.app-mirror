@@ -1,4 +1,4 @@
-name: NeKernel libSystem [BUILD]
+name: NeKernel libSystem CI [BUILD]
 
 on:
   push:

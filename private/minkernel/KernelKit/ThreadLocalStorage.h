@@ -61,7 +61,7 @@ T* tls_new_class(Args&&... args);
 EXTERN_C Kernel::Void rt_install_tib(THREAD_INFORMATION_BLOCK* TIB, THREAD_INFORMATION_BLOCK* PIB);
 
 /// @brief TLS check (syscall)
-EXTERN_C Kernel::Bool tls_check_syscall_impl(Kernel::VoidPtr TIB);
+EXTERN_C Kernel::Bool tls_check_tib(Kernel::VoidPtr TIB);
 
 }  // namespace Kernel
 

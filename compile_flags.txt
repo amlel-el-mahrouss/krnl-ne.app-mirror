@@ -1,10 +1,10 @@
 -Iprivate/minkernel
--Isrc/
--Isrc/user
--Isrc/boot
--Isrc/launch
--Isrc/misc
--Isrc/libDDK
+-Iprivate/
+-Iprivate/user
+-Iprivate/boot
+-Iprivate/launch
+-Iprivate/misc
+-Iprivate/libDDK
 -Ipublic/tools
 -Ipublic/tools/mk.app
 -Ipublic/tools/mk.fwrk
@@ -14,7 +14,7 @@
 -Ipublic/tools/ld.fwrk
 -Ipublic/tools/open
 -Ipublic/frameworks
--Isrc/bootz/BootKit
+-Iprivate/bootz/BootKit
 -Itools/
 -D__BOOTZ_STANDALONE__
 -I./

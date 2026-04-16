@@ -18,6 +18,8 @@
 #define kPeNameSymbol "__NEProgramName"
 #define kPeImageStart "__ImageStart"
 
+#define kPe32BlobFork "__NEPe32Blob"
+
 namespace Kernel {
 
 namespace Detail {
@@ -54,7 +56,7 @@ PE32Loader::PE32Loader(const Char* path) : fCachedBlob(static_cast<VoidPtr>(null
   fFile.New(const_cast<Char*>(path), kRestrictRB);
   fPath = KStringBuilder::Construct(path).Leak();
 
-  auto kPefHeader = "PE32_BLOB";
+  auto kPefHeader = kPe32BlobFork;
   fCachedBlob     = fFile->Read(kPefHeader, 0);
 
   if (fCachedBlob.HasError() || !fCachedBlob.Leak().Leak()) fBad = YES;

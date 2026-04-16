@@ -8,6 +8,7 @@
 
 #define kThreadMapMax (1024UL)
 #define kThreadBaseHash (0x5555ffff6ULL)
+#define kThreadSemID "__NE_RUN_THREAD_HANDLE"
 
 /// @brief The registered thread for a specific process.
 static ThreadRef kThreadMap[kThreadMapMax];
@@ -26,7 +27,8 @@ static ThreadRef kCurrentThread;
 
 static __THREAD_UNSAFE Void _ThrRunThread(SInt32 argument_count, VoidPtr args,
                                           ThrProcKind procedure, ThreadRef ref) {
-  static SemaphoreRef sem_ref = SemCreate(0, 1000, "ThreadSem");
+  static auto         kSemWaitTime = 1000;
+  static SemaphoreRef sem_ref = ::SemCreate(0, kSemWaitTime, kThreadSemID);
 
   if (sem_ref) return;
 
@@ -35,7 +37,7 @@ static __THREAD_UNSAFE Void _ThrRunThread(SInt32 argument_count, VoidPtr args,
 
   if (ref == kCurrentThread) kCurrentThread = nullptr;
 
-  SemClose(sem_ref);
+  ::SemClose(sem_ref);
   sem_ref = nullptr;
 }
 
@@ -61,7 +63,7 @@ IMPORT_C ThreadRef ThrCreateThread(const Char* thread_name, ThrProcKind procedur
 
   kCurrentThread = ref;
 
-  _ThrRunThread(argument_count, args, procedure, ref);
+  ::_ThrRunThread(argument_count, args, procedure, ref);
 
   return ref;
 }

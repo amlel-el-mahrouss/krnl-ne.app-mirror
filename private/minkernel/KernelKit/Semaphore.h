@@ -73,12 +73,12 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64& owner, const UInt64& t
   //if (!sem) return false;
 
   if (!rtl_sem_is_valid(sem, owner)) {
+    err_global_get() = kErrorInvalidData;
     return false;
   }
 
   if (timeout == 0) {
     err_global_get() = kErrorTimeout;
-
     return false;
   }
 

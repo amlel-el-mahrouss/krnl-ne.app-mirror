@@ -38,7 +38,7 @@ PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr         at
   if (!attr || !thread || !arg || !start_routine) return kErrorInvalidData;
 
   /// @note passing zero means you'd have to read the argv until you hit a nullptr.
-  ThreadRef thrd = ThrCreateThread("pthread_thread", (ThrProcKind) start_routine, 0, arg, 0);
+  ThreadRef thrd = ThrCreateThread(nullptr, (ThrProcKind) start_routine, 0, arg, 0);
 
   if (!thrd) return kErrorInvalidData;
 

@@ -116,7 +116,7 @@ typedef struct LDR_IMAGE_HEADER {
   LDR_OPTIONAL_HEADER OptHdr;
 } LDR_IMAGE_HEADER, *LDR_IMAGE_HEADER_PTR;
 
-enum {
+enum : long long {
   kUserSection  = 0x00000020,
   kPEResourceId = 0xFFaadd00,
 };

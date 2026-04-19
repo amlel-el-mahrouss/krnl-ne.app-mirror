@@ -23,9 +23,14 @@
 #define YES 1
 #define NO 0
 #define DDK_EXTERN extern
+#if __STDC__ == 202311L
+#define nil nullptr
+#define NULL nullptr
+#else
 #define nil ((void*) 0)
 #undef NULL
 #define NULL ((void*) 0)
+#endif
 #define DDK_FINAL
 #endif  // defined(__cplusplus)
 

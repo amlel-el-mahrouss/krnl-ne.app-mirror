@@ -13,10 +13,15 @@
 
 namespace Kernel {
 
+/// @brief Local processes.
 inline UserProcessTeam kLowUserTeam;
 inline UserProcessTeam kHighUserTeam;
 inline UserProcessTeam kMidUserTeam;
 inline UserProcessTeam kRTUserTeam;
+
+/// @brief Remote processes.
+inline UserProcessTeam kServicesTeam;
+inline UserProcessTeam kNetworkTeam;
 
 }  // namespace Kernel
 

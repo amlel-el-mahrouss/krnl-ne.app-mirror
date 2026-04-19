@@ -20,7 +20,7 @@ DDK_EXTERN void kputc(const char ch) {
 /// @param message UART to transmit.
 DDK_EXTERN void kprint(const char* message) {
   if (nil == message) return;
-  if (*message == '\0') return;
+  if (*message == 0) return;
 
   size_t index = 0;
   size_t len   = ::kstrlen(message);

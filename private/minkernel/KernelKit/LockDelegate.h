@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 
 namespace Kernel {
-enum {
+enum : int {
   kLockInvalid  = 0,
   kLockDone     = 200,
   kLockTimedOut = 300,

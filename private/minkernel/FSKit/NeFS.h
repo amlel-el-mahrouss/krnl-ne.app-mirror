@@ -100,7 +100,7 @@
 #define kNeFSMimeNameLen (200)
 #define kNeFSForkNameLen (199)
 
-#define kNeFSFrameworkExt "/"
+#define kNeFSFrameworkExt ".fwrk/"
 #define kNeFSStepsExt ".step/"
 #define kNeFSApplicationExt ".app/"
 #define kNeFSJournalExt ".jrnl"

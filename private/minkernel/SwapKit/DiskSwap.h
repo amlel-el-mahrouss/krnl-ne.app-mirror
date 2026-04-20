@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+otz// SPDX-License-Identifier: Apache-2.0
 // Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
@@ -10,8 +10,8 @@
 #include <NeKit/Config.h>
 #include <hint/CompilerHint.h>
 
-#define kSwapPageFilePath "/bootz/pagefile.sys"
-#define kSwapPageFilePathU8 u8"/bootz/pagefile.sys"
+#define kSwapPageFilePath "/boot/pagefile.sys"
+#define kSwapPageFilePathU8 u8"/boot/pagefile.sys"
 
 /// @file SwapDisk.h
 /// @brief Virtual memory swap disk.

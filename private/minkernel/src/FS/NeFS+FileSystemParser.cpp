@@ -858,9 +858,12 @@ namespace Kernel::NeFS {
 /***********************************************************************************/
 Boolean fs_init_nefs(Void) {
   kout << "Creating NeFS disk...\r";
+
   kMountpoint.A() = io_construct_main_drive();
+  
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES)
     ke_stop(RUNTIME_CHECK_FILESYSTEM, "Main disk cannot be mounted.");
+
   NeFileSystemParser parser;
   return parser.Format(&kMountpoint.A(), 0, kNeFSVolumeName);
 }

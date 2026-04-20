@@ -16,5 +16,6 @@
       "kNeLaunchVersion=0x0100",
       "kNeLaunchVersionHighest=0x0100",
       "kNeLaunchVersionLowest=0x0100"
-  ]
+  ],
+  "description": "NeKernel Launch Host."
 }

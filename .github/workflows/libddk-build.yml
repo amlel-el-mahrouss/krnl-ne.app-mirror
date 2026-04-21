@@ -1,4 +1,4 @@
-name: NeKernel libDDK CI [BUILD]
+name: Ne.app NeKernel libDDK CI [BUILD]
 
 on:
   push:

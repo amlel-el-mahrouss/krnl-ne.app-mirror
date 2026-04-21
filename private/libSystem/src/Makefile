@@ -9,8 +9,8 @@ FLAGS=-f win64
 .PHONY: error
 error:
 	@echo "==> Invalid recipe."
-	@echo "==> Use libsys_asm_io_<arch> instead."
+	@echo "==> Use nesys_asm_io_<arch> instead."
 
-.PHONY: libsys_asm_io_x64
-libsys_asm_io_x64:
+.PHONY: nesys_asm_io_x64
+nesys_asm_io_x64:
 	$(ASM) $(FLAGS) SystemCallsABI+AMD64.asm -o SystemCallsABI+AMD64.stub.obj

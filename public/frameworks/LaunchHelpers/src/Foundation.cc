@@ -10,5 +10,5 @@
 /// @return the launch information structure.
 CF::CFRef<LaunchHelpers::LHLaunchInfo> LaunchHelpers::LHGetLaunchInfo(Void) {
   return static_cast<LaunchHelpers::LHLaunchInfo*>(
-      libsys_syscall_arg_1(libsys_hash_64("__LHGetLaunchInfoRef")));
+      nesys_syscall_arg_1(nesys_hash_64("__LHGetLaunchInfoRef")));
 }

@@ -1,8 +1,8 @@
 -Iprivate/minkernel
 -Iprivate/
 -Iprivate/user
--Iprivate/boot
--Iprivate/launch
+-Iprivate/bootz
+-Iprivate/lnchhst
 -Iprivate/misc
 -Iprivate/libDDK
 -Ipublic/tools

@@ -3,6 +3,6 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#include <SoundSystemKit/VirtualMixer.h>
+#include <libSoundSystem/SoundSystemKit/VirtualMixer.h>
 
 namespace SoundSystem {}

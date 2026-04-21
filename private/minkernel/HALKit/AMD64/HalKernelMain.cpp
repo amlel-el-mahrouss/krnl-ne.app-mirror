@@ -156,7 +156,7 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  PEFLoader ldr("/system/lnchst.exe");
+  PEFLoader ldr("/system/lnchhst.exe");
 
   if (ldr.IsLoaded())
     rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);

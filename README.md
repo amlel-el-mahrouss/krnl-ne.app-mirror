@@ -48,7 +48,7 @@ Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open f
 - `src/bootz/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
 - `src/libDDK/` — Driver Development Kit (DDK)
 - `src/libSystem/` — Userland system call interface and runtime
-- `src/launch/` — NeKernel Launch System.
+- `src/lnchhst/` — NeKernel Launch System.
 - `src/libMsg/` — NeKernel OpenMSG framework.
 - `public/tools/` — CLI tools (mkfs, chk, open, manual, etc.)
 - `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)

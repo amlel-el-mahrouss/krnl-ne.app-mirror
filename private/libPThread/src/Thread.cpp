@@ -7,19 +7,19 @@
 #include <libSystem/SystemKit/Err.h>
 
 PTHREAD_SAFE SInt32 pthread_detach(ThreadRef thread) {
-  return ThrDetachThread(thread);
+  return ::ThrDetachThread(thread);
 }
 
 PTHREAD_SAFE SInt32 pthread_yield(void) {
-  return ThrYieldThread(ThrCurrentThread());
+  return ::ThrYieldThread(::ThrCurrentThread());
 }
 
 PTHREAD_SAFE ThreadRef pthread_self(void) {
-  return ThrCurrentThread();
+  return ::ThrCurrentThread();
 }
 
 PTHREAD_SAFE SInt32 pthread_exit(SInt32 retval) {
-  return ThrExitCurrentThread(retval);
+  return ::ThrExitCurrentThread(retval);
 }
 
 PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
@@ -27,7 +27,7 @@ PTHREAD_SAFE SInt32 pthread_join(ThreadRef thread, VoidPtr* retval) {
 
   if (!ret) return kErrorInvalidData;
 
-  *ret = ThrJoinThread(thread);
+  *ret = ::ThrJoinThread(thread);
   return kErrorSuccess;
 }
 
@@ -38,7 +38,7 @@ PTHREAD_SAFE SInt32 pthread_create(_Output ThreadRef* thread, VoidPtr         at
   if (!attr || !thread || !arg || !start_routine) return kErrorInvalidData;
 
   /// @note passing zero means you'd have to read the argv until you hit a nullptr.
-  ThreadRef thrd = ThrCreateThread(nullptr, (ThrProcKind) start_routine, 0, arg, 0);
+  ThreadRef thrd = ::ThrCreateThread(nullptr, (ThrProcKind) start_routine, 0, arg, 0);
 
   if (!thrd) return kErrorInvalidData;
 

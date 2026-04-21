@@ -12,5 +12,5 @@
 using namespace LibSystem;
 
 IMPORT_C struct JAIL* JailGetCurrent(Void) {
-  return (struct JAIL*) libsys_syscall_arg_1(SYSCALL_HASH("JailGetCurrent"));
+  return (struct JAIL*) nesys_syscall_arg_1(SYSCALL_HASH("JailGetCurrent"));
 }

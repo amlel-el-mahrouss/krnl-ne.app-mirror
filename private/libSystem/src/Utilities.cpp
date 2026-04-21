@@ -11,7 +11,7 @@
 using namespace LibSystem;
 
 /// @note This uses the FNV 64-bit variant.
-IMPORT_C UInt64 libsys_hash_64(const Char* path) {
+IMPORT_C UInt64 nesys_hash_64(const Char* path) {
   if (!path || *path == 0) return 0;
 
   const UInt64 kFNVSeed  = 0xcbf29ce484222325ULL;

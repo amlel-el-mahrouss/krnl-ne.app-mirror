@@ -6,7 +6,7 @@
 
 cd private/libSystem
 cd src
-make libsys_asm_io_x64
+make nesys_asm_io_x64
 cd ..
 nebuild libSystem.json
 cd ../libDDK

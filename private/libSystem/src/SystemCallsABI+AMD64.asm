@@ -11,12 +11,12 @@
 
 section .text
 
-global libsys_syscall_arg_1
-global libsys_syscall_arg_2
-global libsys_syscall_arg_3
-global libsys_syscall_arg_4
+global nesys_syscall_arg_1
+global nesys_syscall_arg_2
+global nesys_syscall_arg_3
+global nesys_syscall_arg_4
 
-libsys_syscall_arg_1:
+nesys_syscall_arg_1:
     push rbp
     mov rbp, rsp
 
@@ -30,7 +30,7 @@ libsys_syscall_arg_1:
 
     ret
 
-libsys_syscall_arg_2:
+nesys_syscall_arg_2:
     push rbp
     mov rbp, rsp
 
@@ -45,7 +45,7 @@ libsys_syscall_arg_2:
 
     ret
 
-libsys_syscall_arg_3:
+nesys_syscall_arg_3:
     push rbp
     mov rbp, rsp
 
@@ -61,7 +61,7 @@ libsys_syscall_arg_3:
 
     ret
 
-libsys_syscall_arg_4:
+nesys_syscall_arg_4:
     push rbp
     mov rbp, rsp
 

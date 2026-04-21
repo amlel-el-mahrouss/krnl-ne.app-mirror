@@ -14,7 +14,7 @@ namespace Kernel {
 /// @brief AHCIDeviceInterface class
 /// @details This class is used to send and receive data from the AHCI device.
 /// @note The class is derived from the IDevice class.
-class AHCIDeviceInterface NE_DEVICE<IMountpoint*> {
+class AHCIDeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
   AHCIDeviceInterface() = default;
   AHCIDeviceInterface(void (*out)(IDevice* self, IMountpoint* out),

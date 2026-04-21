@@ -13,7 +13,7 @@
 
 namespace Kernel {
 /// @brief ATA device interface class.
-class ATADeviceInterface : public IDevice<IMountpoint*> {
+class ATADeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
   ATADeviceInterface(void (*Out)(IDevice*, IMountpoint* outpacket),
                      void (*In)(IDevice*, IMountpoint* inpacket));

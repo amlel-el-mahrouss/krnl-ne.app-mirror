@@ -16,7 +16,7 @@ PTHREAD_SAFE IMPORT_C SInt32        pthread_create(_Output pthread_ref_t* thread
 PTHREAD_SAFE IMPORT_C SInt32        pthread_join(pthread_ref_t thread, VoidPtr* retval);
 PTHREAD_SAFE IMPORT_C SInt32        pthread_exit(SInt32 retval);
 PTHREAD_SAFE IMPORT_C SInt32        pthread_detach(pthread_ref_t thread);
-PTHREAD_SAFE IMPORT_C pthread_ref_t pthread_self(Void);
+PTHREAD_SAFE IMPORT_C pthread_ref_t pthread_self(void);
 PTHREAD_SAFE IMPORT_C SInt32        pthread_yield(void);
 
 #endif  // LIBPOSIX_POSIXKIT_THREAD_H

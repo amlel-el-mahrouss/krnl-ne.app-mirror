@@ -14,7 +14,7 @@ PTHREAD_SAFE SInt32 pthread_yield(void) {
   return ThrYieldThread(ThrCurrentThread());
 }
 
-PTHREAD_SAFE ThreadRef pthread_self(Void) {
+PTHREAD_SAFE ThreadRef pthread_self(void) {
   return ThrCurrentThread();
 }
 

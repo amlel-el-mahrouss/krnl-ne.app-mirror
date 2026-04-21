@@ -13,8 +13,9 @@
 #define kPrdtTransferSize (sizeof(Kernel::UShort))
 
 namespace Kernel {
+
 /// @brief Tranfer information about PRD.
-enum {
+enum : Int32 {
   kPRDTTransferInProgress,
   kPRDTTransferIsDone,
   kPRDTTransferCount,
@@ -27,9 +28,12 @@ struct PRDT final {
   UInt8  fEndBit;
 };
 
-void construct_prdt(Ref<PRDT>& prd);
+using RefPRDT = Ref<PRDT>;
+
+void sk_construct_prdt(Ref<PRDT>& prd);
 
 EXTERN_C Int32 kPRDTTransferStatus;
+
 }  // namespace Kernel
 
 #endif

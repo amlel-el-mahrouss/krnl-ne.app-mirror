@@ -18,7 +18,7 @@
 #include <modules/CoreGfx/TextGfx.h>
 
 EXTERN_C Int32 MinChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
-  fw_init_efi((EfiSystemTable*) handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]);
+  ::fw_init_efi((EfiSystemTable*) handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]);
 
   return kEfiOk;
 }

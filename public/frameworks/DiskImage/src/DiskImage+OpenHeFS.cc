@@ -14,7 +14,7 @@
 SInt32 DI::DIFormatFilesystemOpenHeFS(struct DI_DISK_IMAGE& img) {
   NE_UNUSED(img);
 
-  PrintOut(nullptr, "%s",
+  ::PrintOut(nullptr, "%s",
            "DIFormatFilesystemOpenHeFS is not formattable on DI, work may be done in the future to "
            "address that.");
 

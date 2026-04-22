@@ -29,7 +29,7 @@ SInt32 DI::DIFormatPartitionEPM(struct DI_DISK_IMAGE& img) {
 
   ::MmCopyMemory(block.Magic, (VoidPtr) kEPMMagic, ::MmStrLen(kEPMMagic));
 
-  IORef handle = IoOpenFile(img.out_name, nullptr);
+  IORef handle = ::IoOpenFile(img.out_name, nullptr);
 
   if (!handle) return kDIFailureStatus;
 

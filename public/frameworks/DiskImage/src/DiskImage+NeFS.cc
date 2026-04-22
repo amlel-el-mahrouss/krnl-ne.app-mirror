@@ -35,7 +35,7 @@ SInt32 DI::DIFormatFilesystemNeFS(struct DI_DISK_IMAGE& img) {
   rpb.FreeSectors = rpb.SectorCount;
   rpb.FreeCatalog = rpb.DiskSize / sizeof(NEFS_CATALOG_STRUCT);
 
-  IORef handle = IoOpenFile(img.out_name, nullptr);
+  IORef handle = ::IoOpenFile(img.out_name, nullptr);
 
   if (!handle) return kDIFailureStatus;
 

@@ -20,5 +20,11 @@
 EXTERN_C Int32 MinChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
   ::fw_init_efi((EfiSystemTable*) handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]);
 
+  if (handover->f_HardwareTables.f_MultiProcessingEnabled == false) return kEfiFail;
+
+#ifdef __NE_ONLY_SMP__
+    if (handover->f_NumberOfProcessors == 0) return kEfiFail;
+#endif
+
   return kEfiOk;
 }

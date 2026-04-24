@@ -167,6 +167,22 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // ------------------------------------------ //
   // If we succeed in reading the blob, then execute it.
   // ------------------------------------------ //
+  
+  Boot::BootFileReader reader_osdetect(L"mindetect.efi", image_handle);
+  reader_osdetect.ReadAll(0);
+
+  Boot::BootThread* osdetect_thread = nullptr;
+
+  if (reader_osdetect.Blob()) {
+    osdetect_thread = new Boot::BootThread(reader_osdetect.Blob());
+    osdetect_thread->SetName("OS Detect");
+
+    auto ret = osdetect_thread->Start(handover_hdr, NO);
+    if (ret == kEfiFail) {
+    writer.Write("NeSystem: Invalid system specs, can't boot to NeKernel.\r");
+      Boot::Stop();
+    }
+  }
 
   Boot::BootFileReader reader_syschk(L"chk.efi", image_handle);
   reader_syschk.ReadAll(0);

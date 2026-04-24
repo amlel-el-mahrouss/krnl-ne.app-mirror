@@ -1,0 +1,48 @@
+{
+  "compiler_path": "x86_64-w64-mingw32-g++",
+  "compiler_std": "c++20",
+  "headers_path": ["../", "../minloader/", "../minkernel", "../../../", "./"],
+  "sources_path": [
+    "src/*.cpp",
+    "src/*.S",
+    "../minloader/src/HEL/AMD64/BootSATA.cpp",
+    "../minloader/src/HEL/AMD64/BootPlatform.cpp",
+    "../minloader/src/HEL/AMD64/BootAPI.S",
+    "../minloader/src/BootTextWriter.cpp",
+    "../minloader/src/BootSupport.cpp",
+    "../minloader/src/New+Delete.cpp",
+    "../minkernel/HALKit/AMD64/PCI/*.cpp",
+    "../minkernel/HALKit/AMD64/Storage/*.cpp",
+    "../minkernel/HALKit/AMD64/Network/*.cpp",
+    "../minkernel/src/Storage/*.cpp",
+    "../minkernel/src/Network/*.cpp",
+    "../minkernel/HALKit/AMD64/*.cpp",
+    "../minkernel/HALKit/AMD64/*.s",
+    "../minkernel/src/*.cpp"
+  ],
+  "output_name": "mindetect.efi",
+  "compiler_flags": [
+    "-nostdlib",
+    "-std=c++20",
+    "-fno-rtti",
+    "-fno-exceptions",
+    "-Wl,--subsystem=17,--image-base,0x20000000,-e,OSDetectModuleMain"
+  ],
+  "cpp_macros": [
+    "__NEOSKRNL__",
+    "__NE_AMD64__",
+    "__AHCI__",
+    "__SYSCHK__",
+    "BOOTZ_EPM_SUPPORT",
+    "__nekernel_max_cores=8",
+    "__nekernel_dma_best_align=8",
+    "__nekernel_dma_pool_start=0x1000000",
+    "__nekernel_dma_pool_size=0x1000000",
+    "__nekernel_halkit_include_processor=\"<HALKit/AMD64/Processor.h>\"",
+    "__NE_VEPM__",
+    "__NE_MODULAR_KERNEL_COMPONENTS__",
+    "kDetectVersionHighest=0x0100",
+    "kDetectVersionLowest=0x0100",
+    "kDetectVersion=0x0100"
+  ]
+}

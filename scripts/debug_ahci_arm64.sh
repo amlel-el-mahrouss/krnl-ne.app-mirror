@@ -7,10 +7,10 @@ export DEBUG_SUPPORT=1
 
 cd private/minkernel
 make -f arm64-desktop.make  all
-cd ../bootz
+cd ../minloader
 make -f arm64-desktop.make  all
 make -f arm64-desktop.make disk
 cd ../../
-./tools/kimg.py ./private/bootz/private/nekernel-esp.img ./private/bootz/private/root
-cd private/bootz
+./tools/kimg.py ./private/minloader/private/nekernel-esp.img ./private/minloader/private/root
+cd private/minloader
 make -f arm64-desktop.make -j 8 run-efi-arm64

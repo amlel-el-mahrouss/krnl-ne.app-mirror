@@ -11,10 +11,10 @@ BEGIN
       VALUE "CompanyName", "Amlal El Mahrouss"
       VALUE "FileDescription", "NeKernel OS Loader."
       VALUE "FileVersion", BOOTLOADER_VERSION
-      VALUE "InternalName", "bootz"
+      VALUE "InternalName", "minloader"
       VALUE "LegalCopyright", "Copyright (C) 2024-2026, Amlal El Mahrouss licensed under the Apache 2.0 license."
       VALUE "OriginalFilename", "bootzldr.exe"
-      VALUE "ProductName", "bootz"
+      VALUE "ProductName", "minloader"
       VALUE "ProductVersion", BOOTLOADER_VERSION
     END
   END

@@ -1,7 +1,7 @@
 -Iprivate/minkernel
 -Iprivate/
 -Iprivate/user
--Iprivate/bootz
+-Iprivate/minloader
 -Iprivate/lnchhst
 -Iprivate/misc
 -Iprivate/libDDK
@@ -14,7 +14,7 @@
 -Ipublic/tools/ld.fwrk
 -Ipublic/tools/open
 -Ipublic/frameworks
--Iprivate/bootz/BootKit
+-Iprivate/minloader/BootKit
 -Itools/
 -D__BOOTZ_STANDALONE__
 -I./

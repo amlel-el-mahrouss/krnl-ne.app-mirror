@@ -4,7 +4,7 @@
 # 03/25/25: Add 'disk' build step.
 # 04/05/25: Improve and fix script.
 
-cd private/bootz/modules/SysChk
+cd private/minloader/modules/SysChk
 nebuild amd64-pio-epm.json
 cd ../
 cd BootNet

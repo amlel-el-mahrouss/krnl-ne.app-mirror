@@ -6,7 +6,7 @@
 #ifndef COMPILERKIT_VERSION_H
 #define COMPILERKIT_VERSION_H
 
-#define BOOTLOADER_VERSION "v0.1.5-bootz"
+#define BOOTLOADER_VERSION "v0.1.5-minloader"
 #define KERNEL_VERSION "v0.1.5-neoskrnl"
 
 #define BOOTLOADER_VERSION_BCD (0x0105)

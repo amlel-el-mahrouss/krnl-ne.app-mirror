@@ -4,8 +4,6 @@
 
 ======================================== */
 
-#ifdef __NE_NEBOOT__
-
 .section .boot_hdr
 .align 4
 
@@ -15,7 +13,7 @@ boot_hdr_mag:
 	.ascii "CB"
 boot_hdr_name:
 	// it has to match ten bytes.
-	.asciz "bootz\0\0\0"
+	.asciz "minloader\0\0\0"
 boot_hdr_ver:
 	.word 0x101
 boot_hdr_proc:
@@ -28,13 +26,9 @@ boot_hdr_proc:
 
 .globl bootloader_start
 bootloader_start:
-    adr     x0, bootloader_stack        
-    ldr     x1, =bootloader_start       
-    sub     x0, x0, x1                  
-    ldr     x0, [x0]                    
-    mov     sp, x0                      
+    mflr	4			/* real address of .Laddr */
+    lwz	0,(bootloader_stack-bootloader_start)(4)	/* stack address location */
+    mr	1,0			/* use user defined stack */
 
-    bl      bootloader_main             
-    ret                                 
-
-#endif // __NE_NEBOOT__
+    bl bootloader_main
+    blr

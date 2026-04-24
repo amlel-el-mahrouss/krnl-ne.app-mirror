@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gdb -q -x private/bootz/gdbinit
+gdb -q -x private/minloader/gdbinit

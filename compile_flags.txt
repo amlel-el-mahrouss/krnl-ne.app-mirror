@@ -2,7 +2,7 @@
 -Iprivate/
 -Iprivate/user
 -Iprivate/minloader
--Iprivate/lnchhst
+-Iprivate/basehost
 -Iprivate/misc
 -Iprivate/libDDK
 -Ipublic/tools

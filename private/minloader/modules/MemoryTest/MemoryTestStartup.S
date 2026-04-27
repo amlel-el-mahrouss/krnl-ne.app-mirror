@@ -14,7 +14,7 @@
 
 #define kTypeDriver 101
 #define kArchAmd64 122
-#define kHandoverMagic 0xBADCC
+#define kHandoverMagic 0xBADAA
 
 .section .ldr
 

@@ -9,7 +9,7 @@
 #include <FirmwareKit/EFI/EFI.h>
 #include <NeKit/Config.h>
 
-#define kHandoverMagic (0xBADCC)
+#define kHandoverMagic (0xBADAA)
 #define kHandoverVersion (0x0118)
 
 /* Initial bitmap pointer location and size. */

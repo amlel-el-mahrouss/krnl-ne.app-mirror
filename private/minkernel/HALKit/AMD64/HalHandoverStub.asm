@@ -7,7 +7,7 @@
 
 %define kTypeKernel 100
 %define kArchAmd64 122
-%define kHandoverMagic 0xBADCC
+%define kHandoverMagic 0xBADAA
 
 global _HandoverMagic
 global _HandoverType

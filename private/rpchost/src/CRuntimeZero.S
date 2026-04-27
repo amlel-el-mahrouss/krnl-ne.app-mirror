@@ -35,6 +35,6 @@ _ProgramData:
   //;;  flags
   .word 0x0
   //;; Launcher name
-  .asciz "Base Host"
+  .asciz "RPC Host"
 
 

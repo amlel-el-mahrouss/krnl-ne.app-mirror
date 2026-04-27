@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
+// Copyright 2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/ne-kernel
 
@@ -11,14 +11,14 @@
 IMPORT_C SInt32 launch_startup_fn(Void) {
   /// start the LaunchHelpers.fwrk service, and make the launcher scheduable too (via mgmt.launch)
   UInt32* ret = static_cast<UInt32*>(::nesys_syscall_arg_1(
-      ::nesys_hash_64("__ne_register_service")));  // Register service based on program data.
+      ::nesys_hash_64("__ne_register_rpc_service")));  // Register service based on program data.
 
   if (ret) {
     switch (*ret) {
       case kErrorSuccess: {
         ret = static_cast<UInt32*>(::nesys_syscall_arg_1(
           ::nesys_hash_64(
-            "__ne_attach_service")));  // Attach this program as the service process.
+            "__ne_attach_rpc_service")));  // Attach this program as the service process.
         return *ret;
       }
       default:

@@ -1,4 +1,4 @@
-name: Ne.app BootZ CI (Develop, AHCI)
+name: Ne.app MinOSLdr CI (Develop, AHCI)
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Ne.app NeKernel CI (Develop, AHCI)
+name: Ne.app MinOSKrnl CI (Develop, AHCI)
 
 on:
   push:

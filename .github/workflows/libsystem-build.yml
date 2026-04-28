@@ -1,4 +1,4 @@
-name: Ne.app NeKernel libSystem CI [BUILD]
+name: Ne.app MinOSKrnl libSystem CI [BUILD]
 
 on:
   push:

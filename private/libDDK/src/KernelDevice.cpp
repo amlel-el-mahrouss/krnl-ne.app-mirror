@@ -11,7 +11,7 @@
 DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* devicePath) {
   if (nil == devicePath) return nil;
 
-  return (DDK_DEVICE_PTR)::ke_call_dispatch("dk_open_dev", 1, (void*) devicePath,
+  return (DDK_DEVICE_PTR)::ke_call_dispatch("devi_open_device", 1, (void*) devicePath,
                                             kstrlen(devicePath));
 }
 
@@ -20,6 +20,6 @@ DDK_EXTERN DDK_DEVICE_PTR kopen_dev(const char* devicePath) {
 DDK_EXTERN BOOL kclose_dev(DDK_DEVICE_PTR device) {
   if (nil == device) return NO;
 
-  ::ke_call_dispatch("dk_close_dev", 1, device, sizeof(DDK_DEVICE));
+  ::ke_call_dispatch("devi_close_device", 1, device, sizeof(DDK_DEVICE));
   return YES;
 }

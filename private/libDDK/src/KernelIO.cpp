@@ -11,7 +11,7 @@ DDK_EXTERN void kputc(const char ch) {
 
   char assembled[2] = {0};
   assembled[0]      = ch;
-  assembled[1]      = 0;
+  assembled[1]      = {};
 
   ::ke_call_dispatch("ke_put_string", 2, assembled, 2);
 }
@@ -22,7 +22,7 @@ DDK_EXTERN void kprint(const char* message) {
   if (nil == message) return;
   if (*message == 0) return;
 
-  size_t index = 0;
+  size_t index{};
   size_t len   = ::kstrlen(message);
 
   while (index < len) {

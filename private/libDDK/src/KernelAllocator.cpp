@@ -14,7 +14,7 @@
 DDK_EXTERN void* kalloc(size_t sz) {
   if (!sz) ++sz;
 
-  void* ptr = ::ke_call_dispatch("mm_alloc_ptr", 1, &sz, sizeof(sz));
+  void* ptr = ::ke_call_dispatch("mmi_alloc_ptr", 1, &sz, sizeof(sz));
 
   return ptr;
 }
@@ -26,5 +26,5 @@ DDK_EXTERN void* kalloc(size_t sz) {
 DDK_EXTERN void kfree(void* ptr) {
   if (!ptr) return;
 
-  ::ke_call_dispatch("mm_free_ptr", 1, ptr, sizeof(ptr));
+  ::ke_call_dispatch("mmi_free_ptr", 1, ptr, sizeof(ptr));
 }

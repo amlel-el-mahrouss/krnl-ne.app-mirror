@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <tools/libmkfs/mkfs.hpp>
+#include <tools/libidl/idl.hpp>
 
 static uint16_t kNumericalBase = 10;
 static auto     kMinArgs       = 2;

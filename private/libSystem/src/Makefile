@@ -13,4 +13,4 @@ error:
 
 .PHONY: nesys_asm_io_x64
 nesys_asm_io_x64:
-	$(ASM) $(FLAGS) SystemCallsABI+AMD64.asm -o SystemCallsABI+AMD64.stub.obj
+	$(ASM) $(FLAGS) SystemABI+AMD64.asm -o SystemABI+AMD64.stub.obj

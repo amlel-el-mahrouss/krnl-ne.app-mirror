@@ -5,19 +5,27 @@
 
 #include <cstdlib>
 #include <fstream>
-#include <tools/libmkfs/mkfs.hpp>
 #include <tools/libidl/idl.hpp>
 
 static uint16_t kNumericalBase = 10;
-static auto     kMinArgs       = 2;
+static auto     kMinArgs       = 4;
 
 int main(int argc, char** argv) {
   if (argc < kMinArgs) {
-    mkfs::console_out() << "idlcompiler: usage: idlcompiler -in=<file_path> -specs=<specification_path>"
-                        << "\n";
-    mkfs::console_out() << "idlcompiler: note: this tool is compatible with ANT as well.\n";
-
+    std::cout << "cl.idl: invalid argument count, a minimum of 3 is required.\n";
     return EXIT_FAILURE;
+  }
+
+  std::ofstream out_fp(std::string{argv[1]} + LIBIDL_FILE_EXT);
+
+  for (int i = {2}; i < argc; i += 2) {
+    const char* key   = argv[i];
+    const char* value = argv[i + 1];
+
+    if (::strlen(value) > LIBIDL_MAX_LAYOUT_LEN) break;
+    if (::strlen(key) > LIBIDL_MAX_LAYOUT_LEN) break;
+
+    LIBIDL_DECL(key, value, out_fp);
   }
 
   return EXIT_SUCCESS;

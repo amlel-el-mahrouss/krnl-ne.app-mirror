@@ -78,7 +78,7 @@ BOOTNET=net.efi
 MEMTEST=memtest.efi
 SCIKIT=libSystem.dll
 DDK=libDDK.dll
-POSIXWRAPPER=libPOSIXWrapper.dll
+POSIXWRAPPER=libPOSIX.dll
 PTHREAD=libPThread.dll
 HAL=hal.x64.dll
 
@@ -98,7 +98,7 @@ all: compile-amd64
 	$(COPY) ./modules/BootNet/$(BOOTNET) src/root/$(BOOTNET)
 	$(COPY) ./modules/MemoryTest/$(MEMTEST) src/root/$(MEMTEST)
 	$(COPY) ../libSystem/$(SCIKIT) src/root/$(SCIKIT)
-	$(COPY) ../libPOSIXWrapper/$(POSIXWRAPPER) src/root/$(POSIXWRAPPER)
+	$(COPY) ../libPOSIX/$(POSIXWRAPPER) src/root/$(POSIXWRAPPER)
 	# $(COPY) ../libPThread/$(PTHREAD) src/root/$(PTHREAD)
 	# $(COPY) ../hal/$(HAL) src/root/$(HAL)
 	$(COPY) src/$(BOOTLOADER) src/root/$(BOOTLOADER)

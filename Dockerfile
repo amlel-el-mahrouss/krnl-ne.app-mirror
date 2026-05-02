@@ -6,11 +6,11 @@ RUN apt-get update && apt-get upgrade -y
 
 COPY ./ ./src
 
-RUN echo "The NeKernel has been copied to the Docker instance."
+RUN echo "NeKernel: Contents have been copied to Docker."
 
 # Reserved for NeKernel Debugger Protocol
 EXPOSE 8081/tcp
 
-# For the Debugger too (UDP)
+# For the Debugger Protocol as well (UDP)
 EXPOSE 8081/udp
 

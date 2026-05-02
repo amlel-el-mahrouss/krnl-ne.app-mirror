@@ -3,7 +3,7 @@
   "compiler_std": "c++20",
   "headers_path": ["../", "./"],
   "sources_path": ["src/*.cpp"],
-  "output_name": "libPOSIXWrapper.dll",
+  "output_name": "libPOSIX.dll",
   "compiler_flags": [
     "-ffreestanding",
     "-shared",

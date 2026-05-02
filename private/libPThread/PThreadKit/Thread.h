@@ -6,7 +6,7 @@
 #ifndef LIBPOSIX_POSIXKIT_THREAD_H
 #define LIBPOSIX_POSIXKIT_THREAD_H
 
-#include <libPOSIXWrapper/POSIXKit/unistd.h>
+#include <libPOSIX/POSIXKit/unistd.h>
 
 /// @internal Internal type, please do not rely on it for multi-platform builds.
 typedef ThreadRef pthread_ref_t;

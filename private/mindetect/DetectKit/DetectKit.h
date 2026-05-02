@@ -21,7 +21,7 @@
 
 #ifndef __NE_ONLY_SMP__
 #ifndef __NE_NO_SMP__
-#define __NE_ONLY_SMP__
+#define __NE_ONLY_SMP__ 1
 #endif
 #endif
 

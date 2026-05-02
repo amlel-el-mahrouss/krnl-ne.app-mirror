@@ -14,5 +14,7 @@ EXTERN_C Int32 OSDetectModuleMain(Kernel::HEL::BootInfoHeader* handover) {
     if (handover->f_NumberOfProcessors == 0) return kEfiFail;
 #endif
 
+  if (handover->f_BitMapSize == 0) return kEfiFail;
+
   return kEfiOk;
 }

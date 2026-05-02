@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/ne-kernel
 
-#include <basehost/LaunchKit/Foundation.h>
+#include <basehost/HostKit/Foundation.h>
 #include <libSystem/SystemKit/Err.h>
 #include <libSystem/SystemKit/Syscall.h>
 

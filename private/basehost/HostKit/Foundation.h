@@ -10,10 +10,10 @@
 #include <libSystem/SystemKit/System.h>
 
 /// @author Amlal El Mahrouss
-/// @brief NeKernel Launch Kit - launch programs from it.
+/// @brief The NeSystem Host Kit - host programs from it.
 
-#define NELAUNCH_INFO(MSG) PrintOut(nullptr, "INFO: [LAUNCH] %s\n", MSG)
-#define NELAUNCH_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)
+#define HOSTKIT_INFO(MSG) PrintOut(nullptr, "INFO: [LAUNCH] %s\n", MSG)
+#define HOSTKIT_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)
 
 namespace Launch {
 

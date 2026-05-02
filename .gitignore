@@ -12,7 +12,6 @@ build/
 *.ipa
 *.dSYM.zip
 *.dSYM
-tools/*.idl
 *.fls
 *.gz
 *.fdb_*

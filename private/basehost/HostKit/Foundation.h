@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss-org/nekernel
 
-#ifndef LAUNCHKIT_FOUNDATION_H
-#define LAUNCHKIT_FOUNDATION_H
+#ifndef HOSTKIT_FOUNDATION_H
+#define HOSTKIT_FOUNDATION_H
 
 #include <CoreFoundation/headers/Ref.h>
 #include <libSystem/SystemKit/System.h>

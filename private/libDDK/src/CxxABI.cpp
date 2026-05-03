@@ -12,7 +12,7 @@ void* operator new(size_t sz) {
   return ::kalloc(sz);
 }
 
-void operator delete(void* ptr) {
+void operator delete(void* ptr) noexcept {
   ::kfree(ptr);
 }
 
@@ -22,6 +22,6 @@ void* operator new[](size_t sz) {
   return ::kalloc(sz);
 }
 
-void operator delete[](void* ptr) {
+void operator delete[](void* ptr) noexcept {
   ::kfree(ptr);
 }

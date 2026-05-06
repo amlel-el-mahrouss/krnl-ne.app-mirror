@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
-// Official repository: https://github.com/ne-foss-org/nekernel
+// Official repository: https://github.com/ne-foss/nekernel
 
 #define GICD_BASE 0x08000000
 #define GICC_BASE 0x08010000

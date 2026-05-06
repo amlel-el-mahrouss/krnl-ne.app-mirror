@@ -19,17 +19,17 @@ The base system designed for scalability and portability, hybrid and written in 
 - [MinGW](https://www.mingw-w64.org/)
 - [Clang](https://clang.llvm.org/)
 - [NASM](https://nasm.us/)
-- [NeBuild](https://github.com/ne-foss-org/nebuild)
+- [NeBuild](https://github.com/ne-foss/nebuild)
 - CoreUtils
 - [Git](https://git-scm.com/)
-- [Nectar](https://github.com/ne-foss-org/nectar)
+- [Nectar](https://github.com/ne-foss/nectar)
 
 ### **Building & Running**
 
 Please fork, and clone the repository. Then follow those steps:
 
 ```sh
-git clone -j8 https://github.com/ne-foss-org/nekernel.git
+git clone -j8 https://github.com/ne-foss/nekernel.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh
@@ -88,7 +88,7 @@ Modern C/C++ is also used to implement the system, alongside assembly stubs in t
 ## Authors & Credits
 
 - **Amlal El Mahrouss** — Lead and Kernel Architect.
-- [Full contributor list](https://github.com/ne-foss-org/nekernel/graphs/contributors)
+- [Full contributor list](https://github.com/ne-foss/nekernel/graphs/contributors)
 
 ---
 

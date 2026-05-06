@@ -16,8 +16,7 @@ IMPORT_C SInt32 launch_startup_fn(Void) {
   if (ret) {
     switch (*ret) {
       case kErrorSuccess: {
-        ret = static_cast<UInt32*>(::nesys_syscall_arg_1(
-          ::nesys_hash_64(
+        ret = static_cast<UInt32*>(::nesys_syscall_arg_1(::nesys_hash_64(
             "__ne_attach_rpc_service")));  // Attach this program as the service process.
         return *ret;
       }
@@ -25,6 +24,8 @@ IMPORT_C SInt32 launch_startup_fn(Void) {
         break;
     }
   }
+
+  ::nesys_hash_64("__ne_call_shutdown_service");
 
   return kErrorExecutable;
 }

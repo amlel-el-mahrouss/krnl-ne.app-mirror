@@ -6,7 +6,7 @@
 GCC=x86_64-w64-mingw32-g++ -Wl,-subsystem=17
 LIB=-L../../private/libSystem -lSystemKit
 STD=-std=c++20 -DKT_TESTING_ENABLED
-INCLUDE=-I../../src -I../../public -I../../public/frameworks/ -I../../ 
+INCLUDE=-I../../private -I../../public -I../../public/frameworks/ -I../../ 
 
 OBJ_FILES = \
 	error.test.exe \

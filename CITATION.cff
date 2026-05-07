@@ -13,7 +13,7 @@ identifiers:
 repository-code: 'https://github.com/ne-foss/ne-kernel'
 url: 'https://nekernel.org'
 abstract: >-
-  This is Ne.app's Modular Operating System Kernel.
+  This is Ne.app's Operating System Kernel.
 keywords:
   - kernel
   - operating-system

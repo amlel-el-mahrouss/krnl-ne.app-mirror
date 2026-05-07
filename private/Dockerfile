@@ -11,6 +11,6 @@ RUN echo "NeKernel: Contents have been copied to Docker."
 # Reserved for NeKernel Debugger Protocol
 EXPOSE 8081/tcp
 
-# For the Debugger Protocol as well (UDP)
+# For the NeKernel Debugger Protocol as well (UDP)
 EXPOSE 8081/udp
 

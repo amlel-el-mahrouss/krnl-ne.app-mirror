@@ -11,9 +11,9 @@
   "sources_path": [
     "*.cpp",
     "*.S",
-    "../../private/HEL/AMD64/*.cpp",
-    "../../private/HEL/AMD64/*.S",
-    "../../private/*.cpp"
+    "../../src/HEL/AMD64/*.cpp",
+    "../../src/HEL/AMD64/*.S",
+    "../../src/*.cpp"
   ],
   "output_name": "memtest.efi",
   "compiler_flags": [

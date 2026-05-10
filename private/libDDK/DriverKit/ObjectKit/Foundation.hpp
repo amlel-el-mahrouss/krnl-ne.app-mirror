@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#ifndef DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
-#define DRIVERKIT_OBJECTKIT_DRIVER_BASE_H
+#ifndef DRIVERKIT_OBJECTKIT_DRIVER_FOUNDATION_HPP
+#define DRIVERKIT_OBJECTKIT_DRIVER_FOUNDATION_HPP
 
 #include <libDDK/DriverKit/Defines.h>
 
@@ -29,7 +29,7 @@ class IDriverBase {
   IDriverBase& operator=(const IDriverBase&) = default;
   IDriverBase(const IDriverBase&)            = default;
 
-public:
+ public:
   using PtrType = void*;
 
   virtual constexpr bool    IsCastable() { return false; }
@@ -46,5 +46,13 @@ concept IsValidDriver = requires(Driver drv) {
 };
 
 }  // namespace Kernel::DDK
+
+namespace NeApp {
+namespace Kernel {
+  namespace DDK {
+    using namespace ::Kernel::DDK;
+  }
+}  // namespace Kernel
+}  // namespace NeApp
 
 #endif

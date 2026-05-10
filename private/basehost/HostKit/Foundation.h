@@ -15,11 +15,11 @@
 #define HOSTKIT_INFO(MSG) PrintOut(nullptr, "INFO: [LAUNCH] %s\n", MSG)
 #define HOSTKIT_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)
 
-namespace Launch {
+namespace HostKit {
 
 using AnyRef    = CF::CFRef<VoidPtr>;
 using StatusRef = CF::CFRef<SInt32>;
 
-}  // namespace Launch
+}  // namespace HostKit
 
 #endif

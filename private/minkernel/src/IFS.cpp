@@ -29,6 +29,7 @@ namespace Kernel {
 /// @return KPC status code from the IFS.
 Int32 fs_ifs_read(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
   if (!Mnt) return kErrorDisk;
+  if (DrvIndex >= IMountpoint::kDriveIndexInvalid) return kErrorDisk;
 
   DrvTrait.fPacket.fPacketGood = false;
 
@@ -61,6 +62,7 @@ Int32 fs_ifs_read(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
 /// @return
 Int32 fs_ifs_write(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
   if (!Mnt) return kErrorDisk;
+  if (DrvIndex >= IMountpoint::kDriveIndexInvalid) return kErrorDisk;
 
   DrvTrait.fPacket.fPacketGood = false;
 

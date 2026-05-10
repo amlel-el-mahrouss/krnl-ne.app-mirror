@@ -13,7 +13,7 @@
 //! Include filesystems that the kernel supports.
 
 /// \note Ext2 is being phased out in the next NeKernel release.
-// #include <FSKit/Ext2+IFS.h>
+#include <FSKit/Ext2+IFS.h>
 
 #include <FSKit/NeFS.h>
 #include <FSKit/OpenHeFS.h>

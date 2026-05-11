@@ -25,8 +25,12 @@ EXTERN_C Int32 kt_kernel_task_start(HAL::StackFramePtr stack_frame, VoidPtr code
 Bool KernelTaskHelper::Start(KernelTask& task_ptr, const KID& kid) {
   if (!kid) return NO;
 
+  task_ptr.Kid = kid;
+
   auto ret = kt_kernel_task_start(task_ptr.StackFrame, task_ptr.Image.LeakImage().Leak().Leak());
-  return ret == kErrorSuccess;
+  if (ret != kErrorSuccess) return FALSE;
+  
+  return TRUE;
 }
 
 Bool KernelTaskHelper::CanBeStarted(const KernelTask& task) {

@@ -1,20 +1,18 @@
 <!-- Read Me of NeKernel -->
 
-# 🍯 The NeKernel Module.
+# 🍯 The NeKernel Module
 
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss/ne-kernel?style=for-the-badge)
 
 <a href="https://github.com/ne-foss/ne-kernel/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
 <a href="https://github.com/ne-foss/ne-kernel/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
+<a href="https://github.com/ne-foss/ne-kernel/actions/workflows/libddk-build.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/libddk-build.yml/badge.svg?style=for-the-badge" alt="CI 3"></a>
+<a href="https://github.com/ne-foss/ne-kernel/actions/workflows/libsystem-build.yml/badge.svg"><img src="https://github.com/ne-foss/ne-kernel/actions/workflows/libsystem-build.yml/badge.svg?style=for-the-badge" alt="CI 4"></a>
 
-## About:
+## Getting Started
 
-The base system designed for scalability and portability, hybrid and written in modern C++ for backend systems. 
-
-## Getting Started:
-
-### **Requirements**:
+### **Requirements**
 
 - [MinGW](https://www.mingw-w64.org/)
 - [Clang](https://clang.llvm.org/)
@@ -38,81 +36,23 @@ cd nekernel
 
 ---
 
-## Community:
+## Community
 
-Join our [Discord](https://discord.gg/uD76Qweght), we're quite active and open for contributors!
-
-## Structure
-
-- `src/minkernel/` — Hybrid Kernel sources (SwapKit, KernelKit, SMP, Memory, FileMgr)
-- `src/minloader/` — Bootloader and Boot modules sources (BootKit, modules, EFI/NeBoot bring-up)
-- `src/libDDK/` — Driver Development Kit (DDK)
-- `src/libSystem/` — Userland system call interface and runtime
-- `src/basehost/` — NeKernel Launch System.
-- `src/libMsg/` — NeKernel OpenMSG framework.
-- `public/tools/` — CLI tools (mkfs, chk, open, manual, etc.)
-- `public/frameworks/` — Userland frameworks (CoreFoundation, DiskImage, etc.)
-- `doc/` — Specifications, design docs, requirements, and diagrams.
-
----
-
-## Design Rationale:
-
-The sources are designed to be modular and gracefully error when needed.
-
-Modern C/C++ is also used to implement the system, alongside assembly stubs in the HAL.
-
----
-
-## Security
-
-- **Vulnerability Disclosure:**  
-  Please report security issues privately via email or GitHub Security Advisories.
-
----
+Join Ne.app's [discord](https://discord.gg/uD76Qweght) to contribute and chat with contributors.
 
 ## Documentation
 
 - [Documentation](https://docs.src.nekernel.org/)
-- [Specifications](doc/tex/)
-
----
-
-## Contributing
-
-- Please run `format.sh` before committing (uses `.clang-format`).
-- All contributions (code, docs, fuzzing, security) are welcome!
-
----
-
-## Authors & Credits
-
-- **Amlal El Mahrouss** — Lead and Kernel Architect.
-- [Full contributor list](https://github.com/ne-foss/nekernel/graphs/contributors)
-
----
-
-## Citing
-
-- Refer to [CITATION.cff](CITATION.cff)
-
----
 
 ## License
 
-NeKernel is licensed under the [Apache-2.0 License](LICENSE).
+NeKernel is licensed under the [Apache-2.0 License](LICENSE.txt).
 
 ---
-
-## Figures:
-
-#### Figure 1: The Hybrid Kernel booting
-
-<img src="meta/media/ne_kernel.png" alt="NeKernel Hybrid Kernel booting" width="1280"/>
 
 
 <div align="center">
   <sub>
-    &copy; 2022-2026 Amlal El Mahrouss & Ne.app Authors. Licensed under the Apache 2.0 license.
+    &copy; 2022-2026 Amlal El Mahrouss. Licensed under the Apache 2.0 license.
   </sub>
 </div>

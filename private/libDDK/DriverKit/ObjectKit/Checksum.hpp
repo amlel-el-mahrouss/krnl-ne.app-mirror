@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#ifndef DRIVERKIT_CHECKSUM_H
-#define DRIVERKIT_CHECKSUM_H
+#ifndef DRIVERKIT_OBJECTKIT_DRIVER_CHECKSUM_HPP
+#define DRIVERKIT_OBJECTKIT_DRIVER_CHECKSUM_HPP
 
 #include <DriverKit/ObjectKit/Foundation.hpp>
 

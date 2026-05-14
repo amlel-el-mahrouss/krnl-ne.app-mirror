@@ -6,7 +6,7 @@
 #ifndef SYSTEMKIT_SYSCALL_H
 #define SYSTEMKIT_SYSCALL_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 #ifndef __NE_NO_BUILTIN_STDARG
 IMPORT_C {

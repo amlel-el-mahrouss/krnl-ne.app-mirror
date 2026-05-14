@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/ne-kernel
 
-#include <libMsg/MsgKit/Server.h>
-#include <libSystem/SystemKit/Err.h>
+#include <MsgKit/Server.h>
+#include <SystemKit/Err.h>
 
 static libmsg_func_type* kFuncs{nullptr};
 static SizeT             kFuncCnt{0};

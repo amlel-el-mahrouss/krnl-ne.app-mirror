@@ -6,7 +6,7 @@
 #ifndef SYSTEMKIT_VERIFY_H
 #define SYSTEMKIT_VERIFY_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 namespace System::Verify {
 /// @author 0xf00sec, and Amlal El Mahrouss

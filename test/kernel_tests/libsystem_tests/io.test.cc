@@ -2,7 +2,7 @@
 /// \brief File I/O API tests.
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 #include <public/frameworks/KernelTest/headers/TestCase.h>
 
 /// \note File open/close tests

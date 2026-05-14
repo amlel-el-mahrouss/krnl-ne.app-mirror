@@ -4,7 +4,7 @@
  * Copyright (c) 2024-2025 Amlal El Mahrouss
  */
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 /// @brief This program opens an application from **OPEN_APP_BASE_PATH**
 /// @file CommandLine.cc

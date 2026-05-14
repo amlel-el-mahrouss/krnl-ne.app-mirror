@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/ne-kernel
 
-#include <libSystem/SystemKit/Err.h>
-#include <libThread/ThreadKit/Thread.h>
+#include <SystemKit/Err.h>
+#include <ThreadKit/Thread.h>
 
 #define kThreadMapMax (1024UL)
 #define kThreadBaseHash (0x5555ffff6ULL)

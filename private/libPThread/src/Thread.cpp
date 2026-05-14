@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#include <libPThread/PThreadKit/Thread.h>
-#include <libSystem/SystemKit/Err.h>
+#include <PThreadKit/Thread.h>
+#include <SystemKit/Err.h>
 
 PTHREAD_SAFE SInt32 pthread_detach(ThreadRef thread) {
   return ::ThrDetachThread(thread);

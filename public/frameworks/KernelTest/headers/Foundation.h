@@ -6,8 +6,8 @@
 #ifndef FW_HEADERS_KT_FOUNDATION_H
 #define FW_HEADERS_KT_FOUNDATION_H
 
-#include <libSystem/SystemKit/Err.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/Err.h>
+#include <SystemKit/System.h>
 
 #include <CoreFoundation/headers/Object.h>
 #include <CoreFoundation/headers/String.h>

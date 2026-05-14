@@ -3,4 +3,4 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#include <libPOSIX/POSIXKit/POSIX.h>
+#include <POSIXKit/POSIX.h>

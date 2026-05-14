@@ -130,7 +130,7 @@ Contains C++ implementation files for the framework.
   
   **Example:**
   ```cpp
-  #include <libSystem/SystemKit/System.h>
+  #include <SystemKit/System.h>
   
   SInt32 _DylibAttach(SInt32 argc, Char* argv[]) {
       // Initialization code here

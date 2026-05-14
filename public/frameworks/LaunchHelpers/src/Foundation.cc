@@ -4,7 +4,7 @@
 // Official repository: https://github.com/ne-foss/nekernel
 
 #include <LaunchHelpers/headers/Foundation.h>
-#include <libSystem/SystemKit/Syscall.h>
+#include <SystemKit/Syscall.h>
 
 /// @brief Get launch information.
 /// @return the launch information structure.

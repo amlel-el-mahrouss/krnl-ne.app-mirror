@@ -1,7 +1,7 @@
 {
   "compiler_path": "x86_64-w64-mingw32-g++",
   "compiler_std": "c++20",
-  "headers_path": ["../", "./", "../../public/frameworks"],
+  "headers_path": ["../libSystem", "../", "./", "../../public/frameworks"],
   "sources_path": ["src/*.cpp", "src/*.S"],
   "output_name": "basesvc.exe",
   "compiler_flags": [

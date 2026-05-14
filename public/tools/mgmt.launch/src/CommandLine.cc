@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   LIBSYS_UNUSED(argc);

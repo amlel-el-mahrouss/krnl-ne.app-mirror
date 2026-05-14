@@ -6,7 +6,7 @@
 #ifndef FW_HEADERS_CF_ARRAY_H
 #define FW_HEADERS_CF_ARRAY_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 namespace CF {
 template <class T, SizeT N>

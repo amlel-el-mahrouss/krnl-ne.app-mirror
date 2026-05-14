@@ -3,8 +3,8 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-foss/nekernel
 
-#include <libSystem/SystemKit/Jail.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/Jail.h>
+#include <SystemKit/System.h>
 
 /// @author Amlal El Mahrouss
 /// @brief OpenEnclave management tool

@@ -6,7 +6,7 @@
 #ifndef SYSTEMKIT_SYSTEM_H
 #define SYSTEMKIT_SYSTEM_H
 
-#include <libSystem/SystemKit/Macros.h>
+#include <SystemKit/Macros.h>
 
 /// @brief TTY device path.
 #define kPrintDevicePath "/devices/tty{}{}"

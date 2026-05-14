@@ -6,7 +6,7 @@
 #ifndef SYSTEMKIT_JAIL_H
 #define SYSTEMKIT_JAIL_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 /// @file Jail.h
 /// @author Amlal El Mahrouss

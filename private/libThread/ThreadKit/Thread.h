@@ -6,6 +6,6 @@
 #ifndef THREADKIT_THREADKIT_H
 #define THREADKIT_THREADKIT_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 #endif // THREADKIT_THREADKIT_H

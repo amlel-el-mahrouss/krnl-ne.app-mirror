@@ -17,5 +17,5 @@
     "kHALVersionHighest=0x0100",
     "kHALVersionLowest=0x0100"
   ],
-  "description": "The NeSystem Hardware Abstraction Layer."
+  "description": "The NeKernel Hardware Abstraction Layer."
 }

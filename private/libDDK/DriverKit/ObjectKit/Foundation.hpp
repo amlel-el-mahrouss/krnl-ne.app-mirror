@@ -6,7 +6,7 @@
 #ifndef DRIVERKIT_OBJECTKIT_DRIVER_FOUNDATION_HPP
 #define DRIVERKIT_OBJECTKIT_DRIVER_FOUNDATION_HPP
 
-#include <libDDK/DriverKit/Defines.h>
+#include <DriverKit/Defines.h>
 
 #define DDK_DRIVER_IMPL \
   final:                \

@@ -6,6 +6,6 @@
 #ifndef MSGKIT_NETWORK_H
 #define MSGKIT_NETWORK_H
 
-#include <libMsg/MsgKit/Server.h>
+#include <MsgKit/Server.h>
 
 #endif

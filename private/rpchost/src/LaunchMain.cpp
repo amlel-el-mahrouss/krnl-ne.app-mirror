@@ -4,8 +4,8 @@
 // Official repository: https://github.com/ne-foss/ne-kernel
 
 #include <basehost/HostKit/Foundation.h>
-#include <libSystem/SystemKit/Err.h>
-#include <libSystem/SystemKit/Syscall.h>
+#include <SystemKit/Err.h>
+#include <SystemKit/Syscall.h>
 
 /// @note This called by _NeMain from its own runtime.
 IMPORT_C SInt32 launch_startup_fn(Void) {

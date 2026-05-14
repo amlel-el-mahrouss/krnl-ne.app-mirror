@@ -6,7 +6,7 @@
 #ifndef SYSTEMKIT_ERR_H
 #define SYSTEMKIT_ERR_H
 
-#include <libSystem/SystemKit/Macros.h>
+#include <SystemKit/Macros.h>
 
 /// @file Err.h
 /// @brief Process Codes type and values.

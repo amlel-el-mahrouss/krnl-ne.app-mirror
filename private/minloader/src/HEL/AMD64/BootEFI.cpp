@@ -179,7 +179,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
     auto ret = osdetect_thread->Start(handover_hdr, NO);
     if (ret == kEfiFail) {
-    writer.Write("NeSystem: Invalid system specs, can't boot to NeKernel.\r");
+    writer.Write("NeKernel: Invalid system specs, can't boot to NeKernel.\r");
       Boot::Stop();
     }
   }

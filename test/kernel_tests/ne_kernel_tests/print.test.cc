@@ -1,7 +1,7 @@
 /// \file kout.test.cc
 /// \brief Konsole Out tests.
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 #include <public/frameworks/KernelTest/headers/TestCase.h>
 
 /// \note PrintGet tests

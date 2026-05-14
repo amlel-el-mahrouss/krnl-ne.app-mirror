@@ -3,7 +3,7 @@
 /// \author Amlal El Mahrouss (amlal at nekernel dot org)
 
 #include <KernelTest/headers/TestCase.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 /// \note RtlSpawnProcess tests
 KT_DECL_TEST(ProcessHasFailed, []() -> bool {

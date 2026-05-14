@@ -6,6 +6,6 @@
 #ifndef LIBPOSIX_POSIXKIT_PTHREAD_H
 #define LIBPOSIX_POSIXKIT_PTHREAD_H
 
-#include <libPThread/ThreadKit/Thread.h>
+#include <ThreadKit/Thread.h>
 
 #endif

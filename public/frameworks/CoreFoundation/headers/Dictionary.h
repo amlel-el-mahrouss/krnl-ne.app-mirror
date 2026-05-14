@@ -6,7 +6,7 @@
 #ifndef FW_HEADERS_CF_DICTIONARY_H
 #define FW_HEADERS_CF_DICTIONARY_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 namespace CF {
 

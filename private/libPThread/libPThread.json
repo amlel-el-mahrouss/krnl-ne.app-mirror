@@ -1,7 +1,7 @@
 {
   "compiler_path": "x86_64-w64-mingw32-gcc",
   "compiler_std": "c++20",
-  "headers_path": ["../", "./"],
+  "headers_path": ["../libSystem", "../libPOSIX", "../", "./"],
   "sources_path": ["src/*.cpp"],
   "output_name": "libPThread.dll",
   "compiler_flags": [

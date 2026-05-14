@@ -7,6 +7,6 @@
 #define APPS_COMMON_H
 
 #include <CoreFoundation/headers/Foundation.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 #endif  // APPS_COMMON_H

@@ -6,7 +6,7 @@
 #ifndef FW_HEADERS_DI_DISKIMAGE_H
 #define FW_HEADERS_DI_DISKIMAGE_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 #ifndef __DISK_IMAGE_CDROM__
 #define kDISectorSz (512)

@@ -8,7 +8,7 @@
 
 #include <CoreFoundation/headers/Foundation.h>
 #include <CoreFoundation/headers/Ref.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 #define kCFMaxPropLen (256U)
 

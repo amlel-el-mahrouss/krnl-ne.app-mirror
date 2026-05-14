@@ -7,10 +7,10 @@
 #define HOSTKIT_FOUNDATION_H
 
 #include <CoreFoundation/headers/Ref.h>
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 /// @author Amlal El Mahrouss
-/// @brief The NeSystem Host Kit - host programs from it.
+/// @brief The NeKernel Host Kit - host programs from it.
 
 #define HOSTKIT_INFO(MSG) PrintOut(nullptr, "INFO: [LAUNCH] %s\n", MSG)
 #define HOSTKIT_WARN(MSG) PrintOut(nullptr, "WARN: [LAUNCH] %s\n", MSG)

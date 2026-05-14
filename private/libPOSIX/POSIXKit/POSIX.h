@@ -6,10 +6,10 @@
 #ifndef LIBPOSIX_POSIXKIT_POSIX_H
 #define LIBPOSIX_POSIXKIT_POSIX_H
 
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 
 /// @file POSIX.h
-/// @brief POSIX definitions header for the NeSystem.
+/// @brief POSIX definitions header for the NeKernel.
 
 /// @brief Please use these macros to specify whether your function is thread safe or not.
 #define PTHREAD_UNSAFE __THREAD_UNSAFE

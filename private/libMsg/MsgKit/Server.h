@@ -9,7 +9,7 @@
 #ifdef __cplusplus
 #include <CoreFoundation/headers/String.h>
 #else
-#include <libSystem/SystemKit/System.h>
+#include <SystemKit/System.h>
 #endif
 
 /// @author Amlal El Mahrouss

@@ -7,9 +7,10 @@ Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 #ifndef BENCHKIT_HWCHRONOMETER_H
 #define BENCHKIT_HWCHRONOMETER_H
 
-#include <misc/BenchKit/Chronometer.h>
+#include <modules/BenchKit/Chronometer.h>
 
 namespace Kernel {
+
 struct HWChronoTraits;
 
 template <typename ChronoTraits = HWChronoTraits>
@@ -64,6 +65,7 @@ class HWChrono BENCHKIT_INTERFACE {
   UInt64 fStart{};
   UInt64 fStop{};
 };
+
 }  // namespace Kernel
 
 #endif

@@ -7,7 +7,7 @@
 #include <libSystem/SystemKit/Syscall.h>
 #include <libSystem/SystemKit/Verify.h>
 
-using namespace LibSystem;
+using namespace System;
 
 IMPORT_C Void _rtl_assert(Bool expr, const Char* origin) {
   if (!expr) {

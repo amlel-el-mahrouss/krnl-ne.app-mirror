@@ -8,7 +8,7 @@
 #include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Verify.h>
 
-using namespace LibSystem;
+using namespace System;
 
 /// @note This uses the FNV 64-bit variant.
 IMPORT_C UInt64 nesys_hash_64(const Char* path) {

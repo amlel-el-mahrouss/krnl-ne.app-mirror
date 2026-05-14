@@ -9,7 +9,7 @@
 #include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Verify.h>
 
-using namespace LibSystem;
+using namespace System;
 
 IMPORT_C struct JAIL* JailGetCurrent(Void) {
   return (struct JAIL*) nesys_syscall_arg_1(SYSCALL_HASH("JailGetCurrent"));

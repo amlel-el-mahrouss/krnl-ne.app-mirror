@@ -224,14 +224,4 @@ struct PropertyResult final {
 
 }  // namespace Kernel
 
-namespace NeApp {
-
-namespace Kernel {
-
-  using namespace ::Kernel;
-
-}
-
-}  // namespace NeApp
-
 #endif

@@ -8,7 +8,7 @@
 #include <libSystem/SystemKit/System.h>
 #include <libSystem/SystemKit/Verify.h>
 
-using namespace LibSystem;
+using namespace System;
 
 IMPORT_C Char* StrFmt(const Char* fmt, ...) {
   if (!fmt || *fmt == 0) return const_cast<Char*>("(null)");

@@ -1,6 +1,6 @@
 <!-- Read Me of NeKernel -->
 
-# 🍯 The NeKernel Module
+# Ne.app NeKernel
 
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss/krnl?style=for-the-badge)

@@ -30,7 +30,7 @@ static __THREAD_UNSAFE Void _ThrRunThread(SInt32 argument_count, VoidPtr args,
   static auto         kSemWaitTime = 1000;
   static SemaphoreRef sem_ref = ::SemCreate(0, kSemWaitTime, kThreadSemID);
 
-  if (sem_ref) return;
+  if (!sem_ref) return;
 
   auto ret                                      = procedure(argument_count, (Char**) args);
   kThreadExitCodes[kThreadMapMax % ref->__hash] = ret;

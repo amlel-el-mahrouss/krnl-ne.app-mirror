@@ -16,7 +16,9 @@
 #define kMaxLenIndexer (256U)
 
 namespace Kernel {
+
 namespace Indexer {
+  
   Index& IndexableProperty::Leak() {
     return fIndex;
   }
@@ -48,5 +50,7 @@ namespace Indexer {
       (Void)(kout << "FSKit: Indexed new file: " << filename << kendl);
     }
   }
+
 }  // namespace Indexer
+
 }  // namespace Kernel

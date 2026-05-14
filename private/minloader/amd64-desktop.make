@@ -81,6 +81,7 @@ DDK=libDDK.dll
 POSIXWRAPPER=libPOSIX.dll
 PTHREAD=libPThread.dll
 HAL=hal.x64.dll
+MINDETECT=mindetect.efi
 
 .PHONY: invalid-recipe
 invalid-recipe:
@@ -103,6 +104,7 @@ all: compile-amd64
 	# $(COPY) ../hal/$(HAL) src/root/$(HAL)
 	$(COPY) src/$(BOOTLOADER) src/root/$(BOOTLOADER)
 	$(COPY) ../libDDK/$(DDK) src/root/$(DDK)
+	$(COPY) ../mindetect/$(MINDETECT) src/root/$(MINDETECT)
 
 .PHONY: disk
 disk:

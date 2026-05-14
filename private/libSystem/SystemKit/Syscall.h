@@ -7,7 +7,12 @@
 #define SYSTEMKIT_SYSCALL_H
 
 #include <libSystem/SystemKit/System.h>
-#include <cstdarg>
+
+#ifndef __NE_NO_BUILTIN_STDARG
+IMPORT_C {
+#   include <stdarg.h>
+}
+#endif
 
 IMPORT_C VoidPtr nesys_syscall_arg_1(SizeT id);
 IMPORT_C VoidPtr nesys_syscall_arg_2(SizeT id, VoidPtr arg1);

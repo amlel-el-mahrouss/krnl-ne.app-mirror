@@ -10,6 +10,7 @@
 #include <modules/ACPI/ACPI.h>
 
 namespace Kernel {
+  
 struct PACKED HPETAddressStructure final {
   Kernel::UInt8  AddressSpaceId;  // 0 - system memory, 1 - system I/O
   Kernel::UInt8  RegisterBitWidth;

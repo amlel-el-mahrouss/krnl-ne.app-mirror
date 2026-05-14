@@ -186,6 +186,7 @@ class ISchedulable {
 
   /// @brief Is this object offloading to another CPU?
   virtual Bool HasMP() { return NO; }
+  
 };
 
 template <class Type>
@@ -196,7 +197,7 @@ struct FalseResult final {
   using ConstType     = const Type&;
   using TypePtr       = Type*;
 
-  static constexpr bool kValue = false;
+  static constexpr bool kValue = NO;
 };
 
 template <class Type>
@@ -207,7 +208,7 @@ struct TrueResult final {
   using ConstType     = const Type&;
   using TypePtr       = Type*;
 
-  static constexpr bool kValue = true;
+  static constexpr bool kValue = YES;
 };
 
 template <class Type>
@@ -224,9 +225,13 @@ struct PropertyResult final {
 }  // namespace Kernel
 
 namespace NeApp {
+
 namespace Kernel {
+
   using namespace ::Kernel;
+
 }
+
 }  // namespace NeApp
 
 #endif

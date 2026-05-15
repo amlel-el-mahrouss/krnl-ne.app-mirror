@@ -60,6 +60,36 @@ enum {
 
 using NodePtr = VoidPtr;
 
+struct FILE_STAT final {
+  UInt64 fCreationTime;
+  UInt64 fLastAccessTime;
+  UInt64 fLastWriteTime;
+  UInt64 fChangeTime;
+
+  UInt64 fAllocationSize;
+  UInt64 fEndOfFile;
+
+  UInt32 fNumberOfLinks;
+  UInt32 fInodeNumber;
+
+  UInt32 fMode;
+  UInt32 fUID;
+  UInt32 fGID;
+
+  UInt8 fType;
+  UInt8 fDirectory;
+  UInt8 fDeletePending;
+  UInt8 fReserved;
+};
+
+struct FILE_DIRENT final {
+  UInt32 fInodeNumber;
+  UInt8  fType;
+  UInt8  fNameLength;
+  UInt8  fReserved[2];
+  Char   fName[256];
+};
+
 /**
 @brief Filesystem Mgr Interface class
 @brief Used to provide common I/O for a specific filesystem.
@@ -116,6 +146,32 @@ class IFilesystemMgr {
  public:
   virtual SizeT Tell(_Input NodePtr node)   = 0;
   virtual bool  Rewind(_Input NodePtr node) = 0;
+
+  virtual BOOL GetInfo(_Input NodePtr node, _Output FILE_STAT* out) {
+    (void) node;
+    (void) out;
+    err_local_get() = kErrorUnimplemented;
+    return NO;
+  }
+
+  virtual BOOL ReadDir(_Input NodePtr node, _Input UInt64 cookie,
+                       _Output FILE_DIRENT* out, _Output UInt64* next_cookie) {
+    (void) node;
+    (void) cookie;
+    (void) out;
+    (void) next_cookie;
+    err_local_get() = kErrorUnimplemented;
+    return NO;
+  }
+
+  virtual Int32 ReadLink(_Input NodePtr node, _Output Char* buf,
+                         _Input SizeT buf_size) {
+    (void) node;
+    (void) buf;
+    (void) buf_size;
+    err_local_get() = kErrorUnimplemented;
+    return -1;
+  }
 };
 
 #ifdef __FSKIT_INCLUDES_NEFS__
@@ -199,6 +255,13 @@ class Ext2FileSystemMgr final : public IFilesystemMgr {
   _Output VoidPtr Read(_Input const Char* name, _Input NodePtr node, _Input Int32 flags,
                        _Input SizeT sz) override;
 
+  BOOL GetInfo(_Input NodePtr node, _Output FILE_STAT* out) override;
+
+  BOOL ReadDir(_Input NodePtr node, _Input UInt64 cookie, _Output FILE_DIRENT* out,
+               _Output UInt64* next_cookie) override;
+
+  Int32 ReadLink(_Input NodePtr node, _Output Char* buf, _Input SizeT buf_size) override;
+
  public:
   /// @brief Get NeFS parser class.
   /// @return The filesystem parser class.
@@ -206,6 +269,7 @@ class Ext2FileSystemMgr final : public IFilesystemMgr {
 
  private:
   Ext2FileSystemParser* mParser{nullptr};
+  DriveTrait            mDriveTrait;
 };
 
 #endif  // ifdef __FSKIT_INCLUDES_EXT2__

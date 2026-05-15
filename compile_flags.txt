@@ -1,6 +1,10 @@
 -Iprivate/minkernel
 -Iprivate/
--Iprivate/user
+-Iprivate/libSystem
+-Iprivate/libPOSIX
+-Iprivate/libDDK
+-Iprivate/libThread
+-Iprivate/libPThread
 -Iprivate/minloader
 -Iprivate/basehost
 -Iprivate/misc

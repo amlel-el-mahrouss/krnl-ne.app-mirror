@@ -28,6 +28,7 @@
 #define kMBCIESBSz (64)
 
 namespace Kernel {
+  
 struct IMBCIHost;
 
 enum {
@@ -120,6 +121,7 @@ inline MBCIAuthKeyType mbci_read_auth_key(_Input struct IMBCIHost* host) {
   return (host->Esb[kMBCIESBSz - 1] << 16) | (host->Esb[kMBCIESBSz - 2] << 8) |
          (host->Esb[kMBCIESBSz - 3] & 0xFF);
 }
+
 }  // namespace Kernel
 
 #endif  // ifndef _INC_MODULE_MBCI_H_

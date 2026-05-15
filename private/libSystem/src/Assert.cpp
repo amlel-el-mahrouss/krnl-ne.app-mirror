@@ -7,6 +7,8 @@
 #include <SystemKit/Syscall.h>
 #include <SystemKit/Verify.h>
 
+/// @brief This file handles the SCI's assertion API.
+
 using namespace System;
 
 IMPORT_C Void _rtl_assert(Bool expr, const Char* origin) {

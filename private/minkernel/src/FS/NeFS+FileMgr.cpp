@@ -13,6 +13,7 @@
 /// BUGS: 0
 
 namespace Kernel {
+  
 static inline bool is_valid_nefs_catalog(NodePtr node);
 
 /// @brief C++ constructor

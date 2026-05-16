@@ -17,8 +17,8 @@
 
 namespace Kernel {
 
-struct FILE_STAT;
-struct FILE_DIRENT;
+struct FILEMGR_STAT;
+struct FILEMGR_DIRENT;
 
 inline constexpr UInt32 kExt2CacheSlots = 64;
 
@@ -309,8 +309,8 @@ class Ext2FileSystemParser final {
   BOOL  Rewind(VoidPtr node);
 
   Void  Close(VoidPtr node);
-  BOOL  GetInfo(VoidPtr node, FILE_STAT* out);
-  BOOL  ReadDir(VoidPtr node, UInt64 cookie, FILE_DIRENT* out, UInt64* next_cookie);
+  BOOL  GetInfo(VoidPtr node, FILEMGR_STAT* out);
+  BOOL  ReadDir(VoidPtr node, UInt64 cookie, FILEMGR_DIRENT* out, UInt64* next_cookie);
   Int32 ReadLink(VoidPtr node, Char* buf, SizeT buf_size);
 
   Ext2Context* Context() { return fCtx; }

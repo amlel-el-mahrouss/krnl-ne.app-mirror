@@ -565,7 +565,7 @@ Void Ext2FileSystemParser::Close(VoidPtr node) {
   if (node) mm_free_ptr(node);
 }
 
-BOOL Ext2FileSystemParser::GetInfo(VoidPtr node, FILE_STAT* out) {
+BOOL Ext2FileSystemParser::GetInfo(VoidPtr node, FILEMGR_STAT* out) {
   if (!node || !out || !fCtx || !fCtx->fSuperblock) {
     err_local_get() = kErrorInvalidData;
     return NO;
@@ -665,7 +665,7 @@ Int32 Ext2FileSystemParser::ReadLink(VoidPtr node, Char* buf, SizeT buf_size) {
   return static_cast<Int32>(size);
 }
 
-BOOL Ext2FileSystemParser::ReadDir(VoidPtr node, UInt64 cookie, FILE_DIRENT* out,
+BOOL Ext2FileSystemParser::ReadDir(VoidPtr node, UInt64 cookie, FILEMGR_DIRENT* out,
                                     UInt64* next_cookie) {
   if (!node || !out || !next_cookie || !fCtx || !fCtx->fSuperblock) {
     err_local_get() = kErrorInvalidData;

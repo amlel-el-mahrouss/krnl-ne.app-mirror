@@ -228,7 +228,7 @@ Void HeFileSystemMgr::Write(_Input const Char* name, _Input NodePtr node, _Input
   if (!data) return;
   if (!name) return;
 
-  static IMountpoint mnt;
+  STATIC IMountpoint mnt;
   io_construct_main_drive(mnt.A());
 
   mParser->INodeManip(&mnt.A(), (VoidPtr) data, size, u8"/", (Char8*) name, 0, NO);
@@ -247,7 +247,7 @@ _Output VoidPtr HeFileSystemMgr::Read(_Input const Char* name, _Input NodePtr no
 
   rt_set_memory(retBlob, 0, sz);
 
-  static IMountpoint mnt;
+  STATIC IMountpoint mnt;
   io_construct_main_drive(mnt.A());
 
   mParser->INodeManip(&mnt.A(), (VoidPtr) retBlob, sz, u8"/", (Char8*) name, 0, YES);

@@ -45,7 +45,11 @@
 /** @brief invalid position. (n-pos) */
 #define kFileMgrNPos (~0UL)
 
+/** @brief maximum length in filemgr. */
+#define kFileMgrNameLen (4096UL)
+
 namespace Kernel {
+
 enum {
   kFileIOInvalid  = 0,
   kFileWriteAll   = 100,
@@ -60,7 +64,10 @@ enum {
 
 using NodePtr = VoidPtr;
 
-struct FILE_STAT final {
+/***********************************************************************************/
+/// @brief This data structure helps with filesystem status.
+/***********************************************************************************/
+struct FILEMGR_STAT final {
   UInt64 fCreationTime;
   UInt64 fLastAccessTime;
   UInt64 fLastWriteTime;
@@ -82,13 +89,18 @@ struct FILE_STAT final {
   UInt8 fReserved;
 };
 
-struct FILE_DIRENT final {
+#define kFileMgrDirEntResvLen (2)
+
+struct FILEMGR_DIRENT final {
   UInt32 fInodeNumber;
   UInt8  fType;
   UInt8  fNameLength;
-  UInt8  fReserved[2];
-  Char   fName[256];
+  UInt8  fReserved[kFileMgrDirEntResvLen];
+  Char   fName[kFileMgrNameLen];
 };
+
+using FILE_STAT = FILEMGR_STAT;
+using FILE_DIRENT = FILEMGR_DIRENT;
 
 /**
 @brief Filesystem Mgr Interface class
@@ -147,29 +159,35 @@ class IFilesystemMgr {
   virtual SizeT Tell(_Input NodePtr node)   = 0;
   virtual bool  Rewind(_Input NodePtr node) = 0;
 
-  virtual BOOL GetInfo(_Input NodePtr node, _Output FILE_STAT* out) {
-    (void) node;
-    (void) out;
+  virtual BOOL GetInfo(_Input NodePtr node, _Output FILEMGR_STAT* out) {
+    NE_UNUSED(node);
+    NE_UNUSED(out);
+
     err_local_get() = kErrorUnimplemented;
+
     return NO;
   }
 
   virtual BOOL ReadDir(_Input NodePtr node, _Input UInt64 cookie,
-                       _Output FILE_DIRENT* out, _Output UInt64* next_cookie) {
-    (void) node;
-    (void) cookie;
-    (void) out;
-    (void) next_cookie;
+                       _Output FILEMGR_DIRENT* out, _Output UInt64* next_cookie) {
+    NE_UNUSED(node);
+    NE_UNUSED(out);
+    NE_UNUSED(cookie);
+    NE_UNUSED(next_cookie);
+    
     err_local_get() = kErrorUnimplemented;
+
     return NO;
   }
 
   virtual Int32 ReadLink(_Input NodePtr node, _Output Char* buf,
                          _Input SizeT buf_size) {
-    (void) node;
-    (void) buf;
-    (void) buf_size;
+    NE_UNUSED(node);
+    NE_UNUSED(buf);
+    NE_UNUSED(buf_size);
+    
     err_local_get() = kErrorUnimplemented;
+
     return -1;
   }
 };
@@ -255,9 +273,9 @@ class Ext2FileSystemMgr final : public IFilesystemMgr {
   _Output VoidPtr Read(_Input const Char* name, _Input NodePtr node, _Input Int32 flags,
                        _Input SizeT sz) override;
 
-  BOOL GetInfo(_Input NodePtr node, _Output FILE_STAT* out) override;
+  BOOL GetInfo(_Input NodePtr node, _Output FILEMGR_STAT* out) override;
 
-  BOOL ReadDir(_Input NodePtr node, _Input UInt64 cookie, _Output FILE_DIRENT* out,
+  BOOL ReadDir(_Input NodePtr node, _Input UInt64 cookie, _Output FILEMGR_DIRENT* out,
                _Output UInt64* next_cookie) override;
 
   Int32 ReadLink(_Input NodePtr node, _Output Char* buf, _Input SizeT buf_size) override;
@@ -492,8 +510,11 @@ inline FileStream<Encoding, Class>::FileStream(const Encoding* path, const Encod
 template <typename Encoding, typename Class>
 inline FileStream<Encoding, Class>::~FileStream() {
   if (fFile) mm_free_ptr(fFile);
+  kout << "FileMgr: ~FileStream()\r";
+
   fFile = nullptr;
 }
+
 }  // namespace Kernel
 
 #endif  // ifndef KERNELKIT_FILEMGR_H

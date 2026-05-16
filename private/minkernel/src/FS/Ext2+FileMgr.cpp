@@ -96,7 +96,7 @@ _Output VoidPtr Ext2FileSystemMgr::Read(_Input const Char* name, _Input NodePtr 
   return mParser->Read(name, node, flags, sz);
 }
 
-BOOL Ext2FileSystemMgr::GetInfo(_Input NodePtr node, _Output FILE_STAT* out) {
+BOOL Ext2FileSystemMgr::GetInfo(_Input NodePtr node, _Output FILEMGR_STAT* out) {
   if (!mParser) {
     err_local_get() = kErrorUnavailable;
     return NO;
@@ -105,7 +105,7 @@ BOOL Ext2FileSystemMgr::GetInfo(_Input NodePtr node, _Output FILE_STAT* out) {
 }
 
 BOOL Ext2FileSystemMgr::ReadDir(_Input NodePtr node, _Input UInt64 cookie,
-                                 _Output FILE_DIRENT* out,
+                                 _Output FILEMGR_DIRENT* out,
                                  _Output UInt64* next_cookie) {
   if (!mParser) {
     err_local_get() = kErrorUnavailable;

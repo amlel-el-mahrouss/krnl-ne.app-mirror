@@ -19,7 +19,9 @@
 #include <modules/ATA/ATA.h>
 
 namespace Kernel {
+
 namespace Detail {
+
   /// @brief Forward declarations of internal functions.
 
   /***********************************************************************************/
@@ -1145,11 +1147,11 @@ _Output Bool HeFileSystemParser::INodeCtlManip(_Input DriveTrait* mnt, _Input co
   return NO;
 }
 
-STATIC IMountpoint kMountpoint;
-
 /// @brief Initialize the OpenHeFS filesystem.
 /// @return To check its status, see err_local_get().
 Boolean OpenHeFS::fs_init_openhefs(Void) {
+  STATIC IMountpoint kMountpoint;
+  
   io_construct_main_drive(kMountpoint.A());
 
   if (kMountpoint.A().fPacket.fPacketReadOnly == YES) {
@@ -1160,6 +1162,7 @@ Boolean OpenHeFS::fs_init_openhefs(Void) {
   return HeFileSystemParser{}.Format(&kMountpoint.A(), kOpenHeFSEncodingFlagsUTF8,
                                      kOpenHeFSDefaultVolumeName);
 }
+
 }  // namespace Kernel
 
 #endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__

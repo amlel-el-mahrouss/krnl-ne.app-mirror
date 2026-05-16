@@ -99,9 +99,6 @@ struct FILEMGR_DIRENT final {
   Char   fName[kFileMgrNameLen];
 };
 
-using FILE_STAT = FILEMGR_STAT;
-using FILE_DIRENT = FILEMGR_DIRENT;
-
 /**
 @brief Filesystem Mgr Interface class
 @brief Used to provide common I/O for a specific filesystem.

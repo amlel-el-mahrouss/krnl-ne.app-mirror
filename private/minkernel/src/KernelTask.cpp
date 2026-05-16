@@ -34,7 +34,7 @@ Bool KernelTaskHelper::Start(KernelTask& task_ptr, const KID& kid) {
 }
 
 Bool KernelTaskHelper::CanBeStarted(const KernelTask& task) {
-  return task.StackSize > 0 && task.Image.HasCode();
+  return task.StackSize > 0 && task.Image.HasCode() && task.Image.HasImage();
 }
 
 }  // namespace Kernel

@@ -445,6 +445,7 @@ namespace Detail {
 
       err_global_get() = kErrorDisk;
       mm_free_ptr(tmpdir);
+      tmpdir = nullptr;
 
       return NO;
     }
@@ -653,6 +654,7 @@ namespace Detail {
               mnt->fOutput(mnt->fPacket);
 
               mm_free_ptr(dir);
+              dir = nullptr;
 
               return YES;
             }
@@ -664,6 +666,7 @@ namespace Detail {
       }
 
       mm_free_ptr(dir);
+      dir = nullptr;
       err_global_get() = kErrorFileNotFound;
       return NO;
     }

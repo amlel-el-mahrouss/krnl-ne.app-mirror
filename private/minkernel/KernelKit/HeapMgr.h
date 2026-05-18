@@ -15,6 +15,7 @@
 #include <hint/CompilerHint.h>
 
 namespace Kernel {
+
 /// @brief Declare pointer as free.
 /// @param heap_ptr the pointer.
 /// @return a status code regarding the deallocation.
@@ -50,6 +51,7 @@ Int32 mm_set_ptr_flags(VoidPtr heap_ptr, UInt64 flags);
 /// @brief Gets the flags of a heap header.
 /// @param heap_ptr the pointer to get.
 UInt64 mm_get_ptr_flags(VoidPtr heap_ptr);
+
 }  // namespace Kernel
 
 #include "HeapMgr.inl"

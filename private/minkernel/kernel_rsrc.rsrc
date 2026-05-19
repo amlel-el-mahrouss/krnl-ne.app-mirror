@@ -12,7 +12,7 @@ BEGIN
 	    VALUE "FileDescription", "NeKernel OS Kernel"
       VALUE "FileVersion", KERNEL_VERSION
 	    VALUE "InternalName", "ne_kernel"
-      VALUE "LegalCopyright", "(c) 2024-2026 Amlal El Mahrouss and Ne.app, licensed under the Apache 2.0 license."
+      VALUE "LegalCopyright", "(c) 2024-2026 Amlal El Mahrouss and Ne.app. licensed under the Apache 2.0 license."
       VALUE "OriginalFilename", "neoskrnl.exe"
       VALUE "ProductName", "NeKernel"
       VALUE "ProductVersion", KERNEL_VERSION

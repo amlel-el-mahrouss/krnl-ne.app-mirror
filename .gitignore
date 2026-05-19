@@ -28,8 +28,6 @@ build/
 neoskrnl.exe
 bootzldr.exe
 
-neoskrnl/neoskrnl.xcodeproj/project.xcworkspace/xcshareddata/
-
 tools/dist/mkfs.*
 tools/dist/fsck.*
 tools/dist/chk.*

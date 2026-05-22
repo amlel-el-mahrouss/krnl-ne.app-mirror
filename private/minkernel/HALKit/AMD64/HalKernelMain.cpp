@@ -14,8 +14,8 @@
 #include <KernelKit/Timer.h>
 #include <NetworkKit/IPC.h>
 #include <StorageKit/AHCI.h>
-#include <modules/BenchKit/HWChronometer.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
+#include <modules/BenchKit/HWChronometer.h>
 #include <modules/CoreGfx/TextGfx.h>
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
@@ -158,10 +158,11 @@ EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
 
   PEFLoader ldr("/system/basesvc.exe");
 
-  if (ldr.IsLoaded())
+  if (ldr.IsLoaded()) {
     rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
-  else
+  } else {
     ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Launch Host Process.");
+  }
 
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
 

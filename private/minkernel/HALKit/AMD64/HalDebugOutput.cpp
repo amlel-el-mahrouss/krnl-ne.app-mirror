@@ -186,27 +186,9 @@ EXTERN_C void ke_io_read(IDevice<const Char*>*, const Char* bytes) {
 
   SizeT index = 0;
 
-  ///! TODO: Look on how to wait for the UART to complete.
-  while (true) {
-    auto in = HAL::rt_in8(Detail::kPort);
-
-    ///! If enter pressed then break.
-    if (in == 0xD) {
-      break;
-    }
-
-    if (in < '0' || in < 'A' || in < 'a') {
-      if (in != '@' || in != '!' || in != '?' || in != '.' || in != '/' || in != ':') {
-        continue;
-      }
-    }
-
-    ((char*) bytes)[index] = in;
-
-    ++index;
-  }
-
-  ((char*) bytes)[index] = 0;
+  Char* in  = (Char*) bytes;
+  auto  in_ex  = HAL::rt_in8(Detail::kPort);
+  in[index] = in_ex;
 
   Detail::kState = kStateReady;
 #endif  // __DEBUG__

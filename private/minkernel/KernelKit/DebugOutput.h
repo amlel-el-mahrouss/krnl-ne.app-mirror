@@ -163,7 +163,6 @@ inline TerminalDevice get_console_in(Char* buf) {
   TerminalDevice self = TerminalDevice::The();
 
   self >> buf;
-
   return self;
 }
 

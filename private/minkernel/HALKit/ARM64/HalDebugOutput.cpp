@@ -34,31 +34,11 @@ TerminalDevice::~TerminalDevice() = default;
 
 EXTERN_C void ke_io_read(IDevice<const Char*>* self, const Char* bytes) {
 #ifdef __DEBUG__
-  SizeT index = 0;
-
   volatile UInt8* uart_ptr = (UInt8*) 0x09000000;
-
-  ///! TODO: Look on how to wait for the UART to complete.
-  while (Yes) {
-    auto in = *uart_ptr;
-
-    ///! If enter pressed then break.
-    if (in == 0xD) {
-      break;
-    }
-
-    if (in < '0' || in < 'A' || in < 'a') {
-      if (in != '@' || in != '!' || in != '?' || in != '.' || in != '/' || in != ':') {
-        continue;
-      }
-    }
-
-    ((char*) bytes)[index] = in;
-
-    ++index;
-  }
-
-  ((char*) bytes)[index] = 0;
+  Char* in  = (Char*) bytes;
+  auto  in_ex  = *uart_ptr;
+  auto index = 0;
+  in[index] = in_ex;
 #endif  // __DEBUG__
 }
 

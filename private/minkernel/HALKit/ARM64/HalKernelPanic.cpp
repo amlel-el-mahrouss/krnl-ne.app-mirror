@@ -37,8 +37,17 @@ Void ke_stop(const Kernel::Int32& id, const Char* message) {
 }
 
 Void RecoveryFactory::Recover() {
+  Char in[2];
+  in[0] = 0;
+  
+  TerminalDevice::The() << "# ";
   while (YES) {
-    HAL::rt_halt();
+    (Void)(TerminalDevice::The() >> in);
+    in[1] = 0;
+
+    if (in[0] >= 'a' && in[0] <= 'z') TerminalDevice::The() << in;
+    if (in[0] == '\r') TerminalDevice::The() << "\r# ";
+    if (in[0] == ' ') TerminalDevice::The() << " ";
   }
 }
 

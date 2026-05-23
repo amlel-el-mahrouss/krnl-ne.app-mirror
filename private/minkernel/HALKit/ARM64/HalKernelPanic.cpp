@@ -39,15 +39,27 @@ Void ke_stop(const Kernel::Int32& id, const Char* message) {
 Void RecoveryFactory::Recover() {
   Char in[2];
   in[0] = 0;
-  
-  TerminalDevice::The() << "# ";
+
+  /// @brief Begin packet recovery.
+  TerminalDevice::The() << "\0x0F\0xFF # ";
   while (YES) {
     (Void)(TerminalDevice::The() >> in);
     in[1] = 0;
 
     if (in[0] >= 'a' && in[0] <= 'z') TerminalDevice::The() << in;
-    if (in[0] == '\r') TerminalDevice::The() << "\r# ";
-    if (in[0] == ' ') TerminalDevice::The() << " ";
+    if (in[0] >= '0' && in[0] <= '9') TerminalDevice::The() << in;
+    /// @brief End packet recovery.
+    if (in[0] == '\r') TerminalDevice::The() << "\r\xFF\0x0F# ";
+
+    /// @brief Special characters for packet recovery.
+    if (in[0] == '-') TerminalDevice::The() << "-";
+    if (in[0] == ':') TerminalDevice::The() << ":";
+    if (in[0] == '>') TerminalDevice::The() << ">";
+    if (in[0] == ';') TerminalDevice::The() << ";";
+    if (in[0] == '(') TerminalDevice::The() << "(";
+    if (in[0] == ')') TerminalDevice::The() << ")";
+    if (in[0] == ',') TerminalDevice::The() << ",";
+    if (in[0] == '.') TerminalDevice::The() << ".";
   }
 }
 

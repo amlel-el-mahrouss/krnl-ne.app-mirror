@@ -17,7 +17,10 @@ namespace Kernel {
 /// @internal @brief Calls the DDK stub to initialize the stack_frame of the driver.
 EXTERN_C Int32 kt_kernel_task_start(HAL::StackFramePtr stack_frame, VoidPtr code) {
   MUST_PASS(stack_frame && code);
+
+  if (!stack_frame || !code) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Kernel task arguments are invalid");
   ((rtl_kstart_kind) (code))(stack_frame);
+  if (!stack_frame->R8) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Kernel task failed to run");
 
   return stack_frame->R8;
 }

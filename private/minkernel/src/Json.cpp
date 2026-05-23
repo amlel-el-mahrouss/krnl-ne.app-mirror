@@ -4,5 +4,3 @@
 // Official repository: https://github.com/ne-foss/nekernel
 
 #include <NeKit/Json.h>
-
-namespace Kernel {}

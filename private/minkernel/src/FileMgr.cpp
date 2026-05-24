@@ -7,7 +7,7 @@
 #include <NeKit/Utils.h>
 
 /***********************************************************************************/
-//! @file FileMgr.cc
+//! @file FileMgr.cpp
 //! @brief File System Manager API.
 //! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/

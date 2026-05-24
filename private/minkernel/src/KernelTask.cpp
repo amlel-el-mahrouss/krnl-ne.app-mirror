@@ -7,7 +7,7 @@
 #include <KernelKit/KernelTask.h>
 
 /***********************************************************************************/
-/// @file KernelTaskScheduler.cc
+/// @file KernelTaskScheduler.cpp
 /// @brief Kernel Task scheduler.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/

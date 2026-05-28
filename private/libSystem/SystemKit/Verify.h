@@ -18,14 +18,14 @@ inline R* sys_safe_cast(const T* ptr) {
 }
 
 template <class T, class U>
-struct is_castable {
+struct is_castable _FINAL {
   using return_type = U;
 
   constexpr static BOOL value = false;
 };
 
 template <class T>
-struct is_castable<T, T> {
+struct is_castable<T, T> _FINAL {
   using return_type = T;
 
   constexpr static BOOL value = true;

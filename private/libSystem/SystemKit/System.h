@@ -23,7 +23,7 @@
 
 /// @brief Reference type, used for all references in the system, such as file descriptors, dylib
 /// handles, thread handles, etc.
-struct REF_TYPE {
+struct REF_TYPE _FINAL {
   UInt64  __hash;  /// @brief Hash of the syscall
   VoidPtr __self;  /// @brief Syscall self value.
 };

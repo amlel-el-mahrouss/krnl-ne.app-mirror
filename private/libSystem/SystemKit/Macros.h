@@ -21,6 +21,16 @@
 #define IMPORT_CXX extern "C++"
 #define IMPORT_C extern "C"
 
+#ifdef __cplusplus
+#ifndef _FINAL
+#define _FINAL final
+#endif
+#else
+#ifndef _FINAL
+#define _FINAL
+#endif
+#endif
+
 #define DEPRECATED ATTRIBUTE(deprecated)
 
 #define EXIT_SUCCESS (0)

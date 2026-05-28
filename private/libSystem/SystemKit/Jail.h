@@ -16,14 +16,14 @@ struct JAIL_INFO;
 struct JAIL;
 
 /// @brief Jail information (client side struct)
-struct JAIL_INFO {
+struct JAIL_INFO _FINAL {
   SInt32 fParentID;
   SInt32 fJailHash;
   SInt64 fACL;
 };
 
 /// @brief Jail information (we grab a JAIL from JailGetCurrent())
-struct JAIL {
+struct JAIL _FINAL {
   struct JAIL_INFO* fServer;
   struct JAIL_INFO* fClient;
   SInt32            fJailHash;

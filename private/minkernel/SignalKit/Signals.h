@@ -6,20 +6,7 @@
 #ifndef SIGNALKIT_SIGNALS_H
 #define SIGNALKIT_SIGNALS_H
 
-#include <NeKit/Config.h>
-#include <NeKit/KernelPanic.h>
-
-#define SIGBAD 0  /* bad signal*/
-#define SIGKILL 1 /* kill */
-#define SIGPAUS 2 /* pause */
-#define SIGEXEC 3 /* execute */
-#define SIGTRAP 4 /* trap */
-#define SIGABRT 5 /* abort */
-#define SIGCONT 6 /* continue */
-#define SIGSEG 7  /* process fault */
-#define SIGBREK 8
-#define SIGATCH 9
-#define SIGDTCH 10
+#include <SignalKit/Config.h>
 
 /// @author Amlal El Mahrouss
 /// @brief Signal Generation API.

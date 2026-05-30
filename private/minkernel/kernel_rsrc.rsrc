@@ -9,12 +9,12 @@ BEGIN
     BLOCK "080904E4"
     BEGIN
       VALUE "CompanyName", "Amlal El Mahrouss & Ne.app"
-	    VALUE "FileDescription", "NeKernel OS Kernel"
+	    VALUE "FileDescription", "Virtual Memory OS Kernel"
       VALUE "FileVersion", KERNEL_VERSION
-	    VALUE "InternalName", "ne_kernel"
-      VALUE "LegalCopyright", "(c) 2024-2026 Amlal El Mahrouss and Ne.app. licensed under the Apache 2.0 license."
-      VALUE "OriginalFilename", "neoskrnl.exe"
-      VALUE "ProductName", "NeKernel"
+	    VALUE "InternalName", "vmkernel"
+      VALUE "LegalCopyright", "(c) 2024-2026 Amlal El Mahrouss & Ne.app. Licensed under the Apache 2.0 license."
+      VALUE "OriginalFilename", "vmkrnl.exe"
+      VALUE "ProductName", "MinKernel"
       VALUE "ProductVersion", KERNEL_VERSION
     END
   END

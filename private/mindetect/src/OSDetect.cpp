@@ -11,7 +11,7 @@ EXTERN_C Int32 OSDetectModuleMain(Kernel::HEL::BootInfoHeader* handover) {
   if (handover->f_HardwareTables.f_MultiProcessingEnabled == false) return kEfiFail;
 
 #ifdef __NE_ONLY_SMP__
-    if (handover->f_NumberOfProcessors == 0) return kEfiFail;
+  if (handover->f_NumberOfProcessors == 0LL) return kEfiFail;
 #endif
 
   if (handover->f_BitMapSize == 0LL) return kEfiFail;

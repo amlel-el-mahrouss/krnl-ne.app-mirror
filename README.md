@@ -27,7 +27,7 @@
 Please fork, and clone the repository. Then follow those steps:
 
 ```sh
-git clone -j8 https://github.com/ne-foss/nekernel.git
+git clone -j8 https://github.com/ne-app-eu/krnl.git
 cd nekernel
 ./scripts/setup_x64_project.sh
 ./scripts/modules_ahci_x64.sh

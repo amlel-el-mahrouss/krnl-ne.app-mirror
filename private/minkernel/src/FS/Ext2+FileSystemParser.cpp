@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
-// Official repository: https://github.com/ne-foss/nekernel
+// Official repository: https://github.com/ne-app-eu/krnl
 
 // Read-only EXT2/EXT3 parser. Write support is intentionally disabled.
 // See notes at the bottom of this file.

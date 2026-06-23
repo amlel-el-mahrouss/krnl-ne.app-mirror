@@ -5,7 +5,7 @@
 
 #include <NeKit/Variant.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 KString Variant::ToString() {
   switch (fKind) {
     case VariantKind::kTOML:
@@ -34,4 +34,4 @@ Variant::VariantKind& Variant::Kind() {
 RefAny Variant::Leak() {
   return {this->fPtr};
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

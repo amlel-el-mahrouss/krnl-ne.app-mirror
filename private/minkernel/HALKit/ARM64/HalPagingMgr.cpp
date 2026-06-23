@@ -6,7 +6,7 @@
 #include <HALKit/ARM64/Paging.h>
 #include <HALKit/ARM64/Processor.h>
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 typedef UInt32 PageTableIndex;
 
 EXTERN_C UIntPtr mm_get_page_addr(VoidPtr virtual_address) {
@@ -79,4 +79,4 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   return kErrorInvalidData;
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL

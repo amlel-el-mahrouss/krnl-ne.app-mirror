@@ -52,7 +52,7 @@ typedef WideChar CharacterTypeUTF16;
 typedef Char     CharacterTypeASCII;
 typedef char8_t  CharacterTypeUTF8;
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 /**
  * @brief BootKit Text Writer class
@@ -83,19 +83,19 @@ class BootTextWriter final {
   BootTextWriter(const BootTextWriter&)            = default;
 };
 
-Kernel::SizeT BCopyMem(CharacterTypeUTF16* dest, CharacterTypeUTF16* src, const Kernel::SizeT len);
+Ne::Kernel::SizeT BCopyMem(CharacterTypeUTF16* dest, CharacterTypeUTF16* src, const Ne::Kernel::SizeT len);
 
-Kernel::SizeT BSetMem(CharacterTypeASCII* src, const CharacterTypeASCII byte,
-                      const Kernel::SizeT len);
+Ne::Kernel::SizeT BSetMem(CharacterTypeASCII* src, const CharacterTypeASCII byte,
+                      const Ne::Kernel::SizeT len);
 
 /// String length functions.
 
 /// @brief get string length.
-Kernel::SizeT BStrLen(const CharacterTypeUTF16* ptr);
+Ne::Kernel::SizeT BStrLen(const CharacterTypeUTF16* ptr);
 
 /// @brief set memory with custom value.
-Kernel::SizeT BSetMem(CharacterTypeUTF16* src, const CharacterTypeUTF16 byte,
-                      const Kernel::SizeT len);
+Ne::Kernel::SizeT BSetMem(CharacterTypeUTF16* src, const CharacterTypeUTF16 byte,
+                      const Ne::Kernel::SizeT len);
 
 /**
  * @brief BootKit File Reader class

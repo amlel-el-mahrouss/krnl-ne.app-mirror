@@ -15,7 +15,7 @@
 #define kMagicGPT ("EFI PART")  // "EFI PART"
 #define kGPTPartitionTableLBA (512U + sizeof(GPT_PARTITION_TABLE))
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct GPT_PARTITION_TABLE;
 struct GPT_PARTITION_ENTRY;
 
@@ -45,6 +45,6 @@ struct PACKED GPT_PARTITION_ENTRY {
   UInt64   Attributes;
   UInt8    Name[kSectorAlignGPT_PartEntry];
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -12,9 +12,9 @@
 
 #include <NeKit/Config.h>
 
-#define SDT_OBJECT : public Kernel::SDT
+#define SDT_OBJECT : public Ne::Kernel::SDT
 
-namespace Kernel {
+namespace Ne::Kernel {
 class PACKED SDT {
  public:
   Char   Signature[4];
@@ -77,6 +77,6 @@ class PACKED RSDT final {
   UInt32 CreatorRevision;
   UInt32 AddressArr[1];
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !__ACPI__

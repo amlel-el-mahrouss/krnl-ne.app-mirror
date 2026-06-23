@@ -20,8 +20,8 @@
 #include <modules/CoreGfx/CoreGfx.h>
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
-EXTERN_C void hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
-  using namespace Kernel;
+EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
+  using namespace Ne::Kernel;
 
   /************************************************** */
   /*     INITIALIZE AND VALIDATE HEADER.              */
@@ -35,7 +35,7 @@ EXTERN_C void hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
   }
 
 #ifdef __NE_ARM64_EFI__
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);
@@ -49,12 +49,12 @@ EXTERN_C void hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
 
   kBitMapCursor     = 0UL;
   kKernelBitMpSize  = kHandoverHeader->f_BitMapSize;
-  kKernelBitMpStart = reinterpret_cast<Kernel::VoidPtr>(
-      reinterpret_cast<Kernel::UIntPtr>(kHandoverHeader->f_BitMapStart));
+  kKernelBitMpStart = reinterpret_cast<Ne::Kernel::VoidPtr>(
+      reinterpret_cast<Ne::Kernel::UIntPtr>(kHandoverHeader->f_BitMapStart));
 
   /// @note do initialize the interrupts after it.
 
-  Kernel::mp_init_cores();
+  Ne::Kernel::mp_init_cores();
 
   while (YES);
 }

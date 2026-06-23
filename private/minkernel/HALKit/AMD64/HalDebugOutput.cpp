@@ -10,7 +10,7 @@
 #include <modules/CoreGfx/CoreGfx.h>
 #include <modules/CoreGfx/TextGfx.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 enum CommStatus : UInt16 {
   kStateInvalid  = 0x64,
   kStateReady    = 0xCF,
@@ -195,16 +195,16 @@ EXTERN_C void ke_io_read(IDevice<const Char*>*, const Char* bytes) {
 }
 
 TerminalDevice TerminalDevice::The() {
-  TerminalDevice out(Kernel::ke_io_write, Kernel::ke_io_read);
+  TerminalDevice out(Ne::Kernel::ke_io_write, Ne::Kernel::ke_io_read);
   return out;
 }
 
 Utf8TerminalDevice::~Utf8TerminalDevice() = default;
 
 Utf8TerminalDevice Utf8TerminalDevice::The() {
-  Utf8TerminalDevice out(Kernel::ke_utf_io_write,
+  Utf8TerminalDevice out(Ne::Kernel::ke_utf_io_write,
                          [](IDevice<const Utf8Char*>*, const Utf8Char*) -> Void {});
   return out;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

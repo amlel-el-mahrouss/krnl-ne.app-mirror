@@ -8,19 +8,19 @@
 
 /***********************************************************************************/
 /// @file KernelTaskScheduler.cpp
-/// @brief Kernel Task scheduler.
+/// @brief Ne::Kernel Task scheduler.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @internal @brief Calls the DDK stub to initialize the stack_frame of the driver.
 EXTERN_C Int32 kt_kernel_task_start(HAL::StackFramePtr stack_frame, VoidPtr code) {
   MUST_PASS(stack_frame && code);
 
-  if (!stack_frame || !code) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Kernel task arguments are invalid");
+  if (!stack_frame || !code) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Ne::Kernel task arguments are invalid");
   ((rtl_kstart_kind) (code))(stack_frame);
-  if (!stack_frame->R8) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Kernel task failed to run");
+  if (!stack_frame->R8) ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Ne::Kernel task failed to run");
 
   return stack_frame->R8;
 }
@@ -40,4 +40,4 @@ Bool KernelTaskHelper::CanBeStarted(const KernelTask& task) {
   return task.StackSize > 0 && task.Image.HasCode() && task.Image.HasImage();
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

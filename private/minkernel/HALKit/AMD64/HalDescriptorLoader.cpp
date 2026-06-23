@@ -7,9 +7,9 @@
 #include <FSKit/NeFS.h>
 #include <HALKit/AMD64/Processor.h>
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 namespace Detail {
-  STATIC ::Kernel::Detail::AMD64::InterruptDescriptorAMD64 kInterruptVectorTable[kKernelIdtSize] =
+  STATIC ::Ne::Kernel::Detail::AMD64::InterruptDescriptorAMD64 kInterruptVectorTable[kKernelIdtSize] =
       {};
 }  // namespace Detail
 
@@ -43,7 +43,7 @@ Void IDTLoader::Load(Register64& idt) {
   }
 
   idt.Base  = (UIntPtr) &Detail::kInterruptVectorTable[0];
-  idt.Limit = sizeof(::Kernel::Detail::AMD64::InterruptDescriptorAMD64) * (kKernelIdtSize);
+  idt.Limit = sizeof(::Ne::Kernel::Detail::AMD64::InterruptDescriptorAMD64) * (kKernelIdtSize);
 
   hal_load_idt(idt);
   rt_sti();
@@ -67,4 +67,4 @@ void IDTLoader::Load(Ref<Register64>& idt) {
 
   IDTLoader::Load(idt.Leak());
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL

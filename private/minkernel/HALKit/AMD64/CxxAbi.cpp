@@ -14,12 +14,12 @@ atexit_func_entry_t __atexit_funcs[kAtExitMaxDestructors];
 uarch_t             __atexit_func_count;
 
 /// @brief dynamic shared object Handle.
-Kernel::UIntPtr __dso_handle;
+Ne::Kernel::UIntPtr __dso_handle;
 
-EXTERN_C Kernel::Void __cxa_pure_virtual(void* self) {
-  (Kernel::Void)(Kernel::kout << "object: "
-                              << Kernel::number(reinterpret_cast<Kernel::UIntPtr>(self)));
-  (Kernel::Void)(Kernel::kout << ", has unimplemented virtual functions.\r");
+EXTERN_C Ne::Kernel::Void __cxa_pure_virtual(void* self) {
+  (Ne::Kernel::Void)(Ne::Kernel::kout << "object: "
+                              << Ne::Kernel::number(reinterpret_cast<Ne::Kernel::UIntPtr>(self)));
+  (Ne::Kernel::Void)(Ne::Kernel::kout << ", has unimplemented virtual functions.\r");
 }
 
 EXTERN_C void ___chkstk_ms(PtrDiff frame_size) {

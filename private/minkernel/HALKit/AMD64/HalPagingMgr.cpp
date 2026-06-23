@@ -6,7 +6,7 @@
 #include <HALKit/AMD64/Paging.h>
 #include <HALKit/AMD64/Processor.h>
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 namespace Detail {
   /// @brief Page Table Entry for AMD64.
   struct PTE {
@@ -160,4 +160,4 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   return kErrorSuccess;
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL

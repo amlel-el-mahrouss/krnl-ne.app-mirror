@@ -11,7 +11,7 @@
 /// @author Amlal El Mahrouss
 /// @brief Signal Generation API.
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 using rt_signal_kind = SizeT;
 
@@ -39,6 +39,6 @@ inline BOOL sig_validate_unique(const rt_signal_kind& sig) {
   return sig > SIGBAD && sig > SIGDTCH;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

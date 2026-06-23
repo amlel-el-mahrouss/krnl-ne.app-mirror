@@ -12,7 +12,7 @@
 #include <NeKit/OwnPtr.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 enum struct DmaKind {
   PCI = 10,  // Bus mastering is required to be turned on. Basiaclly a request
   // control system. 64-Bit access depends on the PAE bit and the device
@@ -70,7 +70,7 @@ class DMAFactory final {
  public:
   static OwnPtr<IOBuf<Char*>> Construct(OwnPtr<DMAWrapper>& dma);
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include "DMA.inl"
 

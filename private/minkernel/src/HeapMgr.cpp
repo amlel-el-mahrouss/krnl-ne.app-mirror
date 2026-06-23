@@ -30,13 +30,13 @@
 
 #define kHeapMgrSpinMax (255'000)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Implementation details.
 namespace Detail {
   struct PACKED MM_INFORMATION_BLOCK;
 
-  /// @brief Kernel heap information block.
+  /// @brief Ne::Kernel heap information block.
   /// Located before the address bytes.
   /// | HIB |  CLASS/STRUCT/DATA TYPES... |
   struct PACKED MM_INFORMATION_BLOCK final {
@@ -218,7 +218,7 @@ _Output Int32 mm_free_ptr(VoidPtr heap_ptr) {
   return kErrorInternal;
 }
 
-/// @brief Check if pointer is a valid Kernel pointer.
+/// @brief Check if pointer is a valid Ne::Kernel pointer.
 /// @param heap_ptr the pointer
 /// @return if it exists.
 _Output Boolean mm_is_valid_ptr(VoidPtr heap_ptr) {
@@ -253,4 +253,4 @@ _Output Boolean mm_protect_ptr(VoidPtr heap_ptr) {
   return No;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

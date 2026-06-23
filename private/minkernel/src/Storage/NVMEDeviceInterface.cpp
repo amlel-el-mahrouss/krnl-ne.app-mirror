@@ -5,7 +5,7 @@
 
 #include <StorageKit/NVME.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 NVMEDeviceInterface::NVMEDeviceInterface(void (*out)(IDevice*, IMountpoint* outpacket),
                                          void (*in)(IDevice*, IMountpoint* inpacket),
                                          void (*cleanup)(void))
@@ -27,4 +27,4 @@ OwnPtr<IMountpoint*> NVMEDeviceInterface::operator()(UInt32 dma_low, UInt32 dma_
 
   return {};
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

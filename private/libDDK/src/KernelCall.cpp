@@ -31,13 +31,13 @@ static uint64_t ddk_fnv_64(const char* path) {
   return hash;
 }
 
-/// @brief Interrupt Kernel and call it's RPC.
+/// @brief Interrupt Ne::Kernel and call it's RPC.
 /// @param name RPC name
 /// @param cnt number of elements in **data** pointer.
 /// @param data data pointer.
 /// @param sz The size of the whole data pointer.
-/// @retval void* Kernel call was successful.
-/// @retval nil Kernel call failed, call KernelLastError(void)
+/// @retval void* Ne::Kernel call was successful.
+/// @retval nil Ne::Kernel call failed, call KernelLastError(void)
 DDK_EXTERN void* ke_call_dispatch(const char* name, int32_t cnt, void* data, size_t sz) {
   if (name == nil || *name == 0 || data == nil || cnt == 0) return nil;
   return ::__ke_call_dispatch(ddk_fnv_64(name), cnt, data, sz);
@@ -50,7 +50,7 @@ DDK_EXTERN void ke_set_syscall(const int slot, void (*slotFn)(void* a0)) {
   ::ke_call_dispatch("ke_set_syscall", slot, (ptr_t) slotFn, 1);
 }
 
-/// @brief Get a Kernel object.
+/// @brief Get a Ne::Kernel object.
 /// @param slot property id (always 0)
 /// @param name the object's name.
 /// @return Object manifest.
@@ -63,7 +63,7 @@ DDK_EXTERN struct DDK_OBJECT_MANIFEST* ke_get_obj(const int slot, const char* na
   return manifest;
 }
 
-/// @brief Set a Kernel object.
+/// @brief Set a Ne::Kernel object.
 /// @param slot property id (always 0)
 /// @param name the object's name.
 /// @param ddk_pr pointer to a object's DDK_OBJECT_MANIFEST.

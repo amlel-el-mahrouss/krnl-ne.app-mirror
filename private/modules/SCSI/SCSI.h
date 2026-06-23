@@ -11,13 +11,13 @@
 /// @file SCSI.h
 /// @brief Small Computer System Interface device.
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <Int32 PacketBitLen>
-using scsi_packet_type = Kernel::UInt16[PacketBitLen];
+using scsi_packet_type = Ne::Kernel::UInt16[PacketBitLen];
 
 using scsi_packet_type_12 = scsi_packet_type<12>;
 
 extern const scsi_packet_type_12 kCDRomPacketTemplate;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

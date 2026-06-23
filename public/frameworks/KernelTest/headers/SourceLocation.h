@@ -11,7 +11,7 @@
 class KTSourceLocation;
 
 /// ================================================================================
-/// @brief SourceLocation class for Kernel Test Framework.
+/// @brief SourceLocation class for Ne::Kernel Test Framework.
 /// ================================================================================
 class KTSourceLocation final CF_OBJECT {
  public:

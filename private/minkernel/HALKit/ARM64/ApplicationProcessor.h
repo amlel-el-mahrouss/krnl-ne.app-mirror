@@ -14,7 +14,7 @@
 /*     WITH AN EXECUTION LEVEL IN MIND.             */
 /************************************************** */
 
-namespace Kernel {
+namespace Ne::Kernel {
 Void mp_init_cores(Void);
 }
 

@@ -20,7 +20,7 @@
 
 #define kPe32BlobFork "__NEPe32Blob"
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace Detail {
   /***********************************************************************************/
@@ -287,4 +287,4 @@ namespace Utils {
   }
 }  // namespace Utils
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

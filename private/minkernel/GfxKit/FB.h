@@ -8,7 +8,7 @@
 
 #include <KernelKit/DeviceMgr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class FBDeviceInterface;
 struct FBDevicePacket;
@@ -51,6 +51,6 @@ class FBDeviceInterface NE_DEVICE<FBDevicePacket*> {
   FBDeviceInterface& operator>>(FBDevicePacket* dat) override;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

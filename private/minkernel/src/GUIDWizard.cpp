@@ -11,7 +11,7 @@
 // @brief Size of UUID.
 #define kGUIDSize 37
 
-namespace Kernel::CF::XRN::Version1 {
+namespace Ne::Kernel::CF::XRN::Version1 {
 auto cf_make_sequence(const Array<UInt32, 10>& uuidSeq) -> Ref<GUIDSequence*> {
   GUIDSequence* seq = new GUIDSequence();
   MUST_PASS(seq);
@@ -58,4 +58,4 @@ auto cf_try_guid_to_string(Ref<GUIDSequence*>& seq) -> ErrorOr<Ref<KString>> {
 
   return ErrorOr<Ref<KString>>{kErrorInvalidData};
 }
-}  // namespace Kernel::CF::XRN::Version1
+}  // namespace Ne::Kernel::CF::XRN::Version1

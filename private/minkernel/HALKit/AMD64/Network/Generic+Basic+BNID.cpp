@@ -13,8 +13,8 @@
 #define kNetDevID (0x8139)
 #define kNetSubClass (0x10EC)
 
-using namespace Kernel;
-using namespace Kernel::HAL;
+using namespace Ne::Kernel;
+using namespace Ne::Kernel::HAL;
 
 STATIC UInt16 kRTLIOBase = 0xFFFF;
 

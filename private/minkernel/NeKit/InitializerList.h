@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 // \brief Initalizer List object for containers.
 template <class Type, SizeT N>
 class InitializerList final {
@@ -44,6 +44,6 @@ class InitializerList final {
 
 template <class T, SizeT N>
 using ErrorOrList = ErrorOr<InitializerList<T, N>>;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

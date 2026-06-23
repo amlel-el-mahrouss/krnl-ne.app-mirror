@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class PageMgr;
 
 class PTEWrapper final {
@@ -70,6 +70,6 @@ struct PageMgr final {
   friend PTEWrapper;
   friend class Pmm;
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -6,7 +6,7 @@
 #include <HALKit/AMD64/Processor.h>
 #include <KernelKit/ProcessScheduler.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /***********************************************************************************/
 /// @brief Unimplemented function (crashes by default)
 /// @param
@@ -35,7 +35,7 @@ Void mp_wakeup_thread(HAL::StackFrame* stack) {
   // RIP is always in R15. R15 is reserved for the RIP.
   stack->IP = stack->R15;
 
-  Kernel::UserProcessHelper::StartScheduling();
+  Ne::Kernel::UserProcessHelper::StartScheduling();
 }
 
 /// @brief makes the thread sleep on a loop.
@@ -47,4 +47,4 @@ Void mp_hang_thread(HAL::StackFrame* stack) {
   stack->R15 = stack->IP;
   stack->IP  = 0UL;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -6,7 +6,7 @@
 #include <HALKit/AMD64/Processor.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 /***********************************************************************************/
 /// Constructors.
 /***********************************************************************************/
@@ -35,4 +35,4 @@ Void LAPICDmaWrapper::Write(UInt16 reg, UInt32 value) {
   UInt32 volatile* io_apic = (UInt32 volatile*) this->fApic;
   io_apic[reg]             = value;
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL

@@ -8,7 +8,7 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <class Type>
 struct IsDefined final {
   using ResultType    = Type;
@@ -29,6 +29,6 @@ using NullDomain = IsDefined<nullPtr>;
 
 template <class Type>
 using Domain = IsDefined<Type>;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !__NE_KIT_DOMAIN_H__

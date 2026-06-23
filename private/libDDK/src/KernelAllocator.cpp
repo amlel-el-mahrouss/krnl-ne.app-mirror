@@ -7,7 +7,7 @@
 #include <DriverKit/DriverKit.h>
 
 /**
-  \brief Allocates a new heap on the Kernel's side.
+  \brief Allocates a new heap on the Ne::Kernel's side.
   \param sz the size of the heap block.
   \return the newly allocated pointer.
 */

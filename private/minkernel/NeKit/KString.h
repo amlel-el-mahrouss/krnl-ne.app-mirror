@@ -12,10 +12,10 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 inline constexpr Int kMinimumStringSize = 8196;
 
-/// @brief Kernel string class, not dynamic.
+/// @brief Ne::Kernel string class, not dynamic.
 template <typename CharKind = Char, Int MinSz = kMinimumStringSize>
 class KBasicString final {
  public:
@@ -101,7 +101,7 @@ class KStringBuilder final {
   template <typename CharKind = Char>
   static bool Equals(const CharKind* lhs, const CharKind* rhs);
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include <NeKit/KString.inl>
 

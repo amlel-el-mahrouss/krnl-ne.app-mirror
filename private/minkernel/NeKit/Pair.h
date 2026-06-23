@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <typename T1, typename T2>
 class Pair;
 
@@ -48,6 +48,6 @@ class PairBuilder final {
 
 template <typename T1, typename T2>
 using PairOr = ErrorOr<Pair<T1, T2>>;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -8,7 +8,7 @@
 #include <NeKit/New.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 EXTERN_C void ke_io_write(IDevice<const Char*>* self, const Char* bytes) {
 #ifdef __DEBUG__
   if (*bytes == 0) return;
@@ -43,8 +43,8 @@ EXTERN_C void ke_io_read(IDevice<const Char*>* self, const Char* bytes) {
 }
 
 TerminalDevice TerminalDevice::The() {
-  TerminalDevice out(Kernel::ke_io_write, Kernel::ke_io_read);
+  TerminalDevice out(Ne::Kernel::ke_io_write, Ne::Kernel::ke_io_read);
   return out;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

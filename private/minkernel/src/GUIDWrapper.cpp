@@ -5,4 +5,4 @@
 
 #include <CFKit/GUIDWrapper.h>
 
-namespace Kernel::CF::XRN {}
+namespace Ne::Kernel::CF::XRN {}

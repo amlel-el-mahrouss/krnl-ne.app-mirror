@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 template <class T, SizeT N>
 class Array final {
@@ -43,6 +43,6 @@ inline auto make_array(ValueType& val) -> auto {
   return Array<ValueType, ARRAY_SIZE(val)>{val};
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

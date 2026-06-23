@@ -15,7 +15,7 @@
 
 ///! BUG COUNT: 0
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 UserProcess::UserProcess()  = default;
 UserProcess::~UserProcess() = default;
@@ -689,4 +689,4 @@ Bool UserProcessScheduler::operator!() {
   return cnt == 0L;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

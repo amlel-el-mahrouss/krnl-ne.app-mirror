@@ -8,8 +8,8 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 UInt32 ke_calculate_crc32(const VoidPtr crc, Int32 len);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !NEKIT_CRC32_H

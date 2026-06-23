@@ -11,7 +11,7 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <typename T>
 class OwnPtr;
 
@@ -65,6 +65,6 @@ inline OwnPtr<T> make_ptr(Args&&... args) {
 
   return ret;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -12,7 +12,7 @@ EXTERN_C {
 #include <cpuid.h>
 }
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 enum {
   kCPUFeatureSSE3       = 1 << 0,
@@ -79,6 +79,6 @@ enum {
 };
 
 typedef Int64 CPUID;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

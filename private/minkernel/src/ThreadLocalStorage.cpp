@@ -15,7 +15,7 @@
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /**
  * @brief Checks for cookie inside the TIB.
@@ -32,14 +32,14 @@ Boolean tlsi_check_tib(THREAD_INFORMATION_BLOCK* tib_ptr) {
          tib_ptr->Cookie[kCookieMag2Idx] == kCookieMag2;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 /**
  * @brief Implementation of the TLS check.
  * @param tib_ptr The TIB record.
  * @return if the TIB record is valid or not.
  */
-EXTERN_C Bool tls_check_tib(Kernel::VoidPtr tib_ptr) {
+EXTERN_C Bool tls_check_tib(Ne::Kernel::VoidPtr tib_ptr) {
   MUST_PASS(tib_ptr);
   if (!tib_ptr) {
     kout << "TLS: Failed because of an invalid TIB...\r";
@@ -47,5 +47,5 @@ EXTERN_C Bool tls_check_tib(Kernel::VoidPtr tib_ptr) {
   }
 
   THREAD_INFORMATION_BLOCK* tib = static_cast<THREAD_INFORMATION_BLOCK*>(tib_ptr);
-  return Kernel::tlsi_check_tib(tib);
+  return Ne::Kernel::tlsi_check_tib(tib);
 }

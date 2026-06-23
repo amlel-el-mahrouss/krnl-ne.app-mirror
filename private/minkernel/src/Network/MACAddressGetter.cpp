@@ -5,8 +5,8 @@
 
 #include <NetworkKit/MAC.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 Array<UInt8, kMACAddrLen>& MacAddressGetter::AsBytes() {
   return this->fMacAddress;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

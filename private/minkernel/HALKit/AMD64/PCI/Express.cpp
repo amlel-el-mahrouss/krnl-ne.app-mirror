@@ -5,4 +5,4 @@
 
 #include <KernelKit/PCI/Express.h>
 
-namespace Kernel {}
+namespace Ne::Kernel {}

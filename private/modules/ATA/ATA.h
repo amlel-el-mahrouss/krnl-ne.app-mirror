@@ -126,26 +126,26 @@ enum {
 
 #if defined(__ATA_PIO__) || defined(__ATA_DMA__)
 
-Kernel::Boolean drv_std_init(Kernel::UInt16 in_bus, Kernel::UInt8 drive, Kernel::UInt16& out_bus,
-                             Kernel::UInt8& out_master);
+Ne::Kernel::Boolean drv_std_init(Ne::Kernel::UInt16 in_bus, Ne::Kernel::UInt8 drive, Ne::Kernel::UInt16& out_bus,
+                             Ne::Kernel::UInt8& out_master);
 
-Kernel::Boolean drv_std_detected(Kernel::Void);
+Ne::Kernel::Boolean drv_std_detected(Ne::Kernel::Void);
 
-Kernel::Void drv_std_select(Kernel::UInt16 bus);
+Ne::Kernel::Void drv_std_select(Ne::Kernel::UInt16 bus);
 
-Kernel::Boolean drv_std_wait_io(Kernel::UInt16 io);
+Ne::Kernel::Boolean drv_std_wait_io(Ne::Kernel::UInt16 io);
 
-Kernel::Void drv_std_read(Kernel::UInt64 lba, Kernel::UInt16 io, Kernel::UInt8 is_master,
-                          Kernel::Char* buf, Kernel::SizeT sec_sz, Kernel::SizeT buf_sz);
+Ne::Kernel::Void drv_std_read(Ne::Kernel::UInt64 lba, Ne::Kernel::UInt16 io, Ne::Kernel::UInt8 is_master,
+                          Ne::Kernel::Char* buf, Ne::Kernel::SizeT sec_sz, Ne::Kernel::SizeT buf_sz);
 
-Kernel::Void drv_std_write(Kernel::UInt64 lba, Kernel::UInt16 io, Kernel::UInt8 is_master,
-                           Kernel::Char* buf, Kernel::SizeT sec_sz, Kernel::SizeT buf_sz);
+Ne::Kernel::Void drv_std_write(Ne::Kernel::UInt64 lba, Ne::Kernel::UInt16 io, Ne::Kernel::UInt8 is_master,
+                           Ne::Kernel::Char* buf, Ne::Kernel::SizeT sec_sz, Ne::Kernel::SizeT buf_sz);
 
 /// @brief get sector count.
-Kernel::SizeT drv_std_get_sector_count();
+Ne::Kernel::SizeT drv_std_get_sector_count();
 
 /// @brief get device size.
-Kernel::SizeT drv_std_get_size();
+Ne::Kernel::SizeT drv_std_get_size();
 
 #endif  // ifdef __NEOSKRNL__
 

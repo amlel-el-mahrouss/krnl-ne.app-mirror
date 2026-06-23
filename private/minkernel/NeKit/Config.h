@@ -18,10 +18,10 @@
 #define NE_ICODEC \
   final:          \
   public          \
-  ::Kernel::ICodec
+  ::Ne::Kernel::ICodec
 
 /// @brief The **NeKernel** namespace.
-namespace Kernel {
+namespace Ne::Kernel {
 
 using voidPtr = void*;
 using VoidPtr = void*;
@@ -222,6 +222,6 @@ struct PropertyResult final {
   static constexpr bool kValue = Type::kValue;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

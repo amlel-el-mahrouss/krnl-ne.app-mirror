@@ -13,7 +13,7 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Vettable.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Reference wrapper class.
 template <typename T>
@@ -95,6 +95,6 @@ class NonNullRef final {
 using RefAny        = Ref<Any>;
 using NonNullRefAny = NonNullRef<Any>;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef _NEKIT_REF_H_

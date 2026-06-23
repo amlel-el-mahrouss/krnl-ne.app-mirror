@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// ================================================================================
 /// @brief ErrorOr class for error handling.
 /// ================================================================================
@@ -59,6 +59,6 @@ class ErrorOr final {
 
 using ErrorOrAny = ErrorOr<voidPtr>;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

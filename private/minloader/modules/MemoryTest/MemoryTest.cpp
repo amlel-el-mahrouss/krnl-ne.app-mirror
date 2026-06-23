@@ -7,8 +7,8 @@
 #include <BootKit/BootThread.h>
 #include <FirmwareKit/EFI/API.h>
 
-EXTERN_C Int32 MemoryTestModuleMain(Kernel::HEL::BootInfoHeader* handover) {
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::BootTextWriter writer;
   writer.Write("MemoryTest: Testing Memory...\r");

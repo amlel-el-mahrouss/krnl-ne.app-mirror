@@ -5,7 +5,7 @@
 
 #include <KernelKit/UserProcessScheduler.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 UserProcessTeam::UserProcessTeam() {
   for (SizeT i{}; i < kCPSProcessLimitPerTeam; ++i) {
     this->mProcessList[i]        = UserProcess{};
@@ -50,6 +50,6 @@ ProcessID& UserProcessTeam::Id() {
 Ref<UserProcess>& UserProcessTeam::AsRef() {
   return this->mCurrentProcess;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 // last rev 05-03-24

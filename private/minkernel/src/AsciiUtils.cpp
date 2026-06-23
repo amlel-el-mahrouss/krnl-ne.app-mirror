@@ -5,7 +5,7 @@
 
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 Int32 rt_string_cmp(const Char* src, const Char* cmp, Size size) {
   for (Size i{}; i < size; ++i) {
     if (src[i] != cmp[i]) return static_cast<Int32>(src[i]) - static_cast<Int32>(cmp[i]);
@@ -159,4 +159,4 @@ Char* rt_string_has_char(Char* str, Char ch) {
   while (*str && *str != ch) ++str;
   return (*str == ch) ? str : nullptr;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

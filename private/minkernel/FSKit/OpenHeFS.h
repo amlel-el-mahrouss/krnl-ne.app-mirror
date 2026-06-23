@@ -104,7 +104,7 @@ inline constexpr UInt16 kOpenHeFSSliceCount = 0x10;
 
 inline constexpr UInt16 kOpenHeFSInvalidVID = 0xFFFF;
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Access time type.
 /// @details Used to keep track of the INode, INodeDir allocation status.
 typedef UInt64 ATime;
@@ -227,9 +227,9 @@ struct PACKED HEFS_INDEX_NODE_DIRECTORY final {
 
   Char fPad[285];
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
-namespace Kernel::Detail {
+namespace Ne::Kernel::Detail {
 /// @brief OpenHeFS get year from ATime.
 /// @param raw_atime the raw ATime value.
 /// @return the year value.
@@ -376,9 +376,9 @@ inline const Char* hefs_file_flags_to_string(UInt32 flags) {
       return "Unknown";
   }
 }
-}  // namespace Kernel::Detail
+}  // namespace Ne::Kernel::Detail
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief OpenHeFS filesystem parser class.
 /// @details This class is used to parse the OpenHeFS filesystem.
 class HeFileSystemParser final {
@@ -431,6 +431,6 @@ namespace OpenHeFS {
   /// @return Whether it successfuly formated it or not.
   Boolean fs_init_openhefs(Void);
 }  // namespace OpenHeFS
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

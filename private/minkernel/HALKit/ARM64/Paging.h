@@ -46,7 +46,7 @@
 #define cPageMaxToM(M) {0b000, M}
 #define cPageMToN(M, N) {M, N}
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 struct PACKED PTE_4KB final {
   UInt64 Valid : 1;
   UInt64 Table : 1;
@@ -93,12 +93,12 @@ struct PDE_4KB final {
 
 auto mm_alloc_bitmap(Boolean wr, Boolean user, SizeT size, Bool is_page, SizeT pad = 0) -> VoidPtr;
 auto mm_free_bitmap(VoidPtr page_ptr) -> Bool;
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
-namespace Kernel {
+namespace Ne::Kernel {
 typedef HAL::PTE_4KB PTE;
 typedef HAL::PDE_4KB PDE;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 EXTERN_C void hal_flush_tlb();
 

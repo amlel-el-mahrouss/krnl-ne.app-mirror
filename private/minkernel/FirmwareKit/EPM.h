@@ -62,10 +62,10 @@ struct EPM_PART_BLOCK;
 
 /// @brief EPM GUID structure.
 typedef struct EPM_GUID {
-  Kernel::UInt32 Data1;
-  Kernel::UInt16 Data2;
-  Kernel::UInt16 Data3;
-  Kernel::UInt8  Data4[8];
+  Ne::Kernel::UInt32 Data1;
+  Ne::Kernel::UInt16 Data2;
+  Ne::Kernel::UInt16 Data3;
+  Ne::Kernel::UInt8  Data4[8];
 } PACKED EPM_GUID;
 
 /**
@@ -73,19 +73,19 @@ typedef struct EPM_GUID {
  * @note NumBlock and LbaStart are ignored on some platforms.
  */
 struct PACKED EPM_PART_BLOCK {
-  Kernel::Char  Magic[kEPMMagicLength];
-  Kernel::Char  Name[kEPMNameLength];
+  Ne::Kernel::Char  Magic[kEPMMagicLength];
+  Ne::Kernel::Char  Name[kEPMNameLength];
   EPM_GUID      Guid;
-  Kernel::Int32 Version;
-  Kernel::Int64 NumBlocks;
-  Kernel::Int64 SectorSz;
-  Kernel::Int64 LbaStart;  // base offset
-  Kernel::Int64 LbaEnd;    // end offset
-  Kernel::Int16 Kind;
-  Kernel::Int16 Flags;
-  Kernel::Int32 FsVersion;
-  Kernel::Char  Fs[kEPMFilesystemLength];  /* NeFS, OpenHeFS... */
-  Kernel::Char  Reserved[kEPMReserveLen];  // to fill a full sector.
+  Ne::Kernel::Int32 Version;
+  Ne::Kernel::Int64 NumBlocks;
+  Ne::Kernel::Int64 SectorSz;
+  Ne::Kernel::Int64 LbaStart;  // base offset
+  Ne::Kernel::Int64 LbaEnd;    // end offset
+  Ne::Kernel::Int16 Kind;
+  Ne::Kernel::Int16 Flags;
+  Ne::Kernel::Int32 FsVersion;
+  Ne::Kernel::Char  Fs[kEPMFilesystemLength];  /* NeFS, OpenHeFS... */
+  Ne::Kernel::Char  Reserved[kEPMReserveLen];  // to fill a full sector.
 };
 
 ///! @brief Version kind enum.

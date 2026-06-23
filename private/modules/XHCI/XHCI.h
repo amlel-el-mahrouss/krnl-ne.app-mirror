@@ -17,7 +17,7 @@
 #define kUSBPort1StatusCtrl (UInt16) 0x10
 #define kUSBPort2StatusCtrl (UInt16) 0x12
 
-namespace Kernel {
+namespace Ne::Kernel {
 typedef struct USBCommandRegister final {
   UInt8 mReserved[8];  // Reserved
   UInt8 mMaxPacket;    //  	0 = Max packet size 32 bits 1 = Max packet size 64 bits
@@ -55,6 +55,6 @@ typedef struct USBInterruptEnableRegister final {
   32-bit physical adress of Frame List. Remember that first 12 bytes are
    always 0. The Frame List must contain 1024 entries.
 */
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -15,11 +15,11 @@
 #define HAL_UNUSED(X) (Void) X
 #endif
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 
 struct HAL_CALL_ENTRY;
 
-using hal_proc_type = Kernel::Void (*)(Kernel::VoidPtr);
+using hal_proc_type = Ne::Kernel::Void (*)(Ne::Kernel::VoidPtr);
 
 enum : SInt64 { kAuthLevelInvalid, kAuthLevelHigh = 100, kAuthLevelMid, kAuthLevelLow };
 
@@ -38,6 +38,6 @@ struct HAL_CALL_ENTRY final {
 
 inline Array<HAL_CALL_ENTRY, kMaxDispatchCallCount> kRegisteredSystemCalls;
 
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
 #endif  // HAL_HAL_H

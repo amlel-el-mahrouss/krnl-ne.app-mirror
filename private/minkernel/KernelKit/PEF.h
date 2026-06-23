@@ -26,7 +26,7 @@
 #define kPefDebugExt ".dbg"
 #define kPefDriverExt ".sys"
 
-// Kernel System Binary Interface.
+// Ne::Kernel System Binary Interface.
 #define kPefAbi (0x5046)
 
 #define kPefBaseOrigin (0x40000000)
@@ -37,7 +37,7 @@
 #define kPefForkKind kPefMagic
 #define kPefForkKindFAT kPefMagicFat
 
-namespace Kernel {
+namespace Ne::Kernel {
 enum {
   kPefArchIntel86S,
   kPefArchAMD64,
@@ -104,6 +104,6 @@ enum {
   kPefLinkerID = 0x1,
   kPefCount    = 4,
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif /* ifndef KERNELKIT_PEF_H */

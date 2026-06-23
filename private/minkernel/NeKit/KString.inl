@@ -4,9 +4,9 @@
 // Official repository: https://github.com/ne-app-eu/krnl
 
 /// @file KBasicString.inl
-/// @brief Kernel String manipulation file.
+/// @brief Ne::Kernel String manipulation file.
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <typename CharKind>
 inline void ort_string_append(CharKind* lhs, const CharKind* rhs, Int32 cur) {
   SizeT sz_rhs = oe_string_len<CharKind>(rhs);
@@ -173,4 +173,4 @@ inline const CharKind* KStringBuilder::Format(const CharKind* fmt, const CharKin
 
   return ret;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

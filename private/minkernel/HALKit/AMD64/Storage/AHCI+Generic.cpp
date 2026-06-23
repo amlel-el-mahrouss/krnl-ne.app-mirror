@@ -40,7 +40,7 @@
 #define kSATASubClass (0x06)
 #define kSATABar5 (0x24)
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 STATIC PCI::Device kSATADev;
 STATIC HbaMemRef   kSATAHba;
@@ -518,7 +518,7 @@ SizeT drv_std_get_size() {
 
 #endif  // ifdef __AHCI__
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Initialize an AHCI device (StorageKit)
 UInt16 sk_init_ahci_device(BOOL atapi) {
   UInt16 pi = 0;
@@ -586,4 +586,4 @@ ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(UInt32 drv_index) {
 
   return ErrorOr<AHCIDeviceInterface>(device);
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

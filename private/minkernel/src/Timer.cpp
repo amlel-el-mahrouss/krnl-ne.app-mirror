@@ -10,9 +10,9 @@
 ///! @brief Software Timer implementation
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Unimplemented as it is an interface.
 BOOL ITimer::Wait() {
   return NO;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

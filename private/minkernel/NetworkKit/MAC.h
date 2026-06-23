@@ -12,7 +12,7 @@
 
 #define kMACAddrLen (32U)
 
-namespace Kernel {
+namespace Ne::Kernel {
 class MacAddressGetter;
 
 /// \brief This retrieves the MAC address of the device.
@@ -31,6 +31,6 @@ class MacAddressGetter final {
   Array<UInt8, kMACAddrLen> fMacAddress;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

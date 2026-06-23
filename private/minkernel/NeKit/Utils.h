@@ -8,7 +8,7 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// =========================================================== ///
 /// @brief ASCII API
 /// =========================================================== ///
@@ -69,6 +69,6 @@ inline constexpr SizeT oe_string_len(const CharType* str) {
   return len;
 #endif
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

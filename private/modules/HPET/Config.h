@@ -9,29 +9,29 @@
 #include <NeKit/Config.h>
 #include <modules/ACPI/ACPI.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
   
 struct PACKED HPETAddressStructure final {
-  Kernel::UInt8  AddressSpaceId;  // 0 - system memory, 1 - system I/O
-  Kernel::UInt8  RegisterBitWidth;
-  Kernel::UInt8  RegisterBitOffset;
-  Kernel::UInt8  Reserved;
-  Kernel::UInt64 Address;
+  Ne::Kernel::UInt8  AddressSpaceId;  // 0 - system memory, 1 - system I/O
+  Ne::Kernel::UInt8  RegisterBitWidth;
+  Ne::Kernel::UInt8  RegisterBitOffset;
+  Ne::Kernel::UInt8  Reserved;
+  Ne::Kernel::UInt64 Address;
 };
 
 struct PACKED HPETHeader final : public SDT {
-  Kernel::UInt8        HardwareRevId;
-  Kernel::UInt8        ComparatorCount : 5;
-  Kernel::UInt8        CounterSize : 1;
-  Kernel::UInt8        Reserved : 1;
-  Kernel::UInt8        LegacyReplacement : 1;
-  Kernel::UInt16       PciVendorId;
+  Ne::Kernel::UInt8        HardwareRevId;
+  Ne::Kernel::UInt8        ComparatorCount : 5;
+  Ne::Kernel::UInt8        CounterSize : 1;
+  Ne::Kernel::UInt8        Reserved : 1;
+  Ne::Kernel::UInt8        LegacyReplacement : 1;
+  Ne::Kernel::UInt16       PciVendorId;
   HPETAddressStructure Address;
-  Kernel::UInt8        HpetNumber;
-  Kernel::UInt16       MinimumTick;
-  Kernel::UInt8        PageProtection;
+  Ne::Kernel::UInt8        HpetNumber;
+  Ne::Kernel::UInt16       MinimumTick;
+  Ne::Kernel::UInt8        PageProtection;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

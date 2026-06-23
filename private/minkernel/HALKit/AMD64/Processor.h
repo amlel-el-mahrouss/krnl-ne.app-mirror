@@ -45,7 +45,7 @@
 #define kTaskGate (0b10001100)
 #define kIDTSelector (0x08)
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace Detail::AMD64 {
   struct PACKED InterruptDescriptorAMD64 final {
     UInt16 OffsetLow;  // offset bits 0..15
@@ -57,9 +57,9 @@ namespace Detail::AMD64 {
     UInt32 Zero;  // reserved
   };
 }  // namespace Detail::AMD64
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 /// @brief Memory Manager mapping flags.
 enum {
   kMMFlagsInvalid = 1 << 0,
@@ -260,18 +260,18 @@ EXTERN_C Void rt_std();
 EXTERN_C UIntPtr mm_get_page_addr(VoidPtr virtual_address);
 
 EXTERN_C Int32 mm_memory_fence(VoidPtr virtual_address);
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
-EXTERN_C Kernel::Void idt_handle_generic(Kernel::UIntPtr rsp);
-EXTERN_C Kernel::Void idt_handle_gpf(Kernel::UIntPtr rsp);
-EXTERN_C Kernel::Void idt_handle_math(Kernel::UIntPtr rsp);
-EXTERN_C Kernel::Void idt_handle_pf(Kernel::UIntPtr rsp);
+EXTERN_C Ne::Kernel::Void idt_handle_generic(Ne::Kernel::UIntPtr rsp);
+EXTERN_C Ne::Kernel::Void idt_handle_gpf(Ne::Kernel::UIntPtr rsp);
+EXTERN_C Ne::Kernel::Void idt_handle_math(Ne::Kernel::UIntPtr rsp);
+EXTERN_C Ne::Kernel::Void idt_handle_pf(Ne::Kernel::UIntPtr rsp);
 
-EXTERN_C ATTRIBUTE(naked) Kernel::Void hal_load_idt(Kernel::HAL::Register64 ptr);
-EXTERN_C ATTRIBUTE(naked) Kernel::Void hal_load_gdt(Kernel::HAL::Register64 ptr);
+EXTERN_C ATTRIBUTE(naked) Ne::Kernel::Void hal_load_idt(Ne::Kernel::HAL::Register64 ptr);
+EXTERN_C ATTRIBUTE(naked) Ne::Kernel::Void hal_load_gdt(Ne::Kernel::HAL::Register64 ptr);
 
-inline Kernel::VoidPtr kKernelBitMpStart = nullptr;
-inline Kernel::SizeT   kKernelBitMpSize  = 0UL;
+inline Ne::Kernel::VoidPtr kKernelBitMpStart = nullptr;
+inline Ne::Kernel::SizeT   kKernelBitMpSize  = 0UL;
 
 #endif  // __NE_AMD64__ */
 

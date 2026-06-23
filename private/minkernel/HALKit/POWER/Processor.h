@@ -12,7 +12,7 @@
 #define rtl_nop_op() asm volatile("mr 0, 0")
 #define kHalPPCAlignment __attribute__((aligned(4)))
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 typedef UIntPtr Reg;
 
 /// @brief Stack frame (as retrieved from assembly.)
@@ -40,21 +40,21 @@ inline void rt_halt() {
 inline void rt_cli() {
   NoOp();  // no oop
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
-EXTERN_C Kernel::Void int_handle_math(Kernel::UIntPtr sp);
-EXTERN_C Kernel::Void int_handle_pf(Kernel::UIntPtr sp);
+EXTERN_C Ne::Kernel::Void int_handle_math(Ne::Kernel::UIntPtr sp);
+EXTERN_C Ne::Kernel::Void int_handle_pf(Ne::Kernel::UIntPtr sp);
 
 /// @brief Set TLB.
-Kernel::Bool hal_set_tlb(Kernel::UInt8 tlb, Kernel::UInt32 epn, Kernel::UInt64 rpn,
-                         Kernel::UInt8 perms, Kernel::UInt8 wimge, Kernel::UInt8 ts,
-                         Kernel::UInt8 esel, Kernel::UInt8 tsize, Kernel::UInt8 iprot);
+Ne::Kernel::Bool hal_set_tlb(Ne::Kernel::UInt8 tlb, Ne::Kernel::UInt32 epn, Ne::Kernel::UInt64 rpn,
+                         Ne::Kernel::UInt8 perms, Ne::Kernel::UInt8 wimge, Ne::Kernel::UInt8 ts,
+                         Ne::Kernel::UInt8 esel, Ne::Kernel::UInt8 tsize, Ne::Kernel::UInt8 iprot);
 
 /// @brief Write TLB.
-Kernel::Void hal_write_tlb(Kernel::UInt32 mas0, Kernel::UInt32 mas1, Kernel::UInt32 mas2,
-                           Kernel::UInt32 mas3, Kernel::UInt32 mas7);
+Ne::Kernel::Void hal_write_tlb(Ne::Kernel::UInt32 mas0, Ne::Kernel::UInt32 mas1, Ne::Kernel::UInt32 mas2,
+                           Ne::Kernel::UInt32 mas3, Ne::Kernel::UInt32 mas7);
 
 /// @brief Flush TLB.
-EXTERN_C Kernel::Void hal_flush_tlb();
+EXTERN_C Ne::Kernel::Void hal_flush_tlb();
 
 #endif

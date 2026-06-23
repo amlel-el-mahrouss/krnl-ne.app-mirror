@@ -28,7 +28,7 @@
 
 #define kDriveHiddenPrefix '~'
 
-namespace Kernel {
+namespace Ne::Kernel {
 enum {
   kInvalidDrive = -1,
 
@@ -164,6 +164,6 @@ namespace Detect {
 Void io_drv_input(DriveTrait::DrivePacket pckt);
 
 Void io_drv_output(DriveTrait::DrivePacket pckt);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif /* ifndef KERNELKIT_DRIVEMGR_H */

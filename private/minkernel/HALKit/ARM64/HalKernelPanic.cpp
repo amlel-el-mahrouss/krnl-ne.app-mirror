@@ -17,7 +17,7 @@
 /* Each error code is attributed with an ID, which will prompt a string onto the
  * screen. Wait for debugger... */
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Dumping factory class.
 class RecoveryFactory final {
  public:
@@ -28,7 +28,7 @@ class RecoveryFactory final {
 /// @brief Stops execution of the kernel.
 /// @param id kernel stop ID.
 /***********************************************************************************/
-Void ke_stop(const Kernel::Int32& id, const Char* message) {
+Void ke_stop(const Ne::Kernel::Int32& id, const Char* message) {
   (Void)(kout << "*** STOP ***\r");
   (Void)(kout << "Kernel_Panic_MSG: " << message << kendl);
   (Void)(kout << "Kernel_Panic_ID: " << hex_number(id) << kendl);
@@ -71,4 +71,4 @@ void ke_runtime_check(bool expr, const Char* file, const Char* line) {
     ke_stop(RUNTIME_CHECK_FAILED, file);  // Runtime Check failed
   }
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

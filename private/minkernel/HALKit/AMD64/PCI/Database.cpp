@@ -5,4 +5,4 @@
 
 #include <KernelKit/PCI/Database.h>
 
-namespace Kernel {}
+namespace Ne::Kernel {}

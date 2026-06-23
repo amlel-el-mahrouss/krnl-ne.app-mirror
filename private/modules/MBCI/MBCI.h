@@ -27,7 +27,7 @@
 #define kMBCIZeroSz (8)
 #define kMBCIESBSz (64)
 
-namespace Kernel {
+namespace Ne::Kernel {
   
 struct IMBCIHost;
 
@@ -122,6 +122,6 @@ inline MBCIAuthKeyType mbci_read_auth_key(_Input struct IMBCIHost* host) {
          (host->Esb[kMBCIESBSz - 3] & 0xFF);
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef _INC_MODULE_MBCI_H_

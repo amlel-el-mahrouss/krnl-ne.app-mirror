@@ -12,29 +12,29 @@
 #define PCI_BAR_PREFETCH (0x08)
 #define PCI_ENABLE_BIT (0x80000000)
 
-static Kernel::UInt NE_PCIReadRaw(Kernel::UInt bar, Kernel::UShort bus, Kernel::UShort dev,
-                                  Kernel::UShort fun) {
-  Kernel::UInt target = PCI_ENABLE_BIT | ((Kernel::UInt) bus << 16) | ((Kernel::UInt) dev << 11) |
-                        ((Kernel::UInt) fun << 8) | (bar & 0xFC);
+static Ne::Kernel::UInt NE_PCIReadRaw(Ne::Kernel::UInt bar, Ne::Kernel::UShort bus, Ne::Kernel::UShort dev,
+                                  Ne::Kernel::UShort fun) {
+  Ne::Kernel::UInt target = PCI_ENABLE_BIT | ((Ne::Kernel::UInt) bus << 16) | ((Ne::Kernel::UInt) dev << 11) |
+                        ((Ne::Kernel::UInt) fun << 8) | (bar & 0xFC);
 
-  Kernel::HAL::rt_out32((Kernel::UShort) Kernel::PCI::PciConfigKind::ConfigAddress, target);
+  Ne::Kernel::HAL::rt_out32((Ne::Kernel::UShort) Ne::Kernel::PCI::PciConfigKind::ConfigAddress, target);
 
-  Kernel::HAL::rt_wait_400ns();
+  Ne::Kernel::HAL::rt_wait_400ns();
 
-  return Kernel::HAL::rt_in32((Kernel::UShort) Kernel::PCI::PciConfigKind::ConfigData);
+  return Ne::Kernel::HAL::rt_in32((Ne::Kernel::UShort) Ne::Kernel::PCI::PciConfigKind::ConfigData);
 }
 
-static Kernel::Void NE_PCISetCfgTarget(Kernel::UInt bar, Kernel::UShort bus, Kernel::UShort dev,
-                                       Kernel::UShort fun) {
-  Kernel::UInt target = 0x80000000 | ((Kernel::UInt) bus << 16) | ((Kernel::UInt) dev << 11) |
-                        ((Kernel::UInt) fun << 8) | (bar & 0xFC);
+static Ne::Kernel::Void NE_PCISetCfgTarget(Ne::Kernel::UInt bar, Ne::Kernel::UShort bus, Ne::Kernel::UShort dev,
+                                       Ne::Kernel::UShort fun) {
+  Ne::Kernel::UInt target = 0x80000000 | ((Ne::Kernel::UInt) bus << 16) | ((Ne::Kernel::UInt) dev << 11) |
+                        ((Ne::Kernel::UInt) fun << 8) | (bar & 0xFC);
 
-  Kernel::HAL::rt_out32((Kernel::UShort) Kernel::PCI::PciConfigKind::ConfigAddress, target);
+  Ne::Kernel::HAL::rt_out32((Ne::Kernel::UShort) Ne::Kernel::PCI::PciConfigKind::ConfigAddress, target);
 
-  Kernel::HAL::rt_wait_400ns();
+  Ne::Kernel::HAL::rt_wait_400ns();
 }
 
-namespace Kernel::PCI {
+namespace Ne::Kernel::PCI {
 Device::Device(UShort bus, UShort device, UShort func, UInt32 bar)
     : fBus(bus), fDevice(device), fFunction(func), fBar(bar) {}
 
@@ -138,4 +138,4 @@ UShort Device::Vendor() {
 Device::operator bool() {
   return this->VendorId() != (UShort) PciConfigKind::Invalid;
 }
-}  // namespace Kernel::PCI
+}  // namespace Ne::Kernel::PCI

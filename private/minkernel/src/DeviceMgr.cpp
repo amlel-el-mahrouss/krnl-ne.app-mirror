@@ -5,4 +5,4 @@
 
 #include <KernelKit/DeviceMgr.h>
 
-namespace Kernel {}  // namespace Kernel
+namespace Ne::Kernel {}  // namespace Ne::Kernel

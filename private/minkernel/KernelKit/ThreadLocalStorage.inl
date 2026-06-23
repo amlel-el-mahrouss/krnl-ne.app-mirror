@@ -10,11 +10,11 @@
 #include <KernelKit/ProcessScheduler.h>
 #endif
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 template <class T>
 inline T* tls_new_ptr(void) {
-  using namespace Kernel;
+  using namespace Ne::Kernel;
 
   auto ref_process = UserProcessScheduler::The().TheCurrentProcess();
 
@@ -28,8 +28,8 @@ inline T* tls_new_ptr(void) {
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <class T>
-inline Kernel::Bool tls_delete_ptr(T* obj) {
-  using namespace Kernel;
+inline Ne::Kernel::Bool tls_delete_ptr(T* obj) {
+  using namespace Ne::Kernel;
 
   if (!obj) return No;
 
@@ -43,14 +43,14 @@ inline Kernel::Bool tls_delete_ptr(T* obj) {
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <class T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T> obj) {
+inline Ne::Kernel::Bool tls_delete_ptr(Ne::Kernel::ErrorOr<T> obj) {
   return tls_delete_ptr(obj.Leak());
 }
 
 //! @brief Delete process pointer.
 //! @param obj The pointer to delete.
 template <class T>
-inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) {
+inline Ne::Kernel::Bool tls_delete_ptr(Ne::Kernel::ErrorOr<T*> obj) {
   return tls_delete_ptr(obj->Leak());
 }
 
@@ -61,7 +61,7 @@ inline Kernel::Bool tls_delete_ptr(Kernel::ErrorOr<T*> obj) {
 /// @return Class instance.
 template <class T, class... Args>
 T* tls_new_class(Args&&... args) {
-  using namespace Kernel;
+  using namespace Ne::Kernel;
 
   T* obj = tls_new_ptr<T>();
 
@@ -78,8 +78,8 @@ T* tls_new_class(Args&&... args) {
 /// @param obj
 /// @return
 template <class T>
-inline Kernel::Bool tls_delete_class(T* obj) {
-  using namespace Kernel;
+inline Ne::Kernel::Bool tls_delete_class(T* obj) {
+  using namespace Ne::Kernel;
 
   if (!obj) return No;
 
@@ -87,4 +87,4 @@ inline Kernel::Bool tls_delete_class(T* obj) {
   return tls_delete_ptr(obj);
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

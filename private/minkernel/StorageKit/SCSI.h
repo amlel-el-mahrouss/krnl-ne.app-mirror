@@ -10,7 +10,7 @@
 #include <NeKit/OwnPtr.h>
 #include <modules/SCSI/SCSI.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class SCSIDeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
   SCSIDeviceInterface(Void (*out)(IDevice*, IMountpoint* out_packet),
@@ -26,6 +26,6 @@ class SCSIDeviceInterface final NE_DEVICE<IMountpoint*> {
  private:
   Void (*fCleanup)(Void) = {nullptr};
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

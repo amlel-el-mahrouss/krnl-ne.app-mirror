@@ -11,7 +11,7 @@
 #include <NetworkKit/NetworkDevice.h>
 #endif  // __INC_NETWORK_DEVICE_H__
 
-namespace Kernel {
+namespace Ne::Kernel {
 inline NetworkDevice::NetworkDevice(
     void (*out)(IDevice<NetworkDeviceCommand>*, NetworkDeviceCommand),
     void (*in)(IDevice<NetworkDeviceCommand>*, NetworkDeviceCommand), void (*on_cleanup)(void))
@@ -26,4 +26,4 @@ inline NetworkDevice::~NetworkDevice() {
 
   if (fCleanup) fCleanup();
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

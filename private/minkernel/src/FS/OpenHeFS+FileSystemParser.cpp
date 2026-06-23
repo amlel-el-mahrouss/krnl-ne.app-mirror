@@ -18,7 +18,7 @@
 #include <modules/AHCI/AHCI.h>
 #include <modules/ATA/ATA.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace Detail {
 
@@ -745,13 +745,13 @@ namespace Detail {
     return NO;
   }
 }  // namespace Detail
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 /// @note OpenHeFS will allocate inodes and ind in advance, to avoid having to allocate them in
 /// real-time.
 /// @note This is certainly take longer to format a disk with it, but worth-it in the long run.
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Make a EPM+OpenHeFS mnt out of the disk.
 /// @param mnt The mnt to write on.
 /// @return If it was sucessful, see err_local_get().
@@ -1166,6 +1166,6 @@ Boolean OpenHeFS::fs_init_openhefs(Void) {
                                      kOpenHeFSDefaultVolumeName);
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__

@@ -11,9 +11,9 @@
 #include <NeKit/ErrorOr.h>
 #include <hint/CompilerHint.h>
 
-#define NE_EXEC_LOADER : public ::Kernel::ILoader
+#define NE_EXEC_LOADER : public ::Ne::Kernel::ILoader
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief The ILoader interface is used to make dynamic loader contracts (such as: MSCOFF, PEF).
 /// @author Amlal El Mahrouss
@@ -35,6 +35,6 @@ class ILoader {
   }
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

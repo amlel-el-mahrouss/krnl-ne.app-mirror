@@ -11,11 +11,11 @@
 #define KERNELKIT_VERSION "0.0.3"
 #define KERNELKIT_VERSION_BCD 0x0003
 
-namespace Kernel {
+namespace Ne::Kernel {
 class UserProcessScheduler;
 class IDylibObject;
 class UserProcess;
 class KernelTask;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

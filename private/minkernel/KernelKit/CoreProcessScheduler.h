@@ -24,7 +24,7 @@
 
 EXTERN_C void sched_idle_task(void);
 
-namespace Kernel {
+namespace Ne::Kernel {
 class UserProcess;
 class KernelTask;
 class KernelTaskScheduler;
@@ -246,6 +246,6 @@ struct ProcessImage final {
     return ErrorOr<ImagePtr>{kErrorInvalidData};
   }
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

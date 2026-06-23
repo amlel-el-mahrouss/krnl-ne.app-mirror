@@ -5,7 +5,7 @@
 
 #include <StorageKit/SCSI.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 SCSIDeviceInterface::SCSIDeviceInterface(void (*out)(IDevice*, IMountpoint* outpacket),
                                          void (*in)(IDevice*, IMountpoint* inpacket),
                                          void (*cleanup)(void))
@@ -18,4 +18,4 @@ SCSIDeviceInterface::~SCSIDeviceInterface() {
 const Char* SCSIDeviceInterface::Name() const {
   return kDeviceMgrRootDirPath "sd{}{}";
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

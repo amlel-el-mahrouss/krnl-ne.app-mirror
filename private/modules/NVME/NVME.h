@@ -11,9 +11,9 @@
 /// @file NVME.h
 /// @brief Non Volatile Memory.
 
-#define NE_ALIGN_NVME ATTRIBUTE(aligned(sizeof(Kernel::UInt32)))
+#define NE_ALIGN_NVME ATTRIBUTE(aligned(sizeof(Ne::Kernel::UInt32)))
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct NE_ALIGN_NVME HAL_NVME_BAR_0 final {
   UInt32 fCapabilities;
   UInt32 fVersion;
@@ -93,6 +93,6 @@ inline Bool nvme_create_io_command(HAL_NVME_QUEUE* entry, UInt64 baseAddress,
 
   return true;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef __MODULE_NVME_H__

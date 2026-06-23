@@ -24,7 +24,7 @@
 
 #define kPeApplicationMime "application/vnd-portable-executable"
 
-namespace Kernel {
+namespace Ne::Kernel {
 ///
 /// \name PE32Loader
 /// \brief PE32+ loader class.
@@ -76,6 +76,6 @@ using PE_SECTION_INFO = LDR_SECTION_HEADER;
 
 ProcessID rtl_create_user_process(PE32Loader&                        exec,
                                   const UserProcess::ExecutableKind& process_kind);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

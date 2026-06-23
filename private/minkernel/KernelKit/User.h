@@ -30,7 +30,7 @@
 #define kMaxUserNameLen (256U)
 #define kMaxUserTokenLen (256U)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class User;
 
@@ -102,6 +102,6 @@ inline UserPtr kCurrentUser = nullptr;
 /// \brief Supervisor pointer.
 inline UserPtr kRootUser = nullptr;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif /* ifndef KERNELKIT_USERMGR_USER_H */

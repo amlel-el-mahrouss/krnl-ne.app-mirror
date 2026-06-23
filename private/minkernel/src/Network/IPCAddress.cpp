@@ -7,7 +7,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NetworkKit/IPC.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 bool IPC_ADDR::operator==(const IPC_ADDR& addr) {
   return addr.UserProcessID == this->UserProcessID && addr.UserProcessTeam == this->UserProcessTeam;
 }
@@ -23,4 +23,4 @@ bool IPC_ADDR::operator!=(const IPC_ADDR& addr) {
 bool IPC_ADDR::operator!=(IPC_ADDR& addr) {
   return addr.UserProcessID != this->UserProcessID || addr.UserProcessTeam != this->UserProcessTeam;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -16,20 +16,20 @@
 #define kXCOFFLnno (0x0004)
 #define kXCOFFLSyms (0x0008)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 struct XCOFF_FILE_HEADER;
 struct XCOFF_FORK_HEADER;
 
 /// @brief XCoff file header, meant for POWER apps.
 typedef struct XCOFF_FILE_HEADER {
-  Kernel::UInt16  fMagic;
-  Kernel::UInt16  fTarget;
-  Kernel::UInt16  fNumSecs;
-  Kernel::UInt32  fTimeDat;
-  Kernel::UIntPtr fSymPtr;
-  Kernel::UInt32  fNumSyms;
-  Kernel::UInt16  fOptHdr;  // ?: Number of bytes in optional header
+  Ne::Kernel::UInt16  fMagic;
+  Ne::Kernel::UInt16  fTarget;
+  Ne::Kernel::UInt16  fNumSecs;
+  Ne::Kernel::UInt32  fTimeDat;
+  Ne::Kernel::UIntPtr fSymPtr;
+  Ne::Kernel::UInt32  fNumSyms;
+  Ne::Kernel::UInt16  fOptHdr;  // ?: Number of bytes in optional header
 } XCOFF_FILE_HEADER, XCOFF_FILE_HEADER32, XCOFF_FILE_HEADER64;
 
 /// @brief This the executable's manifest fork, designed for NeFS.
@@ -37,11 +37,11 @@ typedef struct XCOFF_FILE_HEADER {
 /// @param fDynamicLoaderFork The DYLD fork metadata.
 /// @param fCodeSignFork Executable's certificate contained in a fork.
 typedef struct XCOFF_FORK_HEADER {
-  Kernel::Char fPropertiesXMLFork[kXCOFF64ForkNameLen];
-  Kernel::Char fDynamicLoaderFork[kXCOFF64ForkNameLen];
-  Kernel::Char fCodeSignFork[kXCOFF64ForkNameLen];
+  Ne::Kernel::Char fPropertiesXMLFork[kXCOFF64ForkNameLen];
+  Ne::Kernel::Char fDynamicLoaderFork[kXCOFF64ForkNameLen];
+  Ne::Kernel::Char fCodeSignFork[kXCOFF64ForkNameLen];
 } XCOFF_FORK_HEADER;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef KERNELKIT_XCOFF_H

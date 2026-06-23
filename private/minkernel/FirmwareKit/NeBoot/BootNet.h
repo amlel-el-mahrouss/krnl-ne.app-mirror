@@ -20,22 +20,22 @@ struct _BOOTNET_INTERNET_HEADER;
 /// sent (if m_preflight = 0)
 /// @note Can be used to patch ROMs too (if ImpliesProgram = 1)
 typedef struct _BOOTNET_INTERNET_HEADER {
-  Kernel::Char NB1;  /// magic char 1 'O'
-  Kernel::Char NB2;  /// magic char 2 'N'
-  Kernel::Char NB3;  /// magic char 3 'E'
-  Kernel::Char NB4;  /// magic char 4 'T'
+  Ne::Kernel::Char NB1;  /// magic char 1 'O'
+  Ne::Kernel::Char NB2;  /// magic char 2 'N'
+  Ne::Kernel::Char NB3;  /// magic char 3 'E'
+  Ne::Kernel::Char NB4;  /// magic char 4 'T'
 
-  Kernel::UInt16 Version;
+  Ne::Kernel::UInt16 Version;
 
-  Kernel::Char Name[kBootNetNameLen];  /// example: Modjo
+  Ne::Kernel::Char Name[kBootNetNameLen];  /// example: Modjo
 
-  Kernel::Int32 Length;                   /// the patch length.
-  Kernel::Char  Target[kBootNetNameLen];  /// the target file.
+  Ne::Kernel::Int32 Length;                   /// the patch length.
+  Ne::Kernel::Char  Target[kBootNetNameLen];  /// the target file.
 
-  Kernel::Boolean ImpliesProgram : 1;  /// does it imply reprogramming?
+  Ne::Kernel::Boolean ImpliesProgram : 1;  /// does it imply reprogramming?
 
-  Kernel::Boolean Preflight : 1;  /// is it a preflight packet.
-  Kernel::Char    Data[1];        /// non preflight packet has a patch blob for a **PatchTarget**
+  Ne::Kernel::Boolean Preflight : 1;  /// is it a preflight packet.
+  Ne::Kernel::Char    Data[1];        /// non preflight packet has a patch blob for a **PatchTarget**
 } PACKED BOOTNET_INTERNET_HEADER;
 
 using BOOTNET_INTERNET_HEADER_PTR = BOOTNET_INTERNET_HEADER*;

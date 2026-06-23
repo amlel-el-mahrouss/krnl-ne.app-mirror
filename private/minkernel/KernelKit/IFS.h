@@ -8,7 +8,7 @@
 
 #include <KernelKit/DriveMgr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Read from IFS disk.
 /// @param Mnt mounted interface.
@@ -24,6 +24,6 @@ Int32 fs_ifs_read(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 /// @return Status code
 Int32 fs_ifs_write(IMountpoint* mnt, DriveTrait& drvTrait, Int32 drvIndex);
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

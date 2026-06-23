@@ -21,8 +21,8 @@ class BootDeviceSATA final {
   NE_COPY_DEFAULT(BootDeviceSATA)
 
   struct SATATrait final : public Device::Trait {
-    Kernel::Boolean mErr{false};
-    Kernel::Boolean mDetected{false};
+    Ne::Kernel::Boolean mErr{false};
+    Ne::Kernel::Boolean mDetected{false};
 
     explicit operator bool() { return !this->mErr; }
   };
@@ -33,8 +33,8 @@ class BootDeviceSATA final {
 
   constexpr static auto kSectorSize = kAHCISectorSize;
 
-  BootDeviceSATA& Read(Boot::CharacterTypeASCII* Buf, const Kernel::SizeT SecCount);
-  BootDeviceSATA& Write(Boot::CharacterTypeASCII* Buf, const Kernel::SizeT SecCount);
+  BootDeviceSATA& Read(Boot::CharacterTypeASCII* Buf, const Ne::Kernel::SizeT SecCount);
+  BootDeviceSATA& Write(Boot::CharacterTypeASCII* Buf, const Ne::Kernel::SizeT SecCount);
 
   SATATrait& Leak();
 

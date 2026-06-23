@@ -5,7 +5,7 @@
 
 #include <GfxKit/FB.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 /// @brief Class constructor
 /// @param Out Drive output

@@ -9,7 +9,7 @@
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/NeKit.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace TraceSrv {
 
@@ -55,6 +55,6 @@ namespace TraceSrv {
 
 }  // namespace TraceSrv
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !KERNELKIT_TRACESRV_H

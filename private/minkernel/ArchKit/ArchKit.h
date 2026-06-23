@@ -28,7 +28,7 @@
 
 #define kMaxDispatchCallCount (512U)
 
-namespace Kernel {
+namespace Ne::Kernel {
 inline SizeT rt_hash_seed(const Char* seed, UInt32 mul) {
   SizeT hash = 0;
 
@@ -65,14 +65,14 @@ namespace HAL {
   /// @param whether successful or not.
   auto mm_is_bitmap(VoidPtr ptr) -> Bool;
 }  // namespace HAL
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
-using rt_syscall_proc = Kernel::Void (*)(Kernel::VoidPtr);
+using rt_syscall_proc = Ne::Kernel::Void (*)(Ne::Kernel::VoidPtr);
 
 /// @brief System Call Dispatch.
 struct HAL_DISPATCH_ENTRY final {
-  Kernel::UInt64  fHash;
-  Kernel::Bool    fHooked;
+  Ne::Kernel::UInt64  fHash;
+  Ne::Kernel::Bool    fHooked;
   rt_syscall_proc fProc;
 
   BOOL IsKernCall() { return NO; }
@@ -81,12 +81,12 @@ struct HAL_DISPATCH_ENTRY final {
   operator bool() { return fHooked; }
 };
 
-using rt_kerncall_proc = Kernel::Void (*)(Kernel::SizeT, Kernel::VoidPtr, Kernel::SizeT);
+using rt_kerncall_proc = Ne::Kernel::Void (*)(Ne::Kernel::SizeT, Ne::Kernel::VoidPtr, Ne::Kernel::SizeT);
 
-/// @brief Kernel Call Dispatch.
+/// @brief Ne::Kernel Call Dispatch.
 struct HAL_KERNEL_DISPATCH_ENTRY final {
-  Kernel::UInt64   fHash;
-  Kernel::Bool     fHooked;
+  Ne::Kernel::UInt64   fHash;
+  Ne::Kernel::Bool     fHooked;
   rt_kerncall_proc fProc;
 
   BOOL IsKernCall() { return YES; }
@@ -95,16 +95,16 @@ struct HAL_KERNEL_DISPATCH_ENTRY final {
   operator bool() { return fHooked; }
 };
 
-inline Kernel::Array<HAL_DISPATCH_ENTRY, kMaxDispatchCallCount> kSysCalls;
+inline Ne::Kernel::Array<HAL_DISPATCH_ENTRY, kMaxDispatchCallCount> kSysCalls;
 
-inline Kernel::Array<HAL_KERNEL_DISPATCH_ENTRY, kMaxDispatchCallCount> kKernCalls;
+inline Ne::Kernel::Array<HAL_KERNEL_DISPATCH_ENTRY, kMaxDispatchCallCount> kKernCalls;
 
 #ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
 
-inline Kernel::VoidPtr kKernelVM = nullptr;
+inline Ne::Kernel::VoidPtr kKernelVM = nullptr;
 
 #endif  // __NE_VIRTUAL_MEMORY_SUPPORT__
 
-inline Kernel::SizeT kBitMapCursor = 0UL;
+inline Ne::Kernel::SizeT kBitMapCursor = 0UL;
 
 #endif

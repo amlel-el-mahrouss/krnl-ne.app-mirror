@@ -8,7 +8,7 @@
 
 #include <DriverKit/ObjectKit/Foundation.hpp>
 
-namespace Kernel::DDK {
+namespace Ne::Kernel::DDK {
 
 using Blob = char*;
 using IndexableBlob = Blob;
@@ -35,6 +35,6 @@ inline uintptr_t rtl_checksum(const IndexableBlob path) {
   return hash;
 }
 
-}  // namespace Kernel::DDK
+}  // namespace Ne::Kernel::DDK
 
 #endif

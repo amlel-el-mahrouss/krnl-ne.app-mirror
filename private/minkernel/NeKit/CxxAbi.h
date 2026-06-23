@@ -18,10 +18,10 @@ struct atexit_func_entry_t {
   void* dso_handle;
 };
 
-typedef Kernel::UInt32 uarch_t;
+typedef Ne::Kernel::UInt32 uarch_t;
 
 namespace cxxabiv1 {
-typedef Kernel::SizeT* __guard;
+typedef Ne::Kernel::SizeT* __guard;
 }
 
 #endif  // !__NECTAR__

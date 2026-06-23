@@ -15,7 +15,7 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 struct FILEMGR_STAT;
 struct FILEMGR_DIRENT;
@@ -319,6 +319,6 @@ class Ext2FileSystemParser final {
   Ext2Context* fCtx;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

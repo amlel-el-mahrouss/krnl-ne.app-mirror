@@ -9,4 +9,4 @@
 
 // after that we have start of additional data.
 
-namespace Kernel {}  // namespace Kernel
+namespace Ne::Kernel {}  // namespace Ne::Kernel

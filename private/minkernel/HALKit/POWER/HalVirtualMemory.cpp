@@ -9,7 +9,7 @@
 
 /// @note Refer to SoC documentation.
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 EXTERN_C Void hal_write_tlb(UInt32 mas0, UInt32 mas1, UInt32 mas2, UInt32 mas3, UInt32 mas7) {
   hal_mtspr(MAS0, mas0);

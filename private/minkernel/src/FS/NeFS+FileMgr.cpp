@@ -12,7 +12,7 @@
 /// @brief NeFS File System Manager.
 /// BUGS: 0
 
-namespace Kernel {
+namespace Ne::Kernel {
   
 static inline bool is_valid_nefs_catalog(NodePtr node);
 
@@ -282,7 +282,7 @@ static inline bool is_valid_nefs_catalog(NodePtr node) {
   return true;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifdef __FSKIT_INCLUDES_NEFS__
 #endif  // ifndef __NE_MINIMAL_OS__

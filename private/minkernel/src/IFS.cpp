@@ -21,7 +21,7 @@
 #define fsi_ifs_write(DRV, TRAITS, MP) (MP->DRV()).fOutput(TRAITS)
 #define fsi_ifs_read(DRV, TRAITS, MP) (MP->DRV()).fInput(TRAITS)
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Read from fs disk.
 /// @param Mnt mounted interface.
 /// @param DrvTrait drive info
@@ -87,4 +87,4 @@ Int32 fs_ifs_write(IMountpoint* Mnt, DriveTrait& DrvTrait, Int32 DrvIndex) {
 
   return DrvTrait.fPacket.fPacketGood ? kErrorSuccess : kErrorDisk;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -5,8 +5,8 @@
 
 #include <mindetect/DetectKit/DetectKit.h>
 
-EXTERN_C Int32 OSDetectModuleMain(Kernel::HEL::BootInfoHeader* handover) {
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+EXTERN_C Int32 OSDetectModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   if (handover->f_HardwareTables.f_MultiProcessingEnabled == false) return kEfiFail;
 

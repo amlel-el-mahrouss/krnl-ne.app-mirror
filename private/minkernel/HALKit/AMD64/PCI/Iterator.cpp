@@ -5,7 +5,7 @@
 
 #include <KernelKit/PCI/Iterator.h>
 
-namespace Kernel::PCI {
+namespace Ne::Kernel::PCI {
 Iterator::Iterator(const Types::PciDeviceKind type, UInt32 bar) {
   // probe devices.
   for (Int32 bus = 0; bus < NE_BUS_COUNT; ++bus) {
@@ -26,4 +26,4 @@ Iterator::~Iterator() {}
 Ref<PCI::Device> Iterator::operator[](const Size& at) {
   return fDevices[at];
 }
-}  // namespace Kernel::PCI
+}  // namespace Ne::Kernel::PCI

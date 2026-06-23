@@ -26,7 +26,7 @@ STATIC EFI_GUID                   kGopGuid;
 
 EXTERN_C Void rt_reset_hardware();
 
-EXTERN_C Kernel::VoidPtr boot_read_cr3();  // @brief Page directory inside cr3 register.
+EXTERN_C Ne::Kernel::VoidPtr boot_read_cr3();  // @brief Page directory inside cr3 register.
 
 /**
   @brief Finds and stores the GOP object.
@@ -161,8 +161,8 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // Convert pages to bytes (assuming 4K pages) for bitmap size.
   handover_hdr->f_BitMapSize = free_pages * 4096;
 
-  handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
-  handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;
+  handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
+  handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;
 
   // ------------------------------------------ //
   // If we succeed in reading the blob, then execute it.

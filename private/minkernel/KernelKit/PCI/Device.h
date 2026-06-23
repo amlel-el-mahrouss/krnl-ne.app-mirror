@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/KernelPanic.h>
 
-namespace Kernel::PCI {
+namespace Ne::Kernel::PCI {
 enum struct PciConfigKind : UShort {
   ConfigAddress = 0xCF8,
   ConfigData    = 0xCFC,
@@ -72,6 +72,6 @@ class Device final {
   UShort fFunction;
   UInt32 fBar;
 };
-}  // namespace Kernel::PCI
+}  // namespace Ne::Kernel::PCI
 
 #endif

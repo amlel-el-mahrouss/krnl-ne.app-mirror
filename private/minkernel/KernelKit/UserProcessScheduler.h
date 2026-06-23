@@ -20,7 +20,7 @@
 // Last revision date is: Fri Mar 28 2025		  //
 ////////////////////////////////////////////////////
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 //! @brief Forward declarations.
 
@@ -273,7 +273,7 @@ class UserProcessHelper final {
   STATIC SizeT              StartScheduling();
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include <KernelKit/ThreadLocalStorage.h>
 #include "UserProcessScheduler.inl"

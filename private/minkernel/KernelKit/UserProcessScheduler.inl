@@ -11,7 +11,7 @@
 #include <KernelKit/UserProcessScheduler.h>
 #endif  // KERNELKIT_USERPROCESSSCHEDULER_H
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /***********************************************************************************/
 /** @brief Free pointer/file from usage. */
@@ -59,4 +59,4 @@ BOOL UserProcess::Delete(ErrorOr<T*> ptr) {
   return No;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

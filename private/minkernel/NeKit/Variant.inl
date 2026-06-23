@@ -7,7 +7,7 @@
 #define NEKIT_VARIANT_INL
 
 template <typename T>
-inline T* Kernel::Variant::As() {
+inline T* Ne::Kernel::Variant::As() {
   return reinterpret_cast<T*>(fPtr);
 }
 

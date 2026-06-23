@@ -22,7 +22,7 @@
 #define kSemaphoreIncrementOwner(sem) (++sem[kSemaphoreOwnerIndex])
 #define kSemaphoreDecrementOwner(sem) (--sem[kSemaphoreOwnerIndex])
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Semaphore structure used for synchronization.
 using SemaphoreArr = UInt64[kSemaphoreCount];
@@ -116,6 +116,6 @@ inline bool rtl_sem_wait(SemaphoreArr& sem, const UInt64& owner, const UInt64& t
   return false;  // Failed to acquire semaphore
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !KERNELKIT_SEMAPHORE_H

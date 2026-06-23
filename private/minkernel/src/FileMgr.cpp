@@ -12,7 +12,7 @@
 //! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-namespace Kernel {
+namespace Ne::Kernel {
 STATIC IFilesystemMgr* kMountedFilesystem = nullptr;
 
 /// @brief FilesystemMgr getter.
@@ -46,4 +46,4 @@ _Output Bool IFilesystemMgr::Mount(_Input IFilesystemMgr* mount_ptr) {
 
   return No;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -8,8 +8,8 @@
 #include <StorageKit/ATA.h>
 #include <modules/ATA/ATA.h>
 
-using namespace Kernel;
-using namespace Kernel::HAL;
+using namespace Ne::Kernel;
+using namespace Ne::Kernel::HAL;
 
 /// BUGS: 0
 
@@ -172,7 +172,7 @@ SizeT drv_pio_get_size() {
   return (drv_pio_get_sector_count()) * kATASectorSize;
 }
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Initialize an PIO device (StorageKit function)
 /// @param is_master is the current PIO master?
 /// @return [io:master] for PIO device.
@@ -236,7 +236,7 @@ ErrorOr<ATADeviceInterface> sk_acquire_ata_device(Int32 drv_index) {
 
   return ErrorOr<ATADeviceInterface>(device);
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #ifdef __ATA_PIO__
 

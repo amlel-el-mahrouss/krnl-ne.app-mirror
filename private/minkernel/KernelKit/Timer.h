@@ -9,7 +9,7 @@
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/KPC.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class SoftwareTimer;
 class HardwareTimer;
@@ -72,6 +72,6 @@ inline constexpr UInt64 rtl_milliseconds(UInt64 time) {
   return time;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !KERNELKIT_TIMER_H

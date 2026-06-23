@@ -12,40 +12,40 @@
 /***********************************************************************************/
 
 #ifndef KIB
-#define KIB(X) (Kernel::UInt64)((X) / 1024)
+#define KIB(X) (Ne::Kernel::UInt64)((X) / 1024)
 #endif
 
 #ifndef kib_cast
-#define kib_cast(X) (Kernel::UInt64)((X) * 1024)
+#define kib_cast(X) (Ne::Kernel::UInt64)((X) * 1024)
 #endif
 
 #ifndef MIB
-#define MIB(X) (Kernel::UInt64)((Kernel::UInt64) KIB(X) / 1024)
+#define MIB(X) (Ne::Kernel::UInt64)((Ne::Kernel::UInt64) KIB(X) / 1024)
 #endif
 
 #ifndef mib_cast
-#define mib_cast(X) (Kernel::UInt64)((Kernel::UInt64) kib_cast(X) * 1024)
+#define mib_cast(X) (Ne::Kernel::UInt64)((Ne::Kernel::UInt64) kib_cast(X) * 1024)
 #endif
 
 #ifndef GIB
-#define GIB(X) (Kernel::UInt64)((Kernel::UInt64) MIB(X) / 1024)
+#define GIB(X) (Ne::Kernel::UInt64)((Ne::Kernel::UInt64) MIB(X) / 1024)
 #endif
 
 #ifndef gib_cast
-#define gib_cast(X) (Kernel::UInt64)((Kernel::UInt64) mib_cast(X) * 1024)
+#define gib_cast(X) (Ne::Kernel::UInt64)((Ne::Kernel::UInt64) mib_cast(X) * 1024)
 #endif
 
 #ifndef TIB
-#define TIB(X) (Kernel::UInt64)((Kernel::UInt64) GIB(X) / 1024)
+#define TIB(X) (Ne::Kernel::UInt64)((Ne::Kernel::UInt64) GIB(X) / 1024)
 #endif
 
 #ifndef tib_cast
-#define tib_cast(X) ((Kernel::UInt64) gib_cast(X) * 1024)
+#define tib_cast(X) ((Ne::Kernel::UInt64) gib_cast(X) * 1024)
 #endif
 
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(a) \
-  (((sizeof(a) / sizeof(*(a))) / (static_cast<Kernel::Size>(!(sizeof(a) % sizeof(*(a)))))))
+  (((sizeof(a) / sizeof(*(a))) / (static_cast<Ne::Kernel::Size>(!(sizeof(a) % sizeof(*(a)))))))
 #endif
 
 #define DEPRECATED ATTRIBUTE(deprecated)
@@ -114,24 +114,24 @@
 #define CONST const
 
 #define STRINGIFY(X) #X
-#define NE_UNUSED(X) ((Kernel::Void) X)
+#define NE_UNUSED(X) ((Ne::Kernel::Void) X)
 
 #ifndef RGB
-#define RGB(R, G, B) ((Kernel::UInt32) ((0xFF << 24) | ((R) << 16) | ((G) << 8) | (B)))
+#define RGB(R, G, B) ((Ne::Kernel::UInt32) ((0xFF << 24) | ((R) << 16) | ((G) << 8) | (B)))
 #endif  // !RGB
 
 #ifdef __NE_AMD64__
 #define DBG_TRAP() asm volatile("int $3")
 #else
-#define DBG_TRAP() ((Kernel::Void) 0)
+#define DBG_TRAP() ((Ne::Kernel::Void) 0)
 #endif
 
-#define LIKELY(ARG) ((ARG) ? MUST_PASS(NO) : ((Kernel::Void) 0))
+#define LIKELY(ARG) ((ARG) ? MUST_PASS(NO) : ((Ne::Kernel::Void) 0))
 #define UNLIKELY(ARG) LIKELY(!(ARG))
 
 #define RTL_ENDIAN(address, value)                                                           \
-  (((reinterpret_cast<Kernel::Char*>(address)[0]) == (value)) ? (Kernel::Endian::kEndianBig) \
-                                                              : (Kernel::Endian::kEndianLittle))
+  (((reinterpret_cast<Ne::Kernel::Char*>(address)[0]) == (value)) ? (Ne::Kernel::Endian::kEndianBig) \
+                                                              : (Ne::Kernel::Endian::kEndianLittle))
 
 #define Yes true
 #define No false
@@ -142,7 +142,7 @@
 #define TRUE true
 #define FALSE false
 
-#define BOOL Kernel::Boolean
+#define BOOL Ne::Kernel::Boolean
 
 #ifdef RTL_INIT_OBJECT
 #undef RTL_INIT_OBJECT

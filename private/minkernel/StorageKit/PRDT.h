@@ -10,9 +10,9 @@
 #include <KernelKit/PCI/Iterator.h>
 #include <NeKit/Ref.h>
 
-#define kPrdtTransferSize (sizeof(Kernel::UShort))
+#define kPrdtTransferSize (sizeof(Ne::Kernel::UShort))
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Tranfer information about PRD.
 enum : Int32 {
@@ -34,6 +34,6 @@ void sk_construct_prdt(Ref<PRDT>& prd);
 
 EXTERN_C Int32 kPRDTTransferStatus;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

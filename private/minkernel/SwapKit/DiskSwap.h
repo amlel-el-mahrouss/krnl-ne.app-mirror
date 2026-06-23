@@ -16,7 +16,7 @@
 /// @file SwapDisk.h
 /// @brief Virtual memory swap disk.
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 struct SwapDiskHdr;
 class IDiskSwap;
@@ -66,6 +66,6 @@ typedef struct SwapDiskHdr {
   UInt8   fBlob[1];
 } PACKED ALIGN(8) SwapDiskHdr, *SwapDiskHdrPtr;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

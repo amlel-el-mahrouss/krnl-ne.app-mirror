@@ -15,11 +15,11 @@
 
 #define kDeviceMgrRootDirPath "/devices/"
 
-#define NE_DEVICE : public ::Kernel::IDevice
+#define NE_DEVICE : public ::Ne::Kernel::IDevice
 
 // Last Rev: Wed, May  27, 2025  6:22 PM
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 template <typename T>
 class IDevice;
@@ -123,6 +123,6 @@ enum {
   kDeviceTypeCount = kDeviceTypeIPC - kDeviceTypeIDE + 1,
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

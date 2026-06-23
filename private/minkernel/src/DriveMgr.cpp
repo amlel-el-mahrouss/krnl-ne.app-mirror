@@ -18,7 +18,7 @@
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/
 
-namespace Kernel {
+namespace Ne::Kernel {
 #if defined(__ATA_PIO__) || defined(__ATA_DMA__)
 STATIC UInt16 kATAIO     = 0U;
 STATIC UInt8  kATAMaster = 0U;
@@ -232,4 +232,4 @@ Void io_construct_main_drive(DriveTrait& trait) {
 
   Probe::io_detect_drive(trait);
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -6,7 +6,7 @@
 #include <HALKit/POWER/Processor.h>
 #include <KernelKit/DebugOutput.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 /// @brief Writes to COM1.
 /// @param bytes

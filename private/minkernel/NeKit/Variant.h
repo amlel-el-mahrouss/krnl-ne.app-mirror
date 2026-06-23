@@ -12,7 +12,7 @@
 #include <NeKit/TOML.h>
 #include <SwapKit/DiskSwap.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class Variant final {
  public:
   enum struct VariantKind : Int {
@@ -63,7 +63,7 @@ class Variant final {
   VoidPtr     fPtr{nullptr};
   VariantKind fKind{VariantKind::kNull};
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include "Variant.inl"
 

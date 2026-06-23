@@ -7,7 +7,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NetworkKit/IPC.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /***********************************************************************************/
 /// @internal internal use for IPC system only.
 /// @brief The internal sanitize function.
@@ -124,4 +124,4 @@ Bool IPC_MSG::Pass(IPC_MSG* src, IPC_MSG* target) {
 
   return No;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -11,7 +11,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <SizeT Sz>
 class IOArray final {
  public:
@@ -54,7 +54,7 @@ inline Array<UShort, Sz> make_ports(UShort base) {
 
   return ports;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #ifdef __NE_AMD64__
 #include "IOArray+AMD64.inl"

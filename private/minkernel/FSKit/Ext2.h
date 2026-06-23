@@ -12,7 +12,7 @@
 #include <NeKit/KString.h>
 #include <hint/CompilerHint.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 inline constexpr UInt16 kExt2FSMagic             = 0xEF53;
 inline constexpr UInt32 kExt2FSSuperblockOffset  = 1024;
@@ -206,6 +206,6 @@ inline UInt8 ext2_inode_type(const EXT2_INODE& n) {
   }
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -11,7 +11,7 @@
 #include <NeKit/OwnPtr.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief ATA device interface class.
 class ATADeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
@@ -53,6 +53,6 @@ BOOL sk_init_ata_device(BOOL is_master, UInt16& io, UInt8& master);
 /// @param drv_index The drive index to assign.
 /// @return A wrapped device interface if successful, or error code.
 ErrorOr<ATADeviceInterface> sk_acquire_ata_device(Int32 drv_index);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

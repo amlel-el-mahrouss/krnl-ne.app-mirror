@@ -14,14 +14,14 @@
 #include <NeKit/KernelPanic.h>
 #include <hint/CompilerHint.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Declare pointer as free.
 /// @param heap_ptr the pointer.
 /// @return a status code regarding the deallocation.
 Int32 mm_free_ptr(VoidPtr heap_ptr);
 
-/// @brief Check if pointer is a valid Kernel pointer.
+/// @brief Check if pointer is a valid Ne::Kernel pointer.
 /// @param heap_ptr the pointer
 /// @return if it exists it returns true.
 Boolean mm_is_valid_ptr(VoidPtr heap_ptr);
@@ -38,7 +38,7 @@ VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount = 0);
 /// @return if it valid: point has crc now., otherwise fail.
 Boolean mm_protect_ptr(VoidPtr heap_ptr);
 
-/// @brief Makes a Kernel page.
+/// @brief Makes a Ne::Kernel page.
 /// @param heap_ptr the page pointer.
 /// @return status code
 Int32 mm_control_page(VoidPtr heap_ptr, const Bool);
@@ -52,7 +52,7 @@ Int32 mm_set_ptr_flags(VoidPtr heap_ptr, UInt64 flags);
 /// @param heap_ptr the pointer to get.
 UInt64 mm_get_ptr_flags(VoidPtr heap_ptr);
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include "HeapMgr.inl"
 

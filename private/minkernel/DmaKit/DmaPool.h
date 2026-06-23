@@ -14,7 +14,7 @@
 #define kNeDMAPoolSize (__nekernel_dma_pool_size)
 #define kNeDMABestAlign (__nekernel_dma_best_align)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief DMA pool base pointer, here we're sure that AHCI or whatever tricky standard sees it.
 inline UInt8* kDmaPoolPtr = (UInt8*) kNeDMAPoolStart;
@@ -91,6 +91,6 @@ inline Void rtl_dma_flush(VoidPtr ptr, SizeT size_buffer) {
   }
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

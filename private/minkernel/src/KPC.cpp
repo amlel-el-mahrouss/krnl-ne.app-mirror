@@ -7,7 +7,7 @@
 #include <KernelKit/KPC.h>
 #include <NeKit/KernelPanic.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 STATIC Bool kRaiseOnBugCheck = false;
 
 /// @brief Does a system wide bug check.
@@ -35,4 +35,4 @@ bug_check_fail:
 
   return No;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

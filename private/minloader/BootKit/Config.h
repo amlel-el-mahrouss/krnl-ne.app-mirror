@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 
 namespace Boot {
-using namespace Kernel;
+using namespace Ne::Kernel;
 }
 
 #endif  // ! __BOOTKIT_CONFIG_H__

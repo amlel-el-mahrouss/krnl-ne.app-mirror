@@ -11,12 +11,12 @@
 #define DDK_DRIVER_IMPL \
   final:                \
   public                \
-  ::Kernel::DDK::IDriverBase
+  ::Ne::Kernel::DDK::IDriverBase
 
 /// @author Amlal El Mahrouss
 /// @brief The DDK C++ API.
 
-namespace Kernel::DDK {
+namespace Ne::Kernel::DDK {
 
 inline constexpr auto kInvalidType = 0;
 
@@ -45,14 +45,14 @@ concept IsValidDriver = requires(Driver drv) {
   { drv.IsActive() && drv.Type() > kInvalidType };
 };
 
-}  // namespace Kernel::DDK
+}  // namespace Ne::Kernel::DDK
 
 namespace NeApp {
-namespace Kernel {
+namespace Ne::Kernel {
   namespace DDK {
-    using namespace ::Kernel::DDK;
+    using namespace ::Ne::Kernel::DDK;
   }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 }  // namespace NeApp
 
 #endif

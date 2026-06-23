@@ -11,15 +11,15 @@
 
 #define kATADataLen (256)
 
-using namespace Kernel;
-using namespace Kernel::HAL;
+using namespace Ne::Kernel;
+using namespace Ne::Kernel::HAL;
 
 /// BUGS: 0
 
 STATIC Boolean              kATADetected                  = false;
 STATIC Int32 kATADeviceType ATTRIBUTE(unused)             = kATADeviceCount;
 STATIC UInt16               kATAIdentifyData[kATADataLen] = {0};
-STATIC Kernel::PCI::Device kATADevice;
+STATIC Ne::Kernel::PCI::Device kATADevice;
 STATIC Char                kATADiskModel[50] ATTRIBUTE(unused) = {"GENERIC DMA"};
 
 Boolean drv_std_wait_io(UInt16 IO) {
@@ -67,13 +67,13 @@ Boolean drv_std_init(UInt16 Bus, UInt8 Drive, UInt16& OutBus, UInt8& OutMaster) 
   return NO;
 }
 
-namespace Kernel::Detail {
+namespace Ne::Kernel::Detail {
 struct PRDEntry final {
   UInt32 mAddress;
   UInt16 mByteCount;
   UInt16 mFlags;  /// @param PRD flags, set to 0x8000 to indicate end of prd.
 };
-}  // namespace Kernel::Detail
+}  // namespace Ne::Kernel::Detail
 
 static UIntPtr kReadAddr  = mib_cast(2);
 static UIntPtr kWriteAddr = mib_cast(2) + kib_cast(64);
@@ -98,8 +98,8 @@ Void drv_std_read(UInt64 Lba, UInt16 IO, UInt8 Master, Char* Buf, SizeT SectorSz
   rt_out8(IO + ATA_REG_LBA2, (Lba) >> 16);
   rt_out8(IO + ATA_REG_LBA3, (Lba) >> 24);
 
-  Kernel::Detail::PRDEntry* prd =
-      (Kernel::Detail::PRDEntry*) (kATADevice.Bar(0x20) + 4);  // The PRDEntry is not correct.
+  Ne::Kernel::Detail::PRDEntry* prd =
+      (Ne::Kernel::Detail::PRDEntry*) (kATADevice.Bar(0x20) + 4);  // The PRDEntry is not correct.
 
   prd->mAddress   = (UInt32) (UIntPtr) kReadAddr;
   prd->mByteCount = Size - 1;
@@ -139,7 +139,7 @@ Void drv_std_write(UInt64 Lba, UInt16 IO, UInt8 Master, Char* Buf, SizeT SectorS
   rt_out8(IO + ATA_REG_LBA2, (Lba) >> 16);
   rt_out8(IO + ATA_REG_LBA3, (Lba) >> 24);
 
-  Kernel::Detail::PRDEntry* prd = (Kernel::Detail::PRDEntry*) (kATADevice.Bar(0x20) + 4);
+  Ne::Kernel::Detail::PRDEntry* prd = (Ne::Kernel::Detail::PRDEntry*) (kATADevice.Bar(0x20) + 4);
 
   prd->mAddress   = (UInt32) (UIntPtr) kWriteAddr;
   prd->mByteCount = Size - 1;
@@ -171,14 +171,14 @@ Boolean drv_std_detected(Void) {
   @return Number of sectors, or zero.
 */
 /***********************************************************************************/
-Kernel::SizeT drv_std_get_sector_count() {
+Ne::Kernel::SizeT drv_std_get_sector_count() {
   return (kATAIdentifyData[61] << 16) | kATAIdentifyData[60];
 }
 
 /***********************************************************************************/
 /// @brief Get the size of the current drive.
 /***********************************************************************************/
-Kernel::SizeT drv_std_get_size() {
+Ne::Kernel::SizeT drv_std_get_size() {
   return (drv_std_get_sector_count()) * kATASectorSize;
 }
 

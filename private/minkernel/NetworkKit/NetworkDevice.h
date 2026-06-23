@@ -11,7 +11,7 @@
 
 /// @note Can either work with: Ethernet, GPRS, WiFi
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct NetworkDeviceCommand;
 class NetworkDevice;
 
@@ -75,7 +75,7 @@ using DBGNetworkDevice = NetworkDevice;
 
 /// @brief LTE device.
 using LTENetworkDevice = NetworkDevice;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #include "NetworkDevice.inl"
 

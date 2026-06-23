@@ -10,7 +10,7 @@
 #define kDriveSectorSizeSSD (512U)
 #define kDriveSectorSizeOptical (2048U)
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <typename T>
 class IDevice;
 
@@ -18,6 +18,6 @@ class NVMEDeviceInterface;
 class AHCIDeviceInterface;
 class ATADeviceInterface;
 class SCSIDeviceInterface;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

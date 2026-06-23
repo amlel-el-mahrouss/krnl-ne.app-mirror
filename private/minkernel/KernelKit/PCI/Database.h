@@ -9,7 +9,7 @@
 #include <KernelKit/PCI/Device.h>
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace Types {
   // https://wiki.osdev.org/PCI
   enum struct PciDeviceKind : UChar {
@@ -33,22 +33,22 @@ namespace Types {
     Invalid                           = Unassgined,
   };
 }  // namespace Types
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
-inline BOOL operator!=(const Kernel::Types::PciDeviceKind& lhs, Kernel::UChar rhs) {
-  return rhs != (Kernel::UChar) lhs;
+inline BOOL operator!=(const Ne::Kernel::Types::PciDeviceKind& lhs, Ne::Kernel::UChar rhs) {
+  return rhs != (Ne::Kernel::UChar) lhs;
 }
 
-inline BOOL operator==(const Kernel::Types::PciDeviceKind& lhs, Kernel::UChar rhs) {
-  return rhs == (Kernel::UChar) lhs;
+inline BOOL operator==(const Ne::Kernel::Types::PciDeviceKind& lhs, Ne::Kernel::UChar rhs) {
+  return rhs == (Ne::Kernel::UChar) lhs;
 }
 
-inline BOOL operator!=(Kernel::UChar lhs, const Kernel::Types::PciDeviceKind& rhs) {
-  return lhs != (Kernel::UChar) rhs;
+inline BOOL operator!=(Ne::Kernel::UChar lhs, const Ne::Kernel::Types::PciDeviceKind& rhs) {
+  return lhs != (Ne::Kernel::UChar) rhs;
 }
 
-inline BOOL operator==(Kernel::UChar lhs, const Kernel::Types::PciDeviceKind& rhs) {
-  return lhs == (Kernel::UChar) rhs;
+inline BOOL operator==(Ne::Kernel::UChar lhs, const Ne::Kernel::Types::PciDeviceKind& rhs) {
+  return lhs == (Ne::Kernel::UChar) rhs;
 }
 
 #endif

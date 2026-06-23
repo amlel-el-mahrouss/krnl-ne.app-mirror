@@ -12,7 +12,7 @@
 /// @brief OpenHeFS File System Manager.
 /// BUGS: 0
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief C++ constructor
 HeFileSystemMgr::HeFileSystemMgr() {
@@ -284,7 +284,7 @@ _Output HeFileSystemParser* HeFileSystemMgr::GetParser() {
   return mParser;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifdef __FSKIT_INCLUDES_OPENHEFS__
 #endif  // ifndef __NE_MINIMAL_OS__

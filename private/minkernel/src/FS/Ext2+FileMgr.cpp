@@ -13,7 +13,7 @@
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 Ext2FileSystemMgr::Ext2FileSystemMgr() {
   io_construct_main_drive(mDriveTrait);
@@ -125,7 +125,7 @@ Int32 Ext2FileSystemMgr::ReadLink(_Input NodePtr node, _Output Char* buf,
 
 Ext2FileSystemParser* Ext2FileSystemMgr::GetParser() { return mParser; }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif
 #endif

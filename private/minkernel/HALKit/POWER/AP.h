@@ -8,19 +8,19 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct HAL_HARDWARE_THREAD;
 
 /// @brief hardware thread indentification type.
-typedef Kernel::Int32 hal_ap_kind;
+typedef Ne::Kernel::Int32 hal_ap_kind;
 
 /// @brief Hardware thread information structure.
 typedef struct HAL_HARDWARE_THREAD {
-  Kernel::UIntPtr fStartAddress;
-  Kernel::UIntPtr fStackPtr;
-  Kernel::UIntPtr fFramePtr;
-  Kernel::UInt8   fPrivileged : 1;
-  Kernel::UInt32  fPageMemoryFlags;
+  Ne::Kernel::UIntPtr fStartAddress;
+  Ne::Kernel::UIntPtr fStackPtr;
+  Ne::Kernel::UIntPtr fFramePtr;
+  Ne::Kernel::UInt8   fPrivileged : 1;
+  Ne::Kernel::UInt32  fPageMemoryFlags;
   hal_ap_kind     fIdentNumber;
 } HAL_HARDWARE_THREAD;
 
@@ -28,7 +28,7 @@ typedef struct HAL_HARDWARE_THREAD {
 /// @param hart the hart
 /// @param epc the pc.
 /// @return
-EXTERN_C Kernel::Void hal_set_pc_to_hart(HAL_HARDWARE_THREAD* hart, Kernel::VoidPtr epc);
-}  // namespace Kernel
+EXTERN_C Ne::Kernel::Void hal_set_pc_to_hart(HAL_HARDWARE_THREAD* hart, Ne::Kernel::VoidPtr epc);
+}  // namespace Ne::Kernel
 
 #endif

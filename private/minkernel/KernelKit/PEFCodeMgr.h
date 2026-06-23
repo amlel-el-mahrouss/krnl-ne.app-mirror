@@ -21,7 +21,7 @@
 
 #define kPefApplicationMime "application/vnd-nekernel-executable"
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 ///
 /// \name PEFLoader
@@ -69,6 +69,6 @@ class PEFLoader NE_EXEC_LOADER {
 
 ProcessID rtl_create_user_process(PEFLoader& exec, const UserProcess::ExecutableKind& procKind);
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef KERNELKIT_CODEMGR_PEF_H

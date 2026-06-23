@@ -24,22 +24,22 @@
 ///! @brief Hardware Timer (HPET)
 /// ================================================================================
 
-namespace Kernel::Detail {
-struct HPET_BLOCK : public Kernel::SDT {
-  Kernel::UInt8  hardware_rev_id;
-  Kernel::UInt8  comparator_count : 5;
-  Kernel::UInt8  counter_size : 1;
-  Kernel::UInt8  reserved : 1;
-  Kernel::UInt8  legacy_replacement : 1;
-  Kernel::UInt16 pci_vendor_id;
+namespace Ne::Kernel::Detail {
+struct HPET_BLOCK : public Ne::Kernel::SDT {
+  Ne::Kernel::UInt8  hardware_rev_id;
+  Ne::Kernel::UInt8  comparator_count : 5;
+  Ne::Kernel::UInt8  counter_size : 1;
+  Ne::Kernel::UInt8  reserved : 1;
+  Ne::Kernel::UInt8  legacy_replacement : 1;
+  Ne::Kernel::UInt16 pci_vendor_id;
   ACPI_ADDRESS   address;
-  Kernel::UInt8  hpet_number;
-  Kernel::UInt16 minimum_tick;
-  Kernel::UInt8  page_protection;
+  Ne::Kernel::UInt8  hpet_number;
+  Ne::Kernel::UInt16 minimum_tick;
+  Ne::Kernel::UInt8  page_protection;
 } PACKED;
-}  // namespace Kernel::Detail
+}  // namespace Ne::Kernel::Detail
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 HardwareTimer::HardwareTimer(UInt64 ms) : fWaitFor(ms) {
   auto power = PowerFactoryInterface(kHandoverHeader->f_HardwareTables.f_VendorPtr);

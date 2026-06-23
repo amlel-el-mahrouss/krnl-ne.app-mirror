@@ -24,7 +24,7 @@
 #define kPefNameSymbol "__PEFProgramName"
 #define kPefImageStart "__ImageStart"
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace Detail {
   /***********************************************************************************/
@@ -346,4 +346,4 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
   return id;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

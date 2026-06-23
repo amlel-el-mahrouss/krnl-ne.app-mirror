@@ -9,7 +9,7 @@
 #include <NeKit/KString.h>
 #include <SignalKit/Signals.h>
 
-EXTERN_C Kernel::Void int_handle_breakpoint(Kernel::UIntPtr rip);
+EXTERN_C Ne::Kernel::Void int_handle_breakpoint(Ne::Kernel::UIntPtr rip);
 EXTERN_C BOOL         mp_handle_gic_interrupt_el0(Void);
 
 EXTERN_C BOOL  kEndOfInterrupt;
@@ -25,8 +25,8 @@ STATIC void hal_int_send_eoi(UInt8 vector) {
 
 /// @brief Handle GPF fault.
 /// @param rsp
-EXTERN_C Kernel::Void int_handle_gpf(Kernel::UIntPtr rsp) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C Ne::Kernel::Void int_handle_gpf(Ne::Kernel::UIntPtr rsp) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(13);
@@ -38,8 +38,8 @@ EXTERN_C Kernel::Void int_handle_gpf(Kernel::UIntPtr rsp) {
 
 /// @brief Handle page fault.
 /// @param rsp
-EXTERN_C void int_handle_pf(Kernel::UIntPtr rsp) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C void int_handle_pf(Ne::Kernel::UIntPtr rsp) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(14);
@@ -50,7 +50,7 @@ EXTERN_C void int_handle_pf(Kernel::UIntPtr rsp) {
 }
 
 /// @brief Handle scheduler interrupt.
-EXTERN_C void int_handle_scheduler(Kernel::UIntPtr rsp) {
+EXTERN_C void int_handle_scheduler(Ne::Kernel::UIntPtr rsp) {
   NE_UNUSED(rsp);
 
   hal_int_send_eoi(32);
@@ -66,8 +66,8 @@ EXTERN_C void int_handle_scheduler(Kernel::UIntPtr rsp) {
 
 /// @brief Handle math fault.
 /// @param rsp
-EXTERN_C void int_handle_math(Kernel::UIntPtr rsp) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C void int_handle_math(Ne::Kernel::UIntPtr rsp) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(8);
@@ -79,23 +79,23 @@ EXTERN_C void int_handle_math(Kernel::UIntPtr rsp) {
 
 /// @brief Handle any generic fault.
 /// @param rsp
-EXTERN_C void int_handle_generic(Kernel::UIntPtr rsp) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C void int_handle_generic(Ne::Kernel::UIntPtr rsp) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(30);
 
-  Kernel::kout << "Kernel: Generic Process Fault.\r";
+  Ne::Kernel::kout << "Ne::Kernel: Generic Process Fault.\r";
 
   process.Signal.SignalArg = rsp;
   process.Signal.SignalID  = SIGKILL;
   process.Signal.Status    = process.Status;
 
-  Kernel::kout << "Kernel: SIGKILL status.\r";
+  Ne::Kernel::kout << "Ne::Kernel: SIGKILL status.\r";
 }
 
-EXTERN_C Kernel::Void int_handle_breakpoint(Kernel::UIntPtr rip) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C Ne::Kernel::Void int_handle_breakpoint(Ne::Kernel::UIntPtr rip) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
 
   hal_int_send_eoi(3);
 
@@ -104,13 +104,13 @@ EXTERN_C Kernel::Void int_handle_breakpoint(Kernel::UIntPtr rip) {
 
   process.Signal.Status = process.Status;
 
-  process.Status = Kernel::ProcessStatusKind::kFrozen;
+  process.Status = Ne::Kernel::ProcessStatusKind::kFrozen;
 }
 
 /// @brief Handle #UD fault.
 /// @param rsp
-EXTERN_C void int_handle_ud(Kernel::UIntPtr rsp) {
-  auto process = Kernel::UserProcessScheduler::The().TheCurrentProcess();
+EXTERN_C void int_handle_ud(Ne::Kernel::UIntPtr rsp) {
+  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(6);
@@ -123,34 +123,34 @@ EXTERN_C void int_handle_ud(Kernel::UIntPtr rsp) {
 /// @brief Enter syscall from assembly (libSystem only)
 /// @param stack the stack pushed from assembly routine.
 /// @return nothing.
-EXTERN_C Kernel::Void hal_system_call_enter(Kernel::UIntPtr rcx_hash,
-                                            Kernel::UIntPtr rdx_syscall_arg) {
+EXTERN_C Ne::Kernel::Void hal_system_call_enter(Ne::Kernel::UIntPtr rcx_hash,
+                                            Ne::Kernel::UIntPtr rdx_syscall_arg) {
   hal_int_send_eoi(50);
 
-  if (!Kernel::kCurrentUser) return;
+  if (!Ne::Kernel::kCurrentUser) return;
 
   for (SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
     if (kSysCalls[i].fHooked && rcx_hash == kSysCalls[i].fHash) {
       if (kSysCalls[i].fProc) {
-        (kSysCalls[i].fProc)((Kernel::VoidPtr) rdx_syscall_arg);
+        (kSysCalls[i].fProc)((Ne::Kernel::VoidPtr) rdx_syscall_arg);
       }
     }
   }
 }
 
-/// @brief Enter Kernel call from assembly (libDDK only).
+/// @brief Enter Ne::Kernel call from assembly (libDDK only).
 /// @param stack the stack pushed from assembly routine.
 /// @return nothing.
-EXTERN_C Kernel::Void hal_kernel_call_enter(Kernel::UIntPtr rcx_hash, Kernel::SizeT cnt,
-                                            Kernel::UIntPtr arg, Kernel::SizeT sz) {
-  if (!Kernel::kRootUser) return;
-  if (Kernel::kCurrentUser != Kernel::kRootUser) return;
-  if (!Kernel::kCurrentUser->IsSuperUser()) return;
+EXTERN_C Ne::Kernel::Void hal_kernel_call_enter(Ne::Kernel::UIntPtr rcx_hash, Ne::Kernel::SizeT cnt,
+                                            Ne::Kernel::UIntPtr arg, Ne::Kernel::SizeT sz) {
+  if (!Ne::Kernel::kRootUser) return;
+  if (Ne::Kernel::kCurrentUser != Ne::Kernel::kRootUser) return;
+  if (!Ne::Kernel::kCurrentUser->IsSuperUser()) return;
 
   for (SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
     if (kKernCalls[i].fHooked && rcx_hash == kKernCalls[rcx_hash].fHash) {
       if (kKernCalls[i].fProc) {
-        (kKernCalls[i].fProc)(cnt, (Kernel::VoidPtr) arg, sz);
+        (kKernCalls[i].fProc)(cnt, (Ne::Kernel::VoidPtr) arg, sz);
       }
     }
   }

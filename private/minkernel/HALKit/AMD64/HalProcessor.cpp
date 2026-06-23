@@ -11,7 +11,7 @@
  * @brief Common CPU API.
  */
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 inline Bool hal_has_msr() {
   static UInt32 eax, unused, edx;  // eax, edx
 
@@ -82,4 +82,4 @@ Void rt_cld() {
 Void rt_std() {
   asm volatile("std");
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL

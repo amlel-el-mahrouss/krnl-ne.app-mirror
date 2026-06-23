@@ -11,7 +11,7 @@
 #include <KernelKit/PE.h>
 
 namespace Boot {
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 class BootThread;
 
@@ -21,7 +21,7 @@ class BootThread final {
   explicit BootThread() = delete;
   ~BootThread()         = default;
 
-  explicit BootThread(Kernel::VoidPtr blob);
+  explicit BootThread(Ne::Kernel::VoidPtr blob);
 
   BootThread& operator=(const BootThread&) = default;
   BootThread(const BootThread&)            = default;

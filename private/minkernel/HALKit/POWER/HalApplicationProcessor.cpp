@@ -9,13 +9,13 @@
 
 /// @note This part of the HAL needs an owner.
 
-namespace Kernel::Detail {
+namespace Ne::Kernel::Detail {
 STATIC void mp_hang_fn(void) {
   while (YES);
 }
-}  // namespace Kernel::Detail
+}  // namespace Ne::Kernel::Detail
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief wakes up thread.
 /// wakes up thread from hang.
 void mp_wakeup_thread(HAL::StackFramePtr stack) {
@@ -36,6 +36,6 @@ void mp_hang_thread(HAL::StackFramePtr stack) {
   MUST_PASS(stack->R15 > 0);
 
   hal_set_pc_to_hart(reinterpret_cast<HAL_HARDWARE_THREAD*>(stack->R15),
-                     reinterpret_cast<VoidPtr>(Kernel::Detail::mp_hang_fn));
+                     reinterpret_cast<VoidPtr>(Ne::Kernel::Detail::mp_hang_fn));
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -21,7 +21,7 @@
 
 #define kIPCHeaderMagic (0x4950434)
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct IPC_ADDR;
 struct IPC_MSG;
 
@@ -79,6 +79,6 @@ BOOL ipc_sanitize_packet(_Input IPC_MSG* pckt_in);
 /// @retval true packet is correct.
 /// @retval false packet is incorrect and process has crashed.
 BOOL ipc_construct_packet(_Output _Input IPC_MSG** pckt_in);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // NETWORKKIT_IPC_H

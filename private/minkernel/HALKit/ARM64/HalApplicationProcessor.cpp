@@ -29,7 +29,7 @@
 
 // ================================================================= //
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct HAL_HARDWARE_THREAD final {
   HAL::StackFramePtr mFramePtr;
   ProcessID          mThreadID{0};
@@ -136,4 +136,4 @@ Void mp_init_cores(Void) {
     Detail::mp_setup_gic_el0();
   }
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

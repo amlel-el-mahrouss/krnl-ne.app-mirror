@@ -19,7 +19,7 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace {
 
@@ -758,7 +758,7 @@ BOOL Ext2FileSystemParser::ReadDir(VoidPtr node, UInt64 cookie, FILEMGR_DIRENT* 
   return NO;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 // The previous impl had (a) double cursor advance on Read,
 // (b) triple-indirect writes that silently dropped data and double-freed,

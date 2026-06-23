@@ -8,7 +8,7 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 typedef Int32 APMPowerCmd;
 
 enum {
@@ -26,6 +26,6 @@ enum {
 /// @param cmd the command.
 /// @return status code of the APM command.
 EXTERN_C Int32 apm_send_io_command(UInt16 cmd);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

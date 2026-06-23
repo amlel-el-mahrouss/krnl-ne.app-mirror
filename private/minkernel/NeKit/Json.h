@@ -6,7 +6,7 @@
 #ifndef NEKIT_JSON_H
 #define NEKIT_JSON_H
 
-/// @brief Kernel JSON API.
+/// @brief Ne::Kernel JSON API.
 
 #include <CompilerKit/CompilerKit.h>
 #include <NeKit/Config.h>
@@ -21,7 +21,7 @@
 #define kNeJsonNullKey "null"
 #define kNeJsonNullValue kNeJsonNullKey
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// ================================================================================
 /// @brief JSON Object type.
 /// ================================================================================
@@ -141,6 +141,6 @@ struct AsciiJsonStreamReader final {
 /// @brief AsciiJsonStream type definition.
 /// ================================================================================
 using AsciiJsonStream = Stream<AsciiJsonStreamReader, JsonObject<Char>>;
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

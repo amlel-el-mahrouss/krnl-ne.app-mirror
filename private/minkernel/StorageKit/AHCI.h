@@ -10,7 +10,7 @@
 #include <KernelKit/DriveMgr.h>
 #include <NeKit/OwnPtr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief AHCIDeviceInterface class
 /// @details This class is used to send and receive data from the AHCI device.
 /// @note The class is derived from the IDevice class.
@@ -45,6 +45,6 @@ class AHCIDeviceInterface final NE_DEVICE<IMountpoint*> {
 
 UInt16                       sk_init_ahci_device(BOOL atapi);
 ErrorOr<AHCIDeviceInterface> sk_acquire_ahci_device(UInt32 drv_index);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

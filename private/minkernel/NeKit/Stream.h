@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 template <typename StreamTrait, typename Kind>
 class Stream final {
@@ -48,6 +48,6 @@ using UnbufferedStream = Stream<ST, Kind>;
 template <class BST, class BKind>
 using BufferedStream = Stream<BST, BKind>;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

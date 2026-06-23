@@ -9,7 +9,7 @@
 #include <modules/ACPI/ACPIFactoryInterface.h>
 #include <modules/APM/APM.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 ACPIFactoryInterface::ACPIFactoryInterface(VoidPtr rsp_ptr) : fRsdp(rsp_ptr), fEntries(0) {}
 
 BOOL ACPIFactoryInterface::Shutdown() {
@@ -22,4 +22,4 @@ BOOL ACPIFactoryInterface::Shutdown() {
 Void ACPIFactoryInterface::Reboot() {
   apm_send_io_command(kAPMPowerCommandReboot);
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

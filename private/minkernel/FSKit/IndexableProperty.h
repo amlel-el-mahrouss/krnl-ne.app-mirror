@@ -14,7 +14,7 @@
 #define kIndexerClaimed (0xCF)
 #define kIndexerUnclaimed (0xCA)
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace Indexer {
   struct Index final {
    public:
@@ -55,6 +55,6 @@ namespace Indexer {
   /// @return none.
   Void fs_index_file(const Char* filename, SizeT filenameLen, IndexableProperty& indexer);
 }  // namespace Indexer
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

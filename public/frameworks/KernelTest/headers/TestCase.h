@@ -9,7 +9,7 @@
 #include <KernelTest/headers/SourceLocation.h>
 
 /// ================================================================================
-/// @brief Kernel Test Framework main header.
+/// @brief Ne::Kernel Test Framework main header.
 /// @file TestCase.h
 /// ================================================================================
 

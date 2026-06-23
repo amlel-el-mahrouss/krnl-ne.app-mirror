@@ -14,7 +14,7 @@
 #include <modules/CoreGfx/MathGfx.h>
 
 namespace FB {
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 template <SizeT N, typename NType>
 struct CGVec;

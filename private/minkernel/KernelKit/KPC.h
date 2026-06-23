@@ -9,21 +9,21 @@
 #include <NeKit/Config.h>
 
 /// @file KPC.h
-/// @brief Kernel Procedure Code.
+/// @brief Ne::Kernel Procedure Code.
 
 #define err_local_ok() \
-  (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() == Kernel::kErrorSuccess)
+  (Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() == Ne::Kernel::kErrorSuccess)
 
 #define err_local_fail() \
-  (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() != Kernel::kErrorSuccess)
+  (Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode() != Ne::Kernel::kErrorSuccess)
 
-#define err_local_get() (Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode())
+#define err_local_get() (Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess().GetLocalCode())
 
-#define err_global_ok() (Kernel::kErrorLocalNumber == Kernel::kErrorSuccess)
-#define err_global_fail() (Kernel::kErrorLocalNumber != Kernel::kErrorSuccess)
-#define err_global_get() (Kernel::kErrorLocalNumber)
+#define err_global_ok() (Ne::Kernel::kErrorLocalNumber == Ne::Kernel::kErrorSuccess)
+#define err_global_fail() (Ne::Kernel::kErrorLocalNumber != Ne::Kernel::kErrorSuccess)
+#define err_global_get() (Ne::Kernel::kErrorLocalNumber)
 
-namespace Kernel {
+namespace Ne::Kernel {
 using ErrorT   = Int32;
 using KPCError = ErrorT;
 
@@ -76,6 +76,6 @@ inline constexpr KPCError kErrorUnimplemented = -1;
 /// @param void no params are needed.
 /// @return if error-free: false, otherwise true.
 Boolean err_bug_check_raise(Void);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

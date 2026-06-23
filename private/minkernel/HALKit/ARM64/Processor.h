@@ -15,7 +15,7 @@
 
 #define kCPUBackendName "aarch64"
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 struct PACKED Register64 final {
   UShort  Limit;
   UIntPtr Base;
@@ -68,10 +68,10 @@ inline Void rt_halt() {
 inline Void hal_wfi(Void) {
   asm volatile("wfi");
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
-inline Kernel::VoidPtr kKernelBitMpStart = nullptr;
-inline Kernel::UIntPtr kKernelBitMpSize  = 0UL;
+inline Ne::Kernel::VoidPtr kKernelBitMpStart = nullptr;
+inline Ne::Kernel::UIntPtr kKernelBitMpSize  = 0UL;
 
 #include <HALKit/ARM64/Paging.h>
 

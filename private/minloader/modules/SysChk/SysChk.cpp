@@ -22,8 +22,8 @@
 #define kMachineModel "OS"
 #endif  // !kMachineModel
 
-EXTERN_C Int32 SysChkModuleMain(Kernel::HEL::BootInfoHeader* handover) {
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+EXTERN_C Int32 SysChkModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
 #if defined(__ATA_PIO__)
   Boot::BDiskFormatFactory<Boot::BootDeviceATA> partition_factory;

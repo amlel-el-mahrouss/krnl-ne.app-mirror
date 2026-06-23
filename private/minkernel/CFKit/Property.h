@@ -14,11 +14,11 @@
 
 #define kMaxPropLen (256U)
 
-namespace Kernel::CF {
+namespace Ne::Kernel::CF {
 /// @brief handle to anything (number, ptr, string...)
 using PropertyId = UIntPtr;
 
-/// @brief Kernel property class.
+/// @brief Ne::Kernel property class.
 /// @note /prop/smp_max or /prop/kern_ver are properties.
 class Property {
  public:
@@ -41,10 +41,10 @@ class Property {
 
 template <SizeT N>
 using PropertyArray = Array<Property, N>;
-}  // namespace Kernel::CF
+}  // namespace Ne::Kernel::CF
 
-namespace Kernel {
-using namespace Kernel::CF;
+namespace Ne::Kernel {
+using namespace Ne::Kernel::CF;
 }
 
 #endif  // !CFKIT_PROPS_H

@@ -6,7 +6,7 @@
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/PCI/DMA.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 DMAWrapper::operator bool() {
   return this->fAddress;
 }
@@ -68,4 +68,4 @@ DMAWrapper& DMAWrapper::operator=(voidPtr Ptr) {
   this->fAddress = Ptr;
   return *this;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

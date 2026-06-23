@@ -6,7 +6,7 @@
 #include <KernelKit/BinaryMutex.h>
 #include <KernelKit/ProcessScheduler.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 Bool BinaryMutex::Unlock() {
   if (!fLockingProcess) return No;
@@ -78,4 +78,4 @@ BOOL BinaryMutex::WaitForProcess(const UInt32& sec) {
 
   return !this->IsLocked();
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

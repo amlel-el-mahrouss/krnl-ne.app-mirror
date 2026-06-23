@@ -33,15 +33,15 @@
 #endif  // !kAlign
 
 EXTERN_C void hal_flush_tlb();
-EXTERN_C void hal_invl_tlb(Kernel::VoidPtr addr);
-EXTERN_C void hal_write_cr3(Kernel::VoidPtr cr3);
-EXTERN_C void hal_write_cr0(Kernel::VoidPtr bit);
+EXTERN_C void hal_invl_tlb(Ne::Kernel::VoidPtr addr);
+EXTERN_C void hal_write_cr3(Ne::Kernel::VoidPtr cr3);
+EXTERN_C void hal_write_cr0(Ne::Kernel::VoidPtr bit);
 
-EXTERN_C Kernel::VoidPtr hal_read_cr0();  // @brief CPU control register.
-EXTERN_C Kernel::VoidPtr hal_read_cr2();  // @brief Fault address.
-EXTERN_C Kernel::VoidPtr hal_read_cr3();  // @brief Page directory inside cr3 register.
+EXTERN_C Ne::Kernel::VoidPtr hal_read_cr0();  // @brief CPU control register.
+EXTERN_C Ne::Kernel::VoidPtr hal_read_cr2();  // @brief Fault address.
+EXTERN_C Ne::Kernel::VoidPtr hal_read_cr3();  // @brief Page directory inside cr3 register.
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 namespace Detail {
   enum struct ControlRegisterBits {
     kProtectedModeEnable = 0,
@@ -64,9 +64,9 @@ namespace Detail {
 
 auto mm_alloc_bitmap(Boolean wr, Boolean user, SizeT size, Bool is_page, SizeT pad = 0) -> VoidPtr;
 auto mm_free_bitmap(VoidPtr page_ptr) -> Bool;
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
-namespace Kernel {
+namespace Ne::Kernel {
 struct PTE {
   UInt64 Present : 1;
   UInt64 Wr : 1;
@@ -88,7 +88,7 @@ struct PTE {
 struct PDE {
   ATTRIBUTE(aligned(kib_cast(4))) PTE fPTE[512];
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // __NE_AMD64__
 

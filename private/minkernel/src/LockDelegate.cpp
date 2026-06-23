@@ -5,6 +5,6 @@
 
 #include <KernelKit/LockDelegate.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @note Leave it empty for now.
-}  // namespace Kernel
+}  // namespace Ne::Kernel

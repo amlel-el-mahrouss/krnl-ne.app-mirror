@@ -19,12 +19,12 @@
 #include <modules/CoreGfx/TextGfx.h>
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
-EXTERN_C Kernel::VoidPtr kInterruptVectorTable[];
+EXTERN_C Ne::Kernel::VoidPtr kInterruptVectorTable[];
 
-/// @brief Kernel init function.
+/// @brief Ne::Kernel init function.
 /// @param handover_hdr Handover boot header.
-EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_hdr) {
-  using namespace Kernel;
+EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
+  using namespace Ne::Kernel;
 
   if (handover_hdr->f_Magic != kHandoverMagic && handover_hdr->f_Version != kHandoverVersion) {
     return kEfiFail;
@@ -32,7 +32,7 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
 
   HAL::rt_sti();
 
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);
@@ -81,13 +81,13 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
        .fBaseMid    = 0,
        .fAccessByte = 0x9A,
        .fFlags      = 0xAF,
-       .fBaseHigh   = 0},  // Kernel code
+       .fBaseHigh   = 0},  // Ne::Kernel code
       {.fLimitLow   = 0x0,
        .fBaseLow    = 0,
        .fBaseMid    = 0,
        .fAccessByte = 0x92,
        .fFlags      = 0xCF,
-       .fBaseHigh   = 0},  // Kernel data
+       .fBaseHigh   = 0},  // Ne::Kernel data
       {},                // TSS data low
       {},                // TSS data high
       {.fLimitLow   = 0x0,
@@ -135,7 +135,7 @@ EXTERN_C Kernel::Int32 hal_init_platform(Kernel::HEL::BootInfoHeader* handover_h
 
 EXTERN_C BOOL rtl_init_nic_rtl8139();
 
-EXTERN_C Kernel::Void hal_real_init(Kernel::Void) {
+EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
   HAL::Register64 idt_reg;

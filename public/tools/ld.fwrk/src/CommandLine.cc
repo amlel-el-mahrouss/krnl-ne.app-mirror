@@ -6,7 +6,7 @@
 
 #include <SystemKit/System.h>
 
-/// @brief This program loads a code framework into Kernel's memory.
+/// @brief This program loads a code framework into Ne::Kernel's memory.
 
 SInt32 _NeMain(SInt32 argc, Char* argv[]) {
   LIBSYS_UNUSED(argc);

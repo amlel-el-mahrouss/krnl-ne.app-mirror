@@ -5,7 +5,7 @@
 
 #include <CFKit/Property.h>
 
-namespace Kernel::CF {
+namespace Ne::Kernel::CF {
 
 /***********************************************************************************/
 /// @brief Destructor.
@@ -39,4 +39,4 @@ PropertyId& Property::GetValue() {
   return fValue;
 }
 
-}  // namespace Kernel::CF
+}  // namespace Ne::Kernel::CF

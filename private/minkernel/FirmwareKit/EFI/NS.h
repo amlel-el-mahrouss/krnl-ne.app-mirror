@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 
 namespace Firmware::Detail::EFI {
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 EXTERN_C {
 #include <FirmwareKit/EFI/EFI.h>

@@ -8,7 +8,7 @@
 #include <NeKit/KString.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// \note This has been incremented to version two, as NeKernel doesn't support 32-bit targets. See
 /// specs.
 constexpr STATIC const auto kMinACPIVer = 2U;
@@ -90,4 +90,4 @@ ErrorOr<voidPtr> ACPIFactoryInterface::operator[](const Char* signature) {
   if (!signature) return ErrorOr<voidPtr>{-kErrorInvalidData};
   return this->Find(signature);
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

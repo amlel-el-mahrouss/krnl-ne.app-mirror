@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/ErrorOr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Function Pointer Container.
 template <typename T, typename... Args>
@@ -39,6 +39,6 @@ using FunctionOr = ErrorOr<Function<T, Args...>>;
 template <typename T, typename... Args>
 using FunctionRef = Ref<Function<T, Args...>>;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

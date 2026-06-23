@@ -5,7 +5,7 @@
 
 #include <NeKit/Utils.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 /// @brief Standard NeKernel Size type.
 using ksz_t = long long unsigned int;
@@ -15,15 +15,15 @@ using ksz_t = long long unsigned int;
 /// =========================================================== ///
 
 EXTERN_C void* memset(void* dst, int c, ksz_t len) {
-  return Kernel::rt_set_memory_safe(dst, c, static_cast<Size>(len), static_cast<Size>(len));
+  return Ne::Kernel::rt_set_memory_safe(dst, c, static_cast<Size>(len), static_cast<Size>(len));
 }
 
 EXTERN_C void* memcpy(void* dst, const void* src, ksz_t len) {
-  Kernel::rt_copy_memory_safe(const_cast<void*>(src), dst, static_cast<Size>(len),
+  Ne::Kernel::rt_copy_memory_safe(const_cast<void*>(src), dst, static_cast<Size>(len),
                               static_cast<Size>(len));
   return dst;
 }
 
 EXTERN_C Int32 strcmp(const char* a, const char* b) {
-  return Kernel::rt_string_cmp(a, b, rt_string_len(a));
+  return Ne::Kernel::rt_string_cmp(a, b, rt_string_len(a));
 }

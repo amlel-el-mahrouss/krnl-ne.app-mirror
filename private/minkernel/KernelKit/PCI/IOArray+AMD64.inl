@@ -3,7 +3,7 @@
 // Licensed under the Apache License, Version 2.0 (see LICENSE file)
 // Official repository: https://github.com/ne-app-eu/krnl
 
-namespace Kernel {
+namespace Ne::Kernel {
 template <SizeT Sz>
 template <typename T>
 T IOArray<Sz>::In(SizeT index) {
@@ -37,4 +37,4 @@ void IOArray<Sz>::Out(SizeT index, T value) {
       break;
   }
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

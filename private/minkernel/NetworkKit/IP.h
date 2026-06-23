@@ -11,7 +11,7 @@
 #include <NeKit/KString.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class RawIPAddress6;
 class RawIPAddress;
@@ -77,6 +77,6 @@ class IPFactory final {
   static bool                         IpCheckVersion4(const Char* ip);
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

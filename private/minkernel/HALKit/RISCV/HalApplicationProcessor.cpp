@@ -7,9 +7,9 @@
 #include <HALKit/RISCV/Processor.h>
 #include <KernelKit/DebugOutput.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace Detail {
   STATIC void mp_hang_fn(void) {
     while (YES);
@@ -32,7 +32,7 @@ void mp_hang_thread(HAL::StackFramePtr stack) {
   if (!stack) return;
 
   hal_set_pc_to_hart(reinterpret_cast<HAL_HARDWARE_THREAD*>(stack->R15),
-                     reinterpret_cast<VoidPtr>(Kernel::Detail::mp_hang_fn));
+                     reinterpret_cast<VoidPtr>(Ne::Kernel::Detail::mp_hang_fn));
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

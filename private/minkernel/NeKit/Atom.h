@@ -8,7 +8,7 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 template <class AtomicType>
 class Atom final {
@@ -46,6 +46,6 @@ class Atom final {
   AtomicType fArrayOfAtoms;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

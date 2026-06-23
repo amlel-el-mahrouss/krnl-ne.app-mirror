@@ -7,14 +7,14 @@
 #define KERNELKIT_KERNELTASKSCHEDULER_H
 
 /// @file KernelTaskScheduler.h
-/// @brief Kernel Task Scheduler backend file.
+/// @brief Ne::Kernel Task Scheduler backend file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
 #include <ArchKit/ArchKit.h>
 #include <KernelKit/CoreProcessScheduler.h>
 #include <KernelKit/LockDelegate.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class KernelTaskHelper;
 
@@ -31,7 +31,7 @@ class KernelTask final {
   SizeT              StackSize{kCPSMaxStackSz};
   ProcessImage       Image{};
 
-  /// @brief a KID is a Kernel ID, it is used to find a task running within the kernel.
+  /// @brief a KID is a Ne::Kernel ID, it is used to find a task running within the kernel.
   KID Kid{};
 
   NE_NON_VETTABLE;
@@ -45,6 +45,6 @@ class KernelTaskHelper final {
   STATIC Bool CanBeStarted(const KernelTask& task_ref);
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

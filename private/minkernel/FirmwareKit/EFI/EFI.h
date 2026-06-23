@@ -12,7 +12,7 @@
 
 #include <NeKit/Config.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 /* we always use stdcall in EFI, the pascal way of calling functions. */
 

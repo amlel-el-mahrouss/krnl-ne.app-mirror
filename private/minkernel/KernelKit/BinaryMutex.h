@@ -11,7 +11,7 @@
 #include <KernelKit/Timer.h>
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class UserProcess;
 
 /// @brief Access control class, which locks a task until one is done.
@@ -41,6 +41,6 @@ class BinaryMutex final {
   LockedPtr    fLockingProcess{nullptr};
   AffinityKind fOwnerOriginalAffinity{AffinityKind::kInvalid};  // for priority inheritance
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

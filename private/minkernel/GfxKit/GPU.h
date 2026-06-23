@@ -8,7 +8,7 @@
 
 #include <KernelKit/DeviceMgr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 class GPUDeviceInterface;
 
@@ -37,6 +37,6 @@ class GPUDeviceInterface NE_DEVICE<VoidPtr> {
   GPUDeviceInterface& operator>>(VoidPtr dat) override;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

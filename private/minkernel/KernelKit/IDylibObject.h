@@ -11,7 +11,7 @@
 
 #define NE_DYLIB_OBJECT : public IDylibObject
 
-namespace Kernel {
+namespace Ne::Kernel {
 class IDylibObject;
 
 /// @brief Dylib class object. A handle to a shared library.
@@ -39,6 +39,6 @@ class IDylibObject {
 
 /// @brief Pure implementation, missing method/function handler.
 EXTERN_C void __ne_pure_call(void);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

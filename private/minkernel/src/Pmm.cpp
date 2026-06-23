@@ -7,7 +7,7 @@
 #include <KernelKit/DebugOutput.h>
 #include <NeKit/Pmm.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 /***********************************************************************************/
 /// @brief Pmm constructor.
 /***********************************************************************************/
@@ -72,4 +72,4 @@ Boolean Pmm::ToggleShare(Ref<PTEWrapper> PageRef, Boolean Enable) {
 
   return true;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

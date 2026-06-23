@@ -9,7 +9,7 @@
 #include <NeKit/KString.h>
 #include <modules/ACPI/ACPIFactoryInterface.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace Detail {
   struct FADT final : public SDT {
     UInt32 FirmwareCtrl;
@@ -109,4 +109,4 @@ Void ACPIFactoryInterface::Reboot() {
       "jmp reset_wait ; "
       ".att_syntax; ");
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

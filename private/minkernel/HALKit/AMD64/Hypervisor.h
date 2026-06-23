@@ -8,7 +8,7 @@
 
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 MAKE_STRING_ENUM(HYPERVISOR)
 ENUM_STRING(Qemu, "TCGTCGTCGTCG");
 ENUM_STRING(KVM, " KVMKVMKVM  ");
@@ -21,6 +21,6 @@ ENUM_STRING(ParallelsAlt, " lrpepyh vr ");
 ENUM_STRING(Bhyve, "bhyve bhyve ");
 ENUM_STRING(Qnx, " QNXQVMBSQG ");
 END_STRING_ENUM()
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -9,7 +9,7 @@
 #include <NeKit/Atom.h>
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 enum : int {
   kLockInvalid  = 0,
   kLockDone     = 200,
@@ -55,6 +55,6 @@ class LockDelegate final {
  private:
   Atom<UInt> fLockStatus;
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

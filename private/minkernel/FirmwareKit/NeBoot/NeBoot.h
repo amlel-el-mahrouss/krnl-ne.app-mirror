@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 
 namespace Firmware::Detail::NeBoot {
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 struct NEBOOT_LINEAR_EXEC;
 

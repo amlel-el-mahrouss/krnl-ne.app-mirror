@@ -10,7 +10,7 @@
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 /// ================================================================================
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 SoftwareTimer::SoftwareTimer(Int64 seconds) : fWaitFor(seconds) {
   fDigitalTimer = new UIntPtr();

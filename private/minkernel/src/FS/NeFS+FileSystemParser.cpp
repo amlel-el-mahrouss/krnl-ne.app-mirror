@@ -20,7 +20,7 @@
 #include <modules/AHCI/AHCI.h>
 #include <modules/ATA/ATA.h>
 
-using namespace Kernel;
+using namespace Ne::Kernel;
 
 #ifdef __NE_NO_BUILTIN__
 /***********************************************************************************/
@@ -32,12 +32,12 @@ using namespace Kernel;
 /***********************************************************************************/
 /// @brief get sector count.
 /***********************************************************************************/
-Kernel::SizeT drv_std_get_sector_count();
+Ne::Kernel::SizeT drv_std_get_sector_count();
 
 /***********************************************************************************/
 /// @brief get device size.
 /***********************************************************************************/
-Kernel::SizeT drv_std_get_size();
+Ne::Kernel::SizeT drv_std_get_size();
 
 #endif
 
@@ -852,7 +852,7 @@ SizeT NeFileSystemParser::Tell(_Input _Output NEFS_CATALOG_STRUCT* catalog) {
   return 0;
 }
 
-namespace Kernel::NeFS {
+namespace Ne::Kernel::NeFS {
 /***********************************************************************************/
 /// @brief Construct NeFS drives.
 /***********************************************************************************/
@@ -867,6 +867,6 @@ Boolean fs_init_nefs(Void) {
   NeFileSystemParser parser;
   return parser.Format(&kMountpoint.A(), 0, kNeFSVolumeName);
 }
-}  // namespace Kernel::NeFS
+}  // namespace Ne::Kernel::NeFS
 
 #endif  // ifdef __FSKIT_INCLUDES_NEFS__

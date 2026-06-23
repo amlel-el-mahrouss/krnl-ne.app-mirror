@@ -6,7 +6,7 @@
 #include <KernelKit/FileMgr.h>
 #include <SwapKit/DiskSwap.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 STATIC constexpr UInt32 kSwapDiskHeaderMagic = 0x44535750;  // 'DSWP'
 
@@ -43,4 +43,4 @@ SwapDiskHdrPtr IDiskSwap::Read(const UIntPtr offset, SizeT data_len) {
   return reinterpret_cast<SwapDiskHdr*>(blob.Leak().Leak());
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

@@ -11,7 +11,7 @@
 #define kZXDMagicNumber (0x2010AF)
 #define kZXDVersion (0x0001)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 struct ZxdExec;
 struct ZxdStub;
@@ -62,6 +62,6 @@ using ZxdExecPtr = ZxdExec*;
 /// @brief Exec stub alias.
 using ZxdStubPtr = ZxdStub*;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

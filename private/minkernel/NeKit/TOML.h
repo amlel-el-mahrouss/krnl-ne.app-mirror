@@ -9,7 +9,7 @@
 #include <NeKit/Config.h>
 #include <NeKit/KString.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// \brief TOML Object Handle
 class TOMLObject final {
@@ -25,6 +25,6 @@ class TOMLObject final {
   KString mValue;
 };
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

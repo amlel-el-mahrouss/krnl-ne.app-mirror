@@ -5,7 +5,7 @@
 
 #include <StorageKit/ATA.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Class constructor
 /// @param Out Drive output
@@ -94,4 +94,4 @@ Void ATADeviceInterface::SetMaster(const UInt16& drv) {
   this->fMaster = drv;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

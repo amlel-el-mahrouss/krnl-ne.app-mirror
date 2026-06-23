@@ -27,7 +27,7 @@ enum {
   DDK_NET_AUTO_FLUSH,
 };
 
-/// @brief Kernel Device driver.
+/// @brief Ne::Kernel Device driver.
 typedef struct _DDK_DEVICE DDK_FINAL {
   char d_name[DDK_DEVICE_NAME_LEN];  // the device name. Could be /./DEVICE_NAME/
   int  d_type;

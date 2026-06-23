@@ -12,7 +12,7 @@ atexit_func_entry_t __atexit_funcs[kAtExitMacDestructors];
 uarch_t __atexit_func_count;
 
 /// @brief dynamic shared object Handle.
-Kernel::UIntPtr __dso_handle;
+Ne::Kernel::UIntPtr __dso_handle;
 
 EXTERN_C void __chkstk(void) {}
 
@@ -65,22 +65,22 @@ EXTERN_C void __cxa_guard_abort(__guard* g) {
 }
 }  // namespace cxxabiv1
 
-EXTERN_C Kernel::Void _purecall(void* self) {
-  (Kernel::Void)(Kernel::kout << "object: "
-                              << Kernel::number(reinterpret_cast<Kernel::UIntPtr>(self)));
-  (Kernel::Void)(Kernel::kout << ", has unimplemented virtual functions.\r");
+EXTERN_C Ne::Kernel::Void _purecall(void* self) {
+  (Ne::Kernel::Void)(Ne::Kernel::kout << "object: "
+                              << Ne::Kernel::number(reinterpret_cast<Ne::Kernel::UIntPtr>(self)));
+  (Ne::Kernel::Void)(Ne::Kernel::kout << ", has unimplemented virtual functions.\r");
 }
 
-EXTERN_C Kernel::Void _Init_thread_footer(Kernel::Int* thread_obj) {
+EXTERN_C Ne::Kernel::Void _Init_thread_footer(Ne::Kernel::Int* thread_obj) {
   NE_UNUSED(thread_obj);
 }
 
-EXTERN_C Kernel::Void _Init_thread_epoch(Kernel::Void) {
+EXTERN_C Ne::Kernel::Void _Init_thread_epoch(Ne::Kernel::Void) {
   NE_UNUSED(0);
 }
 
-EXTERN_C Kernel::Void _Init_thread_header(Kernel::Int* thread_obj) {
+EXTERN_C Ne::Kernel::Void _Init_thread_header(Ne::Kernel::Int* thread_obj) {
   NE_UNUSED(0);
 }
 
-EXTERN_C Kernel::Int _tls_index = 0UL;
+EXTERN_C Ne::Kernel::Int _tls_index = 0UL;

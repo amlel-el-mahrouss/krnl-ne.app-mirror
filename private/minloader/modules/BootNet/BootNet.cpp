@@ -14,8 +14,8 @@ STATIC EFI_SIMPLE_NETWORK_PROTOCOL* kEfiProtocol        = nullptr;
 STATIC Void bootnet_read_ip_packet(BOOTNET_INTERNET_HEADER   inet,
                                    BOOTNET_INTERNET_HEADER** inet_out);
 
-EXTERN_C Int32 BootNetModuleMain(Kernel::HEL::BootInfoHeader* handover) {
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Kernel::HEL::kHandoverTableST]));
+EXTERN_C Int32 BootNetModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
+  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::BootTextWriter writer;
 

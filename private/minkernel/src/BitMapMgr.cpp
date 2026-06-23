@@ -20,7 +20,7 @@
 
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 
-namespace Kernel {
+namespace Ne::Kernel {
 namespace HAL {
   namespace Detail {
     /***********************************************************************************/
@@ -185,4 +185,4 @@ namespace HAL {
     return ret;
   }
 }  // namespace HAL
-}  // namespace Kernel
+}  // namespace Ne::Kernel

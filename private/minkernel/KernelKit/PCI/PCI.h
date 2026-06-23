@@ -15,7 +15,7 @@
 #define kPCIFuncCount (8)
 #define kPCIBusCount (256U)
 
-namespace Kernel::PCI {
+namespace Ne::Kernel::PCI {
 // model
 struct DeviceHeader {
   UInt16 VendorId;
@@ -51,6 +51,6 @@ class BAR {
   Detail::BAR BAR4;
   Detail::BAR BAR5;
 };
-}  // namespace Kernel::PCI
+}  // namespace Ne::Kernel::PCI
 
 #endif

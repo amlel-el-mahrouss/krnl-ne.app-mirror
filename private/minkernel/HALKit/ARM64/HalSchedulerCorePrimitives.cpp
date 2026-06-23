@@ -6,7 +6,7 @@
 #include <HALKit/ARM64/Processor.h>
 #include <KernelKit/ProcessScheduler.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /***********************************************************************************/
 /// @brief Unimplemented function (crashes by default)
@@ -28,4 +28,4 @@ EXTERN_C Bool hal_check_task(HAL::StackFramePtr stack_ptr) {
   return stack_ptr->SP != 0 && stack_ptr->IP != 0;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

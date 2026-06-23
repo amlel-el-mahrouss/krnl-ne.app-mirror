@@ -33,7 +33,7 @@ struct DDK_STATUS_STRUCT DDK_FINAL {
   struct DDK_OBJECT_MANIFEST* s_object;
 };
 
-/// @brief Call Kernel procedure.
+/// @brief Call Ne::Kernel procedure.
 /// @param name the procedure name.
 /// @param cnt number of elements in **dat**
 /// @param dat data argument pointer.
@@ -55,13 +55,13 @@ DDK_EXTERN void* kalloc(size_t sz);
 /// @param pointer kernel pointer to free.
 DDK_EXTERN void kfree(void* the_ptr);
 
-/// @brief Gets a Kernel object.
+/// @brief Gets a Ne::Kernel object.
 /// @param slot object id (can be 0)
 /// @param name the property's name.
 /// @return DDK_OBJECT_MANIFEST.
 DDK_EXTERN struct DDK_OBJECT_MANIFEST* ke_get_obj(const int slot, const char* name);
 
-/// @brief Set a Kernel object.
+/// @brief Set a Ne::Kernel object.
 /// @param slot object id (can be 0)
 /// @param name the property's name.
 /// @param ddk_pr pointer to a object's DDK_OBJECT_MANIFEST.

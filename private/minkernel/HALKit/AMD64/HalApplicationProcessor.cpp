@@ -38,7 +38,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-namespace Kernel::HAL {
+namespace Ne::Kernel::HAL {
 struct HAL_APIC_MADT;
 struct HAL_HARDWARE_THREAD;
 
@@ -87,10 +87,10 @@ struct LAPIC final {
 /// @return
 /***********************************************************************************/
 EXTERN_C Void hal_send_ipi_msg(UInt32 target, UInt32 apic_id, UInt8 vector) {
-  Kernel::ke_dma_write<UInt32>(target, APIC_ICR_HIGH, apic_id << 24);
-  Kernel::ke_dma_write<UInt32>(target, APIC_ICR_LOW, 0x00000600 | 0x00004000 | 0x00000000 | vector);
+  Ne::Kernel::ke_dma_write<UInt32>(target, APIC_ICR_HIGH, apic_id << 24);
+  Ne::Kernel::ke_dma_write<UInt32>(target, APIC_ICR_LOW, 0x00000600 | 0x00004000 | 0x00000000 | vector);
 
-  while (Kernel::ke_dma_read<UInt32>(target, APIC_ICR_LOW) & 0x1000) {
+  while (Ne::Kernel::ke_dma_read<UInt32>(target, APIC_ICR_LOW) & 0x1000) {
     NE_UNUSED(0);
   }
 }
@@ -214,6 +214,6 @@ Void mp_init_cores(VoidPtr vendor_ptr) {
     }
   }
 }
-}  // namespace Kernel::HAL
+}  // namespace Ne::Kernel::HAL
 
 ///////////////////////////////////////////////////////////////////////////////////////

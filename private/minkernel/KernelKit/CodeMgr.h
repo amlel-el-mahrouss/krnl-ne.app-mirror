@@ -15,7 +15,7 @@
 /// @brief Code Manager header file.
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 
-namespace Kernel {
+namespace Ne::Kernel {
 /// @brief Image process entrypoint.
 typedef void (*rtl_start_kind)(void);
 
@@ -27,19 +27,19 @@ typedef void (*rtl_cxx_ctor_kind)(void);
 /// @brief C++ Destructor entrypoint.
 typedef void (*rtl_cxx_dtor_kind)(void);
 
-/// @brief Executes a new process from a function. Kernel code only.
-/// @note This sets up a new stack, anything on the main function that calls the Kernel will not be
+/// @brief Executes a new process from a function. Ne::Kernel code only.
+/// @note This sets up a new stack, anything on the main function that calls the Ne::Kernel will not be
 /// accessible.
 /// @param main the start of the process.
 /// @return The team's process id.
 BOOL rtl_create_kernel_task(KernelTask& main, const KID& kid);
 
 /// @brief Executes a new process from a function. User code only.
-/// @note This sets up a new stack, anything on the main function that calls the Kernel will not be
+/// @note This sets up a new stack, anything on the main function that calls the Ne::Kernel will not be
 /// accessible.
 /// @param main the start of the process.
 /// @return The team's process id.
 ProcessID rtl_create_user_process(rtl_start_kind main, const Char* process_name);
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

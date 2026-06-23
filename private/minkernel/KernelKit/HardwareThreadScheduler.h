@@ -23,14 +23,14 @@
 #define kBootAPIndex (__nekernel_boot_core_index)
 #endif
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 enum struct ThreadKind {
   kAPInvalid        = 0,
   kAPSystemReserved = 100,  // System reserved thread, well user can't use it
-  kAPStandard,              // user thread, cannot be used by Kernel
+  kAPStandard,              // user thread, cannot be used by Ne::Kernel
   kAPRealTime,              // fallback thread, cannot be used by user if not clear or
-                            // used by Kernel.
+                            // used by Ne::Kernel.
   kAPBoot,                  // The core we booted from, the mama.
   kAPCount = kAPBoot - kAPSystemReserved + 1,
 };
@@ -134,6 +134,6 @@ Void mp_wakeup_thread(HAL::StackFramePtr stack);
 /// hooks and hangs thread to prevent code from executing.
 Void mp_hang_thread(HAL::StackFramePtr stack);
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

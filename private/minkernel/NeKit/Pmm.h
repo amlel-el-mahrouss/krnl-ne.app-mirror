@@ -10,7 +10,7 @@
 #include <NeKit/PageMgr.h>
 #include <NeKit/Ref.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class Pmm;
 class PTEWrapper;
 
@@ -37,6 +37,6 @@ class Pmm final {
  private:
   Ref<PageMgr> fPageMgr;
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

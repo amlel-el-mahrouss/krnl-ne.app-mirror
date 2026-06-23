@@ -79,8 +79,8 @@
 #define kNeFSLF '\r'
 #define kNeFSEOF (-1)
 
-#define kNeFSBitWidth (sizeof(Kernel::Char))
-#define kNeFSLbaType (Kernel::Lba)
+#define kNeFSBitWidth (sizeof(Ne::Kernel::Char))
+#define kNeFSLbaType (Ne::Kernel::Lba)
 
 /// @note Start after the partition map header. (Virtual addressing)
 #define kNeFSRootCatalogStartAddress (1024)
@@ -132,40 +132,40 @@ enum {
 struct PACKED NEFS_CATALOG_STRUCT final {
   BOOL ForkOrCatalog : 1 {0};
 
-  Kernel::Char Name[kNeFSCatalogNameLen] = {0};
-  Kernel::Char Mime[kNeFSMimeNameLen]    = {0};
+  Ne::Kernel::Char Name[kNeFSCatalogNameLen] = {0};
+  Ne::Kernel::Char Mime[kNeFSMimeNameLen]    = {0};
 
   /// Catalog flags.
-  Kernel::UInt16 Flags;
+  Ne::Kernel::UInt16 Flags;
 
   /// Catalog allocation status.
-  Kernel::UInt16 Status;
+  Ne::Kernel::UInt16 Status;
 
   /// Custom catalog flags.
-  Kernel::UInt16 CatalogFlags;
+  Ne::Kernel::UInt16 CatalogFlags;
 
   /// Catalog kind.
-  Kernel::Int32 Kind;
+  Ne::Kernel::Int32 Kind;
 
   /// Size of the data fork.
-  Kernel::Lba DataForkSize;
+  Ne::Kernel::Lba DataForkSize;
 
   /// Size of all resource forks.
-  Kernel::Lba ResourceForkSize;
+  Ne::Kernel::Lba ResourceForkSize;
 
   /// Forks LBA.
-  Kernel::Lba DataFork;
-  Kernel::Lba ResourceFork;
+  Ne::Kernel::Lba DataFork;
+  Ne::Kernel::Lba ResourceFork;
 
   /// Buddy allocation tracker.
-  Kernel::Lba NextSibling;
-  Kernel::Lba PrevSibling;
+  Ne::Kernel::Lba NextSibling;
+  Ne::Kernel::Lba PrevSibling;
 
   /// Best-buddy tracker.
-  Kernel::Lba NextBestSibling;
-  Kernel::Lba NextPrevSibling;
+  Ne::Kernel::Lba NextBestSibling;
+  Ne::Kernel::Lba NextPrevSibling;
 
-  Kernel::UInt32 Checksum;
+  Ne::Kernel::UInt32 Checksum;
 };
 
 /// @brief Fork type, contains a data page.
@@ -175,50 +175,50 @@ struct PACKED NEFS_CATALOG_STRUCT final {
 struct PACKED NEFS_FORK_STRUCT final {
   BOOL ForkOrCatalog : 1 {1};
 
-  Kernel::Char ForkName[kNeFSForkNameLen]       = {0};
-  Kernel::Char CatalogName[kNeFSCatalogNameLen] = {0};
+  Ne::Kernel::Char ForkName[kNeFSForkNameLen]       = {0};
+  Ne::Kernel::Char CatalogName[kNeFSCatalogNameLen] = {0};
 
-  Kernel::Int32 Flags;
-  Kernel::Int32 Kind;
+  Ne::Kernel::Int32 Flags;
+  Ne::Kernel::Int32 Kind;
 
-  Kernel::Int64 ResourceId;
-  Kernel::Int32 ResourceKind;
-  Kernel::Int32 ResourceFlags;
+  Ne::Kernel::Int64 ResourceId;
+  Ne::Kernel::Int32 ResourceKind;
+  Ne::Kernel::Int32 ResourceFlags;
 
-  Kernel::Lba   DataOffset;  // 8 Where to look for this data?
-  Kernel::SizeT DataSize;    /// Data size according using sector count.
+  Ne::Kernel::Lba   DataOffset;  // 8 Where to look for this data?
+  Ne::Kernel::SizeT DataSize;    /// Data size according using sector count.
 
-  Kernel::Lba NextSibling;
-  Kernel::Lba PreviousSibling;
+  Ne::Kernel::Lba NextSibling;
+  Ne::Kernel::Lba PreviousSibling;
 };
 
 /// @brief Partition block type
 struct PACKED NEFS_ROOT_PARTITION_BLOCK final {
-  Kernel::Char Ident[kNeFSIdentLen]        = {0};
-  Kernel::Char PartitionName[kNeFSPartLen] = {0};
+  Ne::Kernel::Char Ident[kNeFSIdentLen]        = {0};
+  Ne::Kernel::Char PartitionName[kNeFSPartLen] = {0};
 
-  Kernel::Int32 Flags;
-  Kernel::Int32 Kind;
+  Ne::Kernel::Int32 Flags;
+  Ne::Kernel::Int32 Kind;
 
-  Kernel::Lba   StartCatalog;
-  Kernel::SizeT CatalogCount;
+  Ne::Kernel::Lba   StartCatalog;
+  Ne::Kernel::SizeT CatalogCount;
 
-  Kernel::SizeT DiskSize;
+  Ne::Kernel::SizeT DiskSize;
 
-  Kernel::SizeT FreeCatalog;
-  Kernel::SizeT FreeSectors;
+  Ne::Kernel::SizeT FreeCatalog;
+  Ne::Kernel::SizeT FreeSectors;
 
-  Kernel::SizeT SectorCount;
-  Kernel::SizeT SectorSize;
+  Ne::Kernel::SizeT SectorCount;
+  Ne::Kernel::SizeT SectorSize;
 
-  Kernel::UInt64 Version;
+  Ne::Kernel::UInt64 Version;
 
-  Kernel::Lba EpmBlock;
+  Ne::Kernel::Lba EpmBlock;
 
-  Kernel::Char Pad[kNeFSPadLen];
+  Ne::Kernel::Char Pad[kNeFSPadLen];
 };
 
-namespace Kernel {
+namespace Ne::Kernel {
 class NeFileSystemParser;
 class NeFileSystemJournal;
 class NeFileSystemHelper;
@@ -400,6 +400,6 @@ class NeFileSystemJournal final {
 namespace NeFS {
   Boolean fs_init_nefs(Void);
 }  // namespace NeFS
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

@@ -12,7 +12,7 @@
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/Config.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /**
  * @brief Shared Library class
@@ -85,6 +85,6 @@ using IDylibRef = IPEFDylibObject*;
 EXTERN_C IDylibRef rtl_init_dylib_pef(UserProcess& header);
 EXTERN_C Void      rtl_fini_dylib_pef(UserProcess& header, IDylibRef lib, Bool* successful);
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif /* ifndef __KERNELKIT_PEF_SHARED_OBJECT_H__ */

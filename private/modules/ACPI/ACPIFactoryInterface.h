@@ -13,7 +13,7 @@
 #include <modules/ACPI/ACPI.h>
 #include <modules/Power/PowerFactory.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class PowerFactory;
 class ACPIFactoryInterface;
 
@@ -51,6 +51,6 @@ class ACPIFactoryInterface final NE_POWER_FACTORY {
   SizeT   fEntries{0UL};   // number of entries, -1 tells that no invalid entries were
                            // found.
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // !__MOD_ACPI_H__

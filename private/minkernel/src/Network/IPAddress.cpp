@@ -6,7 +6,7 @@
 #include <NeKit/Utils.h>
 #include <NetworkKit/IP.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 UInt8* RawIPAddress::Address() {
   return fAddr;
@@ -112,4 +112,4 @@ bool IPFactory::IpCheckVersion4(const Char* ip) {
   return YES;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

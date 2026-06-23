@@ -13,9 +13,9 @@ Copyright (C) 2025, Amlal El Mahrouss, licensed under the Apache 2.0 license.
 /// @author Amlal El Mahrouss
 /// @brief BenchKit Chrono contract.
 
-#define BENCHKIT_INTERFACE : public ::Kernel::ChronoInterface
+#define BENCHKIT_INTERFACE : public ::Ne::Kernel::ChronoInterface
 
-namespace Kernel {
+namespace Ne::Kernel {
 class ChronoInterface;
 
 /// @brief a Chronometer interface used for benchmarking.
@@ -31,10 +31,10 @@ class ChronoInterface {
   virtual Void   Reset()                = 0;
   virtual UInt64 GetElapsedTime() const = 0;
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 namespace BenchKit {
-using namespace Kernel;
+using namespace Ne::Kernel;
 }
 
 #endif  // BENCHKIT_CHRONO_H

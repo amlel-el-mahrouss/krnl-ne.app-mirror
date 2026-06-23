@@ -10,11 +10,11 @@
 
 /***********************************************************************************/
 ///! @file HardwareThreadScheduler.cc
-///! @brief This file handles multi processing in the Kernel.
+///! @brief This file handles multi processing in the Ne::Kernel.
 ///! @brief Multi processing is needed for multi-tasking operations.
 /***********************************************************************************/
 
-namespace Kernel {
+namespace Ne::Kernel {
 /***********************************************************************************/
 /// @note Those symbols are needed in order to switch and validate the stack.
 /***********************************************************************************/
@@ -179,4 +179,4 @@ bool HardwareThreadScheduler::operator!() {
 SizeT HardwareThreadScheduler::Capacity() {
   return fThreadList.Count();
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel

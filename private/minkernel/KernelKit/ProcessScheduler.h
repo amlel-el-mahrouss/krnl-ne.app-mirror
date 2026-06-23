@@ -11,7 +11,7 @@
 
 #ifdef __NEOSKRNL__
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 /// @brief Local processes.
 inline UserProcessTeam kLowUserTeam;
@@ -23,7 +23,7 @@ inline UserProcessTeam kRTUserTeam;
 inline UserProcessTeam kServicesTeam;
 inline UserProcessTeam kNetworkTeam;
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif
 

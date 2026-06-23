@@ -9,7 +9,7 @@
 #include <KernelKit/DeviceMgr.h>
 #include <KernelKit/DriveMgr.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class NVMEDeviceInterface final NE_DEVICE<IMountpoint*> {
  public:
   NVMEDeviceInterface(Void (*out)(IDevice*, IMountpoint* out_packet),
@@ -28,6 +28,6 @@ class NVMEDeviceInterface final NE_DEVICE<IMountpoint*> {
  private:
   Void (*fCleanup)(Void) = {nullptr};
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

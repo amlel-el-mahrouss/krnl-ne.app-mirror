@@ -12,7 +12,7 @@
 #include <NeKit/Stream.h>
 #include <NeKit/Utils.h>
 
-namespace Kernel {
+namespace Ne::Kernel {
 class TerminalDevice;
 class DTraceDevice;
 class NeTraceDevice;
@@ -178,7 +178,7 @@ inline TerminalDevice& operator<<(TerminalDevice& src, const Long& num) {
   src = number(num);
   return src;
 }
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #ifdef kout
 #undef kout

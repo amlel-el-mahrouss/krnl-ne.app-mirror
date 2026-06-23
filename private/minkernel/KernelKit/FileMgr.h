@@ -38,7 +38,7 @@
 
 #define kRestrictMax (5U)
 
-#define rtl_node_cast(PTR) reinterpret_cast<Kernel::NodePtr>(PTR)
+#define rtl_node_cast(PTR) reinterpret_cast<Ne::Kernel::NodePtr>(PTR)
 
 #define kFileMimeGeneric "ne-application-kind/all"
 
@@ -48,7 +48,7 @@
 /** @brief maximum length in filemgr. */
 #define kFileMgrNameLen (4096UL)
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 enum {
   kFileIOInvalid  = 0,
@@ -512,6 +512,6 @@ inline FileStream<Encoding, Class>::~FileStream() {
   fFile = nullptr;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif  // ifndef KERNELKIT_FILEMGR_H

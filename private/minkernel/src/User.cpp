@@ -15,7 +15,7 @@
 /// @file User.cpp
 /// @brief Multi-user support.
 
-namespace Kernel {
+namespace Ne::Kernel {
 
 namespace Detail {
   ////////////////////////////////////////////////////////////
@@ -121,4 +121,4 @@ Bool User::IsSuperUser() {
   return this->Ring() == UserRingKind::kRingSuperUser;
 }
 
-}  // namespace Kernel
+}  // namespace Ne::Kernel

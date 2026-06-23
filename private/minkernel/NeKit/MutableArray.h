@@ -34,7 +34,7 @@
 
 // FIXME: this is a shitty algorithm, because it is memory heavy.
 // Remove and occurences of that, and remove that class.
-namespace Kernel {
+namespace Ne::Kernel {
 template <typename T>
 class MutableArray;
 
@@ -126,7 +126,7 @@ class NullableMutableArray {
   MutableLinkedList<T>* fFirstNode{nullptr};
 
   /* Number of nodes inside of this dynamic array. */
-  Kernel::SizeT fNodeCount{0};
+  Ne::Kernel::SizeT fNodeCount{0};
 
  private:
   // don't remove that
@@ -199,8 +199,8 @@ class MutableArray : public NullableMutableArray<voidPtr, nullptr> {
   MutableLinkedList<T>* fFirstNode{nullptr};
 
   /* Number of nodes inside of this dynamic array. */
-  Kernel::SizeT fNodeCount{0};
+  Ne::Kernel::SizeT fNodeCount{0};
 };
-}  // namespace Kernel
+}  // namespace Ne::Kernel
 
 #endif

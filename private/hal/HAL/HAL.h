@@ -27,10 +27,10 @@ enum : SInt64 { kAuthLevelInvalid, kAuthLevelHigh = 100, kAuthLevelMid, kAuthLev
 /// @authors Amlal El Mahrouss (amlal@nekernel.org, amlal@ne-app.eu)
 
 struct HAL_CALL_ENTRY final {
-  UInt64        fHash;
-  Bool          fActive;
+  UInt64        fHash{};
+  Bool          fActive{};
   hal_proc_type fProc;
-  SInt64        fAuthLevel;
+  SInt64        fAuthLevel{};
 
   BOOL     IsActive() { return fActive; }
   explicit operator bool() { return fActive; }

@@ -10,7 +10,9 @@
     "-fPIC",
     "-fno-rtti",
     "-fno-exceptions",
-    "-Wl,--subsystem=17"
+    "-Wl,--subsystem=17",
+    "-L../libSystem",
+    "-lSystem"
   ],
   "cpp_macros": [
     "kLibThreadVersion=0x0100",

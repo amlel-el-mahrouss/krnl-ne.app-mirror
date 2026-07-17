@@ -29,7 +29,7 @@
 using namespace Ne::Kernel;
 
 /***********************************************************************************/
-/// @file IPEFDylibObject.cc
+/// @file IPEFDylibObject.cpp
 /// @brief PEF's Dylib runtime.
 ///! @author Amlal El Mahrouss (amlal@nekernel.org)
 /***********************************************************************************/

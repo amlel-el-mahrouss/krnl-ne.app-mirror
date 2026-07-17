@@ -16,7 +16,7 @@
 
 /// @author Amlal El Mahrouss (amlal@nekernel.org)
 /// @brief PEF backend for the Code Manager.
-/// @file PEFCodeMgr.cc
+/// @file PEFCodeMgr.cpp
 
 /// @brief PEF stack size symbol.
 #define kPefStackSizeSymbol "__PEFSizeOfReserveStack"

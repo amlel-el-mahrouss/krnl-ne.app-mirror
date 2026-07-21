@@ -46,6 +46,7 @@ struct HAL_CALL_ENTRY HAL_FINAL {
   BOOL     IsActive() { return fActive; }
   explicit operator bool() { return fActive; }
 #endif
+
 };
 
 #ifdef __cplusplus

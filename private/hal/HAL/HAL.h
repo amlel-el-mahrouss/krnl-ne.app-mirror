@@ -15,29 +15,45 @@
 #define HAL_UNUSED(X) (Void) X
 #endif
 
+#ifndef HAL_FINAL
+#define HAL_FINAL final
+#endif
+
+#ifdef __cplusplus
 namespace Ne::Kernel::HAL {
+#endif
 
 struct HAL_CALL_ENTRY;
 
+#ifdef __cplusplus
 using hal_proc_type = Ne::Kernel::Void (*)(Ne::Kernel::VoidPtr);
+#else
+typedef VoidPtr hal_proc_type;
+#endif
 
 enum : SInt64 { kAuthLevelInvalid, kAuthLevelHigh = 100, kAuthLevelMid, kAuthLevelLow };
 
 /// @brief Entry structure of the HAL dispatch table.
 /// @authors Amlal El Mahrouss (amlal@nekernel.org, amlal@ne-app.eu)
 
-struct HAL_CALL_ENTRY final {
+struct HAL_CALL_ENTRY HAL_FINAL {
   UInt64        fHash{};
   Bool          fActive{};
   hal_proc_type fProc;
   SInt64        fAuthLevel{};
 
+#ifdef __cplusplus
   BOOL     IsActive() { return fActive; }
   explicit operator bool() { return fActive; }
+#endif
 };
 
+#ifdef __cplusplus
 inline Array<HAL_CALL_ENTRY, kMaxDispatchCallCount> kRegisteredSystemCalls;
+#endif
 
+#ifdef __cplusplus
 }  // namespace Ne::Kernel::HAL
+#endif
 
 #endif  // HAL_HAL_H

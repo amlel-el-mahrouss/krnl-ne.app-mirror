@@ -4,6 +4,9 @@ FROM debian
 
 RUN apt-get update && apt-get upgrade -y
 
+# Blobs for private NeKernel parts.
+RUN mkdir /blobs
+
 COPY ./ ./src
 
 RUN echo "NeKernel: Contents have been copied to Docker."

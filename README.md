@@ -3,12 +3,12 @@
 # Ne.app NeKernel
 
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
-![GitHub Repo stars](https://img.shields.io/github/stars/ne-foss/krnl?style=for-the-badge)
+![GitHub Repo Stars](https://img.shields.io/github/stars/ne-app-eu/krnl?style=for-the-badge)
 
-<a href="https://github.com/ne-foss/krnl/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/krnl/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
-<a href="https://github.com/ne-foss/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-foss/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
-<a href="https://github.com/ne-foss/krnl/actions/workflows/libddk-build.yml/badge.svg"><img src="https://github.com/ne-foss/krnl/actions/workflows/libddk-build.yml/badge.svg?style=for-the-badge" alt="CI 3"></a>
-<a href="https://github.com/ne-foss/krnl/actions/workflows/libsystem-build.yml/badge.svg"><img src="https://github.com/ne-foss/krnl/actions/workflows/libsystem-build.yml/badge.svg?style=for-the-badge" alt="CI 4"></a>
+<a href="https://github.com/ne-app-eu/krnl/actions/workflows/boot-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/boot-ahci-dev.yml/badge.svg" alt="CI 1"></a>
+<a href="https://github.com/ne-app-eu/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
+<a href="https://github.com/ne-app-eu/krnl/actions/workflows/libddk-build.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/libddk-build.yml/badge.svg?style=for-the-badge" alt="CI 3"></a>
+<a href="https://github.com/ne-app-eu/krnl/actions/workflows/libsystem-build.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/libsystem-build.yml/badge.svg?style=for-the-badge" alt="CI 4"></a>
 
 ## Getting Started
 
@@ -17,10 +17,10 @@
 - [MinGW](https://www.mingw-w64.org/)
 - [Clang](https://clang.llvm.org/)
 - [NASM](https://nasm.us/)
-- [NeBuild](https://github.com/ne-foss/nebuild)
+- [NeBuild](https://github.com/ne-app-eu/bld)
 - CoreUtils
 - [Git](https://git-scm.com/)
-- [Nectar](https://github.com/ne-foss/nectar)
+- [NCC](https://github.com/ne-app-eu/ncc)
 
 ### **Building & Running**
 
@@ -48,11 +48,14 @@ Join Ne.app's [discord](https://discord.gg/uD76Qweght) to contribute and chat wi
 
 NeKernel is licensed under the [Apache-2.0 License](LICENSE.txt).
 
----
+## Professional Services
 
+Ne.app NeKernel are available under Ne.app, custom modules, licensing, et al for your use cases.
+
+---
 
 <div align="center">
   <sub>
-    &copy; 2022-2026 Amlal El Mahrouss. Licensed under the Apache 2.0 license.
+    &copy; 2022-2026 Amlal El Mahrouss and Ne.app. Licensed under the Apache 2.0 license.
   </sub>
 </div>

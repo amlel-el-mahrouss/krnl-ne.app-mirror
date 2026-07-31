@@ -50,7 +50,7 @@ NeKernel is licensed under the [Apache-2.0 License](LICENSE.txt).
 
 ## Professional Services
 
-Ne.app NeKernel are available under Ne.app, custom modules, licensing, et al for your use cases.
+Ne.app NeKernel services are available under Ne.app, custom modules, licensing, et al for your use cases.
 
 ---
 

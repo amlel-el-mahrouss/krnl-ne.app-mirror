@@ -47,6 +47,9 @@ struct BootInfoHeader final {
 
   VoidPtr f_PageStart;
 
+  VoidPtr f_HALImage;
+  SizeT   f_HALSz;
+
   VoidPtr f_KernelImage;
   SizeT   f_KernelSz;
 

@@ -39,14 +39,14 @@ HardwareThread::~HardwareThread() = default;
 //! @brief returns the id of the thread.
 /***********************************************************************************/
 _Output const ThreadID& HardwareThread::ID() {
-  return fID;
+  return this->fID;
 }
 
 /***********************************************************************************/
 //! @brief returns the kind of thread we have.
 /***********************************************************************************/
 _Output const ThreadKind& HardwareThread::Kind() {
-  return fKind;
+  return this->fKind;
 }
 
 /***********************************************************************************/
@@ -54,7 +54,7 @@ _Output const ThreadKind& HardwareThread::Kind() {
 //! @return whether the thread is busy or not.
 /***********************************************************************************/
 Bool HardwareThread::IsBusy() {
-  return fBusy;
+  return this->fBusy;
 }
 
 /***********************************************************************************/
@@ -98,7 +98,7 @@ Bool HardwareThread::Switch(HAL::StackFramePtr frame) {
   }
 
   this->fStack = frame;
-  return mp_register_task(fStack, this->fID);
+  return mp_register_task(this->fStack, this->fID);
 }
 
 /***********************************************************************************/
@@ -148,8 +148,8 @@ Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
     return {kFakeThread};
   }
 
-  fCurrentThreadIdx = idx;
-  return &fThreadList[idx];
+  this->fCurrentThreadIdx = idx;
+  return &this->fThreadList[idx];
 }
 
 /***********************************************************************************/
@@ -159,7 +159,7 @@ Ref<HardwareThread*> HardwareThreadScheduler::operator[](SizeT idx) {
  */
 /***********************************************************************************/
 HardwareThreadScheduler::operator bool() {
-  return !fThreadList.Empty();
+  return !this->fThreadList.Empty();
 }
 
 /***********************************************************************************/
@@ -169,7 +169,7 @@ HardwareThreadScheduler::operator bool() {
  */
 /***********************************************************************************/
 bool HardwareThreadScheduler::operator!() {
-  return fThreadList.Empty();
+  return this->fThreadList.Empty();
 }
 
 /***********************************************************************************/
@@ -177,6 +177,6 @@ bool HardwareThreadScheduler::operator!() {
 /// @return the number of APs.
 /***********************************************************************************/
 SizeT HardwareThreadScheduler::Capacity() {
-  return fThreadList.Count();
+  return this->fThreadList.Count();
 }
 }  // namespace Ne::Kernel

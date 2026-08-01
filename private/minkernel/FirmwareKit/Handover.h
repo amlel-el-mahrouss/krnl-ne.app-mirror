@@ -10,7 +10,7 @@
 #include <NeKit/Config.h>
 
 #define kHandoverMagic (0xBADAA)
-#define kHandoverVersion (0x0118)
+#define kHandoverVersion (0x0119)
 
 /* Initial bitmap pointer location and size. */
 #define kHandoverStructSz sizeof(HEL::BootInfoHeader)

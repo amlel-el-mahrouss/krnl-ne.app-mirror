@@ -273,6 +273,11 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader->f_RecoverMode = recover_mode;
 
+  recover_mode = 0;
+
+  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_recover_mode, &recover_mode);
+
   // boot to kernel, if not bootnet this.
 
   Boot::BootFileReader reader_kernel(kernel_path, image_handle);

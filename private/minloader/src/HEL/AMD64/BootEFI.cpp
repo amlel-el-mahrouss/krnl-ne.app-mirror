@@ -167,7 +167,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // ------------------------------------------ //
   // If we succeed in reading the blob, then execute it.
   // ------------------------------------------ //
-  
+
   Boot::BootFileReader reader_osdetect(L"mindetect.efi", image_handle);
   reader_osdetect.ReadAll(0);
 
@@ -179,7 +179,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
     auto ret = osdetect_thread->Start(handover_hdr, NO);
     if (ret == kEfiFail) {
-    writer.Write("NeKernel: Invalid system specs, can't boot to NeKernel.\r");
+      writer.Write("NeKernel: Invalid system specs, can't boot to NeKernel.\r");
       Boot::Stop();
     }
   }
@@ -264,6 +264,14 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   } else {
     writer.Write("BootZ: Version: ").Write(ver).Write("\r");
   }
+
+  UInt32 sz_recover_mode = sizeof(Bool);
+  Bool   recover_mode    = 0;
+
+  ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_recover_mode, &recover_mode);
+
+  kHandoverHeader->f_RecoverMode = recover_mode;
 
   // boot to kernel, if not bootnet this.
 

@@ -42,6 +42,8 @@ struct BootInfoHeader final {
   UInt64 f_Magic;
   UInt64 f_Version;
 
+  Bool f_RecoverMode;
+
   VoidPtr f_BitMapStart;
   SizeT   f_BitMapSize;
 

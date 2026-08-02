@@ -102,6 +102,9 @@ inline UserPtr kCurrentUser = nullptr;
 /// \brief Supervisor pointer.
 inline UserPtr kRootUser = nullptr;
 
+/// \brief Guest user pointer.
+inline UserPtr kGuest = nullptr;
+
 }  // namespace Ne::Kernel
 
 #endif /* ifndef KERNELKIT_USERMGR_USER_H */

@@ -40,6 +40,9 @@ STATIC Bool boot_init_fb() {
   return Yes;
 }
 
+EFI_GUID kEfiGlobalNamespaceVarGUID = {
+    0x8BE4DF61, 0x93CA, 0x11D2, {0xAA, 0x0D, 0x00, 0xE0, 0x98, 0x03, 0x2B, 0x8C}};
+
 EXTERN EfiBootServices* BS;
 
 /// @brief BootloaderMain EFI entrypoint.
@@ -124,6 +127,14 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
 
+  UInt32 sz_recover_mode = sizeof(Bool);
+  Bool   recover_mode    = 0;
+
+  ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_recover_mode, &recover_mode);
+
+  kHandoverHeader->f_RecoverMode = recover_mode;
+
   Boot::BootFileReader reader_kernel(L"vmkrnl.exe", image_handle);
 
   reader_kernel.ReadAll(0);
@@ -134,7 +145,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   if (reader_kernel.Blob()) {
     auto kernel_thread = Boot::BootThread(reader_kernel.Blob());
-    kernel_thread.SetName("NeKernel");
+    kernel_thread.SetName("Ne.app NeKernel");
 
     kHandoverHeader->f_KernelImage = reader_kernel.Blob();
     kHandoverHeader->f_KernelSz    = reader_kernel.Size();

@@ -5,6 +5,8 @@
 
 #include <HALKit/AMD64/Paging.h>
 #include <HALKit/AMD64/Processor.h>
+#include <KernelKit/DebugOutput.h>
+#include <KernelKit/PhysicalMemory.h>
 
 namespace Ne::Kernel::HAL {
 namespace Detail {
@@ -26,6 +28,52 @@ namespace Detail {
     UInt64 Nx : 1;                // No Execute, bit 63
   };
 }  // namespace Detail
+
+/***********************************************************************************/
+/// @brief Build page tables of our own and run on them.
+/// @param limit highest physical address that has to be reachable.
+/// @return the new PML4's physical address, 0 on failure.
+/***********************************************************************************/
+EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit) {
+  constexpr UIntPtr kEntries   = 512;
+  constexpr UIntPtr kLargePage = 0x200000;    // 2 MiB
+  constexpr UIntPtr kGiB       = 0x40000000;  // one PDPT entry's reach
+  constexpr UIntPtr kTablePerm = 0x3;         // present + writable
+  constexpr UIntPtr kLeafPerm  = 0x83;        // present + writable + PS
+
+  auto pml4_pa = pmm_alloc_frame();
+
+  if (!pml4_pa) return 0UL;
+
+  auto pml4 = reinterpret_cast<UInt64*>(pml4_pa);
+
+  for (UIntPtr base = 0UL; base < limit; base += kGiB) {
+    auto pml4_idx = (base >> 39) & (kEntries - 1);
+
+    if (!(pml4[pml4_idx] & 1)) {
+      auto pdpt_pa = pmm_alloc_frame();
+
+      if (!pdpt_pa) return 0UL;
+
+      pml4[pml4_idx] = pdpt_pa | kTablePerm;
+    }
+
+    auto pdpt  = reinterpret_cast<UInt64*>(pml4[pml4_idx] & ~(kPageSize - 1));
+    auto pd_pa = pmm_alloc_frame();
+
+    if (!pd_pa) return 0UL;
+
+    pdpt[(base >> 30) & (kEntries - 1)] = pd_pa | kTablePerm;
+
+    auto pd = reinterpret_cast<UInt64*>(pd_pa);
+
+    for (UIntPtr i = 0UL; i < kEntries; ++i) {
+      pd[i] = (base + (i * kLargePage)) | kLeafPerm;
+    }
+  }
+
+  return pml4_pa;
+}
 
 /***********************************************************************************/
 /// \brief Retrieve the page status of a PTE.
@@ -147,12 +195,6 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   UInt64* pt = reinterpret_cast<UInt64*>(pde & ~kPageMask);
 
-  constexpr UInt64 kCr0WriteProtect = 0x10000;
-
-  auto cr0 = (UInt64) hal_read_cr0();
-
-  if (cr0 & kCr0WriteProtect) hal_write_cr0((VoidPtr) (cr0 & ~kCr0WriteProtect));
-
   if (flags & kMMFlagsUser) {
     constexpr UInt64 kUserBit = 0x4;
 
@@ -179,8 +221,6 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
   pte->Pwt     = !!(flags & kMMFlagsPwt);
 
   pte->PhysicalAddress = ((UIntPtr) (physical_address)) >> 12;
-
-  if (cr0 & kCr0WriteProtect) hal_write_cr0((VoidPtr) cr0);
 
   hal_invl_tlb(virtual_address);
 

@@ -63,6 +63,28 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
                 kHandoverHeader->f_BitMapSize - usable_sz);
 
   /************************************** */
+  /*     ADOPT OUR OWN PAGE TABLES.       */
+  /************************************** */
+
+  constexpr UIntPtr kMinMapLimit = 0x100000000UL;
+  constexpr UIntPtr kGiBMask     = 0x3FFFFFFFUL;
+
+  auto ram_end =
+      reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart) + kHandoverHeader->f_BitMapSize;
+
+  auto map_limit = ram_end > kMinMapLimit ? ((ram_end + kGiBMask) & ~kGiBMask) : kMinMapLimit;
+
+  auto kernel_pml4 = HAL::mm_init_kernel_tables(map_limit);
+
+  if (!kernel_pml4) {
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Can't build the kernel page tables.");
+  }
+
+  kKernelVM = reinterpret_cast<VoidPtr>(kernel_pml4);
+
+  hal_write_cr3(kKernelVM);
+
+  /************************************** */
   /*     INITIALIZE GDT AND SEGMENTS. */
   /************************************** */
 

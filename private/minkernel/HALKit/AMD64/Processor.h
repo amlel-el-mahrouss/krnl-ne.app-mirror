@@ -251,6 +251,10 @@ class LAPICDmaWrapper final {
 EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UInt32 flags,
                            UInt32 level = 2);
 
+/// @brief Build page tables owned by the kernel, identity mapping up to limit.
+/// @return the new PML4's physical address, 0 on failure.
+EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit);
+
 EXTERN_C UInt8  rt_in8(UInt16 port);
 EXTERN_C UInt16 rt_in16(UInt16 port);
 EXTERN_C UInt32 rt_in32(UInt16 port);

@@ -172,12 +172,14 @@ Int32 BootThread::Start(HEL::BootInfoHeader* handover, Bool own_stack) {
     return kEfiFail;
   }
 
-  NE_UNUSED(own_stack);
-
   fHandover = handover;
 
   BootTextWriter writer;
   writer.Write("BootThread: ").Write(fBlobName).Write("\r");
+
+  if (own_stack && handover->f_StackTop) {
+    rt_jump_to_address(fStartAddress, fHandover, (UInt8*) ((UIntPtr) handover->f_StackTop - 8));
+  }
 
   auto ret = ((HEL::HandoverProc)fStartAddress)(fHandover);
 

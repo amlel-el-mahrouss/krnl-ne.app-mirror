@@ -18,7 +18,7 @@
 
 /** Ring 0 stack handed to the kernel's TSS. */
 
-#define kBootStackSz (0x4000U)
+#define kBootStackSz (0x40000U)
 
 /** Graphics related. */
 

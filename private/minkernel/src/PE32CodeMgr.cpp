@@ -309,8 +309,7 @@ ErrorOr<VoidPtr> PE32Loader::FindStart() {
 
   if (!opt || !opt->AddressOfEntryPoint) return ErrorOr<VoidPtr>(kErrorExecutable);
 
-  return ErrorOr<VoidPtr>{
-      (VoidPtr) ((UIntPtr) image.Leak().Leak() + opt->AddressOfEntryPoint)};
+  return ErrorOr<VoidPtr>{(VoidPtr) (opt->ImageBase + opt->AddressOfEntryPoint)};
 }
 
 /// @brief Tells if the executable is loaded or not.

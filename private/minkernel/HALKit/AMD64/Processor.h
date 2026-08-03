@@ -36,6 +36,9 @@
 /// @brief interrupt for system call.
 #define kKernelInterruptId (0x32)
 
+/// @brief interrupt for kernel call.
+#define kKernelCallId (0x33)
+
 #define IsActiveLow(FLG) (FLG & 2)
 #define IsLevelTriggered(FLG) (FLG & 8)
 

@@ -254,39 +254,46 @@ IntNormal 49
 [extern hal_system_call_enter]
 [extern hal_kernel_call_enter]
 
+; rax carries the handler's result back to the caller, so it is never restored.
 __NE_INT_50:
     cli
 
-    push rax
-    mov rax, hal_system_call_enter
+    push rbp
+    mov rbp, rsp
 
     mov rcx, r8
     mov rdx, r9
     mov r8, r10
     mov r9, r11
 
-    call rax
-    pop rax
+    and rsp, -16
+    sub rsp, 32
 
-    std
+    call hal_system_call_enter
+
+    mov rsp, rbp
+    pop rbp
 
     o64 iret
 
 __NE_INT_51:
     cli
 
-    push rax
-    mov rax, hal_kernel_call_enter
+    push rbp
+    mov rbp, rsp
 
     mov rcx, r8
     mov rdx, r9
     mov r8, r10
     mov r9, r11
 
-    call rax
-    pop rax
+    and rsp, -16
+    sub rsp, 32
 
-    std
+    call hal_kernel_call_enter
+
+    mov rsp, rbp
+    pop rbp
 
     o64 iret
 

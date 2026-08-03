@@ -123,19 +123,19 @@ EXTERN_C void int_handle_ud(Ne::Kernel::UIntPtr rsp) {
 /// @brief Enter syscall from assembly (libSystem only)
 /// @param stack the stack pushed from assembly routine.
 /// @return nothing.
-EXTERN_C Ne::Kernel::Void hal_system_call_enter(Ne::Kernel::UIntPtr rcx_hash,
-                                            Ne::Kernel::UIntPtr rdx_syscall_arg) {
-  hal_int_send_eoi(50);
-
-  if (!Ne::Kernel::kCurrentUser) return;
+EXTERN_C Ne::Kernel::VoidPtr hal_system_call_enter(Ne::Kernel::UIntPtr rcx_hash,
+                                                   Ne::Kernel::UIntPtr rdx_syscall_arg) {
+  if (!Ne::Kernel::kCurrentUser) return nullptr;
 
   for (SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
     if (kSysCalls[i].fHooked && rcx_hash == kSysCalls[i].fHash) {
-      if (kSysCalls[i].fProc) {
-        (kSysCalls[i].fProc)((Ne::Kernel::VoidPtr) rdx_syscall_arg);
-      }
+      if (!kSysCalls[i].fProc) break;
+
+      return (kSysCalls[i].fProc)((Ne::Kernel::VoidPtr) rdx_syscall_arg);
     }
   }
+
+  return nullptr;
 }
 
 /// @brief Enter Ne::Kernel call from assembly (libDDK only).

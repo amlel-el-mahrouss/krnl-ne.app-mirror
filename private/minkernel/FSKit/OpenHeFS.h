@@ -416,6 +416,9 @@ class HeFileSystemParser final {
                           const Utf8Char* dir, const Utf8Char* name, const UInt8 kind,
                           const BOOL input);
 
+  _Output Bool INodeExists(_Input DriveTrait* drive, const Utf8Char* dir, const Utf8Char* name,
+                           const UInt8 kind);
+
  private:
   _Output Bool INodeCtlManip(_Input DriveTrait* drive, _Input const Int32 flags,
                              const Utf8Char* dir, const Utf8Char* name, const BOOL delete_or_create,

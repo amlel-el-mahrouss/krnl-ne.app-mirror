@@ -23,8 +23,7 @@ namespace Detail {
     UInt64 PhysicalAddress : 40;  // Physical page frame address (bits 12–51)
     UInt64 Ignored2 : 7;          // More software bits / reserved
     UInt64 ProtectionKey : 4;     // Optional (if PKU enabled)
-    UInt64 Reserved : 1;          // Usually reserved
-    UInt64 Nx : 1;                // No Execute
+    UInt64 Nx : 1;                // No Execute, bit 63
   };
 }  // namespace Detail
 
@@ -135,10 +134,16 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   if (!(pdpte & 1)) return kErrorInvalidData;
 
+  constexpr UInt64 kPageSizeBit = 0x80;
+
+  if (pdpte & kPageSizeBit) return kErrorInvalidData;
+
   UInt64* pd  = reinterpret_cast<UInt64*>(pdpte & ~kPageMask);
   UInt64  pde = pd[(kVMAddr >> 21) & kMask9];
 
   if (!(pde & 1)) return kErrorInvalidData;
+
+  if (pde & kPageSizeBit) return kErrorInvalidData;
 
   UInt64* pt = reinterpret_cast<UInt64*>(pde & ~kPageMask);
 

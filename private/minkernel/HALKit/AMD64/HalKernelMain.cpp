@@ -187,7 +187,8 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
     (Void)(kout << "hal_real_init: warning: No launch host in handover.\r");
   }
 
-  UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
+  /// @note SwitchTeam overwrites the whole team, switching again here would
+  /// discard the process we just spawned.
 
 #ifdef __HALKIT_INCLUDES_BNID__
   rtl_init_nic_rtl8139();

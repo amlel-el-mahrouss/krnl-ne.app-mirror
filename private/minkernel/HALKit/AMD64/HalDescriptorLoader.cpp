@@ -28,6 +28,8 @@ Void IDTLoader::Load(Register64& idt) {
 
   volatile UIntPtr** ptr_ivt = (volatile UIntPtr**) idt.Base;
 
+  if (ptr_ivt == nullptr) ke_stop(RUNTIME_CHECK_INTERRUPT, "Invalid Interrupt Vector.");
+
   for (SizeT idt_indx = 0; idt_indx < kKernelIdtSize; ++idt_indx) {
     Detail::kInterruptVectorTable[idt_indx].Selector = kIDTSelector;
     Detail::kInterruptVectorTable[idt_indx].Ist      = 0;

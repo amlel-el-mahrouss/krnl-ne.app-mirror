@@ -54,10 +54,11 @@ namespace HAL {
 
         this->GetBitMapStatus(ptr_bit_set);
 
-        kBitMapCursor += ptr_bit_set[kBitMapSizeIdx];
+        if (kBitMapCursor >= ptr_bit_set[kBitMapSizeIdx])
+          kBitMapCursor -= ptr_bit_set[kBitMapSizeIdx];
 
-        ptr_bit_set[kBitMapMagIdx]  = 0UL;
-        ptr_bit_set[kBitMapSizeIdx] = 0UL;
+        /// @note magic and size have to survive, FindBitMap walks by them and
+        /// would otherwise reclaim this hole at the wrong size.
         ptr_bit_set[kBitMapUsedIdx] = No;
 
         return Yes;

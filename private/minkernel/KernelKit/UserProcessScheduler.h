@@ -237,11 +237,11 @@ class UserProcessScheduler final : public ISchedulable {
   bool     operator!();
 
  public:
-  Ref<UserProcessTeam> TheCurrentTeam();
+  UserProcessTeam&     TheCurrentTeam();
   BOOL                 SwitchTeam(UserProcessTeam& team);
 
  public:
-  ProcessID Spawn(const Char* name, VoidPtr code, VoidPtr image);
+  ProcessID Spawn(const Char* name, VoidPtr code, VoidPtr image, SizeT image_sz = 0UL);
   Void      Remove(ProcessID process_id);
 
   Bool IsUser() override;

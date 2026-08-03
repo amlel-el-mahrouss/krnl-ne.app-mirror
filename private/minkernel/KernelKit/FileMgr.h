@@ -506,7 +506,8 @@ inline FileStream<Encoding, Class>::FileStream(const Encoding* path, const Encod
 /// @brief destructor of the file stream.
 template <typename Encoding, typename Class>
 inline FileStream<Encoding, Class>::~FileStream() {
-  if (fFile) mm_free_ptr(fFile);
+  if (mm_is_valid_ptr(fFile)) mm_free_ptr(fFile);
+
   kout << "FileMgr: ~FileStream()\r";
 
   fFile = nullptr;

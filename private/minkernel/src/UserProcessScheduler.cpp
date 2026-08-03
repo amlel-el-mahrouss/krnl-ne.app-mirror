@@ -220,18 +220,17 @@ STATIC Void sched_free_ptr_tree(T* tree) {
   // Deleting memory lists. Make sure to free all of them.
   while (tree) {
     if (tree->Entry) {
-      MUST_PASS(mm_free_ptr(tree->Entry));
+      MUST_PASS(mm_free_ptr(tree->Entry) == kErrorSuccess);
     }
 
     auto next = tree->Next;
 
-    if (next->Child) sched_free_ptr_tree(next->Child);
+    if (next && next->Child) sched_free_ptr_tree(next->Child);
 
     tree->Child = nullptr;
 
     mm_free_ptr(tree);
 
-    tree = nullptr;
     tree = next;
   }
 }
@@ -336,7 +335,8 @@ Bool UserProcess::InitDylib() {
 /// @return the process index inside the team.
 /***********************************************************************************/
 
-ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr image) {
+ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr image,
+                                      SizeT image_sz) {
   if (!name || !code) {
     return -kErrorProcessFault;
   }
@@ -355,8 +355,9 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
 
   UserProcess& process = this->mTeam.mProcessList[pid];
 
-  process.Image.fCode = code;
-  process.Image.fBlob = image;
+  process.Image.fCode   = code;
+  process.Image.fBlob   = image;
+  process.Image.fBlobSz = image_sz;
 
   SizeT len = rt_string_len(name);
 
@@ -542,8 +543,8 @@ SizeT UserProcessScheduler::Run() {
 
 /// @brief Gets the current scheduled team.
 /// @return
-Ref<UserProcessTeam> UserProcessScheduler::TheCurrentTeam() {
-  return {mTeam};
+UserProcessTeam& UserProcessScheduler::TheCurrentTeam() {
+  return mTeam;
 }
 
 /***********************************************************************************/
@@ -653,7 +654,7 @@ Bool UserProcessHelper::Switch(HAL::StackFramePtr frame_ptr, ProcessID new_pid) 
     UserProcessHelper::TheCurrentPID().Leak().Leak() = new_pid;
 
     HardwareThreadScheduler::The()[index].Leak()->fPTime =
-        UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[new_pid].PTime;
+        UserProcessScheduler::The().TheCurrentTeam().AsArray()[new_pid].PTime;
 
     return YES;
   }

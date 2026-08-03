@@ -227,6 +227,7 @@ struct ProcessImage final {
 
   ImagePtr fCode{};
   ImagePtr fBlob{};
+  SizeT    fBlobSz{};
 
  public:
   Bool HasCode() const { return this->fCode != nullptr; }
@@ -248,6 +249,8 @@ struct ProcessImage final {
 
     return ErrorOr<ImagePtr>{kErrorInvalidData};
   }
+
+  SizeT LeakBlobSz() const { return this->fBlobSz; }
 };
 
 }  // namespace Ne::Kernel

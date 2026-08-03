@@ -62,15 +62,18 @@ EXTERN_C void __cxa_finalize(void* f) {
 }
 
 namespace cxxabiv1 {
+/// @note returns 1 when the caller still has to run the constructor, 0 when it is done.
 EXTERN_C int __cxa_guard_acquire(__guard g) {
-  if ((*g & 1) || (*g & 2)) return 1;
+  if (*g & 1) return 0;
+
   *g |= 2;
-  return 0;
+
+  return 1;
 }
 
 EXTERN_C void __cxa_guard_release(__guard g) {
   *g |= 1;
-  *g &= 2;
+  *g &= ~2;
 }
 
 EXTERN_C void __cxa_guard_abort(__guard g) {

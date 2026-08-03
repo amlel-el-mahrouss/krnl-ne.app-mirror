@@ -25,6 +25,7 @@
 EXTERN_C void sched_idle_task(void);
 
 namespace Ne::Kernel {
+
 class UserProcess;
 class KernelTask;
 class KernelTaskScheduler;
@@ -124,7 +125,8 @@ enum struct ProcessSubsystem : Int32 {
   kProcessSubsystemService,
   kProcessSubsystemDriver,
   kProcessSubsystemKernel,
-  kProcessSubsystemCount   = kProcessSubsystemKernel - kProcessSubsystemSecurity + 1,
+  kProcessSubsystemPOSIX,
+  kProcessSubsystemCount   = kProcessSubsystemPOSIX - kProcessSubsystemSecurity + 1,
   kProcessSubsystemInvalid = 0xFFFFFFF,
 };
 
@@ -198,9 +200,10 @@ using ProcessID = Int64;
 /// @note For User manager, tells where we run the code.
 /***********************************************************************************/
 enum struct ProcessLevelRing : Int32 {
-  kRingStdUser   = 1,
-  kRingSuperUser = 2,
-  kRingGuestUser = 5,
+  kRingInvalid = -1,
+  kRingStdUser   = 100,
+  kRingSuperUser = 200,
+  kRingGuestUser = 500,
   kRingCount     = 3,
 };
 
@@ -246,6 +249,7 @@ struct ProcessImage final {
     return ErrorOr<ImagePtr>{kErrorInvalidData};
   }
 };
+
 }  // namespace Ne::Kernel
 
 #endif

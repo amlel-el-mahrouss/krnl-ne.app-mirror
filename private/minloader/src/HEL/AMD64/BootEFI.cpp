@@ -16,6 +16,10 @@
 #include <modules/CoreGfx/CoreGfx.h>
 #include <modules/CoreGfx/TextGfx.h>
 
+/** Ring 0 stack handed to the kernel's TSS. */
+
+#define kBootStackSz (0x4000U)
+
 /** Graphics related. */
 
 STATIC EfiGraphicsOutputProtocol* kGop       = nullptr;
@@ -61,11 +65,11 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   HEL::BootInfoHeader* handover_hdr = new HEL::BootInfoHeader();
 
-  UInt32               map_key         = 0;
-  UInt32               size_struct_ptr = sizeof(EfiMemoryDescriptor);
+  UIntPtr              map_key         = 0;
+  UIntPtr              size_struct_ptr = sizeof(EfiMemoryDescriptor);
   EfiMemoryDescriptor* struct_ptr      = nullptr;
-  UInt32               sz_desc         = sizeof(EfiMemoryDescriptor);
-  UInt32               rev_desc        = 0;
+  UIntPtr              sz_desc         = sizeof(EfiMemoryDescriptor);
+  UIntPtr              rev_desc        = 0;
 
   Boot::BootTextWriter writer;
 
@@ -132,20 +136,36 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   handover_hdr->f_BitMapStart = nullptr; /* Start of bitmap. */
   handover_hdr->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
 
-  // Get memory map to determine available memory for bitmap allocation.
-  BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
+  // Probe for the size of the memory map.
+  size_struct_ptr = 0UL;
+  BS->GetMemoryMap(&size_struct_ptr, nullptr, &map_key, &sz_desc, &rev_desc);
 
-  // Allocate space for the memory descriptors.
-  BS->AllocatePool(EfiLoaderData, size_struct_ptr, (VoidPtr*) &struct_ptr);
-  BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc);
+  /// @note AllocatePool itself grows the map, so ask for room to spare or the
+  /// second call fails and leaves the buffer untouched.
+  size_struct_ptr += sz_desc * 8;
+
+  if (BS->AllocatePool(EfiLoaderData, size_struct_ptr, (VoidPtr*) &struct_ptr) != kEfiOk ||
+      !struct_ptr) {
+    writer.Write("BootZ: Can't allocate the memory map, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  if (BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc) != kEfiOk) {
+    writer.Write("BootZ: Can't read the memory map, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
 
   // Calculate initial bitmap size by summing all free memory pages.
   UInt64  free_pages      = 0;
-  VoidPtr first_free_page = (VoidPtr) 1024;
+  VoidPtr first_free_page = nullptr;
 
-  for (UInt32 i = 0; i < size_struct_ptr / sz_desc; ++i) {
+  constexpr UInt64 kBootLowMemEnd = 0x100000;
+
+  for (UIntPtr i = 0; i < size_struct_ptr / sz_desc; ++i) {
     EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
     if (desc->Kind == EfiConventionalMemory) {
+      if (desc->PhysicalStart < kBootLowMemEnd) continue;
+
       if (first_free_page == nullptr) {
         first_free_page = (VoidPtr) desc->PhysicalStart;
       }
@@ -153,7 +173,12 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     }
   }
 
-  free_pages -= 1024;
+  if (!first_free_page) {
+    writer.Write("BootZ: No conventional memory, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  free_pages = free_pages > 1024 ? free_pages - 1024 : free_pages;
 
   // Set bitmap to use the first free page region found.
   handover_hdr->f_BitMapStart = first_free_page;
@@ -163,6 +188,39 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;
+
+  handover_hdr->f_Magic   = kHandoverMagic;
+  handover_hdr->f_Version = kHandoverVersion;
+
+  handover_hdr->f_HardwareTables.f_ImageKey    = map_key;
+  handover_hdr->f_HardwareTables.f_ImageHandle = image_handle;
+
+  UInt32 sz_recover_mode = sizeof(Bool);
+  Bool   recover_mode    = 0;
+
+  ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_recover_mode, &recover_mode);
+
+  handover_hdr->f_RecoverMode = recover_mode;
+
+  recover_mode = 0;
+
+  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
+                                   &sz_recover_mode, &recover_mode);
+
+  // Ring 0 stack, consumed by the kernel as TSS.RSP0. Stacks grow down, so hand over the top.
+
+  VoidPtr stack_base = nullptr;
+
+  if (BS->AllocatePool(EfiLoaderData, kBootStackSz, &stack_base) != kEfiOk || !stack_base) {
+    writer.Write("BootZ: Can't allocate the kernel stack, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  Boot::BSetMem((Char*) stack_base, 0, kBootStackSz);
+
+  handover_hdr->f_StackSz  = kBootStackSz;
+  handover_hdr->f_StackTop = (VoidPtr) (((UIntPtr) stack_base + kBootStackSz) & ~0xFUL);
 
   // ------------------------------------------ //
   // If we succeed in reading the blob, then execute it.
@@ -209,12 +267,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   }
 
   handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
-
-  handover_hdr->f_Magic   = kHandoverMagic;
-  handover_hdr->f_Version = kHandoverVersion;
-
-  handover_hdr->f_HardwareTables.f_ImageKey    = map_key;
-  handover_hdr->f_HardwareTables.f_ImageHandle = image_handle;
 
   // Provide fimware vendor name.
 
@@ -265,20 +317,22 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     writer.Write("BootZ: Version: ").Write(ver).Write("\r");
   }
 
-  UInt32 sz_recover_mode = sizeof(Bool);
-  Bool   recover_mode    = 0;
-
-  ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
-                                   &sz_recover_mode, &recover_mode);
-
-  kHandoverHeader->f_RecoverMode = recover_mode;
-
-  recover_mode = 0;
-
-  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
-                                   &sz_recover_mode, &recover_mode);
-
   // boot to kernel, if not bootnet this.
+
+  Boot::BootFileReader reader_basesvc(L"basesvc.exe", image_handle);
+  reader_basesvc.ReadAll(0);
+
+  if (reader_basesvc.Blob()) {
+    handover_hdr->f_SCIImage   = reader_basesvc.Blob();
+    handover_hdr->f_SCIImageSz = reader_basesvc.Size();
+
+    writer.Write("BootZ: Loaded basesvc.exe.\r");
+  } else {
+    handover_hdr->f_SCIImage   = nullptr;
+    handover_hdr->f_SCIImageSz = 0UL;
+
+    writer.Write("BootZ: No basesvc.exe, booting without a user process.\r");
+  }
 
   Boot::BootFileReader reader_kernel(kernel_path, image_handle);
   reader_kernel.ReadAll(0);

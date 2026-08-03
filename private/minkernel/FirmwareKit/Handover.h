@@ -71,7 +71,7 @@ struct BootInfoHeader final {
     VoidPtr      f_VendorPtr;
     VoidPtr      f_MpPtr;
     Bool         f_MultiProcessingEnabled;
-    UInt32       f_ImageKey;
+    UIntPtr      f_ImageKey;
     EfiHandlePtr f_ImageHandle;
   } f_HardwareTables;
 

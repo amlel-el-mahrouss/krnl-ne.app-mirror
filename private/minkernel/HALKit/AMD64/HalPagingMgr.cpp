@@ -140,8 +140,31 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   if (!(pde & 1)) return kErrorInvalidData;
 
-  UInt64*      pt  = reinterpret_cast<UInt64*>(pde & ~kPageMask);
-  Detail::PTE* pte = (Detail::PTE*) pt[(kVMAddr >> 12) & kMask9];
+  UInt64* pt = reinterpret_cast<UInt64*>(pde & ~kPageMask);
+
+  constexpr UInt64 kCr0WriteProtect = 0x10000;
+
+  auto cr0 = (UInt64) hal_read_cr0();
+
+  if (cr0 & kCr0WriteProtect) hal_write_cr0((VoidPtr) (cr0 & ~kCr0WriteProtect));
+
+  if (flags & kMMFlagsUser) {
+    constexpr UInt64 kUserBit = 0x4;
+
+    pml4[(kVMAddr >> 39) & kMask9] |= kUserBit;
+    pdpt[(kVMAddr >> 30) & kMask9] |= kUserBit;
+    pd[(kVMAddr >> 21) & kMask9] |= kUserBit;
+  }
+
+  if (flags & kMMFlagsWr) {
+    constexpr UInt64 kWriteBit = 0x2;
+
+    pml4[(kVMAddr >> 39) & kMask9] |= kWriteBit;
+    pdpt[(kVMAddr >> 30) & kMask9] |= kWriteBit;
+    pd[(kVMAddr >> 21) & kMask9] |= kWriteBit;
+  }
+
+  Detail::PTE* pte = reinterpret_cast<Detail::PTE*>(&pt[(kVMAddr >> 12) & kMask9]);
 
   pte->Present = !!(flags & kMMFlagsPresent);
   pte->Wr      = !!(flags & kMMFlagsWr);
@@ -151,6 +174,8 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
   pte->Pwt     = !!(flags & kMMFlagsPwt);
 
   pte->PhysicalAddress = ((UIntPtr) (physical_address)) >> 12;
+
+  if (cr0 & kCr0WriteProtect) hal_write_cr0((VoidPtr) cr0);
 
   hal_invl_tlb(virtual_address);
 

@@ -39,6 +39,11 @@
 /// @brief interrupt for kernel call.
 #define kKernelCallId (0x33)
 
+/// @brief faults routed to the TSS interrupt stack.
+#define kDoubleFaultId (0x08)
+#define kPageFaultId (0x0E)
+#define kFaultStackId (1)
+
 #define IsActiveLow(FLG) (FLG & 2)
 #define IsLevelTriggered(FLG) (FLG & 8)
 
@@ -190,7 +195,8 @@ Void hal_set_msr(UInt32 msr, UInt32 lo, UInt32 hi);
 /// @brief Processor specific namespace.
 namespace Detail {
   /* @brief TSS struct. */
-  struct NE_TSS final {
+  /// @note the layout is fixed by the CPU, rsp0 sits at offset 4 and is unaligned.
+  struct PACKED NE_TSS final {
     UInt32 fReserved1;
     UInt64 fRsp0;
     UInt64 fRsp1;

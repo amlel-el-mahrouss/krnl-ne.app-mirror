@@ -69,7 +69,10 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
     ke_stop(RUNTIME_CHECK_BOOTSTRAP, "No ring 0 stack in handover.");
   }
 
+  STATIC UInt8 ALIGN(0x10) kFaultStack[kib_cast(32)]{};
+
   kKernelTSS.fRsp0 = (UInt64) kHandoverHeader->f_StackTop;
+  kKernelTSS.fIst1 = (UInt64) (kFaultStack + sizeof(kFaultStack)) & ~0xFUL;
   kKernelTSS.fIopb = sizeof(HAL::Detail::NE_TSS);
 
   /* The GDT, mostly descriptors for user and kernel segments. */

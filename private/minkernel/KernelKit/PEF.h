@@ -31,6 +31,10 @@
 
 #define kPefBaseOrigin (0x40000000)
 
+/* Sanity caps for untrusted containers. */
+#define kPefMaxSections (64U)
+#define kPefMaxImageSz (0x4000000U)
+
 #define kPefStart "__ImageStart"
 #define kPefMainSymbol "_NeMain"
 

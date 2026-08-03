@@ -50,7 +50,7 @@ class IPEFDylibObject final NE_DYLIB_OBJECT {
     }
 
     if (!fLoader) {
-      fLoader = new PEFLoader(fMounted->ImageObject);
+      fLoader = new PEFLoader(fMounted->ImageObject, fMounted->ImageSz);
     }
   }
 

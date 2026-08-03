@@ -46,21 +46,22 @@ EXTERN_C IDylibRef rtl_init_dylib_pef(UserProcess& process) {
     return nullptr;
   }
 
-  dll_obj->Mount(new IPEFDylibObject::DylibTraits());
+  auto traits = new IPEFDylibObject::DylibTraits();
 
-  if (!dll_obj->Get()) {
+  if (!traits) {
     tls_delete_class(dll_obj);
-    dll_obj = nullptr;
-
     process.Crash();
 
     return nullptr;
   }
 
-  dll_obj->Get()->ImageObject = process.Image.LeakBlob().Leak().Leak();
+  traits->ImageObject = process.Image.LeakBlob().Leak().Leak();
+  traits->ImageSz     = process.Image.LeakBlobSz();
 
-  if (!dll_obj->Get()->ImageObject) {
-    delete dll_obj->Get();
+  dll_obj->Mount(traits);
+
+  if (!dll_obj->Get()) {
+    delete traits;
 
     tls_delete_class(dll_obj);
     dll_obj = nullptr;

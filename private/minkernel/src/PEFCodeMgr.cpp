@@ -45,14 +45,154 @@ namespace Detail {
     return kPefArchInvalid;
 #endif  // __32x0__ || __64x0__ || __x86_64__
   }
+  /// @brief Compare a container magic against a wanted one.
+  STATIC Bool pef_magic_eq(const Char* magic, const Char* want) {
+    for (SizeT i = 0UL; i < kPefMagicLen - 1; ++i) {
+      if (magic[i] != want[i]) return NO;
+    }
+
+    return YES;
+  }
+
+  /// @brief Compare a fixed size, possibly unterminated, name field.
+  STATIC Bool pef_name_eq(const Char* field, const Char* want) {
+    auto field_len = rt_string_len(field, kPefNameLen);
+
+    if (field_len >= kPefNameLen) return NO;
+
+    auto want_len = rt_string_len(want, kPefNameLen);
+
+    if (want_len != field_len) return NO;
+
+    for (SizeT i = 0UL; i < field_len; ++i) {
+      if (field[i] != want[i]) return NO;
+    }
+
+    return YES;
+  }
+
+  /// @brief Build the section name for a symbol, mangling spaces.
+  STATIC Bool pef_make_name(Char* dst, const SizeT dst_sz, const Int32 kind, const Char* name) {
+    const Char* prefix = nullptr;
+
+    switch (kind) {
+      case kPefCode:
+        prefix = ".code64";
+        break;
+      case kPefData:
+        prefix = ".data64";
+        break;
+      case kPefZero:
+        prefix = ".zero64";
+        break;
+      default:
+        return NO;
+    }
+
+    auto prefix_len = rt_string_len(prefix, dst_sz);
+    auto name_len   = rt_string_len(name, dst_sz);
+
+    if (name_len >= dst_sz - prefix_len) return NO;
+
+    rt_copy_memory((VoidPtr) prefix, dst, prefix_len);
+    rt_copy_memory((VoidPtr) name, dst + prefix_len, name_len);
+
+    for (SizeT i = prefix_len; i < prefix_len + name_len; ++i) {
+      if (rt_is_space(dst[i])) dst[i] = '$';
+    }
+
+    dst[prefix_len + name_len] = 0;
+
+    return YES;
+  }
+
+  /// @brief Validate the container header of a flat blob.
+  STATIC Bool pef_read_container(const UInt8* blob, const SizeT len, PEFContainer* out) {
+    if (!blob || len < sizeof(PEFContainer)) return NO;
+
+    rt_copy_memory((VoidPtr) blob, out, sizeof(PEFContainer));
+
+    if (!pef_magic_eq(out->Magic, kPefMagic) && !pef_magic_eq(out->Magic, kPefMagicFat)) return NO;
+
+    if (out->Abi != kPefAbi) return NO;
+    if (out->Count < 1 || out->Count > kPefMaxSections) return NO;
+
+    /// @note never Count * sizeof(), that product is free to wrap.
+    if (out->Count > (len - sizeof(PEFContainer)) / sizeof(PEFCommandHeader)) return NO;
+
+    return YES;
+  }
+
+  /// @brief Find a section header by name and kind inside a flat blob.
+  STATIC Bool pef_find_section(const UInt8* blob, const SizeT len, const Char* name,
+                               const Int32 kind, PEFCommandHeader* out) {
+    PEFContainer container{};
+
+    if (!pef_read_container(blob, len, &container)) return NO;
+
+    const Bool  kIsFat   = pef_magic_eq(container.Magic, kPefMagicFat);
+    const SizeT kTableSz = container.Count * sizeof(PEFCommandHeader);
+
+    for (SizeT i = 0UL; i < container.Count; ++i) {
+      rt_copy_memory((VoidPtr) (blob + sizeof(PEFContainer) + (i * sizeof(PEFCommandHeader))), out,
+                     sizeof(PEFCommandHeader));
+
+      if (out->Kind != kind) continue;
+      if (!pef_name_eq(out->Name, name)) continue;
+
+      if (out->Cpu != ldr_get_platform() && !kIsFat) return NO;
+
+      if (out->VMSize < 1 || out->VMSize > kPefMaxImageSz) return NO;
+      if (out->VMAddress < kPefBaseOrigin) return NO;
+      if (out->OffsetSize > out->VMSize) return NO;
+
+      if (out->OffsetSize > 0) {
+        if (out->Offset > len) return NO;
+        if (out->OffsetSize > len - out->Offset) return NO;
+        /// @note content may not alias the header table it was validated from.
+        if (out->Offset < sizeof(PEFContainer) + kTableSz) return NO;
+      }
+
+      return YES;
+    }
+
+    return NO;
+  }
+
+  /// @brief Instantiate a section, then map it at its virtual address.
+  STATIC ErrorOr<VoidPtr> pef_load_section(const PEFCommandHeader& hdr, const VoidPtr src) {
+    Char* image = new Char[hdr.VMSize];
+
+    if (!image) return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
+
+    rt_set_memory(image, 0, hdr.VMSize);
+
+    if (src && hdr.OffsetSize > 0) {
+      rt_copy_memory_safe(src, image, hdr.OffsetSize, hdr.VMSize);
+    }
+
+    SizeT pages = hdr.VMSize / kPageSize + ((hdr.VMSize % kPageSize) ? 1 : 0);
+
+    for (SizeT i = 0UL; i < pages; ++i) {
+      if (HAL::mm_map_page((VoidPtr) (hdr.VMAddress + (i * kPageSize)),
+                           (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
+                           HAL::kMMFlagsPresent | HAL::kMMFlagsUser) != kErrorSuccess) {
+        delete[] image;
+        return ErrorOr<VoidPtr>{kErrorInvalidData};
+      }
+    }
+
+    return ErrorOr<VoidPtr>{(VoidPtr) image};
+  }
 }  // namespace Detail
 
 /***********************************************************************************/
 /// @brief PEF loader constructor w/ blob.
 /// @param blob file blob.
+/// @param len size of the blob, bounds every walk over it.
 /***********************************************************************************/
-PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
-  if (fCachedBlob.Leak().Leak()) {
+PEFLoader::PEFLoader(const VoidPtr blob, const SizeT len) : fCachedBlob(blob), fCachedBlobSz(len) {
+  if (!fCachedBlob.Leak().Leak()) {
     this->fBad = YES;
     return;
   }
@@ -80,7 +220,6 @@ PEFLoader::PEFLoader(const VoidPtr blob) : fCachedBlob(blob) {
   this->fFatBinary = NO;
   this->fBad       = YES;
 
-  if (this->fCachedBlob) mm_free_ptr(this->fCachedBlob.Leak().Leak());
   this->fCachedBlob.Leak().Leak() = nullptr;
 }
 
@@ -102,6 +241,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
 
   /// @note zero here means that the FileMgr will read every container header inside the file.
   fCachedBlob = fFile->Read(kPefHeader, 0UL);
+  fOwnsBlob   = YES;
 
   if (!fCachedBlob.Leak().Leak()) {
     kout << "PEFLoader: warning: Binary format error!\r";
@@ -142,7 +282,7 @@ PEFLoader::PEFLoader(const Char* path) : fCachedBlob(nullptr), fFatBinary(false)
 /// @brief PEF destructor.
 /***********************************************************************************/
 PEFLoader::~PEFLoader() {
-  if (fCachedBlob.Leak().Leak()) {
+  if (fOwnsBlob && fCachedBlob.Leak().Leak()) {
     mm_free_ptr(fCachedBlob.Leak().Leak());
   }
 }
@@ -154,6 +294,26 @@ PEFLoader::~PEFLoader() {
 /***********************************************************************************/
 ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
   if (!fCachedBlob.Leak().Leak() || fBad || !name) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  if (fCachedBlobSz > 0) {
+    Char             sect_name[kPefNameLen] = {0};
+    PEFCommandHeader hdr{};
+
+    if (!Detail::pef_make_name(sect_name, kPefNameLen, kind, name))
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+    auto blob_ptr = reinterpret_cast<const UInt8*>(fCachedBlob.Leak().Leak());
+
+    if (!Detail::pef_find_section(blob_ptr, fCachedBlobSz, sect_name, kind, &hdr))
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+    kout << "PEFLoader: info: Load stub: " << hdr.Name << "!\r";
+
+    return Detail::pef_load_section(
+        hdr, hdr.OffsetSize > 0 ? (VoidPtr) (blob_ptr + hdr.Offset) : nullptr);
+  }
+
+  if (!fFile) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
   auto blob = fFile->Read(name, sizeof(PEFCommandHeader));
 
@@ -313,9 +473,9 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
 
   if (!symname.Leak().Leak()) return kCPSInvalidPID;
 
-  ProcessID id =
-      UserProcessScheduler::The().Spawn(reinterpret_cast<const Char*>(symname.Leak().Leak()),
-                                        errOrStart.Leak().Leak(), exec.GetBlob().Leak().Leak());
+  ProcessID id = UserProcessScheduler::The().Spawn(
+      reinterpret_cast<const Char*>(symname.Leak().Leak()), errOrStart.Leak().Leak(),
+      exec.GetBlob().Leak().Leak(), exec.BlobSz());
 
   if (symname.Leak().Leak()) mm_free_ptr(symname.Leak().Leak());
 
@@ -336,8 +496,8 @@ ProcessID rtl_create_user_process(PEFLoader&                         exec,
       *(volatile UIntPtr*) stacksym.Leak().Leak() = kCPSMaxStackSz;
     }
 
-    UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].Kind = process_kind;
-    UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].StackSize =
+    UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].Kind = process_kind;
+    UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].StackSize =
         *(UIntPtr*) stacksym.Leak().Leak();
 
     mm_free_ptr(stacksym.Leak().Leak());

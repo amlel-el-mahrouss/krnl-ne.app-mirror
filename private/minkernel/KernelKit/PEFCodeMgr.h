@@ -32,7 +32,7 @@ class PEFLoader NE_EXEC_LOADER {
   explicit PEFLoader() = delete;
 
  public:
-  explicit PEFLoader(const VoidPtr blob);
+  explicit PEFLoader(const VoidPtr blob, const SizeT len);
   explicit PEFLoader(const Char* path);
   ~PEFLoader() override;
 
@@ -50,7 +50,8 @@ class PEFLoader NE_EXEC_LOADER {
   ErrorOr<VoidPtr> GetBlob() override;
 
  public:
-  bool IsLoaded();
+  bool  IsLoaded();
+  SizeT BlobSz() const { return fCachedBlobSz; }
 
  private:
 #ifdef __FSKIT_INCLUDES_NEFS__
@@ -63,8 +64,10 @@ class PEFLoader NE_EXEC_LOADER {
 
   Ref<KString> fPath;
   ErrorOrAny   fCachedBlob;
+  SizeT        fCachedBlobSz{};
   BOOL         fFatBinary{};
   BOOL         fBad{};
+  BOOL         fOwnsBlob{};
 };
 
 ProcessID rtl_create_user_process(PEFLoader& exec, const UserProcess::ExecutableKind& procKind);

@@ -7,24 +7,22 @@
 
 %define kInterruptId 50
 
+;; Exception that the CPU pushes an error code for, drop it before iret.
 %macro IntExp 1
 global __NE_INT_%1
 __NE_INT_%1:
     cli
 
-    std
+    add rsp, 8
 
     o64 iret
 %endmacro
 
+;; Interrupt without an error code.
 %macro IntNormal 1
 global __NE_INT_%1
 __NE_INT_%1:
     cli
-
-    std
-    
-    add rsp, 8
 
     o64 iret
 %endmacro
@@ -132,7 +130,7 @@ __NE_INT_8:
     call idt_handle_math
     pop rcx
 
-    std
+    add rsp, 8
 
     o64 iret
 
@@ -149,8 +147,6 @@ __NE_INT_13:
     call idt_handle_gpf
     pop rcx
 
-    std
-    
     add rsp, 8
 
     o64 iret
@@ -161,7 +157,7 @@ __NE_INT_14:
     call idt_handle_pf
     pop rcx
 
-    std
+    add rsp, 8
 
     o64 iret
 
@@ -171,7 +167,7 @@ IntExp 17
 IntNormal 18
 IntNormal 19
 IntNormal 20
-IntNormal 21
+IntExp    21
 
 IntNormal 22
 
@@ -181,7 +177,7 @@ IntNormal 25
 IntNormal 26
 IntNormal 27
 IntNormal 28
-IntNormal 29
+IntExp    29
 IntExp    30
 IntNormal 31
 

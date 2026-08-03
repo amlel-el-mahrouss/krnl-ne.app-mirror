@@ -22,15 +22,6 @@ EXTERN_C Ne::Kernel::Void __cxa_pure_virtual(void* self) {
   (Ne::Kernel::Void)(Ne::Kernel::kout << ", has unimplemented virtual functions.\r");
 }
 
-EXTERN_C void ___chkstk_ms(PtrDiff frame_size) {
-  char* sp;
-  asm volatile("mov %%rsp, %0" : "=r"(sp));
-
-  for (PtrDiff offset = kPageSize; offset < frame_size; offset += kPageSize) {
-    sp[-offset] = 0;
-  }
-}
-
 EXTERN_C int atexit(void (*f)()) {
   if (__atexit_func_count >= kAtExitMaxDestructors) return 1;
 

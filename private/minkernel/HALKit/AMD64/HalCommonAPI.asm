@@ -127,3 +127,34 @@ sched_recover_registers:
 
     ret
 
+
+;; Stack probe emitted by GCC for large frames.
+;; RAX holds the frame size on entry and the caller does 'sub rax, rsp'
+;; right after, so every register including RAX has to survive.
+
+global ___chkstk_ms
+
+___chkstk_ms:
+    push rcx
+    push rax
+
+    cmp rax, 0x1000
+    lea rcx, [rsp + 24]
+    jb .last
+
+.probe:
+    sub rcx, 0x1000
+    or qword [rcx], 0
+
+    sub rax, 0x1000
+    cmp rax, 0x1000
+    ja .probe
+
+.last:
+    sub rcx, rax
+    or qword [rcx], 0
+
+    pop rax
+    pop rcx
+
+    ret

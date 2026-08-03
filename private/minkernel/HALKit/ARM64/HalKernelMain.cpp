@@ -27,12 +27,11 @@ EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   /*     INITIALIZE AND VALIDATE HEADER.              */
   /************************************************** */
 
-  kHandoverHeader = handover_hdr;
-
-  if (kHandoverHeader->f_Magic != kHandoverMagic &&
-      kHandoverHeader->f_Version != kHandoverVersion) {
+  if (handover_hdr->f_Magic != kHandoverMagic || handover_hdr->f_Version != kHandoverVersion) {
     return;
   }
+
+  kHandoverHeader = handover_hdr;
 
 #ifdef __NE_ARM64_EFI__
   ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
@@ -55,6 +54,8 @@ EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   /// @note do initialize the interrupts after it.
 
   Ne::Kernel::mp_init_cores();
+
+  Ne::Kernel::user_init_globals(kHandoverHeader->f_RecoverMode);
 
   while (YES);
 }

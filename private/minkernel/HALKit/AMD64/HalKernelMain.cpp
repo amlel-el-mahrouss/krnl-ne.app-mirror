@@ -10,6 +10,7 @@
 #include <KernelKit/CodeMgr.h>
 #include <KernelKit/HardwareThreadScheduler.h>
 #include <KernelKit/PEFCodeMgr.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/Timer.h>
 #include <NetworkKit/IPC.h>
@@ -52,10 +53,14 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
   /*     INITIALIZE BIT MAP.              */
   /************************************** */
 
-  kBitMapCursor    = 0UL;
-  kKernelBitMpSize = kHandoverHeader->f_BitMapSize;
-  kKernelBitMpStart =
-      reinterpret_cast<VoidPtr>(reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart));
+  auto usable_sz = kHandoverHeader->f_BitMapSize / 2;
+
+  kBitMapCursor     = 0UL;
+  kKernelBitMpSize  = usable_sz;
+  kKernelBitMpStart = kHandoverHeader->f_BitMapStart;
+
+  HAL::pmm_init(reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart) + usable_sz,
+                kHandoverHeader->f_BitMapSize - usable_sz);
 
   /************************************** */
   /*     INITIALIZE GDT AND SEGMENTS. */
@@ -142,6 +147,41 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
 
 EXTERN_C BOOL rtl_init_nic_rtl8139();
 
+#ifdef __DEBUG__
+/// @brief Check the frame allocator's invariants on real memory.
+STATIC Ne::Kernel::Void pmm_self_test(Ne::Kernel::Void) {
+  using namespace Ne::Kernel;
+
+  auto a = HAL::pmm_alloc_frame();
+  auto b = HAL::pmm_alloc_frame();
+
+  if (!a || !b) {
+    (Void)(kout << "pmm: FAIL out of memory\r");
+    return;
+  }
+
+  if ((a & (kPageSize - 1)) || (b & (kPageSize - 1))) (Void)(kout << "pmm: FAIL alignment\r");
+  if (a == b) (Void)(kout << "pmm: FAIL duplicate frame\r");
+
+  for (SizeT i = 0UL; i < kPageSize; ++i) {
+    if (reinterpret_cast<UInt8*>(a)[i] != 0) {
+      (Void)(kout << "pmm: FAIL frame not zeroed\r");
+      break;
+    }
+  }
+
+  rt_set_memory(reinterpret_cast<VoidPtr>(b), 0xAB, kPageSize);
+  HAL::pmm_free_frame(b);
+
+  auto c = HAL::pmm_alloc_frame();
+
+  if (c != b) (Void)(kout << "pmm: FAIL free list did not reuse\r");
+  if (c && reinterpret_cast<UInt8*>(c)[8] != 0) (Void)(kout << "pmm: FAIL reuse not zeroed\r");
+
+  (Void)(kout << "pmm: self test done, free " << number(HAL::pmm_free_frames()) << kendl);
+}
+#endif  // __DEBUG__
+
 /// @brief Liveness probe, returns the handover magic to its caller.
 STATIC Ne::Kernel::VoidPtr ke_ping(Ne::Kernel::VoidPtr arg) {
   NE_UNUSED(arg);
@@ -156,6 +196,10 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   HAL::IDTLoader idt_loader;
   idt_loader.Load(idt_reg);
+
+#ifdef __DEBUG__
+  pmm_self_test();
+#endif  // __DEBUG__
 
   user_init_globals(kHandoverHeader->f_RecoverMode);
 

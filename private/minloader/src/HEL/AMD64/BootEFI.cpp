@@ -161,30 +161,29 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   constexpr UInt64 kBootLowMemEnd = 0x100000;
 
+  /// @note one region, not the sum of every region. Summing them yields a size the
+  /// kernel does not own the moment the map is fragmented.
   for (UIntPtr i = 0; i < size_struct_ptr / sz_desc; ++i) {
     EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
-    if (desc->Kind == EfiConventionalMemory) {
-      if (desc->PhysicalStart < kBootLowMemEnd) continue;
 
-      if (first_free_page == nullptr) {
-        first_free_page = (VoidPtr) desc->PhysicalStart;
-      }
-      free_pages += desc->NumberOfPages;
+    if (desc->Kind != EfiConventionalMemory) continue;
+    if (desc->PhysicalStart < kBootLowMemEnd) continue;
+
+    if (desc->NumberOfPages > free_pages) {
+      free_pages      = desc->NumberOfPages;
+      first_free_page = (VoidPtr) desc->PhysicalStart;
     }
   }
 
-  if (!first_free_page) {
+  if (!first_free_page || free_pages < 1) {
     writer.Write("BootZ: No conventional memory, can't boot to NeKernel.\r");
     Boot::Stop();
   }
 
-  free_pages = free_pages > 1024 ? free_pages - 1024 : free_pages;
-
-  // Set bitmap to use the first free page region found.
   handover_hdr->f_BitMapStart = first_free_page;
+  handover_hdr->f_BitMapSize  = free_pages * 4096;
 
-  // Convert pages to bytes (assuming 4K pages) for bitmap size.
-  handover_hdr->f_BitMapSize = free_pages * 4096;
+  writer.Write("BootZ: Usable memory: ").Write(free_pages * 4096).Write("\r");
 
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;

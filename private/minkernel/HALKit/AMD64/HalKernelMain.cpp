@@ -26,7 +26,7 @@ EXTERN_C Ne::Kernel::VoidPtr kInterruptVectorTable[];
 EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   using namespace Ne::Kernel;
 
-  if (handover_hdr->f_Magic != kHandoverMagic && handover_hdr->f_Version != kHandoverVersion) {
+  if (handover_hdr->f_Magic != kHandoverMagic || handover_hdr->f_Version != kHandoverVersion) {
     return kEfiFail;
   }
 
@@ -64,6 +64,10 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
   STATIC CONST auto kGDTEntriesCount = 8;
 
   STATIC HAL::Detail::NE_TSS kKernelTSS{};
+
+  if (!kHandoverHeader->f_StackTop) {
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "No ring 0 stack in handover.");
+  }
 
   kKernelTSS.fRsp0 = (UInt64) kHandoverHeader->f_StackTop;
   kKernelTSS.fIopb = sizeof(HAL::Detail::NE_TSS);
@@ -135,6 +139,12 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
 
 EXTERN_C BOOL rtl_init_nic_rtl8139();
 
+/// @brief Liveness probe, returns the handover magic to its caller.
+STATIC Ne::Kernel::VoidPtr ke_ping(Ne::Kernel::VoidPtr arg) {
+  NE_UNUSED(arg);
+  return (Ne::Kernel::VoidPtr) kHandoverMagic;
+}
+
 EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
@@ -143,6 +153,10 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   HAL::IDTLoader idt_loader;
   idt_loader.Load(idt_reg);
+
+  user_init_globals(kHandoverHeader->f_RecoverMode);
+
+  ke_install_syscall("ke_ping", ke_ping);
 
 #ifdef __FSKIT_INCLUDES_OPENHEFS__
   OpenHeFS::fs_init_openhefs();
@@ -156,12 +170,18 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  PEFLoader ldr("/system/basesvc.exe");
+  if (kHandoverHeader->f_SCIImage && kHandoverHeader->f_SCIImageSz) {
+    PE32Loader ldr(kHandoverHeader->f_SCIImage, kHandoverHeader->f_SCIImageSz);
 
-  if (ldr.IsLoaded()) {
-    rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
+    if (ldr.IsLoaded() &&
+        rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind) !=
+            kCPSInvalidPID) {
+      (Void)(kout << "hal_real_init: Spawned the launch host.\r");
+    } else {
+      (Void)(kout << "hal_real_init: warning: Launch host did not spawn.\r");
+    }
   } else {
-    ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Launch Host Process.");
+    (Void)(kout << "hal_real_init: warning: No launch host in handover.\r");
   }
 
   UserProcessScheduler::The().SwitchTeam(kMidUserTeam);

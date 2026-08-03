@@ -34,7 +34,7 @@ class PE32Loader NE_EXEC_LOADER {
   explicit PE32Loader() = delete;
 
  public:
-  explicit PE32Loader(const VoidPtr blob);
+  explicit PE32Loader(const VoidPtr blob, const SizeT len);
   explicit PE32Loader(const Char* path);
   ~PE32Loader() override;
 
@@ -56,6 +56,10 @@ class PE32Loader NE_EXEC_LOADER {
   BOOL IsLoaded();
 
  private:
+  /// @brief Instantiate the image in memory, then map it. Idempotent.
+  ErrorOr<VoidPtr> LoadImage();
+
+ private:
 #ifdef __FSKIT_INCLUDES_NEFS__
   OwnPtr<FileStream<Char, NeFileSystemMgr>> fFile;
 #elif defined(__FSKIT_INCLUDES_OPENHEFS__)
@@ -66,6 +70,8 @@ class PE32Loader NE_EXEC_LOADER {
 
   Ref<KString> fPath;
   ErrorOrAny   fCachedBlob{};
+  SizeT        fCachedBlobSz{};
+  VoidPtr      fImage{};
   BOOL         fBad{};
 };
 

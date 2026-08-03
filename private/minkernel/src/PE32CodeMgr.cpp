@@ -36,6 +36,17 @@ namespace Detail {
     return kPEPlatformInvalid;
 #endif  // __32x0__ || __64x0__ || __x86_64__
   }
+
+  /// @brief COFF machine value this build can execute.
+  UInt16 ldr_get_platform_pe_machine(void) {
+#if defined(__NE_AMD64__)
+    return kPeMachineAMD64;
+#elif defined(__NE_ARM64__)
+    return kPeMachineARM64;
+#else
+    return 0;
+#endif
+  }
 }  // namespace Detail
 
 /***********************************************************************************/
@@ -43,8 +54,35 @@ namespace Detail {
 /// @param blob file blob.
 /***********************************************************************************/
 
-PE32Loader::PE32Loader(const VoidPtr blob) : fCachedBlob(blob) {
-  fBad = false;
+PE32Loader::PE32Loader(const VoidPtr blob, const SizeT len)
+    : fCachedBlob(blob), fCachedBlobSz(len) {
+  if (!blob || len < sizeof(DosHeader)) {
+    fBad = YES;
+    return;
+  }
+
+  auto header = CF::ldr_find_exec_header(reinterpret_cast<const Char*>(blob));
+  auto opt    = CF::ldr_find_opt_exec_header(reinterpret_cast<const Char*>(blob));
+
+  if (!header || !opt) {
+    fBad = YES;
+    return;
+  }
+
+  if (header->Machine != Detail::ldr_get_platform_pe_machine()) {
+    fBad = YES;
+    return;
+  }
+
+  if (opt->Subsystem != kNeKernelPESubsystem) {
+    fBad = YES;
+    return;
+  }
+
+  if (opt->SizeOfImage < 1 || opt->SizeOfImage > kPeMaxImageSz) {
+    fBad = YES;
+    return;
+  }
 }
 
 /***********************************************************************************/
@@ -196,10 +234,83 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
 
 /// @brief Finds the executable entrypoint.
 /// @return
-ErrorOr<VoidPtr> PE32Loader::FindStart() {
-  if (auto sym = this->FindSymbol(kPeImageStart, 0); sym) return sym;
+/***********************************************************************************/
+/// @brief Instantiate the image and map it at its preferred base.
+/// @return the kernel address of the image.
+/***********************************************************************************/
 
-  return ErrorOr<VoidPtr>(kErrorExecutable);
+ErrorOr<VoidPtr> PE32Loader::LoadImage() {
+  if (fImage) return ErrorOr<VoidPtr>{fImage};
+
+  if (fBad || !fCachedBlob.Leak().Leak() || !fCachedBlobSz)
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  auto blob   = reinterpret_cast<Char*>(fCachedBlob.Leak().Leak());
+  auto header = CF::ldr_find_exec_header(blob);
+  auto opt    = CF::ldr_find_opt_exec_header(blob);
+
+  if (!header || !opt || header->NumberOfSections < 1)
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  auto image = new Char[opt->SizeOfImage];
+
+  if (!image) return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
+
+  rt_set_memory(image, 0, opt->SizeOfImage);
+
+  auto sect =
+      reinterpret_cast<LDR_SECTION_HEADER_PTR>(((Char*) opt) + header->SizeOfOptionalHeader);
+
+  for (SizeT i = 0UL; i < header->NumberOfSections; ++i) {
+    auto sec = &sect[i];
+
+    if (!sec->SizeOfRawData) continue;
+
+    /// @note never a + b, both sums are free to wrap.
+    if (sec->VirtualAddress > opt->SizeOfImage ||
+        sec->SizeOfRawData > opt->SizeOfImage - sec->VirtualAddress ||
+        sec->PointerToRawData > fCachedBlobSz ||
+        sec->SizeOfRawData > fCachedBlobSz - sec->PointerToRawData) {
+      delete[] image;
+
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+    }
+
+    rt_copy_memory_safe((VoidPtr) (blob + sec->PointerToRawData),
+                        (VoidPtr) (image + sec->VirtualAddress), sec->SizeOfRawData,
+                        opt->SizeOfImage - sec->VirtualAddress);
+  }
+
+  SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
+
+  for (SizeT i = 0UL; i < pages; ++i) {
+    if (HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)),
+                         (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
+                         HAL::kMMFlagsPresent | HAL::kMMFlagsUser) != kErrorSuccess) {
+      delete[] image;
+
+      return ErrorOr<VoidPtr>{kErrorInvalidData};
+    }
+  }
+
+  fImage = image;
+
+  (Void)(kout << "PE32Loader: info: Mapped image at " << hex_number(opt->ImageBase) << kendl);
+
+  return ErrorOr<VoidPtr>{fImage};
+}
+
+ErrorOr<VoidPtr> PE32Loader::FindStart() {
+  auto image = this->LoadImage();
+
+  if (!image.Leak().Leak()) return ErrorOr<VoidPtr>(kErrorExecutable);
+
+  auto opt = CF::ldr_find_opt_exec_header(reinterpret_cast<Char*>(fCachedBlob.Leak().Leak()));
+
+  if (!opt || !opt->AddressOfEntryPoint) return ErrorOr<VoidPtr>(kErrorExecutable);
+
+  return ErrorOr<VoidPtr>{
+      (VoidPtr) ((UIntPtr) image.Leak().Leak() + opt->AddressOfEntryPoint)};
 }
 
 /// @brief Tells if the executable is loaded or not.
@@ -236,8 +347,7 @@ ErrorOr<VoidPtr> PE32Loader::GetBlob() {
   return ErrorOr<VoidPtr>{this->fCachedBlob.Leak().Leak()};
 }
 
-namespace Utils {
-  ProcessID rtl_create_user_process(PE32Loader&                        exec,
+ProcessID rtl_create_user_process(PE32Loader&                        exec,
                                     const UserProcess::ExecutableKind& process_kind) {
     if (!exec.IsLoaded()) return kCPSInvalidPID;
 
@@ -275,8 +385,8 @@ namespace Utils {
         *(volatile UIntPtr*) stacksym.Leak().Leak() = kCPSMaxStackSz;
       }
 
-      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].Kind = process_kind;
-      UserProcessScheduler::The().TheCurrentTeam().Leak().AsArray()[id].StackSize =
+      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].Kind = process_kind;
+      UserProcessScheduler::The().TheCurrentTeam().AsArray()[id].StackSize =
           *(UIntPtr*) stacksym.Leak().Leak();
 
       mm_free_ptr(stacksym.Leak().Leak());
@@ -285,6 +395,5 @@ namespace Utils {
 
     return id;
   }
-}  // namespace Utils
 
 }  // namespace Ne::Kernel

@@ -404,6 +404,13 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
   process.ProcessId = pid;
   process.Status    = ProcessStatusKind::kRunning;
   process.PTime     = 0;
+
+  /// @note the team is copied in from a global whose constructor never ran, so the
+  /// member initialisers are gone. Spawn owns the scheduling state.
+  process.Affinity = AffinityKind::kStandard;
+  process.RTime    = 0;
+  process.UTime    = 0;
+  process.STime    = 0;
   process.UTime     = 0;
   process.RTime     = 0;
   process.STime     = 0;

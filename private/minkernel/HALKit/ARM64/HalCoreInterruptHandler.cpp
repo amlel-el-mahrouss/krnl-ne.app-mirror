@@ -26,7 +26,7 @@ STATIC void hal_int_send_eoi(UInt8 vector) {
 /// @brief Handle GPF fault.
 /// @param rsp
 EXTERN_C Ne::Kernel::Void int_handle_gpf(Ne::Kernel::UIntPtr rsp) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(13);
@@ -39,7 +39,7 @@ EXTERN_C Ne::Kernel::Void int_handle_gpf(Ne::Kernel::UIntPtr rsp) {
 /// @brief Handle page fault.
 /// @param rsp
 EXTERN_C void int_handle_pf(Ne::Kernel::UIntPtr rsp) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(14);
@@ -67,7 +67,7 @@ EXTERN_C void int_handle_scheduler(Ne::Kernel::UIntPtr rsp) {
 /// @brief Handle math fault.
 /// @param rsp
 EXTERN_C void int_handle_math(Ne::Kernel::UIntPtr rsp) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(8);
@@ -80,7 +80,7 @@ EXTERN_C void int_handle_math(Ne::Kernel::UIntPtr rsp) {
 /// @brief Handle any generic fault.
 /// @param rsp
 EXTERN_C void int_handle_generic(Ne::Kernel::UIntPtr rsp) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(30);
@@ -95,7 +95,7 @@ EXTERN_C void int_handle_generic(Ne::Kernel::UIntPtr rsp) {
 }
 
 EXTERN_C Ne::Kernel::Void int_handle_breakpoint(Ne::Kernel::UIntPtr rip) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
 
   hal_int_send_eoi(3);
 
@@ -110,7 +110,7 @@ EXTERN_C Ne::Kernel::Void int_handle_breakpoint(Ne::Kernel::UIntPtr rip) {
 /// @brief Handle #UD fault.
 /// @param rsp
 EXTERN_C void int_handle_ud(Ne::Kernel::UIntPtr rsp) {
-  auto process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
+  auto& process = Ne::Kernel::UserProcessScheduler::The().TheCurrentProcess();
   process.Crash();
 
   hal_int_send_eoi(6);
@@ -148,7 +148,7 @@ EXTERN_C Ne::Kernel::Void hal_kernel_call_enter(Ne::Kernel::UIntPtr rcx_hash, Ne
   if (!Ne::Kernel::kCurrentUser->IsSuperUser()) return;
 
   for (SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
-    if (kKernCalls[i].fHooked && rcx_hash == kKernCalls[rcx_hash].fHash) {
+    if (kKernCalls[i].fHooked && rcx_hash == kKernCalls[i].fHash) {
       if (kKernCalls[i].fProc) {
         (kKernCalls[i].fProc)(cnt, (Ne::Kernel::VoidPtr) arg, sz);
       }

@@ -411,9 +411,9 @@ ProcessID UserProcessScheduler::Spawn(const Char* name, VoidPtr code, VoidPtr im
   process.RTime    = 0;
   process.UTime    = 0;
   process.STime    = 0;
-  process.UTime     = 0;
-  process.RTime     = 0;
-  process.STime     = 0;
+  process.UTime    = 0;
+  process.RTime    = 0;
+  process.STime    = 0;
 
   if (!process.FileTree) {
     process.FileTree = new ProcessFileTree<VoidPtr>();

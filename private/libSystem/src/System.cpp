@@ -228,8 +228,8 @@ IMPORT_C UInt64 PrintSize(IORef ref) {
 }
 
 IMPORT_C SInt32 ThrExitMainThread(SInt32 exit_code) {
-  nesys_syscall_arg_2(SYSCALL_HASH("ThrExitMainThread"), reinterpret_cast<VoidPtr>(
-                                                             static_cast<UIntPtr>(exit_code)));
+  nesys_syscall_arg_2(SYSCALL_HASH("ThrExitMainThread"),
+                      reinterpret_cast<VoidPtr>(static_cast<UIntPtr>(exit_code)));
 
   while (YES) {
   }

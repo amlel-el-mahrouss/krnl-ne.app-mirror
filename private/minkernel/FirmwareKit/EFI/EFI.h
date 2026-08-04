@@ -468,8 +468,7 @@ typedef UInt64(EFI_API* EfiFreePages)(EfiPhysicalAddress* Memory, UIntPtr Pages)
 
 /// @note UEFI types these as UINTN*, the firmware writes 8 bytes through each.
 typedef UInt64(EFI_API* EfiGetMemoryMap)(UIntPtr* MapSize, EfiMemoryDescriptor* DescPtr,
-                                         UIntPtr* MapKey, UIntPtr* DescSize,
-                                         UIntPtr* DescVersion);
+                                         UIntPtr* MapKey, UIntPtr* DescSize, UIntPtr* DescVersion);
 
 /**
  * @brief GUID type, something you can also find in CFKit.

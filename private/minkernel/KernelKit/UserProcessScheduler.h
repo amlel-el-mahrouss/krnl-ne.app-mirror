@@ -237,8 +237,8 @@ class UserProcessScheduler final : public ISchedulable {
   bool     operator!();
 
  public:
-  UserProcessTeam&     TheCurrentTeam();
-  BOOL                 SwitchTeam(UserProcessTeam& team);
+  UserProcessTeam& TheCurrentTeam();
+  BOOL             SwitchTeam(UserProcessTeam& team);
 
  public:
   ProcessID Spawn(const Char* name, VoidPtr code, VoidPtr image, SizeT image_sz = 0UL);

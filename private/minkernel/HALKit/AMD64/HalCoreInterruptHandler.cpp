@@ -169,7 +169,7 @@ EXTERN_C Ne::Kernel::Void hal_kernel_call_enter(Ne::Kernel::UIntPtr rcx_hash, Ne
   if (!Ne::Kernel::kCurrentUser->IsSuperUser()) return;
 
   for (SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
-    if (kKernCalls[i].fHooked && rcx_hash == kKernCalls[rcx_hash].fHash) {
+    if (kKernCalls[i].fHooked && rcx_hash == kKernCalls[i].fHash) {
       if (kKernCalls[i].fProc) {
         (kKernCalls[i].fProc)(cnt, (Ne::Kernel::VoidPtr) arg, sz);
       }

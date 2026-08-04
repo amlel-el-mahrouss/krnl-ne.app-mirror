@@ -50,6 +50,67 @@ STATIC Bool boot_init_fb() {
 EFI_GUID kEfiGlobalNamespaceVarGUID = {
     0x8BE4DF61, 0x93CA, 0x11D2, {0xAA, 0x0D, 0x00, 0xE0, 0x98, 0x03, 0x2B, 0x8C}};
 
+/// @brief Find the largest block of free memory and hand it to the kernel.
+/// @note run this AFTER every image is placed, or the firmware still reports the
+/// memory those images occupy as free and the kernel allocates over itself.
+STATIC Void boot_scan_memory(HEL::BootInfoHeader* handover_hdr, UIntPtr* out_map_key) {
+  Boot::BootTextWriter writer;
+
+  UIntPtr              map_key         = 0;
+  UIntPtr              size_struct_ptr = 0;
+  UIntPtr              sz_desc         = sizeof(EfiMemoryDescriptor);
+  UIntPtr              rev_desc        = 0;
+  EfiMemoryDescriptor* struct_ptr      = nullptr;
+
+  BS->GetMemoryMap(&size_struct_ptr, nullptr, &map_key, &sz_desc, &rev_desc);
+
+  /// @note AllocatePool itself grows the map, so ask for room to spare or the
+  /// second call fails and leaves the buffer untouched.
+  size_struct_ptr += sz_desc * 8;
+
+  if (BS->AllocatePool(EfiLoaderData, size_struct_ptr, (VoidPtr*) &struct_ptr) != kEfiOk ||
+      !struct_ptr) {
+    writer.Write("BootZ: Can't allocate the memory map, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  if (BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc) != kEfiOk) {
+    writer.Write("BootZ: Can't read the memory map, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  UInt64  free_pages      = 0;
+  VoidPtr first_free_page = nullptr;
+
+  constexpr UInt64 kBootLowMemEnd = 0x100000;
+
+  /// @note one region, not the sum of every region. Summing them yields a size the
+  /// kernel does not own the moment the map is fragmented.
+  for (UIntPtr i = 0; i < size_struct_ptr / sz_desc; ++i) {
+    EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
+
+    if (desc->Kind != EfiConventionalMemory) continue;
+    if (desc->PhysicalStart < kBootLowMemEnd) continue;
+
+    if (desc->NumberOfPages > free_pages) {
+      free_pages      = desc->NumberOfPages;
+      first_free_page = (VoidPtr) desc->PhysicalStart;
+    }
+  }
+
+  if (!first_free_page || free_pages < 1) {
+    writer.Write("BootZ: No conventional memory, can't boot to NeKernel.\r");
+    Boot::Stop();
+  }
+
+  handover_hdr->f_BitMapStart = first_free_page;
+  handover_hdr->f_BitMapSize  = free_pages * 4096;
+
+  if (out_map_key) *out_map_key = map_key;
+
+  writer.Write("BootZ: Usable memory: ").Write(free_pages * 4096).Write("\r");
+}
+
 /// @brief BootloaderMain EFI entrypoint.
 /// @param image_handle Handle of this image.
 /// @param sys_table The system table of it.
@@ -136,54 +197,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   handover_hdr->f_BitMapStart = nullptr; /* Start of bitmap. */
   handover_hdr->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
 
-  // Probe for the size of the memory map.
-  size_struct_ptr = 0UL;
-  BS->GetMemoryMap(&size_struct_ptr, nullptr, &map_key, &sz_desc, &rev_desc);
-
-  /// @note AllocatePool itself grows the map, so ask for room to spare or the
-  /// second call fails and leaves the buffer untouched.
-  size_struct_ptr += sz_desc * 8;
-
-  if (BS->AllocatePool(EfiLoaderData, size_struct_ptr, (VoidPtr*) &struct_ptr) != kEfiOk ||
-      !struct_ptr) {
-    writer.Write("BootZ: Can't allocate the memory map, can't boot to NeKernel.\r");
-    Boot::Stop();
-  }
-
-  if (BS->GetMemoryMap(&size_struct_ptr, struct_ptr, &map_key, &sz_desc, &rev_desc) != kEfiOk) {
-    writer.Write("BootZ: Can't read the memory map, can't boot to NeKernel.\r");
-    Boot::Stop();
-  }
-
-  // Calculate initial bitmap size by summing all free memory pages.
-  UInt64  free_pages      = 0;
-  VoidPtr first_free_page = nullptr;
-
-  constexpr UInt64 kBootLowMemEnd = 0x100000;
-
-  /// @note one region, not the sum of every region. Summing them yields a size the
-  /// kernel does not own the moment the map is fragmented.
-  for (UIntPtr i = 0; i < size_struct_ptr / sz_desc; ++i) {
-    EfiMemoryDescriptor* desc = (EfiMemoryDescriptor*) ((UInt8*) struct_ptr + (i * sz_desc));
-
-    if (desc->Kind != EfiConventionalMemory) continue;
-    if (desc->PhysicalStart < kBootLowMemEnd) continue;
-
-    if (desc->NumberOfPages > free_pages) {
-      free_pages      = desc->NumberOfPages;
-      first_free_page = (VoidPtr) desc->PhysicalStart;
-    }
-  }
-
-  if (!first_free_page || free_pages < 1) {
-    writer.Write("BootZ: No conventional memory, can't boot to NeKernel.\r");
-    Boot::Stop();
-  }
-
-  handover_hdr->f_BitMapStart = first_free_page;
-  handover_hdr->f_BitMapSize  = free_pages * 4096;
-
-  writer.Write("BootZ: Usable memory: ").Write(free_pages * 4096).Write("\r");
+  boot_scan_memory(handover_hdr, &map_key);
 
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST] = (VoidPtr) ST;
@@ -349,6 +363,10 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
     handover_hdr->f_KernelImage = reader_kernel.Blob();
     handover_hdr->f_KernelSz    = reader_kernel.Size();
+
+    boot_scan_memory(handover_hdr, &map_key);
+
+    handover_hdr->f_HardwareTables.f_ImageKey = map_key;
 
     return kernel_thread.Start(handover_hdr, YES);
   }

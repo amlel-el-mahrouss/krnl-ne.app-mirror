@@ -62,7 +62,14 @@ _Output UIntPtr pmm_alloc_frame(Void) {
     Detail::kPmmCursor += kPageSize;
   }
 
-  if (!frame) return 0UL;
+  if (!frame) {
+    (Void)(kout << "pmm: exhausted base " << hex_number(Detail::kPmmBase) << kendl);
+    (Void)(kout << "pmm: exhausted cur " << hex_number(Detail::kPmmCursor) << kendl);
+    (Void)(kout << "pmm: exhausted end " << hex_number(Detail::kPmmEnd) << kendl);
+    (Void)(kout << "pmm: exhausted head " << hex_number(Detail::kPmmFreeHead) << kendl);
+
+    return 0UL;
+  }
 
   rt_set_memory(reinterpret_cast<VoidPtr>(frame), 0, kPageSize);
 

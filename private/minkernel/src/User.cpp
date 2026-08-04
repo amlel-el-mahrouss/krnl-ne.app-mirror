@@ -6,6 +6,7 @@
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/KPC.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ThreadLocalStorage.h>
 #include <KernelKit/User.h>
 #include <NeKit/KString.h>
@@ -75,7 +76,9 @@ User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
 ////////////////////////////////////////////////////////////
 User::~User() = default;
 
-Bool User::IsAdult() { return mUserIsAdult; }
+Bool User::IsAdult() {
+  return mUserIsAdult;
+}
 
 Bool User::Save(const UserPublicKey password) {
   if (!password || *password == 0) return No;
@@ -140,11 +143,15 @@ Bool User::IsGuestUser() {
 ////////////////////////////////////////////////////////////
 
 Void user_init_globals(const Bool recovery) {
-  STATIC User kRootStorage{UserRingKind::kRingSuperUser, kRootUserName};
-  STATIC User kGuestStorage{UserRingKind::kRingGuestUser, kGuestUserName};
+  /// @note heap, not function local statics. Those need guard variables and an
+  /// atexit thunk, and this kernel's implementations of both are homegrown.
+  if (!kRootUser) kRootUser = new User(UserRingKind::kRingSuperUser, kRootUserName);
+  if (!kGuest) kGuest = new User(UserRingKind::kRingGuestUser, kGuestUserName);
 
-  kRootUser = &kRootStorage;
-  kGuest    = &kGuestStorage;
+  if (!kRootUser || !kGuest) {
+    (Void)(kout << "user_init_globals: out of memory\r");
+    return;
+  }
 
   kCurrentUser = recovery ? kGuest : kRootUser;
 

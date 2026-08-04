@@ -78,6 +78,16 @@ BootThread::BootThread(VoidPtr blob) : fStartAddress(nullptr), fBlob(blob) {
 
     writer.Write("BootZ: Image-Base: ").Write(loadStartAddress).Write("\r");
 
+    /// @note claim the window before writing into it. Without this the firmware still
+    /// reports it as free and the kernel hands its own image out as usable memory.
+    EfiPhysicalAddress claim = loadStartAddress;
+
+    auto pages = (opt_header_ptr->SizeOfImage + 0xFFF) / 0x1000;
+
+    if (BS->AllocatePages(AllocateAddress, EfiLoaderCode, pages, &claim) != kEfiOk) {
+      writer.Write("BootZ: warning: image window is already taken.\r");
+    }
+
     LDR_SECTION_HEADER_PTR sectPtr =
         (LDR_SECTION_HEADER_PTR) (((Char*) opt_header_ptr) + header_ptr->SizeOfOptionalHeader);
 
@@ -181,7 +191,7 @@ Int32 BootThread::Start(HEL::BootInfoHeader* handover, Bool own_stack) {
     rt_jump_to_address(fStartAddress, fHandover, (UInt8*) ((UIntPtr) handover->f_StackTop - 8));
   }
 
-  auto ret = ((HEL::HandoverProc)fStartAddress)(fHandover);
+  auto ret = ((HEL::HandoverProc) fStartAddress)(fHandover);
 
   return ret;
 }

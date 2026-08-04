@@ -90,7 +90,11 @@ namespace HAL {
 
         STATIC SizeT biggest{0UL};
 
+        auto limit = reinterpret_cast<UIntPtr>(kKernelBitMpStart) + kKernelBitMpSize;
+
         while (YES) {
+          if ((reinterpret_cast<UIntPtr>(base) + size + pad) > limit) return nullptr;
+
           UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(base);
 
           if (ptr_bit_set[kBitMapMagIdx] == kBitMapMagic &&
@@ -100,9 +104,6 @@ namespace HAL {
               ptr_bit_set[kBitMapUsedIdx] = Yes;
 
               this->GetBitMapStatus(ptr_bit_set);
-
-              UInt32 flags = this->MakeMMFlags(wr, user);
-              mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
               if (biggest < (size + pad)) biggest = size + pad;
               kBitMapCursor += size + pad;
@@ -116,8 +117,8 @@ namespace HAL {
 
             this->GetBitMapStatus(ptr_bit_set);
 
-            UInt32 flags = this->MakeMMFlags(wr, user);
-            mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
+            NE_UNUSED(wr);
+            NE_UNUSED(user);
 
             if (biggest < (size + pad)) biggest = (size + pad);
             kBitMapCursor += size + pad;

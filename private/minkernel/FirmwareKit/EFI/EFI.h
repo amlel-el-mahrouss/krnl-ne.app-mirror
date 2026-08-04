@@ -462,9 +462,9 @@ typedef struct EfiFileDevicePathProtocol {
 typedef UInt64(EFI_API* EfiExitBootServices)(VoidPtr ImageHandle, UIntPtr MapKey);
 
 typedef UInt64(EFI_API* EfiAllocatePages)(EfiAllocateType AllocType, EfiMemoryType MemType,
-                                          UInt32 Count, EfiPhysicalAddress* Memory);
+                                          UIntPtr Count, EfiPhysicalAddress* Memory);
 
-typedef UInt64(EFI_API* EfiFreePages)(EfiPhysicalAddress* Memory, UInt32 Pages);
+typedef UInt64(EFI_API* EfiFreePages)(EfiPhysicalAddress* Memory, UIntPtr Pages);
 
 /// @note UEFI types these as UINTN*, the firmware writes 8 bytes through each.
 typedef UInt64(EFI_API* EfiGetMemoryMap)(UIntPtr* MapSize, EfiMemoryDescriptor* DescPtr,

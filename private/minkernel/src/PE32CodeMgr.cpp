@@ -284,9 +284,12 @@ ErrorOr<VoidPtr> PE32Loader::LoadImage() {
   SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
 
   for (SizeT i = 0UL; i < pages; ++i) {
-    if (HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)),
-                         (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
-                         HAL::kMMFlagsPresent | HAL::kMMFlagsUser) != kErrorSuccess) {
+    auto rc = HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)),
+                               (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
+                               HAL::kMMFlagsPresent | HAL::kMMFlagsUser);
+
+    if (rc != kErrorSuccess) {
+
       delete[] image;
 
       return ErrorOr<VoidPtr>{kErrorInvalidData};

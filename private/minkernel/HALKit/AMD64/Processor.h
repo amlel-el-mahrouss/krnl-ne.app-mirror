@@ -255,6 +255,14 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 /// @return the new PML4's physical address, 0 on failure.
 EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit);
 
+/// @brief Walk to the leaf slot for an address, allocating and splitting on the way.
+/// @return the entry's address, or nullptr.
+EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc);
+
+/// @brief Map a page into a given address space.
+EXTERN_C Int32 mm_map_page_in(UIntPtr root, VoidPtr virtual_address, VoidPtr physical_address,
+                              UInt32 flags);
+
 EXTERN_C UInt8  rt_in8(UInt16 port);
 EXTERN_C UInt16 rt_in16(UInt16 port);
 EXTERN_C UInt32 rt_in32(UInt16 port);

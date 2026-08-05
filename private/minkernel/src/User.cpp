@@ -45,8 +45,8 @@ namespace Detail {
     return hash;
   }
   /// @brief Copy a user name, truncating at kMaxUserNameLen.
-  STATIC Void user_set_name(Char* dst, const UserPublicKeyType* src) {
-    auto len = urt_string_len(src);
+  STATIC Void user_set_name(Char* dst, const Char* src) {
+    auto len = rt_string_len(src);
 
     if (len >= kMaxUserNameLen) len = kMaxUserNameLen - 1;
 
@@ -58,7 +58,7 @@ namespace Detail {
 ////////////////////////////////////////////////////////////
 /// @brief User ring constructor.
 ////////////////////////////////////////////////////////////
-User::User(const Int32& sel, const UserPublicKeyType* user_name) : mUserRing((UserRingKind) sel) {
+User::User(const Int32& sel, const Char* user_name) : mUserRing((UserRingKind) sel) {
   MUST_PASS(sel >= 0);
   Detail::user_set_name(this->mUserName, user_name);
 }
@@ -66,7 +66,7 @@ User::User(const Int32& sel, const UserPublicKeyType* user_name) : mUserRing((Us
 ////////////////////////////////////////////////////////////
 /// @brief User ring constructor.
 ////////////////////////////////////////////////////////////
-User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
+User::User(const UserRingKind& ring_kind, const Char* user_name)
     : mUserRing(ring_kind) {
   Detail::user_set_name(this->mUserName, user_name);
 }

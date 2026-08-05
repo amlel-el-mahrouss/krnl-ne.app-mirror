@@ -26,9 +26,9 @@
 #define kStdUser "NEKERNEL/STD/%s"
 
 ///! Built-in users, bound by user_init_std.
-#define kRootUserName u8"NEKERNEL/MGMT/root"
-#define kGuestUserName u8"NEKERNEL/GUEST/guest"
-#define kRecoveryUserName u8"NEKERNEL/GUEST/recov"
+#define kRootUserName "NEKERNEL/MGMT/root"
+#define kGuestUserName "NEKERNEL/GUEST/guest"
+#define kRecoveryUserName "NEKERNEL/GUEST/recov"
 
 #define kUsersDir "/users/"
 
@@ -56,8 +56,8 @@ class User final {
  public:
   User() = delete;
 
-  User(const Int32& sel, const UserPublicKeyType* username);
-  User(const UserRingKind& kind, const UserPublicKeyType* username);
+  User(const Int32& sel, const Char* username);
+  User(const UserRingKind& kind, const Char* username);
 
   ~User();
 

@@ -25,7 +25,7 @@
 #define kGuestUser "NEKERNEL/GUEST/%s"
 #define kStdUser "NEKERNEL/STD/%s"
 
-///! Built-in users, bound by user_init_globals.
+///! Built-in users, bound by user_init_std.
 #define kRootUserName u8"NEKERNEL/MGMT/root"
 #define kGuestUserName u8"NEKERNEL/GUEST/guest"
 #define kRecoveryUserName u8"NEKERNEL/GUEST/recov"
@@ -115,8 +115,8 @@ inline UserPtr kRootUser = nullptr;
 inline UserPtr kGuest = nullptr;
 
 /// @brief Bind the built-in users.
-/// @param recovery make the guest user current instead of root.
-Void user_init_globals(const Bool recovery);
+/// @param recovery make a recovery user when asked to.
+Void user_init_std(const Bool recovery);
 
 }  // namespace Ne::Kernel
 

@@ -139,10 +139,10 @@ Bool User::IsGuestUser() {
 
 ////////////////////////////////////////////////////////////
 /// @brief Binds kRootUser, kGuest and kCurrentUser.
-/// @param recovery make the guest user current instead of root.
+/// @param recovery make a recovery user when asked to.
 ////////////////////////////////////////////////////////////
 
-Void user_init_globals(const Bool recovery) {
+Void user_init_std(const Bool recovery) {
   /// @note heap, not function local statics. Those need guard variables and an
   /// atexit thunk, and this kernel's implementations of both are homegrown.
   if (!kRootUser) kRootUser = new User(UserRingKind::kRingSuperUser, kRootUserName);
@@ -158,7 +158,7 @@ Void user_init_globals(const Bool recovery) {
   else
     kCurrentUser = kGuest;
 
-  (Void)(kout << "user_init_globals: " << kCurrentUser->Name() << kendl);
+  (Void)(kout << "user_init_std: " << kCurrentUser->Name() << kendl);
 }
 
 }  // namespace Ne::Kernel

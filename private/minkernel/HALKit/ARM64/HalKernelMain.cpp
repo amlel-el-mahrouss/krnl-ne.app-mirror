@@ -55,7 +55,7 @@ EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
 
   Ne::Kernel::mp_init_cores();
 
-  Ne::Kernel::user_init_globals(kHandoverHeader->f_RecoverMode);
+  Ne::Kernel::user_init_std(kHandoverHeader->f_RecoverMode);
 
   while (YES);
 }

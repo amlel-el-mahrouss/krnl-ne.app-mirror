@@ -244,7 +244,7 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   pmm_self_test();
 #endif  // __DEBUG__
 
-  user_init_globals(kHandoverHeader->f_RecoverMode);
+  user_init_std(kHandoverHeader->f_RecoverMode);
 
   ke_install_syscall("ke_ping", ke_ping);
 

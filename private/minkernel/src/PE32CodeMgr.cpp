@@ -64,7 +64,11 @@ namespace Detail {
 
 PE32Loader::PE32Loader(const VoidPtr blob, const SizeT len)
     : fCachedBlob(blob), fCachedBlobSz(len) {
-  if (!blob || len < sizeof(DosHeader)) {
+  /// @note the headers are laid out back to back, the walk reads all three.
+  constexpr SizeT kMinPeSz =
+      sizeof(DosHeader) + sizeof(LDR_EXEC_HEADER) + sizeof(LDR_OPTIONAL_HEADER);
+
+  if (!blob || len < kMinPeSz) {
     fBad = YES;
     return;
   }
@@ -258,6 +262,13 @@ ErrorOr<VoidPtr> PE32Loader::LoadImage() {
   auto opt    = CF::ldr_find_opt_exec_header(blob);
 
   if (!header || !opt || header->NumberOfSections < 1) return ErrorOr<VoidPtr>{kErrorInvalidData};
+
+  auto sect_off = (SizeT) ((Char*) opt - blob) + header->SizeOfOptionalHeader;
+
+  if (sect_off > fCachedBlobSz ||
+      header->NumberOfSections > (fCachedBlobSz - sect_off) / sizeof(LDR_SECTION_HEADER)) {
+    return ErrorOr<VoidPtr>{kErrorInvalidData};
+  }
 
   SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
 

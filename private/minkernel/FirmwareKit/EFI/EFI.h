@@ -609,11 +609,12 @@ struct EfiSimpleFilesystemProtocol {
 typedef struct EfiRuntimeServices {
   EfiTableHeader SystemTable;
   VoidPtr GetTime, SetTime, GetWakeupTime, SetWakeupTime, SetVirtualAddressMap, ConvertPointer;
+  /// @note DataSize is in/out and UEFI types it as UINTN*, the firmware writes 8 bytes.
   UInt64(EFI_API* GetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32* Attributes,
-                               UInt32* DataSize, VoidPtr Data);
+                               UIntPtr* DataSize, VoidPtr Data);
   VoidPtr GetNextVariable;
-  UInt64(EFI_API* SetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32* Attributes,
-                               UInt32* DataSize, VoidPtr Data);
+  UInt64(EFI_API* SetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32 Attributes,
+                               UIntPtr DataSize, VoidPtr Data);
   VoidPtr GetNextHighMonotonicCount;
   VoidPtr ResetSystem;
   VoidPtr UpdateCapsule;

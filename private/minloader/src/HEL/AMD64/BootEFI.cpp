@@ -126,11 +126,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   HEL::BootInfoHeader* handover_hdr = new HEL::BootInfoHeader();
 
-  UIntPtr              map_key         = 0;
-  UIntPtr              size_struct_ptr = sizeof(EfiMemoryDescriptor);
-  EfiMemoryDescriptor* struct_ptr      = nullptr;
-  UIntPtr              sz_desc         = sizeof(EfiMemoryDescriptor);
-  UIntPtr              rev_desc        = 0;
+  UIntPtr map_key = 0;
 
   Boot::BootTextWriter writer;
 
@@ -208,18 +204,17 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   handover_hdr->f_HardwareTables.f_ImageKey    = map_key;
   handover_hdr->f_HardwareTables.f_ImageHandle = image_handle;
 
-  UInt32 sz_recover_mode = sizeof(Bool);
-  Bool   recover_mode    = 0;
+  UIntPtr sz_recover_mode = sizeof(Bool);
+  Bool    recover_mode    = 0;
 
   ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
                                    &sz_recover_mode, &recover_mode);
 
   handover_hdr->f_RecoverMode = recover_mode;
 
-  recover_mode = 0;
-
-  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
-                                   &sz_recover_mode, &recover_mode);
+  /* one shot flag, attributes 0 delete it. */
+  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, 0, 0,
+                                   nullptr);
 
   // Ring 0 stack, consumed by the kernel as TSS.RSP0. Stacks grow down, so hand over the top.
 
@@ -290,16 +285,20 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // Assign to global 'kHandoverHeader'.
 
   WideChar kernel_path[256U] = L"vmkrnl.exe";
-  UInt32   kernel_path_sz    = StrLen("vmkrnl.exe");
+  UIntPtr  kernel_path_sz    = sizeof(kernel_path);
 
-  UInt32 sz_ver = sizeof(UInt64);
-  UInt64 ver    = KERNEL_VERSION_BCD;
+  /// access attributes (in order)
+  /// EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS
+  constexpr UInt32 kVarAttrs = 0x00000001 | 0x00000002 | 0x00000004;
+
+  UIntPtr sz_ver = sizeof(UInt64);
+  UInt64  ver    = KERNEL_VERSION_BCD;
 
   ST->RuntimeServices->GetVariable(L"/props/kern_ver", kEfiGlobalNamespaceVarGUID, nullptr, &sz_ver,
                                    &ver);
 
-  UInt32 sz_smp_max = sizeof(UInt64);
-  UInt64 smp_max    = 0;
+  UIntPtr sz_smp_max = sizeof(UInt64);
+  UInt64  smp_max    = 0;
 
   ST->RuntimeServices->GetVariable(L"/props/smp_max", kEfiGlobalNamespaceVarGUID, nullptr,
                                    &sz_smp_max, &smp_max);
@@ -312,19 +311,16 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   if (ver < KERNEL_VERSION_BCD) {
     ver = KERNEL_VERSION_BCD;
 
-    ST->RuntimeServices->SetVariable(L"/props/kern_ver", kEfiGlobalNamespaceVarGUID, nullptr,
-                                     &sz_ver, &ver);
+    ST->RuntimeServices->SetVariable(L"/props/kern_ver", kEfiGlobalNamespaceVarGUID, kVarAttrs,
+                                     sizeof(UInt64), &ver);
 
     writer.Write("BootZ: Version has been updated: ").Write(ver).Write("\r");
 
     if (ST->RuntimeServices->GetVariable(L"/props/kernel_path", kEfiGlobalNamespaceVarGUID, nullptr,
                                          &kernel_path_sz, kernel_path) != kEfiOk) {
-      /// access attributes (in order)
-      /// EFI_VARIABLE_NON_VOLATILE | EFI_VARIABLE_BOOTSERVICE_ACCESS | EFI_VARIABLE_RUNTIME_ACCESS
-      UInt32 attr = 0x00000001 | 0x00000002 | 0x00000004;
-
-      ST->RuntimeServices->SetVariable(L"/props/kernel_path", kEfiGlobalNamespaceVarGUID, &attr,
-                                       &kernel_path_sz, kernel_path);
+      ST->RuntimeServices->SetVariable(L"/props/kernel_path", kEfiGlobalNamespaceVarGUID, kVarAttrs,
+                                       (Boot::BStrLen(kernel_path) + 1) * sizeof(WideChar),
+                                       kernel_path);
     }
   } else {
     writer.Write("BootZ: Version: ").Write(ver).Write("\r");

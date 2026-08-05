@@ -10,6 +10,7 @@
 #include <KernelKit/CodeMgr.h>
 #include <KernelKit/HardwareThreadScheduler.h>
 #include <KernelKit/PEFCodeMgr.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <KernelKit/Timer.h>
 #include <NetworkKit/IPC.h>
@@ -26,13 +27,14 @@ EXTERN_C Ne::Kernel::VoidPtr kInterruptVectorTable[];
 EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   using namespace Ne::Kernel;
 
-  if (handover_hdr->f_Magic != kHandoverMagic && handover_hdr->f_Version != kHandoverVersion) {
+  if (handover_hdr->f_Magic != kHandoverMagic || handover_hdr->f_Version != kHandoverVersion) {
     return kEfiFail;
   }
 
   HAL::rt_sti();
 
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(
+      handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);
@@ -52,10 +54,56 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
   /*     INITIALIZE BIT MAP.              */
   /************************************** */
 
-  kBitMapCursor    = 0UL;
-  kKernelBitMpSize = kHandoverHeader->f_BitMapSize;
-  kKernelBitMpStart =
-      reinterpret_cast<VoidPtr>(reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart));
+  auto region_base = reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart);
+  auto region_sz   = kHandoverHeader->f_BitMapSize;
+
+  /// @note images map at kPefBaseOrigin over the identity map, shadowing whatever
+  /// phys lives there. Keep the heap and the frames clear of that window.
+  constexpr UIntPtr kImgWinStart = kPefBaseOrigin;
+  constexpr UIntPtr kImgWinEnd   = kPefBaseOrigin + kPefMaxImageSz;
+
+  if (region_base < kImgWinEnd && region_base + region_sz > kImgWinStart) {
+    auto below = region_base < kImgWinStart ? kImgWinStart - region_base : (UIntPtr) 0UL;
+    auto above =
+        region_base + region_sz > kImgWinEnd ? region_base + region_sz - kImgWinEnd : (UIntPtr) 0UL;
+
+    if (below >= above) {
+      region_sz = below;
+    } else {
+      region_base = kImgWinEnd;
+      region_sz   = above;
+    }
+  }
+
+  auto usable_sz = region_sz / 2;
+
+  kBitMapCursor     = 0UL;
+  kKernelBitMpSize  = usable_sz;
+  kKernelBitMpStart = reinterpret_cast<VoidPtr>(region_base);
+
+  HAL::pmm_init(region_base + usable_sz, region_sz - usable_sz);
+
+  /************************************** */
+  /*     ADOPT OUR OWN PAGE TABLES.       */
+  /************************************** */
+
+  constexpr UIntPtr kMinMapLimit = 0x100000000UL;
+  constexpr UIntPtr kGiBMask     = 0x3FFFFFFFUL;
+
+  auto ram_end =
+      reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart) + kHandoverHeader->f_BitMapSize;
+
+  auto map_limit = ram_end > kMinMapLimit ? ((ram_end + kGiBMask) & ~kGiBMask) : kMinMapLimit;
+
+  auto kernel_pml4 = HAL::mm_init_kernel_tables(map_limit);
+
+  if (!kernel_pml4) {
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Can't build the kernel page tables.");
+  }
+
+  kKernelVM = reinterpret_cast<VoidPtr>(kernel_pml4);
+
+  hal_write_cr3(kKernelVM);
 
   /************************************** */
   /*     INITIALIZE GDT AND SEGMENTS. */
@@ -65,7 +113,14 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
 
   STATIC HAL::Detail::NE_TSS kKernelTSS{};
 
+  if (!kHandoverHeader->f_StackTop) {
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "No ring 0 stack in handover.");
+  }
+
+  STATIC UInt8 ALIGN(0x10) kFaultStack[kib_cast(32)]{};
+
   kKernelTSS.fRsp0 = (UInt64) kHandoverHeader->f_StackTop;
+  kKernelTSS.fIst1 = (UInt64) (kFaultStack + sizeof(kFaultStack)) & ~0xFUL;
   kKernelTSS.fIopb = sizeof(HAL::Detail::NE_TSS);
 
   /* The GDT, mostly descriptors for user and kernel segments. */
@@ -88,8 +143,8 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
        .fAccessByte = 0x92,
        .fFlags      = 0xCF,
        .fBaseHigh   = 0},  // Ne::Kernel data
-      {},                // TSS data low
-      {},                // TSS data high
+      {},                  // TSS data low
+      {},                  // TSS data high
       {.fLimitLow   = 0x0,
        .fBaseLow    = 0,
        .fBaseMid    = 0,
@@ -135,6 +190,47 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
 
 EXTERN_C BOOL rtl_init_nic_rtl8139();
 
+#ifdef __DEBUG__
+/// @brief Check the frame allocator's invariants on real memory.
+STATIC Ne::Kernel::Void pmm_self_test(Ne::Kernel::Void) {
+  using namespace Ne::Kernel;
+
+  auto a = HAL::pmm_alloc_frame();
+  auto b = HAL::pmm_alloc_frame();
+
+  if (!a || !b) {
+    (Void)(kout << "pmm: FAIL out of memory\r");
+    return;
+  }
+
+  if ((a & (kPageSize - 1)) || (b & (kPageSize - 1))) (Void)(kout << "pmm: FAIL alignment\r");
+  if (a == b) (Void)(kout << "pmm: FAIL duplicate frame\r");
+
+  for (SizeT i = 0UL; i < kPageSize; ++i) {
+    if (reinterpret_cast<UInt8*>(a)[i] != 0) {
+      (Void)(kout << "pmm: FAIL frame not zeroed\r");
+      break;
+    }
+  }
+
+  rt_set_memory(reinterpret_cast<VoidPtr>(b), 0xAB, kPageSize);
+  HAL::pmm_free_frame(b);
+
+  auto c = HAL::pmm_alloc_frame();
+
+  if (c != b) (Void)(kout << "pmm: FAIL free list did not reuse\r");
+  if (c && reinterpret_cast<UInt8*>(c)[8] != 0) (Void)(kout << "pmm: FAIL reuse not zeroed\r");
+
+  (Void)(kout << "pmm: self test done, free " << number(HAL::pmm_free_frames()) << kendl);
+}
+#endif  // __DEBUG__
+
+/// @brief Liveness probe, returns the handover magic to its caller.
+STATIC Ne::Kernel::VoidPtr ke_ping(Ne::Kernel::VoidPtr arg) {
+  NE_UNUSED(arg);
+  return (Ne::Kernel::VoidPtr) kHandoverMagic;
+}
+
 EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   HAL::mp_init_cores(kHandoverHeader->f_HardwareTables.f_VendorPtr);
 
@@ -143,6 +239,14 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   HAL::IDTLoader idt_loader;
   idt_loader.Load(idt_reg);
+
+#ifdef __DEBUG__
+  pmm_self_test();
+#endif  // __DEBUG__
+
+  user_init_globals(kHandoverHeader->f_RecoverMode);
+
+  ke_install_syscall("ke_ping", ke_ping);
 
 #ifdef __FSKIT_INCLUDES_OPENHEFS__
   OpenHeFS::fs_init_openhefs();
@@ -156,15 +260,22 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  PEFLoader ldr("/system/basesvc.exe");
+  if (kHandoverHeader->f_SCIImage && kHandoverHeader->f_SCIImageSz) {
+    PE32Loader ldr(kHandoverHeader->f_SCIImage, kHandoverHeader->f_SCIImageSz);
 
-  if (ldr.IsLoaded()) {
-    rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind);
+    if (ldr.IsLoaded() &&
+        rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind) !=
+            kCPSInvalidPID) {
+      (Void)(kout << "hal_real_init: Spawned the launch host.\r");
+    } else {
+      (Void)(kout << "hal_real_init: warning: Launch host did not spawn.\r");
+    }
   } else {
-    ke_stop(RUNTIME_CHECK_BAD_BEHAVIOR, "Invalid Launch Host Process.");
+    (Void)(kout << "hal_real_init: warning: No launch host in handover.\r");
   }
 
-  UserProcessScheduler::The().SwitchTeam(kMidUserTeam);
+  /// @note SwitchTeam overwrites the whole team, switching again here would
+  /// discard the process we just spawned.
 
 #ifdef __HALKIT_INCLUDES_BNID__
   rtl_init_nic_rtl8139();

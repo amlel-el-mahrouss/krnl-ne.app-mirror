@@ -11,6 +11,16 @@ namespace Ne::Kernel::HAL {
 namespace Detail {
   STATIC ::Ne::Kernel::Detail::AMD64::InterruptDescriptorAMD64 kInterruptVectorTable[kKernelIdtSize] =
       {};
+
+  /// @brief Is this vector callable from ring 3?
+  STATIC Bool idt_is_user_gate(const SizeT vec) {
+    return vec == kKernelInterruptId || vec == kKernelCallId;
+  }
+
+  /// @brief Faults that must not run on a possibly exhausted stack.
+  STATIC UInt8 idt_stack_of(const SizeT vec) {
+    return (vec == kDoubleFaultId || vec == kPageFaultId) ? kFaultStackId : 0;
+  }
 }  // namespace Detail
 
 /// @brief Loads the provided Global Descriptor Table.
@@ -32,9 +42,9 @@ Void IDTLoader::Load(Register64& idt) {
 
   for (SizeT idt_indx = 0; idt_indx < kKernelIdtSize; ++idt_indx) {
     Detail::kInterruptVectorTable[idt_indx].Selector = kIDTSelector;
-    Detail::kInterruptVectorTable[idt_indx].Ist      = 0;
+    Detail::kInterruptVectorTable[idt_indx].Ist      = Detail::idt_stack_of(idt_indx);
     Detail::kInterruptVectorTable[idt_indx].TypeAttributes =
-        (idt_indx == kKernelInterruptId || idt_indx == (kKernelInterruptId + 1)) ? kUserInterruptGate : kInterruptGate;
+        Detail::idt_is_user_gate(idt_indx) ? kUserInterruptGate : kInterruptGate;
     Detail::kInterruptVectorTable[idt_indx].OffsetLow = ((UIntPtr) ptr_ivt[idt_indx] & 0xFFFF);
     Detail::kInterruptVectorTable[idt_indx].OffsetMid =
         (((UIntPtr) ptr_ivt[idt_indx] >> 16) & 0xFFFF);

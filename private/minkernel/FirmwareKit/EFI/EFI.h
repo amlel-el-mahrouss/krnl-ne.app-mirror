@@ -221,7 +221,7 @@ typedef struct EfiMemoryDescriptor {
   UInt64 Attribute;
 } EfiMemoryDescriptor;
 
-typedef UInt64(EFI_API* EfiAllocatePool)(EfiMemoryType PoolType, UInt32 Size, VoidPtr* Buffer);
+typedef UInt64(EFI_API* EfiAllocatePool)(EfiMemoryType PoolType, UIntPtr Size, VoidPtr* Buffer);
 
 typedef UInt64(EFI_API* EfiFreePool)(VoidPtr Buffer);
 
@@ -459,15 +459,16 @@ typedef struct EfiFileDevicePathProtocol {
   WideChar Path[kPathLen];
 } EfiFileDevicePathProtocol;
 
-typedef UInt64(EFI_API* EfiExitBootServices)(VoidPtr ImageHandle, UInt32 MapKey);
+typedef UInt64(EFI_API* EfiExitBootServices)(VoidPtr ImageHandle, UIntPtr MapKey);
 
 typedef UInt64(EFI_API* EfiAllocatePages)(EfiAllocateType AllocType, EfiMemoryType MemType,
-                                          UInt32 Count, EfiPhysicalAddress* Memory);
+                                          UIntPtr Count, EfiPhysicalAddress* Memory);
 
-typedef UInt64(EFI_API* EfiFreePages)(EfiPhysicalAddress* Memory, UInt32 Pages);
+typedef UInt64(EFI_API* EfiFreePages)(EfiPhysicalAddress* Memory, UIntPtr Pages);
 
-typedef UInt64(EFI_API* EfiGetMemoryMap)(UInt32* MapSize, EfiMemoryDescriptor* DescPtr,
-                                         UInt32* MapKey, UInt32* DescSize, UInt32* DescVersion);
+/// @note UEFI types these as UINTN*, the firmware writes 8 bytes through each.
+typedef UInt64(EFI_API* EfiGetMemoryMap)(UIntPtr* MapSize, EfiMemoryDescriptor* DescPtr,
+                                         UIntPtr* MapKey, UIntPtr* DescSize, UIntPtr* DescVersion);
 
 /**
  * @brief GUID type, something you can also find in CFKit.
@@ -608,11 +609,12 @@ struct EfiSimpleFilesystemProtocol {
 typedef struct EfiRuntimeServices {
   EfiTableHeader SystemTable;
   VoidPtr GetTime, SetTime, GetWakeupTime, SetWakeupTime, SetVirtualAddressMap, ConvertPointer;
+  /// @note DataSize is in/out and UEFI types it as UINTN*, the firmware writes 8 bytes.
   UInt64(EFI_API* GetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32* Attributes,
-                               UInt32* DataSize, VoidPtr Data);
+                               UIntPtr* DataSize, VoidPtr Data);
   VoidPtr GetNextVariable;
-  UInt64(EFI_API* SetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32* Attributes,
-                               UInt32* DataSize, VoidPtr Data);
+  UInt64(EFI_API* SetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32 Attributes,
+                               UIntPtr DataSize, VoidPtr Data);
   VoidPtr GetNextHighMonotonicCount;
   VoidPtr ResetSystem;
   VoidPtr UpdateCapsule;

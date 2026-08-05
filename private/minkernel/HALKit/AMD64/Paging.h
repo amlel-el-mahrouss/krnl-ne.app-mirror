@@ -81,8 +81,7 @@ struct PTE {
   UInt64 PhysicalAddress : 40;  // Physical page frame address (bits 12–51)
   UInt64 Ignored2 : 7;          // More software bits / reserved
   UInt64 ProtectionKey : 4;     // Optional (if PKU enabled)
-  UInt64 Reserved : 1;          // Usually reserved
-  UInt64 Nx : 1;                // No Execute
+  UInt64 Nx : 1;                // No Execute, bit 63
 };
 
 struct PDE {

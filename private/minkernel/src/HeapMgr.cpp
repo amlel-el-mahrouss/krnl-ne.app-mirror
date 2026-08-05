@@ -64,18 +64,31 @@ namespace Detail {
     UInt8 fPadding[kHeapMgrAlignSz];
   };
 
-  /// @brief Check for heap address validity.
+  typedef MM_INFORMATION_BLOCK* MM_INFORMATION_BLOCK_PTR;
+
+  /// @brief Distance between a bitmap block base and the pointer we hand out.
+  /// @note the first header steps over the bitmap's own magic/size/used words.
+  inline constexpr auto kHeapMgrHdrSz = sizeof(MM_INFORMATION_BLOCK) * 2;
+
+  static_assert(sizeof(MM_INFORMATION_BLOCK) > sizeof(UIntPtr) * 3,
+                "heap header would overwrite the bitmap header");
+
+  /// @brief Check that a heap pointer still refers to a live allocation.
   /// @return Bool if the pointer is valid or not.
   /// @param heap_ptr The address_ptr to check.
   _Output auto mm_check_ptr_address(VoidPtr heap_ptr) -> Bool {
-    if (!heap_ptr) return false;
+    if (!heap_ptr) return No;
 
-    IntPtr base_ptr = ((IntPtr) heap_ptr) - sizeof(Detail::MM_INFORMATION_BLOCK);
-    /// Add that check in case we're having an integer underflow. ///
-    return base_ptr < 1;
+    /// Reject anything too low to carry our headers, that would underflow. ///
+    if ((UIntPtr) heap_ptr <= kHeapMgrHdrSz) return No;
+
+    if (!HAL::mm_is_bitmap((VoidPtr) ((UIntPtr) heap_ptr - kHeapMgrHdrSz))) return No;
+
+    auto heap_info_ptr = reinterpret_cast<MM_INFORMATION_BLOCK_PTR>((UIntPtr) heap_ptr -
+                                                                    sizeof(MM_INFORMATION_BLOCK));
+
+    return heap_info_ptr->fMagic == kHeapMgrMagic && heap_info_ptr->fPresent;
   }
-
-  typedef MM_INFORMATION_BLOCK* MM_INFORMATION_BLOCK_PTR;
 }  // namespace Detail
 
 STATIC PageMgr kPageMgr;
@@ -95,7 +108,8 @@ _Output VoidPtr mm_alloc_ptr(SizeT sz, Bool wr, Bool user, SizeT pad_amount) {
 
   kAllocationLocked = true;
 
-  sz_fix += sizeof(Detail::MM_INFORMATION_BLOCK);
+  /// @note the block has to cover both headers, not just ours.
+  sz_fix += Detail::kHeapMgrHdrSz;
 
   PTEWrapper wrapper = kPageMgr.Request(wr, user, 
                   No, sz_fix, pad_amount);
@@ -179,58 +193,48 @@ _Output UInt64 mm_get_ptr_flags(VoidPtr heap_ptr) {
 _Output Int32 mm_free_ptr(VoidPtr heap_ptr) {
   if (!heap_ptr) return kErrorHeapNotPresent;
 
-  if (Detail::mm_check_ptr_address(heap_ptr) == No) return kErrorHeapNotPresent;
+  if ((UIntPtr) heap_ptr <= Detail::kHeapMgrHdrSz) return kErrorHeapNotPresent;
+
+  VoidPtr base_ptr = (VoidPtr) ((UIntPtr) heap_ptr - Detail::kHeapMgrHdrSz);
+
+  if (!HAL::mm_is_bitmap(base_ptr)) return kErrorHeapNotPresent;
 
   Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
       reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>((UIntPtr) (heap_ptr) -
                                                          sizeof(Detail::MM_INFORMATION_BLOCK));
 
-  if (heap_info_ptr && heap_info_ptr->fMagic == kHeapMgrMagic) {
-    if (!heap_info_ptr->fPresent) {
-      return kErrorHeapNotPresent;
-    }
+  if (heap_info_ptr->fMagic != kHeapMgrMagic) return kErrorHeapNotPresent;
 
-    heap_info_ptr->fSize      = 0UL;
-    heap_info_ptr->fPresent   = No;
-    heap_info_ptr->fOffset    = 0;
-    heap_info_ptr->fCRC32     = 0;
-    heap_info_ptr->fWriteRead = No;
-    heap_info_ptr->fUser      = No;
-    heap_info_ptr->fMagic     = 0;
-    heap_info_ptr->fPad       = 0;
-
-    (Void)(kout << "HeapMgr: Freed heap address: "
-                << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
-
-    PTEWrapper page_wrapper(
-        No, No, No,
-        reinterpret_cast<UIntPtr>(heap_info_ptr) - sizeof(Detail::MM_INFORMATION_BLOCK));
-
-    Ref<PTEWrapper> pte_address{page_wrapper};
-
-    kPageMgr.Free(pte_address);
-
-    return kErrorSuccess;
-  } else {
+  /// @note the magic survives a free, so a second one lands here.
+  if (!heap_info_ptr->fPresent) {
     ke_stop(RUNTIME_CHECK_TLS, "Double-Free Detected on HeapMgr, aborting.");
   }
 
-  return kErrorInternal;
+  heap_info_ptr->fSize      = 0UL;
+  heap_info_ptr->fPresent   = No;
+  heap_info_ptr->fOffset    = 0;
+  heap_info_ptr->fCRC32     = 0;
+  heap_info_ptr->fWriteRead = No;
+  heap_info_ptr->fUser      = No;
+  heap_info_ptr->fPad       = 0;
+
+  (Void)(kout << "HeapMgr: Freed heap address: "
+              << hex_number(reinterpret_cast<UIntPtr>(heap_info_ptr)) << kendl);
+
+  PTEWrapper page_wrapper(No, No, No, reinterpret_cast<UIntPtr>(base_ptr));
+
+  Ref<PTEWrapper> pte_address{page_wrapper};
+
+  kPageMgr.Free(pte_address);
+
+  return kErrorSuccess;
 }
 
 /// @brief Check if pointer is a valid Ne::Kernel pointer.
 /// @param heap_ptr the pointer
 /// @return if it exists.
 _Output Boolean mm_is_valid_ptr(VoidPtr heap_ptr) {
-  if (heap_ptr && HAL::mm_is_bitmap(heap_ptr)) {
-    Detail::MM_INFORMATION_BLOCK_PTR heap_info_ptr =
-        reinterpret_cast<Detail::MM_INFORMATION_BLOCK_PTR>((UIntPtr) (heap_ptr) -
-                                                           sizeof(Detail::MM_INFORMATION_BLOCK));
-
-    return (heap_info_ptr && heap_info_ptr->fPresent && heap_info_ptr->fMagic == kHeapMgrMagic);
-  }
-
-  return No;
+  return Detail::mm_check_ptr_address(heap_ptr);
 }
 
 /// @brief Protect the heap with a CRC value.

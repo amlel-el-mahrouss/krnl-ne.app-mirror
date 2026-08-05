@@ -22,6 +22,7 @@ class IDylibObject {
 
   struct DylibTraits final {
     VoidPtr ImageObject{nullptr};
+    SizeT   ImageSz{0UL};
     VoidPtr ImageEntrypointOffset{nullptr};
 
     VoidPtr Image() const { return ImageObject; }

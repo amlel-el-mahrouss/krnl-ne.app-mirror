@@ -6,6 +6,7 @@
 #include <KernelKit/FileMgr.h>
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/KPC.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ThreadLocalStorage.h>
 #include <KernelKit/User.h>
 #include <NeKit/KString.h>
@@ -43,6 +44,15 @@ namespace Detail {
 
     return hash;
   }
+  /// @brief Copy a user name, truncating at kMaxUserNameLen.
+  STATIC Void user_set_name(Char* dst, const UserPublicKeyType* src) {
+    auto len = urt_string_len(src);
+
+    if (len >= kMaxUserNameLen) len = kMaxUserNameLen - 1;
+
+    urt_copy_memory((VoidPtr) src, dst, len);
+    dst[len] = 0;
+  }
 }  // namespace Detail
 
 ////////////////////////////////////////////////////////////
@@ -50,7 +60,7 @@ namespace Detail {
 ////////////////////////////////////////////////////////////
 User::User(const Int32& sel, const UserPublicKeyType* user_name) : mUserRing((UserRingKind) sel) {
   MUST_PASS(sel >= 0);
-  urt_copy_memory((VoidPtr) user_name, this->mUserName, urt_string_len(user_name));
+  Detail::user_set_name(this->mUserName, user_name);
 }
 
 ////////////////////////////////////////////////////////////
@@ -58,7 +68,7 @@ User::User(const Int32& sel, const UserPublicKeyType* user_name) : mUserRing((Us
 ////////////////////////////////////////////////////////////
 User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
     : mUserRing(ring_kind) {
-  urt_copy_memory((VoidPtr) user_name, this->mUserName, urt_string_len(user_name));
+  Detail::user_set_name(this->mUserName, user_name);
 }
 
 ////////////////////////////////////////////////////////////
@@ -66,7 +76,9 @@ User::User(const UserRingKind& ring_kind, const UserPublicKeyType* user_name)
 ////////////////////////////////////////////////////////////
 User::~User() = default;
 
-Bool User::IsAdult() { return mUserIsAdult; }
+Bool User::IsAdult() {
+  return mUserIsAdult;
+}
 
 Bool User::Save(const UserPublicKey password) {
   if (!password || *password == 0) return No;
@@ -119,6 +131,31 @@ Bool User::IsStdUser() {
 
 Bool User::IsSuperUser() {
   return this->Ring() == UserRingKind::kRingSuperUser;
+}
+
+Bool User::IsGuestUser() {
+  return this->Ring() == UserRingKind::kRingGuestUser;
+}
+
+////////////////////////////////////////////////////////////
+/// @brief Binds kRootUser, kGuest and kCurrentUser.
+/// @param recovery make the guest user current instead of root.
+////////////////////////////////////////////////////////////
+
+Void user_init_globals(const Bool recovery) {
+  /// @note heap, not function local statics. Those need guard variables and an
+  /// atexit thunk, and this kernel's implementations of both are homegrown.
+  if (!kRootUser) kRootUser = new User(UserRingKind::kRingSuperUser, kRootUserName);
+  if (!kGuest) kGuest = new User(UserRingKind::kRingGuestUser, kGuestUserName);
+
+  if (!kRootUser || !kGuest) {
+    (Void)(kout << "user_init_globals: out of memory\r");
+    return;
+  }
+
+  kCurrentUser = recovery ? kGuest : kRootUser;
+
+  (Void)(kout << "user_init_globals: " << kCurrentUser->Name() << kendl);
 }
 
 }  // namespace Ne::Kernel

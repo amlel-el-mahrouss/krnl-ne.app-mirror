@@ -36,6 +36,14 @@
 /// @brief interrupt for system call.
 #define kKernelInterruptId (0x32)
 
+/// @brief interrupt for kernel call.
+#define kKernelCallId (0x33)
+
+/// @brief faults routed to the TSS interrupt stack.
+#define kDoubleFaultId (0x08)
+#define kPageFaultId (0x0E)
+#define kFaultStackId (1)
+
 #define IsActiveLow(FLG) (FLG & 2)
 #define IsLevelTriggered(FLG) (FLG & 8)
 
@@ -187,7 +195,8 @@ Void hal_set_msr(UInt32 msr, UInt32 lo, UInt32 hi);
 /// @brief Processor specific namespace.
 namespace Detail {
   /* @brief TSS struct. */
-  struct NE_TSS final {
+  /// @note the layout is fixed by the CPU, rsp0 sits at offset 4 and is unaligned.
+  struct PACKED NE_TSS final {
     UInt32 fReserved1;
     UInt64 fRsp0;
     UInt64 fRsp1;
@@ -241,6 +250,21 @@ class LAPICDmaWrapper final {
 /// @return Status code of page manip.
 EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UInt32 flags,
                            UInt32 level = 2);
+
+/// @brief Build page tables owned by the kernel, identity mapping up to limit.
+/// @return the new PML4's physical address, 0 on failure.
+EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit);
+
+/// @brief Walk to the leaf slot for an address, allocating and splitting on the way.
+/// @return the entry's address, or nullptr.
+EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc);
+
+/// @brief Map a page into a given address space.
+EXTERN_C Int32 mm_map_page_in(UIntPtr root, VoidPtr virtual_address, VoidPtr physical_address,
+                              UInt32 flags);
+
+/// @brief Unmap a page, returns the frame it held.
+EXTERN_C UIntPtr mm_unmap_page(VoidPtr virtual_address);
 
 EXTERN_C UInt8  rt_in8(UInt16 port);
 EXTERN_C UInt16 rt_in16(UInt16 port);

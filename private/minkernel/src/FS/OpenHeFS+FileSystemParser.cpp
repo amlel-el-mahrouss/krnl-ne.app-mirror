@@ -355,7 +355,9 @@ namespace Detail {
                 break;
               }
 
-              hefsi_traverse_tree(tmpend, mnt, boot->fStartIND, child_first);
+              child_first += sizeof(HEFS_INDEX_NODE_DIRECTORY);
+
+              if (child_first == 0UL || child_first >= boot->fEndIND) break;
             }
           }
 
@@ -439,7 +441,7 @@ namespace Detail {
 
         prev_location = start;
 
-        hefsi_traverse_tree(tmpdir, mnt, boot->fStartIND, start);
+        start += sizeof(HEFS_INDEX_NODE_DIRECTORY);
         if (start > boot->fEndIND || start == 0) break;
       }
 
@@ -518,8 +520,11 @@ namespace Detail {
           }
         }
 
-        hefsi_traverse_tree(dir, mnt, boot->fStartIND, start);
-        if (start == boot->fStartIND || start == boot->fStartIND) break;
+        /// @note the sibling links are all stamped with fStartIND, walking them
+        /// never advances. Scan the IND region instead.
+        start += sizeof(HEFS_INDEX_NODE_DIRECTORY);
+
+        if (start >= boot->fEndIND) break;
       }
 
       delete node;
@@ -624,8 +629,9 @@ namespace Detail {
               node->fOffsetSliceLow  = 0;
               node->fOffsetSliceHigh = 0;
 
-              boot->fStartIN -= sizeof(HEFS_INDEX_NODE);
-              boot->fStartBlock -= kOpenHeFSBlockLen;
+              /// @note the cursors are bump allocators, rewinding them here hands the next
+              /// create an inode and a block that a live file still owns. Leak until there
+              /// is a free list.
 
               boot->fChecksum = ke_calculate_crc32((Char*) boot, sizeof(HEFS_BOOT_NODE));
 
@@ -661,7 +667,7 @@ namespace Detail {
           }
         }
 
-        hefsi_traverse_tree(dir, mnt, boot->fStartIND, start);
+        start += sizeof(HEFS_INDEX_NODE_DIRECTORY);
         if (start > boot->fEndIND || start == 0) break;
       }
 
@@ -734,7 +740,7 @@ namespace Detail {
           mnt->fOutput(mnt->fPacket);
         }
 
-        hefsi_traverse_tree(dir, mnt, boot->fStartIND, start);
+        start += sizeof(HEFS_INDEX_NODE_DIRECTORY);
       }
 
       err_global_get() = kErrorSuccess;
@@ -890,8 +896,7 @@ _Output Bool HeFileSystemParser::Format(_Input _Output DriveTrait* mnt, _Input c
   const Utf8Char* kFileMap[] = {u8"/",        u8"/boot",  u8"/system", u8"/network",
                                 u8"/devices", u8"/media", u8"/dev",    (Utf8Char*) nullptr};
 
-  SizeT i = 0;
-  while (kFileMap[++i] != nullptr) {
+  for (SizeT i = 0UL; kFileMap[i] != nullptr; ++i) {
     this->CreateINodeDirectory(mnt, kOpenHeFSEncodingFlagsUTF8, kFileMap[i]);
   }
 
@@ -1020,7 +1025,14 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
 
   auto start = Detail::hefsi_fetch_in(boot, mnt, dir, name, kind);
 
-  if (start) {
+  if (!start) {
+    mm_free_ptr((VoidPtr) boot);
+    err_global_get() = kErrorFileNotFound;
+
+    return NO;
+  }
+
+  {
     (Void)(kout << hex_number(start->fHashPath) << kendl);
     (Void)(kout << hex_number(start->fOffsetSliceLow) << kendl);
 
@@ -1048,6 +1060,55 @@ _Output Bool HeFileSystemParser::INodeManip(_Input DriveTrait* mnt, VoidPtr bloc
 
   mm_free_ptr((VoidPtr) boot);
   delete start;
+  return YES;
+}
+
+/// @brief Tell whether an inode exists under a directory.
+/// @param mnt The mnt to read from.
+/// @param dir The directory holding the file.
+/// @param name The name of the file.
+/// @param kind The kind it must match.
+/// @return If it was found, see err_global_get().
+_Output Bool HeFileSystemParser::INodeExists(_Input DriveTrait* mnt, const Utf8Char* dir,
+                                             const Utf8Char* name, const UInt8 kind) {
+  if (!mnt || !dir || !name) return NO;
+
+  if (urt_string_len(dir) > kOpenHeFSFileNameLen) return NO;
+  if (urt_string_len(name) > kOpenHeFSFileNameLen) return NO;
+
+  HEFS_BOOT_NODE* boot = (HEFS_BOOT_NODE*) mm_alloc_ptr(sizeof(HEFS_BOOT_NODE), Yes, No);
+
+  if (!boot) {
+    err_global_get() = kErrorInvalidData;
+    return NO;
+  }
+
+  mnt->fPacket.fPacketLba     = mnt->fLbaStart;
+  mnt->fPacket.fPacketSize    = sizeof(HEFS_BOOT_NODE);
+  mnt->fPacket.fPacketContent = boot;
+
+  mnt->fInput(mnt->fPacket);
+
+  if (!KStringBuilder::Equals(boot->fMagic, kOpenHeFSMagic) || boot->fVersion != kOpenHeFSVersion) {
+    mm_free_ptr((VoidPtr) boot);
+    err_global_get() = kErrorDisk;
+
+    return NO;
+  }
+
+  auto node = Detail::hefsi_fetch_in(boot, mnt, dir, name, kind);
+
+  mm_free_ptr((VoidPtr) boot);
+
+  if (!node) {
+    err_global_get() = kErrorFileNotFound;
+    return NO;
+  }
+
+  delete node;
+
+  err_global_get() = kErrorSuccess;
+
   return YES;
 }
 

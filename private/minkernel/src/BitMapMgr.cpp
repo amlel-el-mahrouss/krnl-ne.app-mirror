@@ -54,10 +54,11 @@ namespace HAL {
 
         this->GetBitMapStatus(ptr_bit_set);
 
-        kBitMapCursor += ptr_bit_set[kBitMapSizeIdx];
+        if (kBitMapCursor >= ptr_bit_set[kBitMapSizeIdx])
+          kBitMapCursor -= ptr_bit_set[kBitMapSizeIdx];
 
-        ptr_bit_set[kBitMapMagIdx]  = 0UL;
-        ptr_bit_set[kBitMapSizeIdx] = 0UL;
+        /// @note magic and size have to survive, FindBitMap walks by them and
+        /// would otherwise reclaim this hole at the wrong size.
         ptr_bit_set[kBitMapUsedIdx] = No;
 
         return Yes;
@@ -89,7 +90,11 @@ namespace HAL {
 
         STATIC SizeT biggest{0UL};
 
+        auto limit = reinterpret_cast<UIntPtr>(kKernelBitMpStart) + kKernelBitMpSize;
+
         while (YES) {
+          if ((reinterpret_cast<UIntPtr>(base) + size + pad) > limit) return nullptr;
+
           UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(base);
 
           if (ptr_bit_set[kBitMapMagIdx] == kBitMapMagic &&
@@ -99,9 +104,6 @@ namespace HAL {
               ptr_bit_set[kBitMapUsedIdx] = Yes;
 
               this->GetBitMapStatus(ptr_bit_set);
-
-              UInt32 flags = this->MakeMMFlags(wr, user);
-              mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
 
               if (biggest < (size + pad)) biggest = size + pad;
               kBitMapCursor += size + pad;
@@ -115,8 +117,8 @@ namespace HAL {
 
             this->GetBitMapStatus(ptr_bit_set);
 
-            UInt32 flags = this->MakeMMFlags(wr, user);
-            mm_map_page(ptr_bit_set, (VoidPtr) mm_get_page_addr(ptr_bit_set), flags);
+            NE_UNUSED(wr);
+            NE_UNUSED(user);
 
             if (biggest < (size + pad)) biggest = (size + pad);
             kBitMapCursor += size + pad;

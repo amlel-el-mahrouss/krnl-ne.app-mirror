@@ -18,6 +18,9 @@
 
 #define kNeKernelPESubsystem (0x11)
 
+/* Sanity cap for untrusted images. */
+#define kPeMaxImageSz (0x4000000U)
+
 typedef struct LDR_EXEC_HEADER final {
   Ne::Kernel::UInt32 Signature;
   Ne::Kernel::UInt16 Machine;

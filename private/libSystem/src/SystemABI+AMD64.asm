@@ -16,15 +16,17 @@ global nesys_syscall_arg_2
 global nesys_syscall_arg_3
 global nesys_syscall_arg_4
 
+;; Win64 in: rcx = hash, rdx/r8/r9 = args.
+;; Kernel expects: r8 = hash, r9/r10/r11 = args. Move high to low so nothing is clobbered.
+;; Result comes back in rax.
+
 nesys_syscall_arg_1:
     push rbp
     mov rbp, rsp
 
     mov r8, rcx
 
-    xor rax, rax
-
-    syscall
+    int 0x32
 
     pop rbp
 
@@ -34,12 +36,10 @@ nesys_syscall_arg_2:
     push rbp
     mov rbp, rsp
 
-    mov r8, rcx
     mov r9, rdx
+    mov r8, rcx
 
-    xor rax, rax
-
-    syscall
+    int 0x32
 
     pop rbp
 
@@ -49,13 +49,11 @@ nesys_syscall_arg_3:
     push rbp
     mov rbp, rsp
 
-    mov r8, rcx
+    mov r10, r8
     mov r9, rdx
-    mov r10, rbx
+    mov r8, rcx
 
-    xor rax, rax
-
-    syscall
+    int 0x32
 
     pop rbp
 
@@ -65,16 +63,12 @@ nesys_syscall_arg_4:
     push rbp
     mov rbp, rsp
 
-    mov rax, r8
-
-    mov r8, rcx
+    mov r11, r9
+    mov r10, r8
     mov r9, rdx
-    mov r10, rbx
-    mov r11, rax
+    mov r8, rcx
 
-    xor rax, rax
-
-    syscall
+    int 0x32
 
     pop rbp
 

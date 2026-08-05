@@ -97,7 +97,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   if (mp) {
     mp->GetNumberOfProcessors(mp, &cnt_disabled, &cnt_enabled);
-    kHandoverHeader->f_NumberOfProcessors = cnt_enabled;
+    kHandoverHeader->f_NumberOfProcessors                      = cnt_enabled;
     kHandoverHeader->f_HardwareTables.f_MultiProcessingEnabled = cnt_enabled > 1;
   } else {
     kHandoverHeader->f_NumberOfProcessors                      = 1;
@@ -127,18 +127,17 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   kHandoverHeader->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
 
-  UInt32 sz_recover_mode = sizeof(Bool);
-  Bool   recover_mode    = 0;
+  UIntPtr sz_recover_mode = sizeof(Bool);
+  Bool    recover_mode    = 0;
 
   ST->RuntimeServices->GetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
                                    &sz_recover_mode, &recover_mode);
 
   kHandoverHeader->f_RecoverMode = recover_mode;
 
-  recover_mode = 0;
-
-  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, nullptr,
-                                   &sz_recover_mode, &recover_mode);
+  /* one shot flag, attributes 0 delete it. */
+  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, 0, 0,
+                                   nullptr);
 
   Boot::BootFileReader reader_kernel(L"vmkrnl.exe", image_handle);
 

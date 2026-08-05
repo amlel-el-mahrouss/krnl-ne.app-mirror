@@ -67,7 +67,7 @@ namespace HAL {
 }  // namespace HAL
 }  // namespace Ne::Kernel
 
-using rt_syscall_proc = Ne::Kernel::Void (*)(Ne::Kernel::VoidPtr);
+using rt_syscall_proc = Ne::Kernel::VoidPtr (*)(Ne::Kernel::VoidPtr);
 
 /// @brief System Call Dispatch.
 struct HAL_DISPATCH_ENTRY final {
@@ -98,6 +98,64 @@ struct HAL_KERNEL_DISPATCH_ENTRY final {
 inline Ne::Kernel::Array<HAL_DISPATCH_ENTRY, kMaxDispatchCallCount> kSysCalls;
 
 inline Ne::Kernel::Array<HAL_KERNEL_DISPATCH_ENTRY, kMaxDispatchCallCount> kKernCalls;
+
+/// @brief FNV-64 of a call name.
+/// @note must stay bit for bit identical to libSystem's nesys_hash_64.
+inline Ne::Kernel::UInt64 ke_hash_64(const Ne::Kernel::Char* name) {
+  if (!name || *name == 0) return 0;
+
+  const Ne::Kernel::UInt64 kFNVSeed  = 0xcbf29ce484222325ULL;
+  const Ne::Kernel::UInt64 kFNVPrime = 0x100000001b3ULL;
+
+  Ne::Kernel::UInt64 hash = kFNVSeed;
+
+  while (*name) {
+    hash ^= (Ne::Kernel::Char) (*name++);
+    hash *= kFNVPrime;
+  }
+
+  return hash;
+}
+
+/// @brief Bind a system call to a free dispatch slot.
+/// @return the slot it took, -1 when the table is full.
+inline Ne::Kernel::SSizeT ke_install_syscall(const Ne::Kernel::Char* name, rt_syscall_proc proc) {
+  auto hash = ke_hash_64(name);
+
+  if (!hash || !proc) return -1;
+
+  for (Ne::Kernel::SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
+    if (kSysCalls[i].fHooked) continue;
+
+    kSysCalls[i].fHash   = hash;
+    kSysCalls[i].fProc   = proc;
+    kSysCalls[i].fHooked = YES;
+
+    return i;
+  }
+
+  return -1;
+}
+
+/// @brief Bind a kernel call to a free dispatch slot.
+/// @return the slot it took, -1 when the table is full.
+inline Ne::Kernel::SSizeT ke_install_kerncall(const Ne::Kernel::Char* name, rt_kerncall_proc proc) {
+  auto hash = ke_hash_64(name);
+
+  if (!hash || !proc) return -1;
+
+  for (Ne::Kernel::SizeT i = 0UL; i < kMaxDispatchCallCount; ++i) {
+    if (kKernCalls[i].fHooked) continue;
+
+    kKernCalls[i].fHash   = hash;
+    kKernCalls[i].fProc   = proc;
+    kKernCalls[i].fHooked = YES;
+
+    return i;
+  }
+
+  return -1;
+}
 
 #ifdef __NE_VIRTUAL_MEMORY_SUPPORT__
 

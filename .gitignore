@@ -27,6 +27,7 @@ build/
 
 vmkrnl.exe
 bootzldr.exe
+private/minloader/src/root/ne_kernel
 
 tools/dist/mkfs.*
 tools/dist/fsck.*

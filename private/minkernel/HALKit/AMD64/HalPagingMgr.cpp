@@ -5,6 +5,8 @@
 
 #include <HALKit/AMD64/Paging.h>
 #include <HALKit/AMD64/Processor.h>
+#include <KernelKit/DebugOutput.h>
+#include <KernelKit/PhysicalMemory.h>
 
 namespace Ne::Kernel::HAL {
 namespace Detail {
@@ -23,10 +25,55 @@ namespace Detail {
     UInt64 PhysicalAddress : 40;  // Physical page frame address (bits 12–51)
     UInt64 Ignored2 : 7;          // More software bits / reserved
     UInt64 ProtectionKey : 4;     // Optional (if PKU enabled)
-    UInt64 Reserved : 1;          // Usually reserved
-    UInt64 Nx : 1;                // No Execute
+    UInt64 Nx : 1;                // No Execute, bit 63
   };
 }  // namespace Detail
+
+/***********************************************************************************/
+/// @brief Build page tables of our own and run on them.
+/// @param limit highest physical address that has to be reachable.
+/// @return the new PML4's physical address, 0 on failure.
+/***********************************************************************************/
+EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit) {
+  constexpr UIntPtr kEntries   = 512;
+  constexpr UIntPtr kLargePage = 0x200000;    // 2 MiB
+  constexpr UIntPtr kGiB       = 0x40000000;  // one PDPT entry's reach
+  constexpr UIntPtr kTablePerm = 0x3;         // present + writable
+  constexpr UIntPtr kLeafPerm  = 0x83;        // present + writable + PS
+
+  auto pml4_pa = pmm_alloc_frame();
+
+  if (!pml4_pa) return 0UL;
+
+  auto pml4 = reinterpret_cast<UInt64*>(pml4_pa);
+
+  for (UIntPtr base = 0UL; base < limit; base += kGiB) {
+    auto pml4_idx = (base >> 39) & (kEntries - 1);
+
+    if (!(pml4[pml4_idx] & 1)) {
+      auto pdpt_pa = pmm_alloc_frame();
+
+      if (!pdpt_pa) return 0UL;
+
+      pml4[pml4_idx] = pdpt_pa | kTablePerm;
+    }
+
+    auto pdpt  = reinterpret_cast<UInt64*>(pml4[pml4_idx] & ~(kPageSize - 1));
+    auto pd_pa = pmm_alloc_frame();
+
+    if (!pd_pa) return 0UL;
+
+    pdpt[(base >> 30) & (kEntries - 1)] = pd_pa | kTablePerm;
+
+    auto pd = reinterpret_cast<UInt64*>(pd_pa);
+
+    for (UIntPtr i = 0UL; i < kEntries; ++i) {
+      pd[i] = (base + (i * kLargePage)) | kLeafPerm;
+    }
+  }
+
+  return pml4_pa;
+}
 
 /***********************************************************************************/
 /// \brief Retrieve the page status of a PTE.
@@ -72,26 +119,36 @@ EXTERN_C UIntPtr mm_get_page_addr(VoidPtr virt) {
 
   if (!(pdpte & 1)) return 0;
 
+  constexpr UInt64 kPageSizeBit = 0x80;
+  constexpr UInt64 kAddrMask    = 0x000FFFFFFFFFF000ULL;
+
+  // A 1 GiB leaf stops the walk here.
+  if (pdpte & kPageSizeBit) {
+    constexpr UInt64 kGiBOffset = (1ULL << 30) - 1;
+
+    return (pdpte & kAddrMask & ~kGiBOffset) | (kVMAddr & kGiBOffset);
+  }
+
   // Level 2
   auto   pd  = reinterpret_cast<UInt64*>(pdpte & ~kPageOffsetMask);
   UInt64 pde = pd[(kVMAddr >> 21) & kMask9Bits];
 
   if (!(pde & 1)) return 0;
 
-  // 1 GiB page support
-  if (pde & (1 << 7)) {
-    return (pde & ~((1ULL << 30) - 1)) | (kVMAddr & ((1ULL << 30) - 1));
+  // A 2 MiB leaf, the identity map is built out of these.
+  if (pde & kPageSizeBit) {
+    constexpr UInt64 kLargeOffset = (1ULL << 21) - 1;
+
+    return (pde & kAddrMask & ~kLargeOffset) | (kVMAddr & kLargeOffset);
   }
 
   // Level 1
-  auto         pt  = reinterpret_cast<UInt64*>(pde & ~kPageOffsetMask);
-  Detail::PTE* pte = (Detail::PTE*) pt[(kVMAddr >> 12) & kMask9Bits];
+  auto   pt  = reinterpret_cast<UInt64*>(pde & ~kPageOffsetMask);
+  UInt64 pte = pt[(kVMAddr >> 12) & kMask9Bits];
 
-  if (!pte->Present) return 0;
+  if (!(pte & 1)) return 0;
 
-  mmi_page_status((Detail::PTE*) pte);
-
-  return (pte->PhysicalAddress << 12) | (kVMAddr & 0xFFF);
+  return (pte & kAddrMask) | (kVMAddr & kPageOffsetMask);
 }
 
 /***********************************************************************************/
@@ -113,35 +170,81 @@ EXTERN_C Int32 mm_memory_fence(VoidPtr virtual_address) {
 /// @param flags the flags to put on the page.
 /// @return Status code of page manipulation process.
 /***********************************************************************************/
-EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UInt32 flags,
-                           UInt32 level) {
+EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc) {
+  constexpr UInt64 kMask9       = 0x1FF;
+  constexpr UInt64 kPageMask    = 0xFFF;
+  constexpr UInt64 kPageSizeBit = 0x80;
+  constexpr UInt64 kEntries     = 512;
+
+  /// @note privileges are ANDed down the walk, so every table on the way has to be
+  /// permissive and the leaf carries the real policy.
+  constexpr UInt64 kTablePerm = 0x7;  // present + writable + user
+
+  if (!root) return nullptr;
+
+  auto table = reinterpret_cast<UInt64*>(root & ~kPageMask);
+
+  /// PML4 -> PDPT -> PD, splitting anything mapped as a large page on the way down.
+  for (Int32 shift = 39; shift > 12; shift -= 9) {
+    auto  idx   = (virtual_address >> shift) & kMask9;
+    auto& entry = table[idx];
+
+    if (!(entry & 1)) {
+      if (!alloc) return nullptr;
+
+      auto frame = pmm_alloc_frame();
+
+      if (!frame) return nullptr;
+
+      entry = frame | kTablePerm;
+    } else if (entry & kPageSizeBit) {
+      if (!alloc) return nullptr;
+
+      auto frame = pmm_alloc_frame();
+
+      if (!frame) return nullptr;
+
+      auto step = 1ULL << shift;
+      auto base = entry & ~(step - 1);
+
+      /// @note carry the leaf's own attributes, never PS itself nor its PAT bit.
+      auto perm = (entry & 0x1F) | (entry & 0x100) | (entry & (1ULL << 63));
+
+      auto split = reinterpret_cast<UInt64*>(frame);
+
+      for (UInt64 i = 0UL; i < kEntries; ++i) {
+        split[i] = (base + (i * (step >> 9))) | perm | ((shift > 21) ? kPageSizeBit : 0);
+      }
+
+      entry = frame | kTablePerm;
+    } else {
+      entry |= kTablePerm;
+    }
+
+    table = reinterpret_cast<UInt64*>(entry & ~kPageMask);
+  }
+
+  return &table[(virtual_address >> 12) & kMask9];
+}
+
+/***********************************************************************************/
+/// @brief Maps a page into a specific address space.
+/***********************************************************************************/
+EXTERN_C Int32 mm_map_page_in(UIntPtr root, VoidPtr virtual_address, VoidPtr physical_address,
+                              UInt32 flags) {
   if (physical_address == 0) return kErrorInvalidData;
 
-  NE_UNUSED(level);  /// @todo support PML4, and PDPT levels.
+  /// @note the PTE only holds bits 12..51, an unaligned frame would silently map
+  /// the page containing it and shift the whole view.
+  if ((UIntPtr) physical_address & (kPageSize - 1)) return kErrorInvalidData;
 
-  const UInt64     kVMAddr   = (UInt64) virtual_address;
-  constexpr UInt64 kMask9    = 0x1FF;
-  constexpr UInt64 kPageMask = 0xFFF;
+  auto slot = mm_walk_page(root, (UIntPtr) virtual_address, Yes);
 
-  UInt64 cr3 = (UIntPtr) hal_read_cr3() & ~kPageMask;
+  if (!slot) return kErrorInvalidData;
 
-  auto   pml4  = reinterpret_cast<UInt64*>(cr3);
-  UInt64 pml4e = pml4[(kVMAddr >> 39) & kMask9];
+  Detail::PTE* pte = reinterpret_cast<Detail::PTE*>(slot);
 
-  if (!(pml4e & 1)) return kErrorInvalidData;
-
-  UInt64* pdpt  = reinterpret_cast<UInt64*>(pml4e & ~kPageMask);
-  UInt64  pdpte = pdpt[(kVMAddr >> 30) & kMask9];
-
-  if (!(pdpte & 1)) return kErrorInvalidData;
-
-  UInt64* pd  = reinterpret_cast<UInt64*>(pdpte & ~kPageMask);
-  UInt64  pde = pd[(kVMAddr >> 21) & kMask9];
-
-  if (!(pde & 1)) return kErrorInvalidData;
-
-  UInt64*      pt  = reinterpret_cast<UInt64*>(pde & ~kPageMask);
-  Detail::PTE* pte = (Detail::PTE*) pt[(kVMAddr >> 12) & kMask9];
+  *slot = 0UL;
 
   pte->Present = !!(flags & kMMFlagsPresent);
   pte->Wr      = !!(flags & kMMFlagsWr);
@@ -154,10 +257,37 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
 
   hal_invl_tlb(virtual_address);
 
-  mm_memory_fence(virtual_address);
-
   mmi_page_status(pte);
 
   return kErrorSuccess;
+}
+
+/***********************************************************************************/
+/// @brief Maps a page into the address space we are running on.
+/***********************************************************************************/
+EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UInt32 flags,
+                           UInt32 level) {
+  NE_UNUSED(level);
+
+  return mm_map_page_in((UIntPtr) hal_read_cr3(), virtual_address, physical_address, flags);
+}
+
+/***********************************************************************************/
+/// @brief Unmaps a page, returns the frame it pointed at, 0 when there was none.
+/***********************************************************************************/
+EXTERN_C UIntPtr mm_unmap_page(VoidPtr virtual_address) {
+  auto slot = mm_walk_page((UIntPtr) hal_read_cr3(), (UIntPtr) virtual_address, No);
+
+  if (!slot || !(*slot & 1)) return 0UL;
+
+  constexpr UInt64 kAddrMask = 0x000FFFFFFFFFF000ULL;
+
+  auto frame = *slot & kAddrMask;
+
+  *slot = 0UL;
+
+  hal_invl_tlb(virtual_address);
+
+  return frame;
 }
 }  // namespace Ne::Kernel::HAL

@@ -25,6 +25,10 @@
 #define kGuestUser "NEKERNEL/GUEST/%s"
 #define kStdUser "NEKERNEL/STD/%s"
 
+///! Built-in users, bound by user_init_globals.
+#define kRootUserName u8"NEKERNEL/MGMT/root"
+#define kGuestUserName u8"NEKERNEL/GUEST/guest"
+
 #define kUsersDir "/users/"
 
 #define kMaxUserNameLen (256U)
@@ -75,6 +79,9 @@ class User final {
   /// @brief Is she a super user?
   Bool IsSuperUser();
 
+  /// @brief Is he a guest user?
+  Bool IsGuestUser();
+
   /// @brief Saves a password from the public key.
   Bool Save(const UserPublicKey password);
 
@@ -104,6 +111,10 @@ inline UserPtr kRootUser = nullptr;
 
 /// \brief Guest user pointer.
 inline UserPtr kGuest = nullptr;
+
+/// @brief Bind the built-in users.
+/// @param recovery make the guest user current instead of root.
+Void user_init_globals(const Bool recovery);
 
 }  // namespace Ne::Kernel
 

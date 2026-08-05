@@ -1,5 +1,6 @@
 # boot, user, and kernel are owned by amlal@nekernel.org.
 /private/minkernel/ @amlel-el-mahrouss
+/private/mindetect/ @amlel-el-mahrouss
 /private/minloader/ @amlel-el-mahrouss
 /private/libDDK/ @amlel-el-mahrouss
 /private/libMsg/ @0xf00sec

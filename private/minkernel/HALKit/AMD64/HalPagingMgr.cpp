@@ -234,6 +234,10 @@ EXTERN_C Int32 mm_map_page_in(UIntPtr root, VoidPtr virtual_address, VoidPtr phy
                               UInt32 flags) {
   if (physical_address == 0) return kErrorInvalidData;
 
+  /// @note the PTE only holds bits 12..51, an unaligned frame would silently map
+  /// the page containing it and shift the whole view.
+  if ((UIntPtr) physical_address & (kPageSize - 1)) return kErrorInvalidData;
+
   auto slot = mm_walk_page(root, (UIntPtr) virtual_address, Yes);
 
   if (!slot) return kErrorInvalidData;
@@ -266,5 +270,24 @@ EXTERN_C Int32 mm_map_page(VoidPtr virtual_address, VoidPtr physical_address, UI
   NE_UNUSED(level);
 
   return mm_map_page_in((UIntPtr) hal_read_cr3(), virtual_address, physical_address, flags);
+}
+
+/***********************************************************************************/
+/// @brief Unmaps a page, returns the frame it pointed at, 0 when there was none.
+/***********************************************************************************/
+EXTERN_C UIntPtr mm_unmap_page(VoidPtr virtual_address) {
+  auto slot = mm_walk_page((UIntPtr) hal_read_cr3(), (UIntPtr) virtual_address, No);
+
+  if (!slot || !(*slot & 1)) return 0UL;
+
+  constexpr UInt64 kAddrMask = 0x000FFFFFFFFFF000ULL;
+
+  auto frame = *slot & kAddrMask;
+
+  *slot = 0UL;
+
+  hal_invl_tlb(virtual_address);
+
+  return frame;
 }
 }  // namespace Ne::Kernel::HAL

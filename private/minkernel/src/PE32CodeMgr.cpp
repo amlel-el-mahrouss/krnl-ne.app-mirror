@@ -7,6 +7,7 @@
 #include <KernelKit/DebugOutput.h>
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/PE32CodeMgr.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/Config.h>
 #include <NeKit/KString.h>
@@ -46,6 +47,13 @@ namespace Detail {
 #else
     return 0;
 #endif
+  }
+
+  /// @brief Unmap n pages from base, handing the frames back.
+  STATIC Void ldr_unmap_pages(UIntPtr base, SizeT n) {
+    while (n-- > 0) {
+      HAL::pmm_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
+    }
   }
 }  // namespace Detail
 
@@ -251,11 +259,22 @@ ErrorOr<VoidPtr> PE32Loader::LoadImage() {
 
   if (!header || !opt || header->NumberOfSections < 1) return ErrorOr<VoidPtr>{kErrorInvalidData};
 
-  auto image = new Char[opt->SizeOfImage];
+  SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
 
-  if (!image) return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
+  /// @note frames back the image, the heap is not page aligned and the PTE
+  /// would silently shift the whole view. Frames come zeroed, so BSS is done.
+  for (SizeT i = 0UL; i < pages; ++i) {
+    auto frame = HAL::pmm_alloc_frame();
 
-  rt_set_memory(image, 0, opt->SizeOfImage);
+    if (!frame || HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)), (VoidPtr) frame,
+                                   HAL::kMMFlagsPresent | HAL::kMMFlagsWr | HAL::kMMFlagsUser) !=
+                      kErrorSuccess) {
+      HAL::pmm_free_frame(frame);
+      Detail::ldr_unmap_pages(opt->ImageBase, i);
+
+      return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
+    }
+  }
 
   auto sect =
       reinterpret_cast<LDR_SECTION_HEADER_PTR>(((Char*) opt) + header->SizeOfOptionalHeader);
@@ -270,31 +289,17 @@ ErrorOr<VoidPtr> PE32Loader::LoadImage() {
         sec->SizeOfRawData > opt->SizeOfImage - sec->VirtualAddress ||
         sec->PointerToRawData > fCachedBlobSz ||
         sec->SizeOfRawData > fCachedBlobSz - sec->PointerToRawData) {
-      delete[] image;
+      Detail::ldr_unmap_pages(opt->ImageBase, pages);
 
       return ErrorOr<VoidPtr>{kErrorInvalidData};
     }
 
     rt_copy_memory_safe((VoidPtr) (blob + sec->PointerToRawData),
-                        (VoidPtr) (image + sec->VirtualAddress), sec->SizeOfRawData,
+                        (VoidPtr) (opt->ImageBase + sec->VirtualAddress), sec->SizeOfRawData,
                         opt->SizeOfImage - sec->VirtualAddress);
   }
 
-  SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
-
-  for (SizeT i = 0UL; i < pages; ++i) {
-    auto rc = HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)),
-                               (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
-                               HAL::kMMFlagsPresent | HAL::kMMFlagsUser);
-
-    if (rc != kErrorSuccess) {
-      delete[] image;
-
-      return ErrorOr<VoidPtr>{kErrorInvalidData};
-    }
-  }
-
-  fImage = image;
+  fImage = (VoidPtr) opt->ImageBase;
 
   (Void)(kout << "PE32Loader: info: Mapped image at " << hex_number(opt->ImageBase) << kendl);
 

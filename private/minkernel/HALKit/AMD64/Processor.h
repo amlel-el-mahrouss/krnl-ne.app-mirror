@@ -263,6 +263,9 @@ EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc)
 EXTERN_C Int32 mm_map_page_in(UIntPtr root, VoidPtr virtual_address, VoidPtr physical_address,
                               UInt32 flags);
 
+/// @brief Unmap a page, returns the frame it held.
+EXTERN_C UIntPtr mm_unmap_page(VoidPtr virtual_address);
+
 EXTERN_C UInt8  rt_in8(UInt16 port);
 EXTERN_C UInt16 rt_in16(UInt16 port);
 EXTERN_C UInt32 rt_in32(UInt16 port);

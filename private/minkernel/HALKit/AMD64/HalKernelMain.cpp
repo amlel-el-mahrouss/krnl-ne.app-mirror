@@ -33,7 +33,8 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
 
   HAL::rt_sti();
 
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(
+      handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);
@@ -53,14 +54,34 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
   /*     INITIALIZE BIT MAP.              */
   /************************************** */
 
-  auto usable_sz = kHandoverHeader->f_BitMapSize / 2;
+  auto region_base = reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart);
+  auto region_sz   = kHandoverHeader->f_BitMapSize;
+
+  /// @note images map at kPefBaseOrigin over the identity map, shadowing whatever
+  /// phys lives there. Keep the heap and the frames clear of that window.
+  constexpr UIntPtr kImgWinStart = kPefBaseOrigin;
+  constexpr UIntPtr kImgWinEnd   = kPefBaseOrigin + kPefMaxImageSz;
+
+  if (region_base < kImgWinEnd && region_base + region_sz > kImgWinStart) {
+    auto below = region_base < kImgWinStart ? kImgWinStart - region_base : (UIntPtr) 0UL;
+    auto above =
+        region_base + region_sz > kImgWinEnd ? region_base + region_sz - kImgWinEnd : (UIntPtr) 0UL;
+
+    if (below >= above) {
+      region_sz = below;
+    } else {
+      region_base = kImgWinEnd;
+      region_sz   = above;
+    }
+  }
+
+  auto usable_sz = region_sz / 2;
 
   kBitMapCursor     = 0UL;
   kKernelBitMpSize  = usable_sz;
-  kKernelBitMpStart = kHandoverHeader->f_BitMapStart;
+  kKernelBitMpStart = reinterpret_cast<VoidPtr>(region_base);
 
-  HAL::pmm_init(reinterpret_cast<UIntPtr>(kHandoverHeader->f_BitMapStart) + usable_sz,
-                kHandoverHeader->f_BitMapSize - usable_sz);
+  HAL::pmm_init(region_base + usable_sz, region_sz - usable_sz);
 
   /************************************** */
   /*     ADOPT OUR OWN PAGE TABLES.       */
@@ -122,8 +143,8 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
        .fAccessByte = 0x92,
        .fFlags      = 0xCF,
        .fBaseHigh   = 0},  // Ne::Kernel data
-      {},                // TSS data low
-      {},                // TSS data high
+      {},                  // TSS data low
+      {},                  // TSS data high
       {.fLimitLow   = 0x0,
        .fBaseLow    = 0,
        .fBaseMid    = 0,

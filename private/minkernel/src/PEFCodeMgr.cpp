@@ -7,6 +7,7 @@
 #include <KernelKit/DebugOutput.h>
 #include <KernelKit/HeapMgr.h>
 #include <KernelKit/PEFCodeMgr.h>
+#include <KernelKit/PhysicalMemory.h>
 #include <KernelKit/ProcessScheduler.h>
 #include <NeKit/Config.h>
 #include <NeKit/KString.h>
@@ -143,7 +144,9 @@ namespace Detail {
       if (out->Cpu != ldr_get_platform() && !kIsFat) return NO;
 
       if (out->VMSize < 1 || out->VMSize > kPefMaxImageSz) return NO;
+      /// @note sections live inside the image window, the heap owns everything past it.
       if (out->VMAddress < kPefBaseOrigin) return NO;
+      if (out->VMAddress - kPefBaseOrigin > kPefMaxImageSz - out->VMSize) return NO;
       if (out->OffsetSize > out->VMSize) return NO;
 
       if (out->OffsetSize > 0) {
@@ -159,30 +162,35 @@ namespace Detail {
     return NO;
   }
 
-  /// @brief Instantiate a section, then map it at its virtual address.
-  STATIC ErrorOr<VoidPtr> pef_load_section(const PEFCommandHeader& hdr, const VoidPtr src) {
-    Char* image = new Char[hdr.VMSize];
-
-    if (!image) return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
-
-    rt_set_memory(image, 0, hdr.VMSize);
-
-    if (src && hdr.OffsetSize > 0) {
-      rt_copy_memory_safe(src, image, hdr.OffsetSize, hdr.VMSize);
+  /// @brief Unmap n pages from base, handing the frames back.
+  STATIC Void ldr_unmap_pages(UIntPtr base, SizeT n) {
+    while (n-- > 0) {
+      HAL::pmm_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
     }
+  }
 
+  /// @brief Instantiate a section at its virtual address, backed by frames.
+  STATIC ErrorOr<VoidPtr> pef_load_section(const PEFCommandHeader& hdr, const VoidPtr src) {
     SizeT pages = hdr.VMSize / kPageSize + ((hdr.VMSize % kPageSize) ? 1 : 0);
 
     for (SizeT i = 0UL; i < pages; ++i) {
-      if (HAL::mm_map_page((VoidPtr) (hdr.VMAddress + (i * kPageSize)),
-                           (VoidPtr) (HAL::mm_get_page_addr(image) + (i * kPageSize)),
-                           HAL::kMMFlagsPresent | HAL::kMMFlagsUser) != kErrorSuccess) {
-        delete[] image;
-        return ErrorOr<VoidPtr>{kErrorInvalidData};
+      auto frame = HAL::pmm_alloc_frame();
+
+      if (!frame || HAL::mm_map_page((VoidPtr) (hdr.VMAddress + (i * kPageSize)), (VoidPtr) frame,
+                                     HAL::kMMFlagsPresent | HAL::kMMFlagsWr | HAL::kMMFlagsUser) !=
+                        kErrorSuccess) {
+        HAL::pmm_free_frame(frame);
+        ldr_unmap_pages(hdr.VMAddress, i);
+
+        return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
       }
     }
 
-    return ErrorOr<VoidPtr>{(VoidPtr) image};
+    if (src && hdr.OffsetSize > 0) {
+      rt_copy_memory_safe(src, (VoidPtr) hdr.VMAddress, hdr.OffsetSize, hdr.VMSize);
+    }
+
+    return ErrorOr<VoidPtr>{(VoidPtr) hdr.VMAddress};
   }
 }  // namespace Detail
 

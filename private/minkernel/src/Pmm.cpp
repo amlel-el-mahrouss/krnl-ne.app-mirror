@@ -8,7 +8,8 @@
 #include <NeKit/Pmm.h>
 
 namespace Ne::Kernel {
-/***********************************************************************************/
+
+  /***********************************************************************************/
 /// @brief Pmm constructor.
 /***********************************************************************************/
 Pmm::Pmm() : fPageMgr() {
@@ -72,4 +73,5 @@ Boolean Pmm::ToggleShare(Ref<PTEWrapper> PageRef, Boolean Enable) {
 
   return true;
 }
+
 }  // namespace Ne::Kernel

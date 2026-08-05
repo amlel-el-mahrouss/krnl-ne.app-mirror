@@ -8,6 +8,7 @@
 #include <StorageKit/PRDT.h>
 
 namespace Ne::Kernel {
+  
 /***********************************************************************************/
 /// @brief constructs a new PRD.
 /// @param prd PRD reference.
@@ -18,4 +19,5 @@ void sk_construct_prdt(Ref<PRDT>& prd) {
   prd.Leak().fSectorCount = 0x0;
   prd.Leak().fEndBit      = 0x0;
 }
+
 }  // namespace Ne::Kernel

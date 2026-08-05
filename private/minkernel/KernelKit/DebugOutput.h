@@ -13,6 +13,7 @@
 #include <NeKit/Utils.h>
 
 namespace Ne::Kernel {
+
 class TerminalDevice;
 class DTraceDevice;
 class NeTraceDevice;
@@ -178,6 +179,7 @@ inline TerminalDevice& operator<<(TerminalDevice& src, const Long& num) {
   src = number(num);
   return src;
 }
+
 }  // namespace Ne::Kernel
 
 #ifdef kout

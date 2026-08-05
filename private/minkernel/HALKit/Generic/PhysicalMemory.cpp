@@ -9,6 +9,7 @@
 namespace Ne::Kernel::HAL {
 
 namespace Detail {
+
   /// @brief Bump cursor, everything above it inside the region is untouched.
   STATIC UIntPtr kPmmBase{0UL};
   STATIC UIntPtr kPmmCursor{0UL};
@@ -21,6 +22,7 @@ namespace Detail {
   STATIC SizeT kPmmUsed{0UL};
 
   inline constexpr auto kPmmAlign = kPageSize - 1;
+  
 }  // namespace Detail
 
 /// @brief Hand a physical region to the frame allocator.
@@ -43,9 +45,6 @@ Void pmm_init(UIntPtr base, SizeT sz) {
   Detail::kPmmFreeHead = 0UL;
   Detail::kPmmFree     = (end - start) / kPageSize;
   Detail::kPmmUsed     = 0UL;
-
-  (Void)(kout << "pmm_init: base " << hex_number(start) << kendl);
-  (Void)(kout << "pmm_init: frames " << number(Detail::kPmmFree) << kendl);
 }
 
 /// @brief Take one frame.
@@ -63,11 +62,6 @@ _Output UIntPtr pmm_alloc_frame(Void) {
   }
 
   if (!frame) {
-    (Void)(kout << "pmm: exhausted base " << hex_number(Detail::kPmmBase) << kendl);
-    (Void)(kout << "pmm: exhausted cur " << hex_number(Detail::kPmmCursor) << kendl);
-    (Void)(kout << "pmm: exhausted end " << hex_number(Detail::kPmmEnd) << kendl);
-    (Void)(kout << "pmm: exhausted head " << hex_number(Detail::kPmmFreeHead) << kendl);
-
     return 0UL;
   }
 
@@ -103,4 +97,5 @@ _Output SizeT pmm_free_frames(Void) {
 _Output SizeT pmm_used_frames(Void) {
   return Detail::kPmmUsed;
 }
+
 }  // namespace Ne::Kernel::HAL

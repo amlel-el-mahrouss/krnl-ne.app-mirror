@@ -28,6 +28,7 @@
 ///! Built-in users, bound by user_init_globals.
 #define kRootUserName u8"NEKERNEL/MGMT/root"
 #define kGuestUserName u8"NEKERNEL/GUEST/guest"
+#define kRecoveryUserName u8"NEKERNEL/GUEST/recov"
 
 #define kUsersDir "/users/"
 
@@ -43,6 +44,7 @@ enum struct UserRingKind : Int32 {
   kRingStdUser   = 444,
   kRingSuperUser = 666,
   kRingGuestUser = 777,
+  kRingRecoveryUser = 888,
   kRingCount     = 3,
 };
 

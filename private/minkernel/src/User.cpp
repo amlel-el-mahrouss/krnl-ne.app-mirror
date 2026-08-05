@@ -149,11 +149,14 @@ Void user_init_globals(const Bool recovery) {
   if (!kGuest) kGuest = new User(UserRingKind::kRingGuestUser, kGuestUserName);
 
   if (!kRootUser || !kGuest) {
-    (Void)(kout << "user_init_globals: out of memory\r");
+    ke_stop(RUNTIME_CHECK_UNEXCPECTED, "Ran out of memory for users.");
     return;
   }
 
-  kCurrentUser = recovery ? kGuest : kRootUser;
+  if (recovery)
+    kCurrentUser = new User(UserRingKind::kRingRecoveryUser, kRecoveryUserName);
+  else
+    kCurrentUser = kGuest;
 
   (Void)(kout << "user_init_globals: " << kCurrentUser->Name() << kendl);
 }

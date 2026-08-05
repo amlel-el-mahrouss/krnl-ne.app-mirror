@@ -35,7 +35,7 @@ MOVEALL=./move-all-aarch64.sh
 .PHONY: nekernel-arm64-epm
 nekernel-arm64-epm: clean
 	$(CC) $(CCFLAGS) $(DISKDRIVER) $(DEBUG) $(wildcard src/*.cpp) \
-	       $(wildcard src/FS/*.cpp) $(wildcard HALKit/ARM64/Storage/*.cpp) \
+	       $(wildcard src/FS/*.cpp) $(wildcard HALKit/Generic/*.cpp) $(wildcard HALKit/ARM64/Storage/*.cpp) \
 			$(wildcard HALKit/ARM64/PCI/*.cpp) $(wildcard src/Network/*.cpp) $(wildcard src/Storage/*.cpp) \
 			$(wildcard HALKit/ARM64/*.cpp) $(wildcard HALKit/ARM64/*.cpp) \
 			$(wildcard HALKit/ARM64/*.s) $(wildcard HALKit/ARM64/APM/*.cpp)

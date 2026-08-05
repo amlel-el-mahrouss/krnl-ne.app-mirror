@@ -8,6 +8,7 @@
 %define kInterruptId 50
 
 ;; Exception that the CPU pushes an error code for, drop it before iret.
+;; The error code is one qword; iret pops the rest of the frame itself.
 %macro IntExp 1
 global __NE_INT_%1
 __NE_INT_%1:
@@ -15,14 +16,18 @@ __NE_INT_%1:
 
     add rsp, 8
 
+    std
+
     o64 iret
 %endmacro
 
-;; Interrupt without an error code.
+;; Interrupt without an error code, the frame is already iret shaped.
 %macro IntNormal 1
 global __NE_INT_%1
 __NE_INT_%1:
     cli
+
+    std
 
     o64 iret
 %endmacro

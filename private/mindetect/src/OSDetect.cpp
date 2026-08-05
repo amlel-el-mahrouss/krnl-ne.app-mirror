@@ -8,7 +8,7 @@
 EXTERN_C Int32 OSDetectModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
   ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
-  if (handover->f_HardwareTables.f_MultiProcessingEnabled == false) return kEfiFail;
+  if (handover->f_HardwareTables.f_MultiProcessingEnabled == NO) return kEfiFail;
 
 #ifdef __NE_ONLY_SMP__
   if (handover->f_NumberOfProcessors == 0LL) return kEfiFail;

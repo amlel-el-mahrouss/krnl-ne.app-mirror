@@ -260,8 +260,8 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 
-  if (kHandoverHeader->f_SCIImage && kHandoverHeader->f_SCIImageSz) {
-    PE32Loader ldr(kHandoverHeader->f_SCIImage, kHandoverHeader->f_SCIImageSz);
+  if (kHandoverHeader->f_HostImage && kHandoverHeader->f_HostImageSz) {
+    PE32Loader ldr(kHandoverHeader->f_HostImage, kHandoverHeader->f_HostImageSz);
 
     if (ldr.IsLoaded() &&
         rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind) !=

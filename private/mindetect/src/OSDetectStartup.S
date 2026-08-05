@@ -22,3 +22,32 @@
 .word kTypeDriver
 .word 0
 .word kArchAmd64
+
+.section .text
+
+.global ___chkstk_ms
+
+___chkstk_ms:
+    push rcx
+    push rax
+
+    cmp rax, 0x1000
+    lea rcx, [rsp + 24]
+    jb .last
+
+.probe:
+    sub rcx, 0x1000
+    or rcx, 0
+
+    sub rax, 0x1000
+    cmp rax, 0x1000
+    ja .probe
+
+.last:
+    sub rcx, rax
+    or rcx, 0
+
+    pop rax
+    pop rcx
+
+    ret

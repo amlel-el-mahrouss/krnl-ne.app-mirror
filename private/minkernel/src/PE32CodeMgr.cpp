@@ -244,8 +244,6 @@ ErrorOr<VoidPtr> PE32Loader::FindSymbol(const Char* name, Int32 kind) {
   return ErrorOr<VoidPtr>{kErrorInvalidData};
 }
 
-/// @brief Finds the executable entrypoint.
-/// @return
 /***********************************************************************************/
 /// @brief Instantiate the image and map it at its preferred base.
 /// @return the kernel address of the image.

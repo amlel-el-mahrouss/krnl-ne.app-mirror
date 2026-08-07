@@ -14,7 +14,8 @@ global __NE_INT_%1
 __NE_INT_%1:
     cli
 
-    add rsp, 8
+    std
+    add rsp, 16
 
     std
 
@@ -28,6 +29,7 @@ __NE_INT_%1:
     cli
 
     std
+    add rsp, 16
 
     o64 iret
 %endmacro

@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2024-2026, Amlal El Mahrouss (amlal@nekernel.org)
+// Licensed under the Apache License, Version 2.0 (see LICENSE file)
+// Official repository: https://github.com/ne-app-eu/krnl
+
 #include <KernelKit/DebugOutput.h>
 #include <KernelKit/PhysicalMemory.h>
 #include <NeKit/KernelPanic.h>
@@ -28,7 +33,7 @@ namespace Detail {
 /// @brief Hand a physical region to the frame allocator.
 /// @param base first byte of the region.
 /// @param sz size of the region in bytes.
-Void pmm_init(UIntPtr base, SizeT sz) {
+Void pmmi_init(UIntPtr base, SizeT sz) {
   auto start = (base + Detail::kPmmAlign) & ~Detail::kPmmAlign;
   auto end   = (base + sz) & ~Detail::kPmmAlign;
 
@@ -49,7 +54,7 @@ Void pmm_init(UIntPtr base, SizeT sz) {
 
 /// @brief Take one frame.
 /// @return the frame's physical address, zeroed, or 0 when out of memory.
-_Output UIntPtr pmm_alloc_frame(Void) {
+_Output UIntPtr pmmi_alloc_frame(Void) {
   UIntPtr frame = 0UL;
 
   if (Detail::kPmmFreeHead) {
@@ -75,7 +80,7 @@ _Output UIntPtr pmm_alloc_frame(Void) {
 
 /// @brief Give a frame back.
 /// @param frame the frame's physical address.
-Void pmm_free_frame(UIntPtr frame) {
+Void pmmi_free_frame(UIntPtr frame) {
   if (!frame || (frame & Detail::kPmmAlign)) return;
 
   if (frame < Detail::kPmmBase || frame >= Detail::kPmmCursor) return;
@@ -89,12 +94,12 @@ Void pmm_free_frame(UIntPtr frame) {
 }
 
 /// @brief Frames still available.
-_Output SizeT pmm_free_frames(Void) {
+_Output SizeT pmmi_free_frames(Void) {
   return Detail::kPmmFree;
 }
 
 /// @brief Frames handed out.
-_Output SizeT pmm_used_frames(Void) {
+_Output SizeT pmmi_used_frames(Void) {
   return Detail::kPmmUsed;
 }
 

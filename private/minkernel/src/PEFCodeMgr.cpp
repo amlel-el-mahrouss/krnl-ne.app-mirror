@@ -48,7 +48,7 @@ namespace Detail {
   }
   /// @brief Compare a container magic against a wanted one.
   STATIC Bool pef_magic_eq(const Char* magic, const Char* want) {
-    for (SizeT i = 0UL; i < kPefMagicLen - 1; ++i) {
+    for (SizeT i{}; i < kPefMagicLen - 1; ++i) {
       if (magic[i] != want[i]) return NO;
     }
 
@@ -65,7 +65,7 @@ namespace Detail {
 
     if (want_len != field_len) return NO;
 
-    for (SizeT i = 0UL; i < field_len; ++i) {
+    for (SizeT i{}; i < field_len; ++i) {
       if (field[i] != want[i]) return NO;
     }
 
@@ -134,7 +134,7 @@ namespace Detail {
     const Bool  kIsFat   = pef_magic_eq(container.Magic, kPefMagicFat);
     const SizeT kTableSz = container.Count * sizeof(PEFCommandHeader);
 
-    for (SizeT i = 0UL; i < container.Count; ++i) {
+    for (SizeT i{}; i < container.Count; ++i) {
       rt_copy_memory((VoidPtr) (blob + sizeof(PEFContainer) + (i * sizeof(PEFCommandHeader))), out,
                      sizeof(PEFCommandHeader));
 
@@ -165,7 +165,7 @@ namespace Detail {
   /// @brief Unmap n pages from base, handing the frames back.
   STATIC Void ldr_unmap_pages(UIntPtr base, SizeT n) {
     while (n-- > 0) {
-      HAL::pmm_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
+      HAL::pmmi_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
     }
   }
 
@@ -173,13 +173,13 @@ namespace Detail {
   STATIC ErrorOr<VoidPtr> pef_load_section(const PEFCommandHeader& hdr, const VoidPtr src) {
     SizeT pages = hdr.VMSize / kPageSize + ((hdr.VMSize % kPageSize) ? 1 : 0);
 
-    for (SizeT i = 0UL; i < pages; ++i) {
-      auto frame = HAL::pmm_alloc_frame();
+    for (SizeT i{}; i < pages; ++i) {
+      auto frame = HAL::pmmi_alloc_frame();
 
       if (!frame || HAL::mm_map_page((VoidPtr) (hdr.VMAddress + (i * kPageSize)), (VoidPtr) frame,
                                      HAL::kMMFlagsPresent | HAL::kMMFlagsWr | HAL::kMMFlagsUser) !=
                         kErrorSuccess) {
-        HAL::pmm_free_frame(frame);
+        HAL::pmmi_free_frame(frame);
         ldr_unmap_pages(hdr.VMAddress, i);
 
         return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};
@@ -366,7 +366,7 @@ ErrorOr<VoidPtr> PEFLoader::FindSymbol(const Char* name, Int32 kind) {
 
   Char* unconst_symbol = const_cast<Char*>(name);
 
-  for (SizeT i = 0UL; i < rt_string_len(unconst_symbol, kPefNameLen); ++i) {
+  for (SizeT i{}; i < rt_string_len(unconst_symbol, kPefNameLen); ++i) {
     if (rt_is_space(unconst_symbol[i])) {
       unconst_symbol[i] = kMangleCharacter;
     }

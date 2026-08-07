@@ -52,7 +52,7 @@ namespace Detail {
   /// @brief Unmap n pages from base, handing the frames back.
   STATIC Void ldr_unmap_pages(UIntPtr base, SizeT n) {
     while (n-- > 0) {
-      HAL::pmm_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
+      HAL::pmmi_free_frame(HAL::mm_unmap_page((VoidPtr) (base + (n * kPageSize))));
     }
   }
 }  // namespace Detail
@@ -268,17 +268,18 @@ ErrorOr<VoidPtr> PE32Loader::LoadImage() {
     return ErrorOr<VoidPtr>{kErrorInvalidData};
   }
 
+  // This count the amount of pages from the SizeOfImage field of a PE32 image.
   SizeT pages = opt->SizeOfImage / kPageSize + ((opt->SizeOfImage % kPageSize) ? 1 : 0);
 
   /// @note frames back the image, the heap is not page aligned and the PTE
   /// would silently shift the whole view. Frames come zeroed, so BSS is done.
-  for (SizeT i = 0UL; i < pages; ++i) {
-    auto frame = HAL::pmm_alloc_frame();
+  for (SizeT i{}; i < pages; ++i) {
+    auto frame = HAL::pmmi_alloc_frame();
 
     if (!frame || HAL::mm_map_page((VoidPtr) (opt->ImageBase + (i * kPageSize)), (VoidPtr) frame,
                                    HAL::kMMFlagsPresent | HAL::kMMFlagsWr | HAL::kMMFlagsUser) !=
                       kErrorSuccess) {
-      HAL::pmm_free_frame(frame);
+      HAL::pmmi_free_frame(frame);
       Detail::ldr_unmap_pages(opt->ImageBase, i);
 
       return ErrorOr<VoidPtr>{kErrorHeapOutOfMemory};

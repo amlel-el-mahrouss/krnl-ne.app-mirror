@@ -41,7 +41,7 @@ EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit) {
   constexpr UIntPtr kTablePerm = 0x3;         // present + writable
   constexpr UIntPtr kLeafPerm  = 0x83;        // present + writable + PS
 
-  auto pml4_pa = pmm_alloc_frame();
+  auto pml4_pa = pmmi_alloc_frame();
 
   if (!pml4_pa) return 0UL;
 
@@ -51,7 +51,7 @@ EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit) {
     auto pml4_idx = (base >> 39) & (kEntries - 1);
 
     if (!(pml4[pml4_idx] & 1)) {
-      auto pdpt_pa = pmm_alloc_frame();
+      auto pdpt_pa = pmmi_alloc_frame();
 
       if (!pdpt_pa) return 0UL;
 
@@ -59,7 +59,7 @@ EXTERN_C UIntPtr mm_init_kernel_tables(UIntPtr limit) {
     }
 
     auto pdpt  = reinterpret_cast<UInt64*>(pml4[pml4_idx] & ~(kPageSize - 1));
-    auto pd_pa = pmm_alloc_frame();
+    auto pd_pa = pmmi_alloc_frame();
 
     if (!pd_pa) return 0UL;
 
@@ -192,7 +192,7 @@ EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc)
     if (!(entry & 1)) {
       if (!alloc) return nullptr;
 
-      auto frame = pmm_alloc_frame();
+      auto frame = pmmi_alloc_frame();
 
       if (!frame) return nullptr;
 
@@ -200,7 +200,7 @@ EXTERN_C UInt64* mm_walk_page(UIntPtr root, UIntPtr virtual_address, Bool alloc)
     } else if (entry & kPageSizeBit) {
       if (!alloc) return nullptr;
 
-      auto frame = pmm_alloc_frame();
+      auto frame = pmmi_alloc_frame();
 
       if (!frame) return nullptr;
 

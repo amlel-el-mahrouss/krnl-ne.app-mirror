@@ -81,7 +81,7 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
   kKernelBitMpSize  = usable_sz;
   kKernelBitMpStart = reinterpret_cast<VoidPtr>(region_base);
 
-  HAL::pmm_init(region_base + usable_sz, region_sz - usable_sz);
+  HAL::pmmi_init(region_base + usable_sz, region_sz - usable_sz);
 
   /************************************** */
   /*     ADOPT OUR OWN PAGE TABLES.       */
@@ -192,11 +192,11 @@ EXTERN_C BOOL rtl_init_nic_rtl8139();
 
 #ifdef __DEBUG__
 /// @brief Check the frame allocator's invariants on real memory.
-STATIC Ne::Kernel::Void pmm_self_test(Ne::Kernel::Void) {
+STATIC Ne::Kernel::Void pmmi_self_test(Ne::Kernel::Void) {
   using namespace Ne::Kernel;
 
-  auto a = HAL::pmm_alloc_frame();
-  auto b = HAL::pmm_alloc_frame();
+  auto a = HAL::pmmi_alloc_frame();
+  auto b = HAL::pmmi_alloc_frame();
 
   if (!a || !b) {
     (Void)(kout << "pmm: FAIL out of memory\r");
@@ -214,14 +214,14 @@ STATIC Ne::Kernel::Void pmm_self_test(Ne::Kernel::Void) {
   }
 
   rt_set_memory(reinterpret_cast<VoidPtr>(b), 0xAB, kPageSize);
-  HAL::pmm_free_frame(b);
+  HAL::pmmi_free_frame(b);
 
-  auto c = HAL::pmm_alloc_frame();
+  auto c = HAL::pmmi_alloc_frame();
 
   if (c != b) (Void)(kout << "pmm: FAIL free list did not reuse\r");
   if (c && reinterpret_cast<UInt8*>(c)[8] != 0) (Void)(kout << "pmm: FAIL reuse not zeroed\r");
 
-  (Void)(kout << "pmm: self test done, free " << number(HAL::pmm_free_frames()) << kendl);
+  (Void)(kout << "pmm: self test done, free " << number(HAL::pmmi_free_frames()) << kendl);
 }
 #endif  // __DEBUG__
 
@@ -241,7 +241,7 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   idt_loader.Load(idt_reg);
 
 #ifdef __DEBUG__
-  pmm_self_test();
+  pmmi_self_test();
 #endif  // __DEBUG__
 
   user_init_std(kHandoverHeader->f_RecoverMode);

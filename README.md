@@ -4,7 +4,7 @@
 
 ### Notice
 
-NeKernel is not open to new contributors, unless you contributed to similar Ne.app modules. This is done to have the higest quality merge requests.
+NeKernel is not open to new contributors, unless you contributed to similar Ne.app modules and similar large scale open source projects. This is done to have the highest quality merge requests.
 
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
 ![GitHub Repo Stars](https://img.shields.io/github/stars/ne-app-eu/krnl?style=for-the-badge)

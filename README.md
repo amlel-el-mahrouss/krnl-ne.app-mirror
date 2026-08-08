@@ -2,6 +2,10 @@
 
 # Ne.app NeKernel
 
+### Notice
+
+NeKernel is not open to new contributors, unless you contributed to similar Ne.app modules. This is done to have the higest quality merge requests.
+
 ![License](https://img.shields.io/badge/LICENSE-Apache--2.0-blue.svg?style=for-the-badge)
 ![GitHub Repo Stars](https://img.shields.io/github/stars/ne-app-eu/krnl?style=for-the-badge)
 
@@ -9,6 +13,8 @@
 <a href="https://github.com/ne-app-eu/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/kernel-ahci-dev.yml/badge.svg?style=for-the-badge" alt="CI 2"></a>
 <a href="https://github.com/ne-app-eu/krnl/actions/workflows/libddk-build.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/libddk-build.yml/badge.svg?style=for-the-badge" alt="CI 3"></a>
 <a href="https://github.com/ne-app-eu/krnl/actions/workflows/libsystem-build.yml/badge.svg"><img src="https://github.com/ne-app-eu/krnl/actions/workflows/libsystem-build.yml/badge.svg?style=for-the-badge" alt="CI 4"></a>
+
+The Modular Operating System module of NeSystem.
 
 ## Getting Started
 

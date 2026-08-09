@@ -2,6 +2,8 @@
 
 # Ne.app NeKernel
 
+The kernel module of the Ne.app NeSystem distribution.
+
 ### Notice
 
 NeKernel is not open to new contributors, unless you contributed to similar Ne.app modules and similar large scale open source projects. This is done to have the highest quality merge requests.

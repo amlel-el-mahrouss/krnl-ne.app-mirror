@@ -18,7 +18,7 @@
 namespace Ne::Kernel {
 
 namespace Indexer {
-  
+
   Index& IndexableProperty::Leak() {
     return fIndex;
   }
@@ -44,10 +44,20 @@ namespace Indexer {
     if (!indexer.HasFlag(kIndexerClaimed)) {
       indexer.RemoveFlag(kIndexerUnclaimed);
       indexer.AddFlag(kIndexerClaimed);
+
       rt_copy_memory_safe(reinterpret_cast<VoidPtr>(const_cast<Char*>(filename)),
                           (VoidPtr) indexer.Leak().Path, filenameLen, kIndexerCatalogNameLength);
 
-      (Void)(kout << "FSKit: Indexed new file: " << filename << kendl);
+      (Void)(kout << "FSKit: Indexed file: " << filename << kendl);
+    }
+  }
+
+  Void fs_unindex_file(IndexableProperty& indexer) {
+    if (indexer.HasFlag(kIndexerClaimed)) {
+      indexer.RemoveFlag(kIndexerClaimed);
+      indexer.AddFlag(kIndexerUnclaimed);
+
+      (Void)(kout << "FSKit: Unindex file: " << indexer.Leak().Path << kendl);
     }
   }
 

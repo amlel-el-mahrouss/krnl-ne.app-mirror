@@ -26,7 +26,7 @@
 
  ======================================== */
 
-using namespace Ne::Kernel;
+namespace Ne::Kernel {
 
 /***********************************************************************************/
 /// @file IPEFDylibObject.cpp
@@ -104,3 +104,5 @@ EXTERN_C Void rtl_fini_dylib_pef(UserProcess& process, IDylibRef dll_obj, BOOL* 
 
   *successful = true;
 }
+
+}  // namespace Ne::Kernel

@@ -15,7 +15,9 @@
 #define kIndexerUnclaimed (0xCA)
 
 namespace Ne::Kernel {
+
 namespace Indexer {
+
   struct Index final {
    public:
     Char Drive[kDriveNameLen]{};
@@ -54,7 +56,11 @@ namespace Indexer {
   /// @param indexer the filesystem indexer.
   /// @return none.
   Void fs_index_file(const Char* filename, SizeT filenameLen, IndexableProperty& indexer);
+
+  Void fs_unindex_file(IndexableProperty& indexer);
+  
 }  // namespace Indexer
+
 }  // namespace Ne::Kernel
 
 #endif

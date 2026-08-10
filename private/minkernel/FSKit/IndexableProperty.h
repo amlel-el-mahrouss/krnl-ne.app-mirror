@@ -57,6 +57,7 @@ namespace Indexer {
   /// @return none.
   Void fs_index_file(const Char* filename, SizeT filenameLen, IndexableProperty& indexer);
 
+  /// @brief Unindexes a file from the indexer itself.
   Void fs_unindex_file(IndexableProperty& indexer);
   
 }  // namespace Indexer

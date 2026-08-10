@@ -3,3 +3,10 @@
 RELEASE_NAME=Big Navajo
 RELEASE_PRODUCT=NeKernel
 RELEASE_VERSION=v1.0.0
+
+.PHONY: all
+all:
+	@echo "[ReleaseInfo]"
+	@echo "Release=\"${RELEASE_NAME}-${RELEASE_VERSION}-${RELEASE_PRODUCT}\""
+	@echo "Vendor=\"Ne.app\""
+	@echo "Profile=\"Desktop\""

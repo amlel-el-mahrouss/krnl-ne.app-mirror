@@ -9,12 +9,12 @@ BEGIN
     BLOCK "080904E4"
     BEGIN
       VALUE "CompanyName", "Ne.app"
-	    VALUE "FileDescription", "Ne.app Virtual Memory OS Kernel"
+	    VALUE "FileDescription", "Ne.app RPC Host"
       VALUE "FileVersion", KERNEL_VERSION
-	    VALUE "InternalName", "vmkernel"
+	    VALUE "InternalName", "rpchost"
       VALUE "LegalCopyright", "(c) 2024-2026 Ne.app. Licensed under the Apache 2.0 license."
-      VALUE "OriginalFilename", "vmkrnl.exe"
-      VALUE "ProductName", "minkernel"
+      VALUE "OriginalFilename", "rpchost.exe"
+      VALUE "ProductName", "rpchost"
       VALUE "ProductVersion", KERNEL_VERSION
     END
   END

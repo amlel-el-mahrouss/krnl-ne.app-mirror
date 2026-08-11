@@ -8,11 +8,11 @@ BEGIN
   BEGIN
     BLOCK "080904E4"
     BEGIN
-      VALUE "CompanyName", "Amlal El Mahrouss"
-      VALUE "FileDescription", "NeKernel OS Loader."
+      VALUE "CompanyName", "Ne.app"
+      VALUE "FileDescription", "Ne.app NeSystem OS Loader."
       VALUE "FileVersion", BOOTLOADER_VERSION
       VALUE "InternalName", "minloader"
-      VALUE "LegalCopyright", "Copyright (C) 2024-2026, Amlal El Mahrouss licensed under the Apache 2.0 license."
+      VALUE "LegalCopyright", "Copyright (C) 2024-2026 Ne.app. Licensed under the Apache 2.0 license."
       VALUE "OriginalFilename", "bootzldr.exe"
       VALUE "ProductName", "minloader"
       VALUE "ProductVersion", BOOTLOADER_VERSION

@@ -11,6 +11,7 @@
   "sources_path": [
     "*.cpp",
     "*.S",
+    "../../../minkernel/HALKit/Generic/*.cpp",
     "../../src/HEL/AMD64/BootATA.cpp",
     "../../src/HEL/AMD64/BootPlatform.cpp",
     "../../src/HEL/AMD64/BootAPI.S",

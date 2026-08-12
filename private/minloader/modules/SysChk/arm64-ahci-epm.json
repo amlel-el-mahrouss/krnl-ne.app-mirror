@@ -11,6 +11,7 @@
     "../../src/BootTextWriter.cpp",
     "../../src/BootSupport.cpp",
     "../../src/New+Delete.cpp",
+    "../../../minkernel/HALKit/Generic/*.cpp",
     "../../../minkernel/HALKit/ARM64/PCI/*.cpp",
     "../../../minkernel/HALKit/ARM64/Storage/*.cpp",
     "../../../minkernel/src/Storage/*.cpp",

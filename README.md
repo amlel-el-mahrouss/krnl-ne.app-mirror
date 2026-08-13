@@ -1,6 +1,6 @@
 <!-- Read Me of NeKernel -->
 
-# Ne.app NeKernel
+# Ne.app NeKernel Core
 
 The kernel module of the Ne.app NeSystem distribution.
 

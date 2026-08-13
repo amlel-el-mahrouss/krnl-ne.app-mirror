@@ -27,7 +27,7 @@ _NeMain:
 .global _ProgramData
 _ProgramData:
   //;; ident
-  .word 0xffeecc
+  .word 0xeecc
   //;; version
   .word 0x0110
   //;; kind: 0x0 = LaunchSystem

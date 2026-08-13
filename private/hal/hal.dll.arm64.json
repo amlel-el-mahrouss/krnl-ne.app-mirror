@@ -25,5 +25,5 @@
     "kHALVersionLowest=0x0100",
     "__NE_ARM64__"
   ],
-  "description": "The NeKernel Hardware Abstraction Layer."
+  "description": "The Ne.app NeKernel Hardware Abstraction Layer."
 }

@@ -127,7 +127,7 @@ enum struct ProcessSubsystem : Int32 {
   kProcessSubsystemKernel,
   kProcessSubsystemPOSIX,
   kProcessSubsystemNeSystem,
-  kProcessSubsystemWine64,
+  kProcessSubsystemWine64, /// @brief Wine Project Subsystem.
   kProcessSubsystemCount   = kProcessSubsystemWine64 - kProcessSubsystemSecurity + 1,
   kProcessSubsystemInvalid = 0xFFFFFFF,
 };

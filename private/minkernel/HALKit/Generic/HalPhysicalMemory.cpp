@@ -8,7 +8,7 @@
 #include <NeKit/KernelPanic.h>
 #include <NeKit/Utils.h>
 
-/// @file PhysicalMemory.cpp
+/// @file HalPhysicalMemory.cpp
 /// @brief Physical frame allocator, the memory page tables are built from.
 
 namespace Ne::Kernel::HAL {
@@ -57,6 +57,12 @@ Void pmmi_init(UIntPtr base, SizeT sz) {
 _Output UIntPtr pmmi_alloc_frame(Void) {
   UIntPtr frame = 0UL;
 
+  STATIC Bool kLocked = NO;
+
+  while (kLocked);
+
+  kLocked = YES;
+
   if (Detail::kPmmFreeHead) {
     frame = Detail::kPmmFreeHead;
 
@@ -75,6 +81,8 @@ _Output UIntPtr pmmi_alloc_frame(Void) {
   --Detail::kPmmFree;
   ++Detail::kPmmUsed;
 
+  kLocked = NO;
+
   return frame;
 }
 
@@ -85,12 +93,20 @@ Void pmmi_free_frame(UIntPtr frame) {
 
   if (frame < Detail::kPmmBase || frame >= Detail::kPmmCursor) return;
 
+  STATIC Bool kLocked = NO;
+
+  while (kLocked);
+
+  kLocked = YES;
+
   *reinterpret_cast<UIntPtr*>(frame) = Detail::kPmmFreeHead;
 
   Detail::kPmmFreeHead = frame;
 
   ++Detail::kPmmFree;
   --Detail::kPmmUsed;
+
+  kLocked = NO;
 }
 
 /// @brief Frames still available.

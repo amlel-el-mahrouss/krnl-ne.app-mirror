@@ -57,7 +57,7 @@ EXTERN_C BOOL rtl_init_nic_rtl8139() {
 
   rt_out8(kRTLIOBase + 0x37, 0x10);
 
-  UInt16 timeout = 0U;
+  UInt16 timeout{};
 
   while (rt_in8(kRTLIOBase + 0x37) & 0x10) {
     ++timeout;

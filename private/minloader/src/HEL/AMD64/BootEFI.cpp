@@ -234,31 +234,24 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // If we succeed in reading the blob, then execute it.
   // ------------------------------------------ //
 
-  Boot::BootFileReader reader_osdetect(L"mindetect.efi", image_handle);
-  reader_osdetect.ReadAll(0);
-
-  Boot::BootThread* osdetect_thread = nullptr;
-
-  if (reader_osdetect.Blob()) {
-    osdetect_thread = new Boot::BootThread(reader_osdetect.Blob());
-    osdetect_thread->SetName("OS Detect");
-
-    auto ret = osdetect_thread->Start(handover_hdr, NO);
-    if (ret == kEfiFail) {
-      writer.Write("NeKernel: Problematic System Specs detected.\r");
-    }
-  }
-
   Boot::BootFileReader reader_syschk(L"chk.efi", image_handle);
   reader_syschk.ReadAll(0);
 
   Boot::BootThread* syschk_thread = nullptr;
 
+  // Provide fimware vendor name.
+
+  Boot::BCopyMem(handover_hdr->f_FirmwareVendorName, sys_table->FirmwareVendor,
+                 handover_hdr->f_FirmwareVendorLen);
+
+  handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
+  // Assign to global 'kHandoverHeader'.
+
   if (reader_syschk.Blob()) {
     syschk_thread = new Boot::BootThread(reader_syschk.Blob());
     syschk_thread->SetName("SysChk");
 
-    syschk_thread->Start(handover_hdr, NO);
+    //syschk_thread->Start(handover_hdr, NO);
   }
 
   Boot::BootFileReader reader_memtest(L"memtest.efi", image_handle);
@@ -272,16 +265,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
       memtest_thread->Start(handover_hdr, NO);
     }
   }
-
-  handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
-
-  // Provide fimware vendor name.
-
-  Boot::BCopyMem(handover_hdr->f_FirmwareVendorName, sys_table->FirmwareVendor,
-                 handover_hdr->f_FirmwareVendorLen);
-
-  handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
-  // Assign to global 'kHandoverHeader'.
 
   WideChar kernel_path[256U] = L"vmkrnl.exe";
   UIntPtr  kernel_path_sz    = sizeof(kernel_path);
@@ -342,6 +325,22 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     writer.Write("BootZ: No libSystem.dll, booting without a user process.\r");
   }
 
+  Boot::BootFileReader reader_osdetect(L"mindetect.efi", image_handle);
+  reader_osdetect.ReadAll(0);
+
+  Boot::BootThread* osdetect_thread = nullptr;
+
+  if (reader_osdetect.Blob()) {
+    osdetect_thread = new Boot::BootThread(reader_osdetect.Blob());
+    osdetect_thread->SetName("OS Detect");
+
+    auto ret = osdetect_thread->Start(handover_hdr, NO);
+
+    if (ret == kEfiFail) {
+      writer.Write("NeKernel: Problematic System Specs detected.\r");
+    }
+  }
+
   Boot::BootFileReader reader_kernel(kernel_path, image_handle);
   reader_kernel.ReadAll(0);
 
@@ -366,7 +365,7 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     return kernel_thread.Start(handover_hdr, YES);
   }
 
-  Boot::BootFileReader reader_net(L"memtest.efi", image_handle);
+  Boot::BootFileReader reader_net(L"net.efi", image_handle);
   reader_net.ReadAll(0);
 
   if (reader_net.Blob()) {

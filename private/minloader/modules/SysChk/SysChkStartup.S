@@ -12,16 +12,7 @@
 .intel_syntax noprefix
 #endif
 
-#define kTypeDriver 101
-#define kArchAmd64 122
-#define kHandoverMagic 0xBADAA
-
-.section .ldr
-
-.quad kHandoverMagic
-.word kTypeDriver
-.word 0
-.word kArchAmd64
+#ifdef __NE_AMD64__
 
 .section .text
 
@@ -51,3 +42,15 @@ ___chkstk_ms:
     pop rcx
 
     ret
+#endif
+
+#define kTypeDriver 101
+#define kArchAmd64 122
+#define kHandoverMagic 0xBADAA
+
+.section .ldr
+
+.quad kHandoverMagic
+.word kTypeDriver
+.word 0
+.word kArchAmd64

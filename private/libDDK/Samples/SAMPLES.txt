@@ -1,0 +1,5 @@
+SAMPLES GUIDELINES
+==================
+
+- Shall show a feature of the sample.
+- Shall be correct and adhere fo Standard security and eng practices.

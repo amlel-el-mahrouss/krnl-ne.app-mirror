@@ -12,7 +12,7 @@
 %macro IntExp 1
 global __NE_INT_%1
 __NE_INT_%1:
-    cli
+    cld
 
     std
     add rsp, 16
@@ -26,7 +26,7 @@ __NE_INT_%1:
 %macro IntNormal 1
 global __NE_INT_%1
 __NE_INT_%1:
-    cli
+    cld
 
     std
     add rsp, 16
@@ -51,7 +51,7 @@ extern idt_handle_math
 section .text
 
 __NE_INT_0:
-    cli
+    cld
     push rcx
     call idt_handle_generic
     pop rcx
@@ -61,7 +61,7 @@ __NE_INT_0:
     o64 iret
 
 __NE_INT_1:
-    cli
+    cld
     push rcx
     call idt_handle_generic
     pop rcx
@@ -71,7 +71,7 @@ __NE_INT_1:
     o64 iret
 
 __NE_INT_2:
-    cli
+    cld
     push rcx
     call idt_handle_generic
     pop rcx
@@ -82,7 +82,7 @@ __NE_INT_2:
 
 ;; @brief Triggers a breakpoint and freeze the process. RIP is also fetched.
 __NE_INT_3:
-    cli
+    cld
     push rcx
     call idt_handle_breakpoint
     pop rcx
@@ -92,7 +92,7 @@ __NE_INT_3:
     o64 iret
 
 __NE_INT_4:
-    cli
+    cld
 
     push rcx
     call idt_handle_generic
@@ -103,14 +103,14 @@ __NE_INT_4:
     o64 iret
 
 __NE_INT_5:
-    cli
+    cld
     std
 
     o64 iret
 
 ;; Invalid opcode interrupt
 __NE_INT_6:
-    cli
+    cld
     push rcx
     call idt_handle_ud
     pop rcx
@@ -120,7 +120,7 @@ __NE_INT_6:
     o64 iret
 
 __NE_INT_7:
-    cli
+    cld
     push rcx
     call idt_handle_generic
     pop rcx
@@ -131,7 +131,7 @@ __NE_INT_7:
 
 ;; Invalid opcode interrupt
 __NE_INT_8:
-    cli
+    cld
 
     push rcx
     call idt_handle_math
@@ -148,7 +148,7 @@ IntExp   11
 IntExp 12
 
 __NE_INT_13:
-    cli
+    cld
 
     push rcx
     call idt_handle_gpf
@@ -159,7 +159,7 @@ __NE_INT_13:
     o64 iret
 
 __NE_INT_14:
-    cli
+    cld
     push rcx
     call idt_handle_pf
     pop rcx
@@ -193,7 +193,7 @@ IntNormal 31
 [global __NE_INT_33]
 
 __NE_INT_32:
-    cli
+    cld
 
     push rax
     mov rcx, rsp
@@ -205,7 +205,7 @@ __NE_INT_32:
     o64 iret
 
 __NE_INT_33:
-    cli
+    cld
 
     push rax
 
@@ -232,7 +232,7 @@ IntNormal 39
 [extern rtl_rtl8139_interrupt_handler]
 
 __NE_INT_40:
-    cli
+    cld
 
     push rax
     mov rcx, rsp
@@ -259,7 +259,7 @@ IntNormal 49
 
 ; rax carries the handler's result back to the caller, so it is never restored.
 __NE_INT_50:
-    cli
+    cld
 
     push rbp
     mov rbp, rsp
@@ -280,7 +280,7 @@ __NE_INT_50:
     o64 iret
 
 __NE_INT_51:
-    cli
+    cld
 
     push rbp
     mov rbp, rsp
@@ -322,7 +322,7 @@ section .text
 [global hal_load_gdt]
 
 hal_load_gdt:
-    cli
+    cld
 
     lgdt [rcx]
 

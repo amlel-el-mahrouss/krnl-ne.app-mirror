@@ -20,7 +20,7 @@ Some of them shall not be defined at the same time to avoid run-time issues.
 - `__nekernel_dma_pool_start`: NeKernel DMA pool start.
 - `__nekernel_dma_pool_size`: NeKernel DMA pool size.
 - `__nekernel_dma_best_align`: NeKernel Best DMA align size.
-- `__NE_VERBOSE_HEFS__`: Enables HeFS logging.
+- `__NE_VERBOSE_HEFS__`: Enables OpenHeFS logging.
 
 ===================================
 

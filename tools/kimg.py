@@ -36,3 +36,4 @@ if __name__ == "__main__":
     copy_to_fat(image_path, source_dir)
 
     print("INFO: Image created successfully.")
+

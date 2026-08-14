@@ -375,7 +375,7 @@ _Output Bool HeFileSystemMgr::Seek(NodePtr node, SizeT off) {
 }
 
 /// @brief Tell current offset within catalog.
-/// @param node The HeFS node we need.
+/// @param node The OpenHeFS node we need.
 /// @return kFileMgrNPos if invalid, else current offset.
 _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
   if (!node) return kFileMgrNPos;
@@ -384,7 +384,7 @@ _Output SizeT HeFileSystemMgr::Tell(NodePtr node) {
 }
 
 /// @brief Rewinds the catalog
-/// @param node The needed HeFS node.
+/// @param node The needed OpenHeFS node.
 /// @return False if invalid, nah? calls Seek(node, 0).
 _Output Bool HeFileSystemMgr::Rewind(NodePtr node) {
   if (!node) return NO;

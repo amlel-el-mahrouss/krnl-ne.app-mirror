@@ -189,11 +189,12 @@ Int32 BootThread::Start(HEL::BootInfoHeader* handover, Bool own_stack) {
 
   if (own_stack && handover->f_StackTop) {
     rt_jump_to_address(fStartAddress, fHandover, (UInt8*) ((UIntPtr) handover->f_StackTop - 8));
+  } else {
+    auto ret = ((HEL::HandoverProc) fStartAddress)(fHandover);
+    return ret;
   }
 
-  auto ret = ((HEL::HandoverProc) fStartAddress)(fHandover);
-
-  return ret;
+  return kErrorExecutable;
 }
 
 const Char* BootThread::GetName() {

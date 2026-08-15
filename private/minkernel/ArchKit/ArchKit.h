@@ -120,6 +120,8 @@ inline Ne::Kernel::UInt64 ke_hash_64(const Ne::Kernel::Char* name) {
 /// @brief Bind a system call to a free dispatch slot.
 /// @return the slot it took, -1 when the table is full.
 inline Ne::Kernel::SSizeT ke_install_syscall(const Ne::Kernel::Char* name, rt_syscall_proc proc) {
+  if (!name || *name == 0) return -1;
+
   auto hash = ke_hash_64(name);
 
   if (!hash || !proc) return -1;
@@ -140,6 +142,8 @@ inline Ne::Kernel::SSizeT ke_install_syscall(const Ne::Kernel::Char* name, rt_sy
 /// @brief Bind a kernel call to a free dispatch slot.
 /// @return the slot it took, -1 when the table is full.
 inline Ne::Kernel::SSizeT ke_install_kerncall(const Ne::Kernel::Char* name, rt_kerncall_proc proc) {
+  if (!name || *name == 0) return -1;
+
   auto hash = ke_hash_64(name);
 
   if (!hash || !proc) return -1;

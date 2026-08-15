@@ -46,8 +46,10 @@ struct HAL_CALL_ENTRY HAL_FINAL {
   BOOL     IsActive() { return fActive; }
   explicit operator bool() { return fActive; }
 #endif
-
 };
+
+EXTERN_C SInt32 hali_add_entry(HAL::hal_proc_type, const UInt64&, const SInt64& hash);
+EXTERN_C Void hali_remove_entry(const SInt64& hash);
 
 #ifdef __cplusplus
 inline Array<HAL_CALL_ENTRY, kMaxDispatchCallCount> kRegisteredSystemCalls;

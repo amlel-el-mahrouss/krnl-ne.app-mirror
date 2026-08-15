@@ -266,14 +266,14 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
     if (ldr.IsLoaded() &&
         rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind) !=
             kCPSInvalidPID) {
-      (Void)(kout << "hal_real_init: Spawned the launch host.\r");
+      (Void)(kout << "hal_real_init: Spawned the NeSystem Launch Host.\r");
     } else {
       (Void)(kout << "hal_real_init: warning: Launch host did not spawn.\r");
-      ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bugcheck failed at Kernel Main in HAL.");
+      ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bug-Check failed at Kernel Main in HAL.");
     }
   } else {
     (Void)(kout << "hal_real_init: warning: No launch host in handover.\r");
-    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bugcheck failed at Kernel Main in HAL.");
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bug-Check failed at Kernel Main in HAL.");
   }
 
   /// @note SwitchTeam overwrites the whole team, switching again here would

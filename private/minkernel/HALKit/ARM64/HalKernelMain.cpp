@@ -34,7 +34,8 @@ EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   kHandoverHeader = handover_hdr;
 
 #ifdef __NE_ARM64_EFI__
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(
+      handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);

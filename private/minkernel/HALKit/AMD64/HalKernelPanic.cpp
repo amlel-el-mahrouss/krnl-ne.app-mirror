@@ -39,6 +39,7 @@ Void ke_stop(const Ne::Kernel::Int32& id, const Char* message) {
 }
 
 Void RecoveryFactory::Recover() {
+#ifdef __DEBUG__
   Char in[2];
   in[0] = 0;
 
@@ -63,6 +64,9 @@ Void RecoveryFactory::Recover() {
     if (in[0] == ',') TerminalDevice::The() << ",";
     if (in[0] == '.') TerminalDevice::The() << ".";
   }
+#else
+  while (YES);
+#endif
 }
 
 void ke_runtime_check(bool expr, const Char* file, const Char* line) {

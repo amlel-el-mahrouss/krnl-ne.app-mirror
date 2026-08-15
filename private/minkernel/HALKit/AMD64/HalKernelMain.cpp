@@ -143,8 +143,8 @@ EXTERN_C Ne::Kernel::Int32 hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* ha
        .fAccessByte = 0x92,
        .fFlags      = 0xCF,
        .fBaseHigh   = 0},  // Ne::Kernel data
-      {},                  // TSS data low
-      {},                  // TSS data high
+      {},                // TSS data low
+      {},                // TSS data high
       {.fLimitLow   = 0x0,
        .fBaseLow    = 0,
        .fBaseMid    = 0,
@@ -219,7 +219,7 @@ STATIC Ne::Kernel::Void pmmi_self_test(Ne::Kernel::Void) {
   auto c = HAL::pmmi_alloc_frame();
 
   if (c != b) (Void)(kout << "pmm: FAIL free list did not reuse\r");
-  if (c && reinterpret_cast<UInt8*>(c)[8] != 0) (Void)(kout << "pmm: FAIL reuse not zeroed\r");
+  if (c && reinterpret_cast<UInt8*>(c)[8] != 0) (Void)(kout << "pmm: FAIL reuse not zeroed0\r");
 
   (Void)(kout << "pmm: self test done, free " << number(HAL::pmmi_free_frames()) << kendl);
 }
@@ -269,9 +269,11 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
       (Void)(kout << "hal_real_init: Spawned the launch host.\r");
     } else {
       (Void)(kout << "hal_real_init: warning: Launch host did not spawn.\r");
+      ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bugcheck failed at Kernel Main in HAL.");
     }
   } else {
     (Void)(kout << "hal_real_init: warning: No launch host in handover.\r");
+    ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bugcheck failed at Kernel Main in HAL.");
   }
 
   /// @note SwitchTeam overwrites the whole team, switching again here would

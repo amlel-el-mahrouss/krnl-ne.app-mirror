@@ -35,6 +35,8 @@ Void ke_stop(const Ne::Kernel::Int32& id, const Char* message) {
   (Void)(kout << "Kernel_Panic_ID: " << hex_number(id) << kendl);
   (Void)(kout << "Kernel_Panic_CR2: " << hex_number((UIntPtr) hal_read_cr2()) << kendl);
 
+  kout << "\0";
+
   RecoveryFactory::Recover();
 }
 

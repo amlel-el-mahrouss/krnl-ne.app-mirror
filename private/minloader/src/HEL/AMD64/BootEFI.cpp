@@ -155,8 +155,8 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // ------------------------------------------ //
 
   handover_hdr->f_GOP.f_The          = kGop->Mode->FrameBufferBase;
-  handover_hdr->f_GOP.f_Width        = kGop->Mode->Info->VerticalResolution;
-  handover_hdr->f_GOP.f_Height       = kGop->Mode->Info->HorizontalResolution;
+  handover_hdr->f_GOP.f_Width        = kGop->Mode->Info->HorizontalResolution;
+  handover_hdr->f_GOP.f_Height       = kGop->Mode->Info->VerticalResolution;
   handover_hdr->f_GOP.f_PixelPerLine = kGop->Mode->Info->PixelsPerScanLine;
   handover_hdr->f_GOP.f_PixelFormat  = kGop->Mode->Info->PixelFormat;
   handover_hdr->f_GOP.f_Size         = kGop->Mode->FrameBufferSize;

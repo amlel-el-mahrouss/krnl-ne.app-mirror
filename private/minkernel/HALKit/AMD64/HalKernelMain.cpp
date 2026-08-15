@@ -267,6 +267,10 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
         rtl_create_user_process(ldr, UserProcess::ExecutableKind::kExecutableKind) !=
             kCPSInvalidPID) {
       (Void)(kout << "hal_real_init: Spawned the NeSystem Launch Host.\r");
+
+#ifdef __HALKIT_INCLUDES_BNID__
+      rtl_init_nic_rtl8139();
+#endif
     } else {
       (Void)(kout << "hal_real_init: warning: Launch host did not spawn.\r");
       ke_stop(RUNTIME_CHECK_BOOTSTRAP, "Bug-Check failed at Kernel Main in HAL.");
@@ -278,10 +282,6 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
 
   /// @note SwitchTeam overwrites the whole team, switching again here would
   /// discard the process we just spawned.
-
-#ifdef __HALKIT_INCLUDES_BNID__
-  rtl_init_nic_rtl8139();
-#endif
 
   while (YES);
 }

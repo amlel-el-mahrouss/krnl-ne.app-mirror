@@ -21,14 +21,14 @@
 
 ///! We got the MGMT, STD (%s format) and GUEST users,
 ///! all are used to make authorized operations.
-#define kMgmtUser "NEKERNEL/MGMT/%s"
-#define kGuestUser "NEKERNEL/GUEST/%s"
-#define kStdUser "NEKERNEL/STD/%s"
+#define kMgmtUser "NE.APP/MGMT/%s"
+#define kGuestUser "NE.APP/GUEST/%s"
+#define kStdUser "NE.APP/STD/%s"
 
 ///! Built-in users, bound by user_init_std.
-#define kRootUserName "NEKERNEL/MGMT/root"
-#define kGuestUserName "NEKERNEL/GUEST/guest"
-#define kRecoveryUserName "NEKERNEL/GUEST/recov"
+#define kRootUserName "NE.APP/MGMT/root"
+#define kGuestUserName "NE.APP/GUEST/guest"
+#define kRecoveryUserName "NE.APP/GUEST/recov"
 
 #define kUsersDir "/users/"
 

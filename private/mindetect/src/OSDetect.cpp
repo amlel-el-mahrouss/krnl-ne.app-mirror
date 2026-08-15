@@ -6,15 +6,13 @@
 #include <mindetect/DetectKit/DetectKit.h>
 
 EXTERN_C Int32 OSDetectModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
-  ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
+  ::fw_init_efi(static_cast<EfiSystemTable*>(
+      handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   if (handover->f_HardwareTables.f_MultiProcessingEnabled == NO) return kEfiFail;
-
-#ifdef __NE_ONLY_SMP__
-  if (handover->f_NumberOfProcessors < 1LL) return kEfiFail;
-#endif
-
+  if (handover->f_NumberOfProcessors < 2LL) return kEfiFail;
   if (handover->f_BitMapSize < 1LL) return kEfiFail;
+  if (handover->f_FirmwareVendorLen < 1LL) return kEfiFail;
 
   return kEfiOk;
 }

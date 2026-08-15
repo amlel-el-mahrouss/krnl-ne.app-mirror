@@ -213,8 +213,8 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   handover_hdr->f_RecoverMode = recover_mode;
 
   /* one shot flag, attributes 0 delete it. */
-  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, 0, 0,
-                                   nullptr);
+  ST->RuntimeServices->SetVariable(L"/props/recover_mode", kEfiGlobalNamespaceVarGUID, 0,
+                                   &sz_recover_mode, &recover_mode);
 
   // Ring 0 stack, consumed by the kernel as TSS.RSP0. Stacks grow down, so hand over the top.
 
@@ -281,16 +281,18 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   if (ver < KERNEL_VERSION_BCD) {
     ver = KERNEL_VERSION_BCD;
 
+    UIntPtr ver_sz = sizeof(UInt64);
+
     ST->RuntimeServices->SetVariable(L"/props/kern_ver", kEfiGlobalNamespaceVarGUID, kVarAttrs,
-                                     sizeof(UInt64), &ver);
+                                     &ver_sz, &ver);
 
     writer.Write("BootZ: Version has been updated: ").Write(ver).Write("\r");
 
     if (ST->RuntimeServices->GetVariable(L"/props/kernel_path", kEfiGlobalNamespaceVarGUID, nullptr,
                                          &kernel_path_sz, kernel_path) != kEfiOk) {
+      UIntPtr len_t = (Boot::BStrLen(kernel_path) + 1) * sizeof(WideChar);
       ST->RuntimeServices->SetVariable(L"/props/kernel_path", kEfiGlobalNamespaceVarGUID, kVarAttrs,
-                                       (Boot::BStrLen(kernel_path) + 1) * sizeof(WideChar),
-                                       kernel_path);
+                                       &len_t, kernel_path);
     }
   } else {
     writer.Write("BootZ: Version: ").Write(ver).Write("\r");
@@ -325,7 +327,16 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
     auto ret = osdetect_thread->Start(handover_hdr, NO);
 
     if (ret == kEfiFail) {
-      writer.Write("NeKernel: Problematic System Specs detected.\r");
+      UIntPtr sz_prob_cnt = sizeof(UInt64);
+      UInt64  prob_cnt    = 0;
+
+      ST->RuntimeServices->GetVariable(L"/props/problems_detected_cnt", kEfiGlobalNamespaceVarGUID,
+                                       nullptr, &sz_prob_cnt, &prob_cnt);
+
+      ++prob_cnt;
+
+      ST->RuntimeServices->SetVariable(L"/props/problems_detected_cnt", kEfiGlobalNamespaceVarGUID,
+                                       0, &sz_prob_cnt, &prob_cnt);
     }
   }
 

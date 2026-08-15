@@ -614,7 +614,7 @@ typedef struct EfiRuntimeServices {
                                UIntPtr* DataSize, VoidPtr Data);
   VoidPtr GetNextVariable;
   UInt64(EFI_API* SetVariable)(const WideChar* Name, EFI_GUID VendorGUID, UInt32 Attributes,
-                               UIntPtr DataSize, VoidPtr Data);
+                               UIntPtr* DataSize, VoidPtr Data);
   VoidPtr GetNextHighMonotonicCount;
   VoidPtr ResetSystem;
   VoidPtr UpdateCapsule;

@@ -234,11 +234,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   // If we succeed in reading the blob, then execute it.
   // ------------------------------------------ //
 
-  Boot::BootFileReader reader_syschk(L"chk.efi", image_handle);
-  reader_syschk.ReadAll(0);
-
-  Boot::BootThread* syschk_thread = nullptr;
-
   // Provide fimware vendor name.
 
   Boot::BCopyMem(handover_hdr->f_FirmwareVendorName, sys_table->FirmwareVendor,
@@ -246,13 +241,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   handover_hdr->f_FirmwareVendorLen = Boot::BStrLen(sys_table->FirmwareVendor);
   // Assign to global 'kHandoverHeader'.
-
-  if (reader_syschk.Blob()) {
-    syschk_thread = new Boot::BootThread(reader_syschk.Blob());
-    syschk_thread->SetName("SysChk");
-
-    //syschk_thread->Start(handover_hdr, NO);
-  }
 
   Boot::BootFileReader reader_memtest(L"memtest.efi", image_handle);
   reader_memtest.ReadAll(0);

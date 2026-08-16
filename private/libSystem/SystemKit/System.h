@@ -412,6 +412,20 @@ IMPORT_C SInt32 SemClose(_Input SemaphoreRef sem);
 // @brief User AgeAuth API.
 // ------------------------------------------------------------------------------------------ //
 
-IMPORT_C SInt32 UserIsAdult(_Input SInt32 uid);
+#ifndef UserIsAdult
+#define UserIsAdult UserIsOfAdultAge
+#endif
+
+IMPORT_C Bool UserIsOfAdultAge(_Input SInt32 uid);
+
+enum {
+    kAccountInvalid,
+    kAccountChild = 0x67,
+    kAccountTeen,
+    kAccountAdult,
+    kAccountTypeAgeCount = 3,
+};
+
+IMPORT_C SInt32 UserGetAccountAgeType(_Input SInt32 uid);
 
 #endif  // ifndef SYSTEMKIT_SYSTEM_H

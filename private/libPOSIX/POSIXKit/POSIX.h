@@ -15,8 +15,13 @@
 #define PTHREAD_UNSAFE __THREAD_UNSAFE
 #define PTHREAD_SAFE __THREAD_SAFE
 
+#ifndef _POSIX_SOURCE
 #define _POSIX_SOURCE __POSIX_SOURCE__
+#endif
+
+#ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE __XOPEN_SOURCE__
+#endif
 
 PTHREAD_UNSAFE IMPORT_C SInt64 write(SizeT count, SInt32 fd, Void* data, SizeT sz);
 PTHREAD_UNSAFE IMPORT_C SInt64 read(SizeT count, SInt32 fd, Void* data, SizeT sz);

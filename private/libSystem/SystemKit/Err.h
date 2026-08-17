@@ -52,7 +52,12 @@ inline constexpr ErrRef kErrorCDTrayBroken       = 62;
 inline constexpr ErrRef kErrorUnrecoverableDisk  = 63;
 inline constexpr ErrRef kErrorFileLocked         = 64;
 inline constexpr ErrRef kErrorDiskIsTooTiny      = 65;
+inline constexpr ErrRef kMissingDLL              = 66;
 inline constexpr ErrRef kErrorUnimplemented      = -1;
+
+#ifndef kKPCLastError
+#define kKPCLastError kMissingDLL
+#endif
 
 /// @brief The last error reported by the system to the process.
 IMPORT_C ErrRef kLastError;

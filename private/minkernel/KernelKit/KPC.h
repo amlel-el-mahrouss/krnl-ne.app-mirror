@@ -69,8 +69,13 @@ inline constexpr KPCError kErrorTimeout            = 68;
 inline constexpr KPCError kErrorAccessDenied       = 69;
 inline constexpr KPCError kErrorUnavailable        = 70;
 inline constexpr KPCError kErrorIPCTimeOut         = 71;
+inline constexpr KPCError kErrorNetTimeOut         = 71;
 /// Generic errors.
 inline constexpr KPCError kErrorUnimplemented = -1;
+
+#ifndef kKPCLastError
+#define kKPCLastError kErrorNetTimeOut
+#endif
 
 /// @brief Does a system wide bug check.
 /// @param void no params are needed.

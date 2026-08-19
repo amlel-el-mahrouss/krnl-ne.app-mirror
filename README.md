@@ -44,7 +44,7 @@ cd nekernel
 
 ---
 
-## Community
+## User Group
 
 Join Ne.app's [discord](https://discord.gg/uD76Qweght) to contribute and chat with contributors.
 

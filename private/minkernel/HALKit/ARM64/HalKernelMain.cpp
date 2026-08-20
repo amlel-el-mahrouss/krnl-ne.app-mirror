@@ -20,6 +20,8 @@
 #include <modules/CoreGfx/CoreGfx.h>
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
+STATIC Ne::Kernel::Void kei_init_drivers(Ne::Kernel::Void) {}
+
 EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   using namespace Ne::Kernel;
 
@@ -40,6 +42,8 @@ EXTERN_C void hal_init_platform(Ne::Kernel::HEL::BootInfoHeader* handover_hdr) {
   Boot::ExitBootServices(handover_hdr->f_HardwareTables.f_ImageKey,
                          handover_hdr->f_HardwareTables.f_ImageHandle);
 #endif
+
+  kei_init_drivers();
 
   FB::cg_clear_video();
 

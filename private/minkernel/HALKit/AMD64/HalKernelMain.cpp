@@ -20,6 +20,8 @@
 #include <modules/CoreGfx/TextGfx.h>
 
 #ifndef __NE_MODULAR_KERNEL_COMPONENTS__
+STATIC Ne::Kernel::Void kei_init_drivers(Ne::Kernel::Void) {}
+
 EXTERN_C Ne::Kernel::VoidPtr kInterruptVectorTable[];
 
 /// @brief Ne::Kernel init function.
@@ -257,6 +259,8 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   NeFS::fs_init_nefs();
   NeFileSystemMgr::Mount(new NeFileSystemMgr());
 #endif
+
+  kei_init_drivers();
 
   UserProcessScheduler::The().SwitchTeam(kRTUserTeam);
 

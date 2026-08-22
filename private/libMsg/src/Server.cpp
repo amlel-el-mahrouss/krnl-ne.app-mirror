@@ -21,7 +21,7 @@ IMPORT_C UInt32 libmsg_close_library(Void) {
 
 IMPORT_C UInt32 libmsg_eval_expr(struct LIBMSG_EXPR* head, VoidPtr arg, SizeT arg_size) {
   if (kSemaphore) return kErrorInvalidData;
-  if (!head || !arg) return kErrorInvalidData;
+  if (!head || !arg || !arg_size) return kErrorInvalidData;
 
   static auto kSemWaitTime = 1000;
 

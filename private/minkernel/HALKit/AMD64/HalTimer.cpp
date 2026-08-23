@@ -77,7 +77,7 @@ BOOL HardwareTimer::Wait() {
 
   volatile UInt64* timer = (volatile UInt64*) (fDigitalTimer + kHPETCounterRegValue);
 
-  if (!timer || timer == kHPETCounterRegValue) return NO;
+  if (!timer) return NO;
 
   UInt64 hpet_cap              = *((volatile UInt64*) (fDigitalTimer));
   UInt64 femtoseconds_per_tick = (hpet_cap >> 32);

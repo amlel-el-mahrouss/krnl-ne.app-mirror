@@ -29,7 +29,7 @@ Int64 IDiskSwap::Write(SwapDiskHdrPtr data, const Char* name) {
 /// @param data the data packet length.
 /// @return Whether the swap was fetched to disk, or not.
 /***********************************************************************************/
-SwapDiskHdrPtr IDiskSwap::Read(const UIntPtr& offset, SizeT data_len, , const Char* name) {
+SwapDiskHdrPtr IDiskSwap::Read(const UIntPtr& offset, SizeT data_len, const Char* name) {
   if (data_len == 0UL) return nullptr;
   if (!name || *name == 0) return nullptr;
 

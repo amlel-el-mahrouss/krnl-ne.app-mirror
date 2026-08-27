@@ -307,6 +307,6 @@ EXTERN_C Ne::Kernel::Void hal_real_init(Ne::Kernel::Void) {
   /// @note SwitchTeam overwrites the whole team, switching again here would
   /// discard the process we just spawned.
 
-  while (YES);
+  while (YES) rt_cli();
 }
 #endif  // ifndef __NE_MODULAR_KERNEL_COMPONENTS__

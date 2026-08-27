@@ -39,7 +39,7 @@ namespace HAL {
 
         UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(page_ptr);
 
-        if (!ptr_bit_set[kBitMapMagIdx] || ptr_bit_set[kBitMapMagIdx] != kBitMapMagic) return No;
+        if (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic) return No;
 
         return Yes;
       }
@@ -49,8 +49,7 @@ namespace HAL {
 
         UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(page_ptr) - kBitMapSz;
 
-        if (!page_ptr) return No;
-
+        if (!ptr_bit_set) return No;
         if (ptr_bit_set[kBitMapMagIdx] != kBitMapMagic) return No;
 
         this->GetBitMapStatus(ptr_bit_set);

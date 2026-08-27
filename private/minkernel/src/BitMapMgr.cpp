@@ -90,11 +90,7 @@ namespace HAL {
 
         STATIC SizeT biggest{0UL};
 
-        auto limit = reinterpret_cast<UIntPtr>(kKernelBitMpStart) + kKernelBitMpSize;
-
         while (YES) {
-          if ((reinterpret_cast<UIntPtr>(base) + size + pad) > limit) return nullptr;
-
           UIntPtr* ptr_bit_set = reinterpret_cast<UIntPtr*>(base);
 
           if (ptr_bit_set[kBitMapMagIdx] == kBitMapMagic &&

@@ -198,9 +198,6 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
 
   // Fill handover header now.
 
-  handover_hdr->f_BitMapStart = nullptr; /* Start of bitmap. */
-  handover_hdr->f_BitMapSize  = 0UL;     /* Size of bitmap in bytes. */
-
   boot_scan_memory(handover_hdr, &map_key);
 
   handover_hdr->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableBS] = (VoidPtr) BS;

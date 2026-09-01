@@ -15,7 +15,7 @@ EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
 
   auto kTestValue = handover->f_BitMapStart;
 
-  volatile Int32* mem = (volatile Int32*) kTestValue;
+  volatile UInt64* mem = (volatile UInt64*) kTestValue;
 
   auto prev = *mem;
   *mem      = 42;

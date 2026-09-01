@@ -8,8 +8,6 @@
 #include <FirmwareKit/EFI/API.h>
 
 EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
-  if (!handover) return kEfiFail;
-  
   ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
   Boot::BootTextWriter writer;

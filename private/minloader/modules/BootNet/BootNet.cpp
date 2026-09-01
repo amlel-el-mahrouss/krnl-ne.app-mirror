@@ -15,8 +15,6 @@ STATIC Void bootnet_read_ip_packet(BOOTNET_INTERNET_HEADER   inet,
                                    BOOTNET_INTERNET_HEADER** inet_out);
 
 EXTERN_C Int32 BootNetModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
-  if (!handover) return kEfiFail;
-  
   ::fw_init_efi(static_cast<EfiSystemTable*>(
       handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 

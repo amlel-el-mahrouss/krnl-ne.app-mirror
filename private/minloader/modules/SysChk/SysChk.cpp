@@ -23,8 +23,6 @@
 #endif  // !kMachineModel
 
 EXTERN_C Int32 SysChkModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
-  if (!handover) return kEfiFail;
-  
   ::fw_init_efi(static_cast<EfiSystemTable*>(handover->f_FirmwareCustomTables[Ne::Kernel::HEL::kHandoverTableST]));
 
 #if defined(__ATA_PIO__)

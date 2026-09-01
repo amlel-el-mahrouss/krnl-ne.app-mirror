@@ -13,7 +13,7 @@ EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
   Boot::BootTextWriter writer;
   writer.Write("MemoryTest: Testing Memory...\r");
 
-  auto kTestValue = handover->f_BitMapStart;
+  auto kTestValue = 0;
 
   volatile UInt64* mem = (volatile UInt64*) kTestValue;
 

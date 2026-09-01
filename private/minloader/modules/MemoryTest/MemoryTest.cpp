@@ -15,9 +15,9 @@ EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
   Boot::BootTextWriter writer;
   writer.Write("MemoryTest: Testing Memory...\r");
 
-  constexpr auto kTestValue = 0x20000000L;
+  auto kTestValue = handover->f_BitMapStart;
 
-  Int32* mem = (Int32*) kTestValue;
+  volatile Int32* mem = (volatile Int32*) kTestValue;
   if (!mem) return kEfiFail;
 
   auto prev = *mem;

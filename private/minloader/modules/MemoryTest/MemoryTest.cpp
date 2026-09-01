@@ -22,6 +22,7 @@ EXTERN_C Int32 MemoryTestModuleMain(Ne::Kernel::HEL::BootInfoHeader* handover) {
 
   auto prev = *mem;
   *mem      = 42;
+  
   if (*mem != 42) {
     return kEfiFail;
   }

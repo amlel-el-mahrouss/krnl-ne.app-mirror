@@ -251,12 +251,9 @@ EFI_EXTERN_C EFI_API Int32 BootloaderMain(EfiHandlePtr image_handle, EfiSystemTa
   reader_memtest.ReadAll(0);
 
   if (reader_memtest.Blob()) {
-    auto memtest_thread = new Boot::BootThread(reader_memtest.Blob());
-
-    if (memtest_thread) {
-      memtest_thread->SetName("MemoryTest");
-      memtest_thread->Start(handover_hdr, NO);
-    }
+    auto memtest_thread = Boot::BootThread(reader_memtest.Blob());
+    memtest_thread.SetName("MemoryTest");
+    memtest_thread.Start(handover_hdr, NO);
   }
 
   WideChar kernel_path[256U] = L"vmoskrnl.exe";
